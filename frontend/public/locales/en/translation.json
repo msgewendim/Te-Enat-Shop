@@ -1,0 +1,14 @@
+{
+  "home": "Home",
+  "about": "About",
+  "contact": "Contact Us",
+  "services": "Services",
+  "item": {
+    "title": "title ",
+    "name": "name",
+    "description": "description"
+  },
+  "login": "Login",
+  "shop": "Shop",
+  "recipes": "Recipes"
+}
