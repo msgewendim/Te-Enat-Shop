@@ -19,4 +19,5 @@ type Languages = {
     nativeName: string;
   };
 }
-export type { Product, Languages };
+type RecipeCreatedAt = { number : string}
+export type { Product, Languages, RecipeCreatedAt };

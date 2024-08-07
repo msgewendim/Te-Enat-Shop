@@ -1,11 +1,11 @@
-import BannerImg from "../assets/Image.svg"
+import { createBanner } from "../utils/helperFunctions"
 
-const Banner = () => {
+const Banner = ({ image, text }: { image: string, text: string }) => {
   return (
-    <div>
-      <img src={BannerImg} alt="Banner" />
-      {/* <h1>Welcome to our website!</h1>
-      <p>This is a placeholder for the main content.</p> */}
+    <div style={createBanner(image)}>
+      <div className="container mx-auto py-16">
+        <h1 className="text-4xl font-bold text-center mt-8 text-primary">{text}</h1>
+      </div>
     </div>
   )
 }
