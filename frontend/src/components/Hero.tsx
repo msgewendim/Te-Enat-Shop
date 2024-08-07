@@ -1,4 +1,4 @@
-import { useState } from "react"
+// import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import Card from "./Card"
 import { tavlinim, rollInjera, veggie } from "../utils/data"
@@ -32,7 +32,7 @@ import { tavlinim, rollInjera, veggie } from "../utils/data"
 //   width: '100%',
 // }
 const Hero = () => {
-  const [imageId, setImageId] = useState(veggie)
+  // const [imageId, setImageId] = useState(veggie)
   const { t } = useTranslation()
   return (
     <>
@@ -57,7 +57,7 @@ const Hero = () => {
             <div className="order-1 sm:order-2 min-h-[450px] sm:min-h-[450px] flex justify-center items-center relative">
               {/* main image section */}
               <div className="">
-                <img src={imageId} alt="" className="w-[300px] sm:w-[450px] mx-auto spin" />
+                <img src={veggie} alt="" className="w-[300px] sm:w-[450px] mx-auto spin" />
               </div>
             </div>
           </div>
