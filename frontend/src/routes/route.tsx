@@ -11,6 +11,8 @@ import Login from "../components/Login.tsx"
 import Register from "../components/Register.tsx"
 import Shop from "../pages/Shop.tsx";
 import SingleProductPage from "../pages/SingleProductPage.tsx";
+import RecipePage from "../pages/RecipePage.tsx";
+import React from "react";
 
 export const routes = createBrowserRouter([
   {
@@ -36,6 +38,10 @@ export const routes = createBrowserRouter([
       {
         path: "/products/:productID",
         element: <SingleProductPage />
+      },
+      {
+        path: "/recipes/:recipeID",
+        element: <RecipePage />
       },
       {
         path: "/recipes",

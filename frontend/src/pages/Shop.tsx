@@ -1,7 +1,7 @@
 import ProductCard from "../components/ProductCard"
 import ShopBanner from "/ShopBanner.svg"
 import { cake, adamame, cookies } from "../utils/data"
-import { Product } from "../utils/types/product"
+import { Product } from "../../types/product.types"
 import Banner from "../components/Banner"
 
 const products: Array<Product> = [

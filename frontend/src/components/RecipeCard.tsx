@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 import { createRecipeCardImage } from "../utils/helperFunctions"
 
-const RecipeCard = ({ id, title, description, image, date }: { id: string, title: string, description: string, image: string, date: Date }) => {
+const RecipeCard = ({ id, title, description, image, date, imageClassProps }: { id: string, title: string, description: string, image: string, date: Date, imageClassProps : string[] }) => {
   const month = date.toLocaleString("default", {month : 'short'})
   return (
-    <div style={createRecipeCardImage(image)} className="relative">
+    <div style={createRecipeCardImage(image, imageClassProps[0], imageClassProps[1])} className="relative">
       {/* date */}
       <div className="bg-primary text-center text-white w-fit py-2 px-4 rounded-full m-3">
         <p>{date.getDay()}</p>
