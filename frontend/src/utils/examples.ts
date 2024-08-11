@@ -1,5 +1,5 @@
 import { Recipe } from "../../../types/recipe.types";
-import { cookies } from "./data";
+import { cookies, productPagePhoto } from "./data";
 
 export const recipe: Recipe = {
   _id: "chocolate-chip-cookies",
@@ -33,4 +33,21 @@ export const recipe: Recipe = {
     { _id: "123", userId: "John Doe", rating: 5, comment: "Love this recipe!", recipeId: "1221", createdAt: new Date() },
   ],
   createdAt: new Date()
+}
+
+export const product = {
+  _id: "123",
+  category: "dessert",
+  image: productPagePhoto,
+  name: "cake",
+  price: 15.0,
+  rate: 4,
+  relatedProducts : [{ _id: "chocolate-chip-cookies", name: "cookie" }, { _id: "chocolate-chip-cookies", name: "cookie" }],
+  description: [
+    ["Rich in Antioxidants", " The chili peppers and spices in Berbere are loaded with antioxidants, which help protect your body from free radicals and reduce inflammation."],
+    ["Boosts Metabolism", " The capsaicin in chili peppers has been shown to increase metabolism and promote fat burning, making Berbere not only flavorful but also beneficial for weight management."],
+    ["Immune-Boosting Properties", "The blend includes several spices known for their immune-boosting effects, such as garlic and ginger, which can help ward off colds and infections."],
+    ["Supports Digestive Health", "The blend includes several spices known for their immune-boosting effects, such as garlic and ginger, which can help ward off colds and infections."],
+    ["Anti-Inflammatory Effects", "Many of the spices in Berbere, including turmeric and fenugreek, have anti-inflammatory properties, which can help reduce the risk of chronic diseases."],
+  ]
 }

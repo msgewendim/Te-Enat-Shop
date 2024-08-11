@@ -2,7 +2,7 @@ import Banner from "../components/Banner"
 import recipeBanner from "/RecipeBanner.svg"
 import { createRecipeCardImage } from "../utils/helperFunctions"
 import RelatedRecipes from "../components/RelatedRecipes"
-import Reviews from "../components/Reviews"
+// import Reviews from "../components/Reviews"
 import { recipe } from "../utils/examples"
 
 const RecipePage = () => {
@@ -50,14 +50,14 @@ const RecipePage = () => {
                   <hr className="w-full h-[2px] my-8 bg-gray-600 last:h-0" />
                 </>
               ))}
-            </ol>
+            </ol> 
           </div>
         </div>
 
         {/* Related Recipes */}
         <RelatedRecipes relatedRecipes={relatedRecipes} />
         {/* Reviews */}
-        <Reviews />
+        {/* <Reviews /> */}
       </div >
     </>
   )

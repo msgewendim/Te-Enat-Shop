@@ -26,11 +26,11 @@ const Testimonials = () => {
               <img src={testimonial} alt="Testimonials" width={600} />
             </div>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 justify-center items-center lg:mx-40 mx-auto my-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 justify-center items-center lg:mx-40 mx-auto my-5">
             {/* Cards */}
-            <TestimonialCard title="Return Policy" text="Simply dummy text of the print in type setting industry." icon={Cart}/>
             <TestimonialCard title="100% Fresh" text="Simply dummy text of the print in type setting industry." icon={Globe}/>
-            <TestimonialCard title="Support 24/7" text="Simply dummy text of the print in type setting industry." icon={Support}/>
+            <TestimonialCard title="Support" text="Simply dummy text of the print in type setting industry." icon={Support}/>
+            <TestimonialCard title="Return Policy" text="Simply dummy text of the print in type setting industry." icon={Cart}/>
             <TestimonialCard title="Secured Payment" text="Simply dummy text of the print in type setting industry." icon={Credit}/>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { Product } from "./product.types";
-import { User } from "./user.types";
+import { User } from "./User.types";
+
 
 interface Recipe {
   _id: string;

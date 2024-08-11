@@ -17,7 +17,7 @@ interface Product {
   discountedPrice?: number;
   discountPercentage?: number;
   reviews: Review[];
-  relatedProducts: Product["_id"][];
+  relatedProducts: Partial<Product>[];
   totalSales?: number;
 }
 

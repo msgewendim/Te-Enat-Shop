@@ -48,10 +48,11 @@ import tavlinim from "../assets/tavlinim.jpg";
 import tibs from "../assets/tibs.jpg";
 import veggie from "../assets/veggie.svg";
 import testimonial from "../assets/testimonial.svg";
-// import image from "../assets/image.svg";
+import productPagePhoto from "../assets/singlePagePhoto.png";
 import wine from "../assets/wine.jpg";
 
 export {
+  productPagePhoto,
   testimonial,
   adamame,
   awaze,

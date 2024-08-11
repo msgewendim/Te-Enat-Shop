@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import DarkMode from './DarkMode';
+import searchIcon from '/searchIcon.svg';
 import { useTranslation } from 'react-i18next';
 import SwitchLanguage from './SwitchLang';
 
@@ -19,7 +20,7 @@ const Navbar = () => {
               {/* Logo */}
               <Link to="/" className="flex justify-start items-center gap-2 text-2xl sm:text-3xl font-bold text-primary dark:text-white">
                 <img alt="" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" className="h-8 w-auto" />
-                TE-ENAT
+                TE-ENATE
               </Link>
             </div>
             {/* Navbar Elements */}
@@ -27,7 +28,7 @@ const Navbar = () => {
               <Link to="/" className="inline-block text-md font-medium text-primary hover:text-secondary dark:text-white">
                 {t('home')}
               </Link>
-              <Link to="/shop" className="inline-block text-md font-medium text-primary hover:text-secondary dark:text-white">
+              <Link to="/products" className="inline-block text-md font-medium text-primary hover:text-secondary dark:text-white">
                 {t('shop')}
               </Link>
               <Link to="/recipes" className="inline-block text-md font-medium text-primary dark:text-white hover:text-secondary">
@@ -39,14 +40,11 @@ const Navbar = () => {
             </div>
             {/* NAVBAR ICONS */}
             <div className="hidden lg:flex lg:gap-x-6 items-center gap-4">
-              {/* DARK MODE BUTTON */}
-              <div className="">
-                <DarkMode />
-              </div>
               {/* SEARCH ICON */}
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
+              <div className="flex relative w-24">
+                <input type="text" className='border-primary border-2 rounded-lg pl-2 w-full' />
+                <img src={searchIcon} alt="search icon" width={20} className='absolute right-1 top-1' />
+              </div>
               {/* CART ICON */}
               <div className="flex justify-center relative">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
@@ -55,12 +53,16 @@ const Navbar = () => {
                 <span className="absolute -top-3 left-6 text-black rounded w-3 h-5 dark:text-white">0</span>
               </div>
               {/* LOGIN BUTTON LINK */}
-              <Link to="/login" className="text-md font-semibold leading-6 dark:text-white text-white border bg-secondary rounded-full p-2 text-center">
+              {/* <Link to="/login" className="text-md font-semibold leading-6 dark:text-white text-white border bg-secondary rounded-full p-2 text-center">
                 {t('login')}
                 {/* <span aria-hidden="true">&rarr;</span> */}
-              </Link>
+              {/* </Link> */}
               {/* LANGUAGE SWITCHER */}
-              <SwitchLanguage />
+              <SwitchLanguage /> 
+              {/* DARK MODE BUTTON */}
+              <div className="">
+                <DarkMode />
+              </div>
             </div>
 
             <div className="flex justify- lg:hidden">
@@ -103,7 +105,7 @@ const Navbar = () => {
                   </Link>
                   <Link
                     onClick={() => setMobileMenuOpen(false)}
-                    to="/shop"
+                    to="/products"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-secondary"
                   >
                     {t('shop')}
@@ -131,13 +133,13 @@ const Navbar = () => {
                   </Link>
                 </div>
                 <div className="py-6 flex justify-between">
-                  <Link
+                  {/* <Link
                     onClick={() => setMobileMenuOpen(false)}
                     to="/login"
                     className="-mx-3 text-center block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 dark:text-white  hover:bg-secondary"
                   >
                     {t('login')}
-                  </Link>
+                  </Link> */}
                   <DarkMode />
                   <SwitchLanguage />
                 </div>
