@@ -10,7 +10,7 @@ const SingleProduct = () => {
   // half descriptions
   const [even_numbered_desc, odd_numbered_desc] = divideDescriptionInfo(description)
   return (
-    <main className="flex flex-col mb-24">
+    <main className="flex flex-col">
       <Banner text={name} image={ProductPageBanner} />
       {/* Product details */}
       <div className="flex justify-center items-center">
@@ -48,19 +48,21 @@ const SingleProduct = () => {
           {/* Buttons  */}
           <div className="flex justify-center items-center gap-10 my-3 mb-16">
             <div className="bg-primary w-fit p-2 text-white rounded-lg cursor-pointer hover:bg-slate-800">
-                Recipes
+              Recipes
             </div>
             <div className="bg-secondary w-fit p-2 px-3 text-white rounded-lg cursor-pointer hover:bg-slate-600">
-                Buy
+              Buy
             </div>
           </div>
         </div>
       </div>
-      <div className="min-w-[90vw]">
-        <img src={videoProduct} alt="" />
+      <div className="grid grid-cols-3 items-center justify-center my-3">
+        <div className="col-span-2">
+          <img src={videoProduct} alt="" width={800} />
+        </div>
+        {/* Product related products */}
+        <RelatedProducts relatedProducts={relatedProducts} />
       </div>
-      {/* Product related products */}
-      <RelatedProducts relatedProducts={relatedProducts} />
     </main>
   )
 }

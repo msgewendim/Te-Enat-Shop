@@ -1,5 +1,5 @@
-import { Recipe } from "../../../types/recipe.types";
-import { cookies, productPagePhoto } from "./data";
+import { Category, Recipe } from "../../../types/recipe.types";
+import { cookies, dessert, kimem, kurkum, productPagePhoto, soup } from "./data";
 
 export const recipe: Recipe = {
   _id: "chocolate-chip-cookies",
@@ -42,7 +42,7 @@ export const product = {
   name: "cake",
   price: 15.0,
   rate: 4,
-  relatedProducts : [{ _id: "chocolate-chip-cookies", name: "cookie" }, { _id: "chocolate-chip-cookies", name: "cookie" }],
+  relatedProducts : [{ _id: "chocolate-chip-cookies", name: "cookie" }, { _id: "chocolate-chip-cookies", name: "cookie" },{ _id: "chocolate-chip-cookies", name: "cookie" }, { _id: "chocolate-chip-cookies", name: "cookie" }],
   description: [
     ["Rich in Antioxidants", " The chili peppers and spices in Berbere are loaded with antioxidants, which help protect your body from free radicals and reduce inflammation."],
     ["Boosts Metabolism", " The capsaicin in chili peppers has been shown to increase metabolism and promote fat burning, making Berbere not only flavorful but also beneficial for weight management."],
@@ -51,3 +51,33 @@ export const product = {
     ["Anti-Inflammatory Effects", "Many of the spices in Berbere, including turmeric and fenugreek, have anti-inflammatory properties, which can help reduce the risk of chronic diseases."],
   ]
 }
+
+export const topRecipes = [
+  recipe, recipe, recipe 
+]
+export const topCategories : Category[] = [
+  {
+    _id: "123",
+    name: "Flour",
+    images : [kimem],
+    recipes: [recipe._id, recipe._id]
+  },
+  {
+    _id: "124",
+    name: "Spice",
+    images : [kurkum],
+    recipes: [recipe._id, recipe._id]
+  },
+  {
+    _id: "125",
+    name: "Soup",
+    images : [soup],
+    recipes: [recipe._id, recipe._id]
+  },
+  {
+    _id: "126",
+    name: "dessert",
+    images : [dessert],
+    recipes: [recipe._id, recipe._id]
+  }
+]
