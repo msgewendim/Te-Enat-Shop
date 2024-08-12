@@ -1,5 +1,5 @@
 import ProductDal from "../Dal/ProductDal";
-import {Product} from "../../utils/types"
+import {Product} from "../../../types/product.types"
 
 export class ProductService {
   private ProductDataAccess: ProductDal;
@@ -18,6 +18,7 @@ export class ProductService {
 
   async addProduct(product: Product): Promise<void> {
     try {
+      console.log("Product adding", product);
       await this.ProductDataAccess.addProduct(product);
     } catch {
       throw new Error("Can not add Product!");

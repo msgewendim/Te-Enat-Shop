@@ -1,21 +1,45 @@
-import { DataAccess } from "../../utils/interfaces/IProductDal";
-import {Product} from "../../utils/types";
+import { IProduct } from "../utils/interfaces/IProductDal";
+import {Product} from "../../../types/product.types"
+import productModel from "../models/Product";
 
-export class ProductDal implements DataAccess<Product> {
-  getProduct(id: string): Promise<Product> {
-   throw new Error("Method not implemented.");
+export class ProductDal implements IProduct<Product> {
+  async getProduct(id: string) : Promise<Product | null> {
+    try {
+      const product = await productModel.findById(id) as Product;
+      return product 
+    } catch (error) {
+      throw error
+    }
   }
-  getAllProducts(page? : number, pageSize? : number, filter? : string): Promise<Product[]> {
-    throw new Error("Method not implemented.");
+  async getAllProducts(pageSize: number = 10, page : number = 0, filter? : string): Promise<Product[]> {
+    try {
+      const products = await productModel.find({}, {}, {limit: pageSize, skip: page * pageSize}) as Product[];
+      return products
+    } catch (error) {
+      throw error
+    }
   }
-  deleteProduct(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+  async deleteProduct(id: string): Promise<void> {
+    try {
+      await productModel.findByIdAndDelete(id);
+    } catch (error) {
+      throw error
+    }
   }
-  updateProduct(id: string, postData: Partial<Product>): Promise<void> {
-    throw new Error("Method not implemented.");
+  async updateProduct(id: string, postData: Partial<Product>): Promise<void> {
+    try {
+      await productModel.findByIdAndUpdate(id, postData)
+    } catch (error) {
+      throw error
+    }
   }
-  addProduct(product: Product): Promise<void> {
-    throw new Error("Method not implemented.");
+  async addProduct(product: Product): Promise<void> {
+    try {
+      const newProduct = await productModel.create(product);
+      console.log(newProduct);
+    } catch (error) {
+      throw error
+    }
   }
 }
 

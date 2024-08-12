@@ -1,5 +1,5 @@
 import { Product } from "./product.types";
-import { User } from "./User.types";
+import { User } from "./user.types";
 
 
 interface Recipe {
@@ -26,6 +26,7 @@ interface Ingredient {
 interface Category {
   _id?: string;
   name: string;
+  images? : string[]
   recipes?: Recipe["_id"][];
   products?: Product["_id"][];
 }
@@ -38,4 +39,4 @@ interface Review {
   createdAt: Date;
 }
 
-export { Recipe, Category, Review, Ingredient };
+export type { Recipe, Category, Review, Ingredient };

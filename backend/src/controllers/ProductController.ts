@@ -21,7 +21,7 @@ export class ProductController {
   async getAllProducts(req: Request, res: Response) {
     try {
       // receive this from the URL if specify
-      const { page = 1, pageSize = 5, filter } = req.query;
+      const { page, pageSize, filter } = req.query;
       // all data in the query is as string so needed to ParseIt
       const parsedPage = parseInt(page as string, 10);
       // function takes string , counting BASE &  returns Integer
@@ -39,7 +39,7 @@ export class ProductController {
 
   async addProduct(req: Request, res: Response) {
     const product = req.body;
-
+    // console.log(product, "add product controller");
     try {
       await this.productService.addProduct(product);
       res.status(201).send("Product Added to DB!");
@@ -50,7 +50,6 @@ export class ProductController {
 
   async deleteProduct(req: Request, res: Response) {
     const productId = req.params._id;
-
     try {
       await this.productService.deleteProduct(productId);
       res.status(200).send("Product Deleted from DB!");
@@ -62,7 +61,6 @@ export class ProductController {
   async updateProduct(req: Request, res: Response) {
     const productId = req.params._id;
     const productData = req.body;
-
     try {
       await this.productService.updateProduct(productId, productData);
       res.status(201).send("Product Updated!");

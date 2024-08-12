@@ -1,16 +1,18 @@
-import express  from "express";
+import express from "express";
 import ProductRoute from "./src/Routes/ProductRoute";
-import connectToMongoDB from "./utils/DB/MongoDB";
+import connectToMongoDB from "./src/utils/DB/MongoDB";
+import dotenv from "dotenv";
+dotenv.config();
 
-const server = express();
+const App = express();
 
 const port = 3005;
-server.use(express.json())
+App.use(express.json());
 
-server.use("/api/products", ProductRoute);
-// server.use("/api/users", UserRoute);
-// server.use("/api/cart", CartRoute);
-server.use(connectToMongoDB)
-server.listen(port, ()=>{
-    console.log(`Server is listening on port ${port}`)
+App.use("/api/products", ProductRoute);
+// App.use("/api/users", UserRoute);
+// App.use("/api/cart", CartRoute);
+App.listen(port, () => {
+  connectToMongoDB(process.env.MONGO_URI as string);
+  console.log(`App is listening on port ${port}`);
 });
