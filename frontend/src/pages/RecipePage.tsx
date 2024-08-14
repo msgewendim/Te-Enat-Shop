@@ -45,10 +45,10 @@ const RecipePage = () => {
             <h2 className="text-xl font-bold text-primary text-center mb-3">Instructions</h2>
             <ol className="py-4">
               {instructions.map((instruction, index) => (
-                <>
-                  <li key={index} className="text-sm list-disc ml-3">{instruction}</li>
+                <div key={index}>
+                  <li className="text-sm list-disc ml-3">{instruction}</li>
                   <hr className="w-full h-[2px] my-8 bg-gray-600 last:h-0" />
-                </>
+                </div>
               ))}
             </ol> 
           </div>
