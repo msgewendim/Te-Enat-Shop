@@ -25,9 +25,11 @@ export class ProductService {
     }
   }
 
-  async getAllProducts(page: number, pageSize: number, filter?: string): Promise<Product[]> {
+  async getAllProducts(page: number, searchTerm?: string, category? : string): Promise<Product[] | unknown> {
     try {
-      return await this.ProductDataAccess.getAllProducts(page, pageSize, filter);
+      const limit = 10; 
+      page ? page : 1  
+      return await this.ProductDataAccess.getAllProducts(page, limit, searchTerm, category);
     } catch (error) {
       throw new Error("NO Products Found!");
     }
