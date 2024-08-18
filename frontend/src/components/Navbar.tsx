@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import DarkMode from './DarkMode';
-import searchIcon from '/searchIcon.svg';
+// import searchIcon from '/searchIcon.svg';
 import { useTranslation } from 'react-i18next';
 import SwitchLanguage from './SwitchLang';
 
@@ -41,10 +41,10 @@ const Navbar = () => {
             {/* NAVBAR ICONS */}
             <div className="hidden lg:flex lg:gap-x-6 items-center gap-4">
               {/* SEARCH ICON */}
-              <div className="flex relative w-24">
+              {/* <div className="flex relative w-24">
                 <input type="text" className='border-primary border-2 rounded-lg pl-2 w-full' />
                 <img src={searchIcon} alt="search icon" width={20} className='absolute right-1 top-1' />
-              </div>
+              </div> */}
               {/* CART ICON */}
               <div className="flex justify-center relative">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">

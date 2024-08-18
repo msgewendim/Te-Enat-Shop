@@ -27,7 +27,7 @@ export class ProductService {
 
   async getAllProducts(page: number, searchTerm?: string, category? : string): Promise<Product[] | unknown> {
     try {
-      const limit = 10; 
+      const limit = 9; 
       page ? page : 1  
       return await this.ProductDataAccess.getAllProducts(page, limit, searchTerm, category);
     } catch (error) {

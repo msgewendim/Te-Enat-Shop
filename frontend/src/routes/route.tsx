@@ -12,6 +12,8 @@ import Shop from "../pages/Shop.tsx";
 import SingleProductPage from "../pages/SingleProductPage.tsx";
 import RecipePage from "../pages/RecipePage.tsx";
 import Cart from "../pages/Cart.tsx";
+import BuyProduct from "../components/BuyProduct.tsx";
+import PopupWindow from "../components/PopUp.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -20,7 +22,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home/>
+        element: <Home />
       },
       {
         path: "/about",
@@ -35,10 +37,10 @@ export const routes = createBrowserRouter([
         element: <Shop />
       },
       {
-        path: "/products/:productID",
-        element: <SingleProductPage />
+        path: "/products/:productID/info",
+        element: <SingleProductPage />,
       },
-      { 
+      {
         path: "/recipes/:recipeID",
         element: <RecipePage />
       },
@@ -55,9 +57,13 @@ export const routes = createBrowserRouter([
         element: <Register />,
       },
       {
+        path: "/buy/:productID",
+        element: <PopupWindow children={<BuyProduct/>}/>
+      },
+      {
         path: "*",
-        element : <Error />
-      } 
+        element: <Error />
+      }
     ]
   }
-]);
+])

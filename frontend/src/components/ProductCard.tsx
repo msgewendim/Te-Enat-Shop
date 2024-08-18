@@ -12,26 +12,26 @@ interface ProductCardProps {
 const ProductCard = ({ _id, name, price, image, categories, rate, imageSize = 32 }: ProductCardProps) => {
 
   return (
-    <div className="w-[250px] h-[250px] bg-gray-100 flex flex-col rounded-xl justify-center items-center relative" >
+    <div className="w-[280px] h-[250px] bg-gray-100 flex flex-col rounded-xl justify-center items-start mx-auto relative" >
       <span className="bg-primary text-white max-w-max p-[4px] text-center absolute left-5 top-3 rounded-md text-sm">{categories[0]}</span>
       <div className="flex flex-col w-full">
         {/* image */}
-        <Link to={`/products/${_id}`}>
+        <Link to={`/buy/${_id}`}>
           <img src={image} alt={name} className={`min-w-${imageSize} min-h-40 object-fit flex-1`} />
         </Link>
         {/* name */}
-        <Link to={`/products/${_id}`} className="text-xl ml-2 text-primary capitalize font-semibold">{name}</Link>
+        <div className="flex justify-between items-center">
+          <Link to={`/buy/${_id}`} className="text-xl ml-2 text-primary capitalize font-semibold">{name}</Link>
+          <p className="text-sm text-primary ml-2">{price}$</p>
+        </div>
         <hr className="bg-primary h-0.5" />
         {/* price & rate*/}
-        <div className="flex justify-between items-center mx-3">
-          <p className="text-sm text-primary ml-2">{price}$</p>
-          {/* rate */}
-          <span className="flex">{
-            Array.from({ length: rate }, (_, index) => (
-              <img key={index} src={star} alt="star-icon" width={16} />
-            ))
-          }</span>
-        </div>
+        {/* rate */}
+        <span className="flex justify-end my-1">{
+          Array.from({ length: rate }, (_, index) => (
+            <img key={index} src={star} alt="star-icon" width={16} />
+          ))
+        }</span>
       </div>
       {/* Add product purchase button */}
       {/* Add product wishlist button */}

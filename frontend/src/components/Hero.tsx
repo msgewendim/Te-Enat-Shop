@@ -3,34 +3,6 @@ import { useTranslation } from "react-i18next"
 import Card from "./Card"
 import { tavlinim, rollInjera, veggie } from "../utils/data"
 
-// const ImageList = [
-//   {
-//     id: 1,
-//     image: beyaynetu
-//   },
-//   {
-//     id: 2,
-//     image: enjera
-//   },
-//   {
-//     id: 3,
-//     image: menu2
-//   },
-//   {
-//     id: 4,
-//     image: menu
-//   }
-// ]
-
-// const bgImage = {
-//   backgroundImage: `url(${menu})`,
-//   // backgroundColor: "#D2FCFF"
-//   backgroundSize: 'cover',
-//   backgroundPosition: "",
-//   backgroundRepeat: 'no-repeat',
-//   height: '100%',
-//   width: '100%',
-// }
 const Hero = () => {
   // const [imageId, setImageId] = useState(veggie)
   const { t } = useTranslation()
@@ -49,15 +21,15 @@ const Hero = () => {
               <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, molestias libero? Aut consequuntur deleniti consequatur neque dignissimos quae distinctio eos.</p>
               {/* </div> */}
               <div className="flex gap-4 m-4">
-                <Card imageUrl={tavlinim} title={t("shop")} />
-                <Card imageUrl={rollInjera} title={t("recipes")} />
+                <Card imageUrl={tavlinim} title={t("shop")} link="products" />
+                <Card imageUrl={rollInjera} title={t("recipes")} link="recipes" />
               </div>
             </div>
             {/* Image section */}
-            <div className="order-1 sm:order-2 min-h-[450px] sm:min-h-[450px] flex justify-center items-center relative">
+            <div className="col-span- sm:order-2 min-h-[650px] sm:min-h-[450px] flex justify-center items-center relative">
               {/* main image section */}
               <div className="">
-                <img src={veggie} alt="" className="w-[300px] sm:w-[450px] mx-auto spin" />
+                <img src={veggie} alt="" className="w-[600px] sm:w-[550px] mx-auto spin" />
               </div>
             </div>
           </div>

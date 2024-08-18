@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 import { cookies } from "../utils/data"
 import { Product } from "../../../types/product.types"
+import arrowLeft from "/arrowLeft.svg"
+import arrowRight from "/arrowRight.svg"
 
 const RelatedProducts = ({ relatedProducts }: Partial<Product>) => {
   // const handleGettingMoreRelatedProducts = (e: HTMLButtonElement) => {
@@ -8,27 +10,30 @@ const RelatedProducts = ({ relatedProducts }: Partial<Product>) => {
   // e.preventDefault()
 
   // // Fetch more related products
-  // // Set the new relatedProducts state with the fetched data))
+  // Set the new relatedProducts state with the fetched data))
   // }
   return (
     <>
-      <div className="flex flex-col justify-center items-start pl-4 ml-4 border-l-2 border-l-gray-200">
+      <div className="flex flex-col justify-center items-start">
         <h2 className="text-2xl font-bold text-primary text-start my-5 mx-auto">Related Products</h2>
         <div className="flex justify-between items-center gap-4">
-          <div className="grid grid-rows-auto gap-4 my-3">
+          <button className="">
+            <img src={arrowLeft} alt="" width={48} />
+          </button>
+          <div className="grid grid-cols-4 gap-4 mt-3">
             {relatedProducts?.map(({ _id, name }) => (
-              <Link to={`/recipes/${_id}`} key={_id} className="flex gap-2 justify-between items-end">
-                <img src={cookies} alt={name} className="object-cover w-20 h-20 rounded-xl" />
-                <h2 className="text-lg ml-2 text-primary capitalize font-semibold">
+              <Link to={`/recipes/${_id}`} key={_id} className="flex flex-col gap-4 justify-between items-center">
+                <img src={cookies} alt={name} className="object-cover w-32 h-32 rounded-l" />
+                <h2 className="text-xl ml-2 text-primary capitalize font-semibold">
                   {name}
                 </h2>
               </Link>
             ))}
           </div>
+          <button className="">
+            <img src={arrowRight} alt="" width={48} />
+          </button>
         </div>
-        <button className="w-fit p-2 text-white bg-primary rounded-lg my-2 mx-auto">
-          more
-        </button>
       </div>
     </>
   )

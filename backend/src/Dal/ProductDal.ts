@@ -24,7 +24,7 @@ export class ProductDal implements IProduct<Product> {
       }      
       // Add category filter if provided
       if (category) {
-        query.categories = category; // Exact match for category
+        query.categories = {$regex: category}
       }
       const products = await productModel.find(query).skip((page - 1) * limit) // Skip items based on the page number
       .limit(limit) // Limit the number of items returned

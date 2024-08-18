@@ -7,7 +7,7 @@ const TopRecipes = () => {
     <div style={{ backgroundColor: '#D2FCFF' }}
       className="min-h-[350px] sm:min-h-[500px]"
     >
-      <div className="flex flex-col justify-center items-center my-3">
+      <div className="flex flex-col justify-center items-center mb-3 pt-8">
         <div className="flex flex-col justify-center items-center gap-2 mt-3">
           <h1 className="text-4xl font-bold text-primary capitalize">Our organic experts</h1>
           <p className="text-sm text-black text-center w-[60vw]">

@@ -21,13 +21,14 @@ export class ProductController {
 
   async getAllProducts(req: Request, res: Response) {
     try {
-      const { page, searchTerm, category } = req.query;
+      const { page, filter, category } = req.query;
       const parsedPage = parseInt(page as string, 10);
       const products = await this.productService.getAllProducts(
         parsedPage,
-        searchTerm as string,
+        filter as string,
         category as string
       );
+      // console.log(products[0]);
       res.status(200).json(products as Product[]);
     } catch (error) {
       res.status(400).json((error as Error).message);

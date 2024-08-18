@@ -52,7 +52,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     getProducts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, category, filter])
+  }, [page])
 
   const getProductById = async (id: string) => {
     try {
