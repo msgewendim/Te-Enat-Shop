@@ -16,7 +16,16 @@ interface Product {
   totalSales?: number;
 }
 
-
+export interface ProductCardProps {
+  _id?: string,
+  name: string,
+  price: number,
+  image: string,
+  categories: string[],
+  rate: number,
+  imageSize?: number,
+  shortDescription?: string
+}
 
 interface Languages {
   en: {

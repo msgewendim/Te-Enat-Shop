@@ -11,9 +11,7 @@ import Register from "../components/Register.tsx"
 import Shop from "../pages/Shop.tsx";
 import SingleProductPage from "../pages/SingleProductPage.tsx";
 import RecipePage from "../pages/RecipePage.tsx";
-import Cart from "../pages/Cart.tsx";
-import BuyProduct from "../components/BuyProduct.tsx";
-import PopupWindow from "../components/PopUp.tsx";
+import Cart from "../pages/Cart.tsx"
 
 export const routes = createBrowserRouter([
   {
@@ -55,10 +53,6 @@ export const routes = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
-      },
-      {
-        path: "/buy/:productID",
-        element: <PopupWindow children={<BuyProduct/>}/>
       },
       {
         path: "*",

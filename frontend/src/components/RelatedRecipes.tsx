@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { Recipe } from "../../../types/recipe.types"
+import { Recipe } from "../../types/recipe.types"
 import arrowLeft from "/arrowLeft.svg"
 import arrowRight from "/arrowRight.svg"
 import { cookies } from "../utils/data"

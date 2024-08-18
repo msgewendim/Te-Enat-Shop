@@ -1,5 +1,5 @@
 import ProductDal from "../Dal/ProductDal";
-import {Product} from "../../../types/product.types"
+import { Product } from "../../../types/product.types";
 
 export class ProductService {
   private ProductDataAccess: ProductDal;
@@ -25,11 +25,20 @@ export class ProductService {
     }
   }
 
-  async getAllProducts(page: number, searchTerm?: string, category? : string): Promise<Product[] | unknown> {
+  async getAllProducts(
+    page: number,
+    searchTerm?: string,
+    category?: string
+  ): Promise<Product[] | unknown> {
     try {
-      const limit = 9; 
-      page ? page : 1  
-      return await this.ProductDataAccess.getAllProducts(page, limit, searchTerm, category);
+      const limit = 9;
+      page ? page : 1;
+      return await this.ProductDataAccess.getAllProducts(
+        page,
+        limit,
+        searchTerm,
+        category
+      );
     } catch (error) {
       throw new Error("NO Products Found!");
     }

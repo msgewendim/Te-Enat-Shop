@@ -1,6 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { Product } from "../../../types/product.types";
-
+import { Product } from "../../../types/product.types"
 const API_URL = import.meta.env.VITE_API_URL as string || "http://localhost:3005/api";
 
 interface IContext {
@@ -41,7 +40,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const getProducts = async () => {
     try {
-      const products = await fetch(`${API_URL}/products?${page ? `page=${page}` : ""}&${category ? `category=${category}` : ""}&${filter ? `filter=${filter}` :""}`, { method: 'GET' })
+      const products = await fetch(`${API_URL}/products?${page ? `page=${page}` : ""}&${category ? `category=${category}` : ""}&${filter ? `filter=${filter}` : ""}`, { method: 'GET' })
       const data = await products.json()
       setProducts(data)
       return data

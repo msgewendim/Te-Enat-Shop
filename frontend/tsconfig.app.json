@@ -27,8 +27,7 @@
     "types",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "types/**/*.ts",
-    "../types/**/*.ts"
+    "../types/**/*.ts",
   ],
   "exclude": ["node_modules", "dist", "build", "scripts"]
 }
