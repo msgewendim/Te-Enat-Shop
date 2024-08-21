@@ -1,4 +1,4 @@
-import { Product } from "../../../types/product.types";
+import { Product } from "../../types/product.types";
 import { ProductService } from "../Service/ProductService";
 import { Response, Request } from "express";
 

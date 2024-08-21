@@ -1,5 +1,5 @@
 import { IProduct } from "../utils/interfaces/IProductDal";
-import { Product } from "../../../types/product.types";
+import { Product } from "../../types/product.types";
 import productModel from "../models/Product";
 import { QueryOptions } from "mongoose";
 

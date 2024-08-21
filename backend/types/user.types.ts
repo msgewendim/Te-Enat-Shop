@@ -13,7 +13,6 @@ interface User {
   wishlist: Product[];
   cart: CartItem[];
   addresses: Address[];
-  paymentMethods: PaymentMethod[];
   recipeReviews: string[];
   productReviews: string[];
   createdAt: Date;
@@ -37,13 +36,6 @@ interface Address {
   state: string;
   zip: string;
   country: string;
-}
-
-interface PaymentMethod {
-  id: string;
-  cardType: string;
-  lastFourDigits: string;
-  expirationDate: string;
 }
 
 export { User};

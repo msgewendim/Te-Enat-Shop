@@ -1,213 +1,468 @@
-openapi: 3.0.0
+openapi: "3.0.0"
 info:
-  title: Te-Enat API
-  description: API for managing products, users, and authentication in my shop
-  version: 1.0.0
+  title: "Ethiopian Cuisine Products and Recipes Store API"
+  version: "1.0.0"
+  description: "This API allows users to explore and purchase authentic Ethiopian cuisine products and discover traditional recipes. The API provides routes to manage products, users, and shopping carts, ensuring a seamless shopping and culinary experience for those interested in Ethiopian culture and cuisine."
 servers:
-  - url: http://localhost:3000
+  - url: "http:localhost:3005/api"
+  - description: Development server
 paths:
   /products:
     get:
-      -tags: users
-      summary: List all products
+      summary: Get all products
+      tags:
+        - Products
+      operationId: getAllProducts
       responses:
-        "200":
-          description: Successful response
+        200:
+          description: A list of 9 products
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Product"
-        "400":
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorMessage"
-        "500":
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorMessage"
-
+                  $ref: '#/components/schemas/Product'
     post:
-      -tags: admin
-      summary: Create a new product
+      summary: Add a new product
+      tags:
+        - Products
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ProductInput"
+              $ref: '#/components/schemas/Product'
       responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Product"
-        "400":
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorMessage"
-        "500":
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorMessage"
-
-  /products/{productId}:
+        201:
+          description: Product created
+        400:
+          description: Invalid input
+  /products/{id}:
     get:
-      -tags: users
       summary: Get a product by ID
+      tags:
+        - Products
       parameters:
         - in: path
-          name: productId
+          name: id
           required: true
+          description: The product ID
           schema:
             type: string
+      operationId: getProduct
       responses:
-        "200":
-          description: Successful response
+        200:
+          description: A single product
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Product"
-        "404":
-        description: Product not found
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ErrorMessage"
-  /users:
-    post:
-      summary: Create a new user
+                $ref: '#/components/schemas/Product'
+        404:
+          description: Product not found
+    delete:
+      summary: Delete a product by ID
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The product ID
+          schema:
+            type: string
+      responses:
+        204:
+          description: Product deleted
+        404:
+          description: Product not found
+    put:
+      summary: Update a product by ID
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The product ID
+          schema:
+            type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserInput"
+              $ref: '#/components/schemas/Product'
       responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-
-  /users/{userId}:
-    get:
-      summary: Get a user by ID
-      parameters:
-        - in: path
-          name: userId
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-
-  /auth/login:
-    post:
-      summary: User login
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LoginInput"
-      responses:
-        "200":
-          description: Successful login
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AuthToken"
+        200:
+          description: Product updated
+        404:
+          description: Product not found
 
 components:
   schemas:
     Product:
       type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        price:
-          type: number
-        description:
-          type: string
-
-    ProductInput:
-      type: object
       required:
         - name
+        - shortDescription
         - price
+        - images
+        - rate
+        - categories
+        - InStock
+        - availability
+        - weights
       properties:
+        _id:
+          type: string
+          description: The unique identifier for the product.
+          example: "60d21b4667d0d8992e610c85"
         name:
           type: string
+          description: The name of the product.
+          example: "Awesome Gadget"
+        shortDescription:
+          type: string
+          description: A brief description of the product.
+          example: "A multi-functional gadget that makes your life easier."
         price:
           type: number
-        description:
+          format: float
+          description: The price of the product.
+          example: 99.99
+        images:
+          type: array
+          description: A list of image URLs for the product.
+          items:
+            type: string
+            format: uri
+            example: "https://example.com/product-image.jpg"
+        rate:
+          type: number
+          format: float
+          description: The average rating of the product.
+          example: 4.5
+        categories:
+          type: array
+          description: A list of category names the product belongs to.
+          items:
+            type: string
+            example: "Spices"
+        InStock:
+          type: integer
+          description: The number of items in stock.
+          example: 150
+        availability:
           type: string
+          description: The availability status of the product.
+          enum:
+            - "In Stock"
+            - "Out of Stock"
+            - "Pre-order"
+          example: "In Stock"
+        weights:
+          type: array
+          description: A list of weight options for the product.
+          items:
+            type: string
+            example: "1kg"
+        benefits:
+          type: array
+          description: An optional list of benefits associated with the product.
+          items:
+            type: string
+            example: "Water-resistant"
+        reviews:
+          type: array
+          description: An optional list of reviews for the product.
+          items:
+            $ref: "#/components/schemas/Review"
+        relatedProducts:
+          type: array
+          description: An optional list of related products.
+          items:
+            type: object
+            description: A partial representation of a related product.
+            properties:
+              _id:
+                type: string
+                description: The unique identifier for the related product.
+                example: "60d21b4667d0d8992e610c86"
+              name:
+                type: string
+                description: The name of the related product.
+                example: "Gadget Accessory"
+              price:
+                type: number
+                format: float
+                description: The price of the related product.
+                example: 29.99
+              images:
+                type: array
+                items:
+                  type: string
+        totalSales:
+          type: integer
+          description: An optional field for the total number of sales.
+          example: 5000
 
-    ErrorMessage:
+    Review:
       type: object
       properties:
-        message:
+        reviewerName:
           type: string
-          required: true
+          description: ID of the user who wrote the review
+        rating:
+          type: integer
+          format: int32
+          description: Rating given to the recipe (e.g., 1 to 5)
+          minimum: 1
+          maximum: 5
+        comment:
+          type: string
+          description: Comment provided by the user for the recipe
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time when the review was created
+      required:
+        - userId
+        - recipeId
+        - rating
+        - comment
+      example:
+        userId: "647e59e1f9a4e7a1b4c3d7f4"
+        recipeId: "647e59f1f9a4e7a1b4c3d7f5"
+        rating: 5
+        comment: "Amazing recipe! The instructions were easy to follow, and the dish turned out great."
+        createdAt: "2023-08-20T12:45:00Z"
 
     User:
       type: object
       properties:
-        id:
+        _id:
           type: string
+          description: Unique identifier for the user
         username:
           type: string
         email:
           type: string
-
-    UserInput:
-      type: object
+          format: email
+        password:
+          type: string
+        profilePicture:
+          type: string
+          nullable: true
+          description: URL to the user's profile picture
+        savedRecipes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Recipe"
+        orderHistory:
+          type: array
+          items:
+            $ref: "#/components/schemas/Order"
+        wishlist:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+        cart:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItem"
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+        recipeReviews:
+          type: array
+          items:
+            type: string
+        productReviews:
+          type: array
+          items:
+            $ref:"#components/schemas/Review"
+        createdAt:
+          type: string
+          format: date-time
+        isAdmin:
+          type: boolean
+          nullable: true
+          description: Indicates if the user has administrative privileges
       required:
+        - _id
         - username
         - email
-        - password
-      properties:
-        username:
-          type: string
-        email:
-          type: string
-        password:
-          type: string
+        - isAdmin
 
-    LoginInput:
+    Order:
       type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the order
+        userId:
+          type: string
+          description: The ID of the user who placed the order
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItem"
+        total:
+          type: number
+          format: float
+          description: Total amount for the order
       required:
-        - email
-        - password
-      properties:
-        email:
-          type: string
-        password:
-          type: string
+        - id
+        - userId
+        - products
+        - total
 
-    AuthToken:
+    Address:
       type: object
       properties:
-        token:
+        id:
           type: string
-        expiresIn:
+          description: Unique identifier for the address
+        street:
           type: string
+        city:
+          type: string
+        zip:
+          type: string
+      required:
+        - id
+        - street
+        - city
+        - zip
+
+    CartItem:
+      type: object
+      properties:
+        productId:
+          type: string
+          description: The ID of the product in the cart
+        quantity:
+          type: integer
+          description: Quantity of the product in the cart
+      required:
+        - productId
+        - quantity
+    
+    Recipe:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique identifier for the recipe
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+          description: URL to an image of the recipe
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ingredient'
+        instructions:
+          type: array
+          items:
+            type: string
+        prepTime:
+          type: string
+          description: Preparation time for the recipe (e.g., "30 minutes")
+        difficulty:
+          type: string
+          enum: ["Easy", "Medium", "Hard"]
+        categories:
+          type: array
+          items:
+            type: string
+            description: Names of categories the recipe belongs to
+          nullable: true
+        relatedRecipes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartialRecipe'
+          nullable: true
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - _id
+        - title
+        - description
+        - image
+        - ingredients
+        - instructions
+        - prepTime
+        - difficulty
+
+    Category:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique identifier for the category
+          nullable: true
+        name:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+            description: URLs to images representing the category
+          nullable: true
+        recipes:
+          type: array
+          items:
+            type: string
+            description: List of recipe IDs associated with the category
+          nullable: true
+        products:
+          type: array
+          items:
+            type: string
+            description: List of product IDs associated with the category
+          nullable: true
+      required:
+        - name
+    
+    PartialRecipe:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique identifier for the recipe
+        title:
+          type: string
+        image:
+          type: string
+          description: URL to an image of the recipe
+      required:
+        - _id
+        - title
+        - image
+    
+    Ingredient:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique identifier for the ingredient
+        name:
+          type: string
+        quantity:
+          type: string
+          description: Amount of the ingredient required (e.g., "1 cup", "2 tbsp")
+      required:
+        - _id
+        - name
+        - quantity

@@ -17,14 +17,14 @@ interface Product {
 }
 
 export interface ProductCardProps {
-  _id?: string,
+  _id: string,
   name: string,
   price: number,
   image: string,
   categories: string[],
   rate: number,
+  shortDescription: string
   imageSize?: number,
-  shortDescription?: string
 }
 
 interface Languages {
