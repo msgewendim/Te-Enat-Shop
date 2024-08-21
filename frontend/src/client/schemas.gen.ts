@@ -122,6 +122,61 @@ export const $Product = {
     }
 } as const;
 
+export const $ProductCardProps = {
+    type: 'object',
+    properties: {
+        _id: {
+            type: 'string',
+            description: 'Unique identifier for the product'
+        },
+        name: {
+            type: 'string',
+            description: 'Name of the product'
+        },
+        price: {
+            type: 'number',
+            format: 'float',
+            description: 'Price of the product'
+        },
+        image: {
+            type: 'string',
+            description: 'URL of the product image'
+        },
+        categories: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            description: 'List of categories the product belongs to'
+        },
+        rate: {
+            type: 'number',
+            format: 'float',
+            description: 'Rating of the product (e.g., 1 to 5)'
+        },
+        shortDescription: {
+            type: 'string',
+            description: 'A brief description of the product'
+        },
+        imageSize: {
+            type: 'number',
+            format: 'int32',
+            description: 'Optional size of the image (e.g., width or height)'
+        }
+    },
+    required: ['_id', 'name', 'price', 'image', 'categories', 'rate', 'shortDescription'],
+    example: {
+        _id: '647e59e1f9a4e7a1b4c3d7f4',
+        name: 'Injera',
+        price: 15.99,
+        image: 'https://example.com/images/injera.jpg',
+        categories: ['Bread', 'Traditional'],
+        rate: 4.5,
+        shortDescription: 'A traditional Ethiopian flatbread.',
+        imageSize: 300
+    }
+} as const;
+
 export const $Review = {
     type: 'object',
     properties: {
@@ -141,12 +196,12 @@ export const $Review = {
             description: 'Comment provided by the user for the recipe'
         },
         createdAt: {
-            type: 'date-time',
+            type: 'string',
             format: 'date-time',
             description: 'The date and time when the review was created'
         }
     },
-    required: ['userId', 'recipeId', 'rating', 'comment', 'createdAt'],
+    required: ['userId', 'recipeId', 'rating', 'comment'],
     example: {
         userId: '647e59e1f9a4e7a1b4c3d7f4',
         recipeId: '647e59f1f9a4e7a1b4c3d7f5',
@@ -170,7 +225,7 @@ export const $User = {
             type: 'string',
             format: 'email'
         },
-        passwordHash: {
+        password: {
             type: 'string'
         },
         profilePicture: {
@@ -216,9 +271,7 @@ export const $User = {
         },
         productReviews: {
             type: 'array',
-            items: {
-                type: 'string'
-            }
+            items: '$ref:"#components/schemas/Review"'
         },
         createdAt: {
             type: 'string',
@@ -230,7 +283,7 @@ export const $User = {
             description: 'Indicates if the user has administrative privileges'
         }
     },
-    required: ['_id', 'username', 'email', 'createdAt', 'isAdmin']
+    required: ['_id', 'username', 'email', 'isAdmin']
 } as const;
 
 export const $Order = {
@@ -354,11 +407,11 @@ export const $Recipe = {
             nullable: true
         },
         createdAt: {
-            type: 'date-time',
+            type: 'string',
             format: 'date-time'
         }
     },
-    required: ['_id', 'title', 'description', 'image', 'ingredients', 'instructions', 'prepTime', 'difficulty', 'createdAt']
+    required: ['_id', 'title', 'description', 'image', 'ingredients', 'instructions', 'prepTime', 'difficulty']
 } as const;
 
 export const $Category = {

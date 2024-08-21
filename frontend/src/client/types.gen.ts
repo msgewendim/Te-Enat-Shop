@@ -82,6 +82,41 @@ export enum availability {
     PRE_ORDER = 'Pre-order'
 }
 
+export type ProductCardProps = {
+    /**
+     * Unique identifier for the product
+     */
+    _id: string;
+    /**
+     * Name of the product
+     */
+    name: string;
+    /**
+     * Price of the product
+     */
+    price: number;
+    /**
+     * URL of the product image
+     */
+    image: string;
+    /**
+     * List of categories the product belongs to
+     */
+    categories: Array<(string)>;
+    /**
+     * Rating of the product (e.g., 1 to 5)
+     */
+    rate: number;
+    /**
+     * A brief description of the product
+     */
+    shortDescription: string;
+    /**
+     * Optional size of the image (e.g., width or height)
+     */
+    imageSize?: number;
+};
+
 export type Review = {
     /**
      * ID of the user who wrote the review
@@ -98,7 +133,7 @@ export type Review = {
     /**
      * The date and time when the review was created
      */
-    createdAt: string;
+    createdAt?: string;
 };
 
 export type User = {
@@ -108,7 +143,7 @@ export type User = {
     _id: string;
     username: string;
     email: string;
-    passwordHash?: string;
+    password?: string;
     /**
      * URL to the user's profile picture
      */
@@ -119,8 +154,8 @@ export type User = {
     cart?: Array<CartItem>;
     addresses?: Array<Address>;
     recipeReviews?: Array<(string)>;
-    productReviews?: Array<(string)>;
-    createdAt: string;
+    productReviews?: Array<unknown>;
+    createdAt?: string;
     /**
      * Indicates if the user has administrative privileges
      */
@@ -185,7 +220,7 @@ export type Recipe = {
     categories?: Array<(string)> | null;
     relatedRecipes?: Array<PartialRecipe> | null;
     reviews?: Array<Review> | null;
-    createdAt: string;
+    createdAt?: string;
 };
 
 export enum difficulty {
