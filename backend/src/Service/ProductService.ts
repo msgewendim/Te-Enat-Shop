@@ -18,9 +18,9 @@ export class ProductService {
 
   async addProduct(product: Product): Promise<void> {
     try {
-      console.log("Product adding", product);
       await this.ProductDataAccess.addProduct(product);
-    } catch {
+    } catch(error) {
+      console.log(error);
       throw new Error("Can not add Product!");
     }
   }

@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema({
       "Number of images should not exceed 10.",
     ],
   },
-  weights : {
+  sizes : {
     type : Array<String>,
     required : true,
     validate : [
@@ -56,7 +56,7 @@ const productSchema = new mongoose.Schema({
     min : 1,
     max : 5
   },
-  benefits: {
+  features: {
     type : Array<String>,
     default : [],
   },

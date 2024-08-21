@@ -40,11 +40,11 @@ export type Product = {
     /**
      * A list of weight options for the product.
      */
-    weights: Array<(string)>;
+    sizes?: Array<(string)>;
     /**
      * An optional list of benefits associated with the product.
      */
-    benefits?: Array<(string)>;
+    features?: Array<(string)>;
     /**
      * An optional list of reviews for the product.
      */

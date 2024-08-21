@@ -59,7 +59,7 @@ export const $Product = {
             enum: ['In Stock', 'Out of Stock', 'Pre-order'],
             example: 'In Stock'
         },
-        weights: {
+        sizes: {
             type: 'array',
             description: 'A list of weight options for the product.',
             items: {
@@ -67,7 +67,7 @@ export const $Product = {
                 example: '1kg'
             }
         },
-        benefits: {
+        features: {
             type: 'array',
             description: 'An optional list of benefits associated with the product.',
             items: {

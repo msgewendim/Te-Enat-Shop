@@ -9,9 +9,8 @@ interface Product {
   categories: string[];
   InStock: number;
   availability: "In Stock" | "Out of Stock" | "Pre-order";
-  weights: string[];
-  benefits?: Array<String>;
-  reviews?: Review[];
+  sizes: string[];
+  features?: Array<String>;
   relatedProducts?: Partial<Product>[];
   totalSales?: number;
 }

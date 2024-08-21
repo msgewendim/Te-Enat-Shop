@@ -8,6 +8,9 @@ const productController = new ProductController(
   new ProductService(new ProductDal())
 );
 
+router.get("/", async (req: Request, res: Response) =>
+  await productController.getAllProducts(req, res)
+);
 router.get("/:_id", async (req: Request, res: Response) =>
   await productController.getProduct(req, res)
 );

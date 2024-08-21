@@ -58,7 +58,7 @@ export class ProductDal implements IProduct<Product> {
   async addProduct(product: Product): Promise<void> {
     try {
       const newProduct = await productModel.insertMany(product);
-      console.log(newProduct);
+      console.log("Product created successfully", newProduct);
     } catch (error) {
       throw error;
     }

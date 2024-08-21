@@ -1,6 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { deleteProductsById, DeleteProductsByIdError, DeleteProductsByIdResponse, getAllProducts, GetAllProductsError, getProduct, GetProductError, GetProductResponse, postProducts, PostProductsError, PostProductsResponse, Product, putProductsById, PutProductsByIdError, PutProductsByIdResponse } from "../client";
-import { client } from '../client';
+import { DeleteProductsByIdError, DeleteProductsByIdResponse, GetAllProductsError, GetProductError, GetProductResponse, PostProductsError, PostProductsResponse, Product, PutProductsByIdError, PutProductsByIdResponse } from "../client/types.gen";
+import { createClient } from '@hey-api/client-fetch';
+import { client, deleteProductsById, getAllProducts, getProduct, postProducts, putProductsById } from '../client/services.gen';
+
 const API_URL = import.meta.env.VITE_API_URL as string || "http://localhost:3005/api";
 
 interface IContext {
@@ -34,13 +36,27 @@ export const AppContext = createContext<IContext>({
 });
 client.setConfig({
   baseUrl: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  fetch,
 });
-client.interceptors.response.use((response) => {
-  if (response.status === 200) {
-    console.log(`request to ${response.url} was successful`);
+const localClient = createClient({
+  baseUrl: 'http://localhost:3005/api',
+  headers: {
+    Authorization: 'Bearer <token_from_local_client>',
+    'Content-Type': 'application/json',
+  },
+})
+localClient.interceptors.request.use((req, options) => {
+  if (
+    options.url === '/products/{id}' &&
+    options.method === 'GET'
+  ) {
+    req.headers.set('Authorization', 'Bearer <token_from_interceptor>');
   }
-  return response;
-});
+  return req
+})
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([])
   const [category, setCategory] = useState<string>("")
@@ -48,19 +64,16 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [filter, setFilter] = useState<string>("");
 
   const getProducts = async () => {
-    // fetch(`${API_URL}/products?${page ? `page=${page}` : ""}&${category ? `category=${category}` : ""}&${filter ? `filter=${filter}` : ""}`, { method: 'GET' }
     try {
-      const products = await getAllProducts({
-        client: client,
+      const { data, response } = await getAllProducts({
+        client: localClient,
         query: {
           page: page,
           category: category,
           filter: filter,
         }
       })
-      const { data, response, error } = products
       if (response.ok === false) {
-        console.log(error);
         throw new Error(`Field to fetch products status: ${response.status}`);
       }
       setProducts(data as Product[])
@@ -69,14 +82,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       console.info(error)
     }
   }
-  useEffect(() => {
-    getProducts()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, filter, category])
 
   const getProductById = async (id: string) => {
     try {
-      // const product = await fetch(`${API_URL}/products/${id}`, { method: 'GET' })
       const product = await getProduct({
         client: client,
         path: {
@@ -93,15 +101,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const addProduct = async (productData: Partial<Product>) => {
     try {
-      // const { categories, name, price, images, rate, shortDescription, weights, benefits, InStock, availability, totalSales, reviews, } = productData
-      // const newProduct = {
-      //   body: productData as Product
-      // }
-      // const response = await fetch(`${API_URL}/products`, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(newProduct)
-      // })
       const product = await postProducts({
         client: client,
         body: productData as Product
@@ -118,12 +117,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const deleteProduct = async (productId: string) => {
     try {
-      // const response = await fetch(`${API_URL}/products/${productId}`, {
-      //   method: 'DELETE',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      // })
       const product = await deleteProductsById({
         client: client,
         path: {
@@ -142,14 +135,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const updateProduct = async (productId: string, productData: Partial<Product>) => {
     try {
-
-      // const response = await fetch(`${API_URL}/products/${productId}`, {
-      //   method: "PUT",
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(productData)
-      // });
       const product = await putProductsById({
         client: client,
         path: {
@@ -166,6 +151,12 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       console.info(error);
     }
   }
+
+  useEffect(() => {
+    getProducts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, filter, category])
+  
   const values = {
     getProducts,
     getProductById,
