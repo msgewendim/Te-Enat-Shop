@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
 import { cookies } from "../utils/data"
-// import { Product } from "@types/product.types"
 import arrowLeft from "/arrowLeft.svg"
 import arrowRight from "/arrowRight.svg"
+import { Product } from "../client"
 
 const RelatedProducts = ({ relatedProducts }: Partial<Product>) => {
   // const handleGettingMoreRelatedProducts = (e: HTMLButtonElement) => {

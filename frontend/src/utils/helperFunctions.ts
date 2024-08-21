@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 const createBanner = (image: string) => {
   const bgImage = {
     backgroundImage: `url(${image})`,
@@ -49,4 +52,15 @@ const divideDescriptionInfo = (
   return [odd, even];
 };
 
-export { createBanner, createRecipeCardImage, divideDescriptionInfo };
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
+export { createBanner, createRecipeCardImage, divideDescriptionInfo,  ScrollToTop};

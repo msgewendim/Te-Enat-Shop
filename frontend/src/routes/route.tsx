@@ -11,12 +11,17 @@ import Register from "../components/Register.tsx"
 import Shop from "../pages/Shop.tsx";
 import SingleProductPage from "../pages/SingleProductPage.tsx";
 import RecipePage from "../pages/RecipePage.tsx";
-import Cart from "../pages/Cart.tsx"
+import { ScrollToTop } from "../utils/helperFunctions.ts";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <>
+        <ScrollToTop />
+        <App />
+      </>
+    ),
     children: [
       {
         path: "/",
@@ -25,10 +30,6 @@ export const routes = createBrowserRouter([
       {
         path: "/about",
         element: <About />
-      },
-      {
-        path: "/cart",
-        element: <Cart />
       },
       {
         path: "/products",

@@ -1,14 +1,15 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { Product } from "../../../types/product.types"
+import { deleteProductsById, DeleteProductsByIdError, DeleteProductsByIdResponse, getAllProducts, GetAllProductsError, getProduct, GetProductError, GetProductResponse, postProducts, PostProductsError, PostProductsResponse, Product, putProductsById, PutProductsByIdError, PutProductsByIdResponse } from "../client";
+import { client } from '../client';
 const API_URL = import.meta.env.VITE_API_URL as string || "http://localhost:3005/api";
 
 interface IContext {
   products: Product[]
-  getProducts: () => Promise<Partial<Product[]>>
-  getProductById: (id: string) => Promise<Partial<Product>>
-  addProduct: (productData: Partial<Product>) => Promise<void>
-  updateProduct: (id: string, productData: Partial<Product>) => Promise<void>
-  deleteProduct: (id: string) => Promise<void>
+  getProducts: () => Promise<GetProductResponse | GetAllProductsError>
+  getProductById: (id: string) => Promise<GetProductResponse | GetProductError>
+  addProduct: (productData: Partial<Product>) => Promise<PostProductsResponse | PostProductsError>
+  updateProduct: (id: string, productData: Partial<Product>) => Promise<PutProductsByIdResponse | PutProductsByIdError>
+  deleteProduct: (id: string) => Promise<DeleteProductsByIdResponse | DeleteProductsByIdError>
   category: string
   page: number
   filter: string
@@ -31,19 +32,39 @@ export const AppContext = createContext<IContext>({
   setPage: () => { },
   setCategory: () => { },
 });
-
+client.setConfig({
+  baseUrl: API_URL,
+});
+client.interceptors.response.use((response) => {
+  if (response.status === 200) {
+    console.log(`request to ${response.url} was successful`);
+  }
+  return response;
+});
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState([])
-  const [category, setCategory] = useState("")
-  const [page, setPage] = useState(1);
-  const [filter, setFilter] = useState("");
+  const [products, setProducts] = useState<Product[]>([])
+  const [category, setCategory] = useState<string>("")
+  const [page, setPage] = useState<number>(1);
+  const [filter, setFilter] = useState<string>("");
 
   const getProducts = async () => {
+    // fetch(`${API_URL}/products?${page ? `page=${page}` : ""}&${category ? `category=${category}` : ""}&${filter ? `filter=${filter}` : ""}`, { method: 'GET' }
     try {
-      const products = await fetch(`${API_URL}/products?${page ? `page=${page}` : ""}&${category ? `category=${category}` : ""}&${filter ? `filter=${filter}` : ""}`, { method: 'GET' })
-      const data = await products.json()
-      setProducts(data)
-      return data
+      const products = await getAllProducts({
+        client: client,
+        query: {
+          page: page,
+          category: category,
+          filter: filter,
+        }
+      })
+      const { data, response, error } = products
+      if (response.ok === false) {
+        console.log(error);
+        throw new Error(`Field to fetch products status: ${response.status}`);
+      }
+      setProducts(data as Product[])
+      return products
     } catch (error) {
       console.info(error)
     }
@@ -51,12 +72,19 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     getProducts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page])
+  }, [page, filter, category])
 
   const getProductById = async (id: string) => {
     try {
-      const product = await fetch(`${API_URL}/products/${id}`, { method: 'GET' })
-      const data = await product.json()
+      // const product = await fetch(`${API_URL}/products/${id}`, { method: 'GET' })
+      const product = await getProduct({
+        client: client,
+        path: {
+          id: id,
+        }
+      })
+      const { data, response } = product
+      if (!response.ok) throw new Error(`Error fetch product ${id} from ${API_URL}`)
       return data;
     } catch (error) {
       console.info(error)
@@ -65,15 +93,20 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const addProduct = async (productData: Partial<Product>) => {
     try {
-      const { categories, name, price, images, rate, shortDescription, weights, benefits, InStock, availability, totalSales, reviews, } = productData
-      const newProduct = {
-        name, price, images, rate, shortDescription, weights, categories, benefits, InStock, availability, totalSales, reviews,
-      }
-      const response = await fetch(`${API_URL}/products`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newProduct)
+      // const { categories, name, price, images, rate, shortDescription, weights, benefits, InStock, availability, totalSales, reviews, } = productData
+      // const newProduct = {
+      //   body: productData as Product
+      // }
+      // const response = await fetch(`${API_URL}/products`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(newProduct)
+      // })
+      const product = await postProducts({
+        client: client,
+        body: productData as Product
       })
+      const { response } = product
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -85,12 +118,19 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const deleteProduct = async (productId: string) => {
     try {
-      const response = await fetch(`${API_URL}/products/${productId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+      // const response = await fetch(`${API_URL}/products/${productId}`, {
+      //   method: 'DELETE',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      // })
+      const product = await deleteProductsById({
+        client: client,
+        path: {
+          id: productId,
+        }
       })
+      const { response } = product;
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -103,16 +143,25 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const updateProduct = async (productId: string, productData: Partial<Product>) => {
     try {
 
-      const response = await fetch(`${API_URL}/products/${productId}`, {
-        method: "PUT",
-        headers: {
-          'Content-Type': 'application/json'
+      // const response = await fetch(`${API_URL}/products/${productId}`, {
+      //   method: "PUT",
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(productData)
+      // });
+      const product = await putProductsById({
+        client: client,
+        path: {
+          id: productId,
         },
-        body: JSON.stringify(productData)
-      });
+        body: productData as Product
+      })
+      const { response } = product;
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      await getProducts()
     } catch (error) {
       console.info(error);
     }

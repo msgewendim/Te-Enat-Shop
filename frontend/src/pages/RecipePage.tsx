@@ -2,7 +2,6 @@ import Banner from "../components/Banner"
 import recipeBanner from "/RecipeBanner.svg"
 import { createRecipeCardImage } from "../utils/helperFunctions"
 import RelatedRecipes from "../components/RelatedRecipes"
-// import Reviews from "../components/Reviews"
 import { recipe } from "../utils/examples"
 
 const RecipePage = () => {

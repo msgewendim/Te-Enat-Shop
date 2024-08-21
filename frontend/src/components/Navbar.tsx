@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import DarkMode from './DarkMode';
-// import searchIcon from '/searchIcon.svg';
 import { useTranslation } from 'react-i18next';
 import SwitchLanguage from './SwitchLang';
+import Cart from '../pages/Cart';
 
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [openCart, setOpenCart] = useState(false)
+
   const { t } = useTranslation()
   return (
     <>
@@ -46,12 +48,13 @@ const Navbar = () => {
                 <img src={searchIcon} alt="search icon" width={20} className='absolute right-1 top-1' />
               </div> */}
               {/* CART ICON */}
-              <div className="flex justify-center relative">
+              <Cart setOpenCart={setOpenCart} openCart={openCart}/>
+              <button onClick={() => setOpenCart(true)} className="flex justify-center relative">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                 </svg>
                 <span className="absolute -top-3 left-6 text-black rounded w-3 h-5 dark:text-white">0</span>
-              </div>
+              </button>
               {/* LOGIN BUTTON LINK */}
               {/* <Link to="/login" className="text-md font-semibold leading-6 dark:text-white text-white border bg-secondary rounded-full p-2 text-center">
                 {t('login')}

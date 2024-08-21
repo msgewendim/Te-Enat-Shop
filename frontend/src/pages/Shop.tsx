@@ -7,7 +7,6 @@ import { useContext, useEffect, MouseEvent } from "react"
 import { Link } from "react-router-dom"
 
 const Shop = () => {
-  
   const { getProducts, page, setPage, products } = useContext(AppContext)
   const handlePagination = async (e: MouseEvent<HTMLAnchorElement>) => {
     const { id } = e.currentTarget
