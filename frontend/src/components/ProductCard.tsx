@@ -1,7 +1,7 @@
 import star from "/star.svg"
 import { useState } from "react"
 import PopupProduct from "./PopupProduct"
-import { ProductCardProps } from "../../../types/product.types";
+import { ProductCardProps } from "../client/types.gen";
 
 const ProductCard = ({ _id, name, price, image, categories, rate, imageSize = 32, shortDescription } : ProductCardProps) => {
   const [openProductId, setOpenProductId] = useState("");
