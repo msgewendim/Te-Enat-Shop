@@ -1,7 +1,8 @@
-import { Category, Recipe } from "../../../types/recipe.types";
-import { cookies, dessert, kimem, kurkum, productPagePhoto, soup } from "./data";
+import { Recipe } from "../client";
+import { Category } from "../client";
+import { cookies, dessert, kik, kimem, kimem2, kurkum, soup } from "./data";
 
-export const recipe: Recipe = {
+export const recipe : Recipe = {
   _id: "chocolate-chip-cookies",
 
   title: "Chocolate Chip Cookies",
@@ -22,62 +23,138 @@ export const recipe: Recipe = {
     "Place the cookies in a greased baking sheet or cookie tray.",
     "Bake for 15-20 minutes, or until a toothpick inserted in the center comes out clean.",
   ],
-  prepTime: '15',
+  prepTime: "15",
   difficulty: "Easy",
   categories: ["Dessert", "Cookie", "Chocolate Chip"],
   image: cookies,
-  relatedRecipes: [{ _id: "chocolate-chip-cookies", title: "cookie" }, { _id: "doro-wet", title: "doro-wot" }, { _id: "chocolate-chip-cookies", title: "cookie" }, { _id: "doro-wet", title: "doro-wot" }],
+  relatedRecipes: [
+    { _id: "chocolate-chip-cookies", title: "cookie", image: dessert },
+    { _id: "doro-wet", title: "doro-wot", image: kik },
+    { _id: "chocolate-chip-cookies", title: "cookie", image: kimem },
+    { _id: "doro-wet", title: "doro-wot", image: kimem2 },
+  ],
   reviews: [
     // Add review objects here
     // Example:
-    { _id: "123", userId: "John Doe", rating: 5, comment: "Love this recipe!", recipeId: "1221", createdAt: new Date() },
+    {
+      reviewerName: "John Doe",
+      rating: 5,
+      comment: "Love this recipe!",
+      createdAt: "2023-08-20T12:45:00Z"
+    },
   ],
-  createdAt: new Date()
-}
+  createdAt: "2023-08-20T12:45:00Z",
+};
 
 export const product = {
   _id: "123",
   category: "dessert",
-  image: productPagePhoto,
+  image: kik,
   name: "cake",
   price: 15.0,
   rate: 4,
-  relatedProducts : [{ _id: "chocolate-chip-cookies", name: "cookie" }, { _id: "chocolate-chip-cookies", name: "cookie" },{ _id: "chocolate-chip-cookies", name: "cookie" }, { _id: "chocolate-chip-cookies", name: "cookie" }],
+  relatedProducts: [
+    { _id: "chocolate-chip-cookies", name: "cookie" },
+    { _id: "chocolate-chip-cookies", name: "cookie" },
+    { _id: "chocolate-chip-cookies", name: "cookie" },
+    { _id: "chocolate-chip-cookies", name: "cookie" },
+  ],
   description: [
-    ["Rich in Antioxidants", " The chili peppers and spices in Berbere are loaded with antioxidants, which help protect your body from free radicals and reduce inflammation."],
-    ["Boosts Metabolism", " The capsaicin in chili peppers has been shown to increase metabolism and promote fat burning, making Berbere not only flavorful but also beneficial for weight management."],
-    ["Immune-Boosting Properties", "The blend includes several spices known for their immune-boosting effects, such as garlic and ginger, which can help ward off colds and infections."],
-    ["Supports Digestive Health", "The blend includes several spices known for their immune-boosting effects, such as garlic and ginger, which can help ward off colds and infections."],
-    ["Anti-Inflammatory Effects", "Many of the spices in Berbere, including turmeric and fenugreek, have anti-inflammatory properties, which can help reduce the risk of chronic diseases."],
-  ]
-}
+    [
+      "Rich in Antioxidants",
+      " The chili peppers and spices in Berbere are loaded with antioxidants, which help protect your body from free radicals and reduce inflammation.",
+    ],
+    [
+      "Boosts Metabolism",
+      " The capsaicin in chili peppers has been shown to increase metabolism and promote fat burning, making Berbere not only flavorful but also beneficial for weight management.",
+    ],
+    [
+      "Immune-Boosting Properties",
+      "The blend includes several spices known for their immune-boosting effects, such as garlic and ginger, which can help ward off colds and infections.",
+    ],
+    [
+      "Supports Digestive Health",
+      "The blend includes several spices known for their immune-boosting effects, such as garlic and ginger, which can help ward off colds and infections.",
+    ],
+    [
+      "Anti-Inflammatory Effects",
+      "Many of the spices in Berbere, including turmeric and fenugreek, have anti-inflammatory properties, which can help reduce the risk of chronic diseases.",
+    ],
+  ],
+};
 
-export const topRecipes = [
-  recipe, recipe, recipe 
-]
-export const topCategories : Category[] = [
+export const topRecipes = [recipe, recipe, recipe];
+export const topCategories: Category[] = [
   {
     _id: "123",
     name: "Flour",
-    images : [kimem],
-    recipes: [recipe._id, recipe._id]
+    images: [kimem],
+    recipes: [recipe._id, recipe._id],
   },
   {
     _id: "124",
     name: "Spice",
-    images : [kurkum],
-    recipes: [recipe._id, recipe._id]
+    images: [kurkum],
+    recipes: [recipe._id, recipe._id],
   },
   {
     _id: "125",
     name: "Soup",
-    images : [soup],
-    recipes: [recipe._id, recipe._id]
+    images: [soup],
+    recipes: [recipe._id, recipe._id],
   },
   {
     _id: "126",
-    name: "dessert",
-    images : [dessert],
-    recipes: [recipe._id, recipe._id]
-  }
-]
+    name: "Dessert",
+    images: [dessert],
+    recipes: [recipe._id, recipe._id],
+  },
+  {
+    _id: "126",
+    name: "Beverages",
+    images: [dessert],
+    recipes: [recipe._id, recipe._id],
+  },
+];
+export const products = [
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+  product,
+];
