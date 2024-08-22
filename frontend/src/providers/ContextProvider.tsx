@@ -1,67 +1,16 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
-import { DeleteProductsByIdError, DeleteProductsByIdResponse, GetAllProductsError, GetProductError, GetProductResponse, PostProductsError, PostProductsResponse, Product, PutProductsByIdError, PutProductsByIdResponse } from "../client/types.gen";
-import { createClient } from '@hey-api/client-fetch';
+import { ReactNode, useEffect, useState } from "react";
 import { client, deleteProductsById, getAllProducts, getProduct, postProducts, putProductsById } from '../client/services.gen';
+import { CartItem, Product } from "../client/types.gen";
+import { AppContext } from "./interface/context";
+import { localClient } from "../utils/client.config";
 
-const API_URL = import.meta.env.VITE_API_URL as string || "http://localhost:3005/api";
-
-interface IContext {
-  products: Product[]
-  getProducts: () => Promise<GetProductResponse | GetAllProductsError>
-  getProductById: (id: string) => Promise<GetProductResponse | GetProductError>
-  addProduct: (productData: Partial<Product>) => Promise<PostProductsResponse | PostProductsError>
-  updateProduct: (id: string, productData: Partial<Product>) => Promise<PutProductsByIdResponse | PutProductsByIdError>
-  deleteProduct: (id: string) => Promise<DeleteProductsByIdResponse | DeleteProductsByIdError>
-  category: string
-  page: number
-  filter: string
-  setFilter: (filter: string) => void
-  setPage: (newPage: number) => void
-  setCategory: (newCategory: string) => void
-}
-
-export const AppContext = createContext<IContext>({
-  products: [],
-  getProducts: () => Promise.resolve([]),
-  getProductById: () => Promise.resolve({}),
-  addProduct: () => Promise.resolve(),
-  updateProduct: () => Promise.resolve(),
-  deleteProduct: () => Promise.resolve(),
-  category: "",
-  page: 0,
-  filter: "",
-  setFilter: () => { },
-  setPage: () => { },
-  setCategory: () => { },
-});
-client.setConfig({
-  baseUrl: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  fetch,
-});
-const localClient = createClient({
-  baseUrl: 'http://localhost:3005/api',
-  headers: {
-    Authorization: 'Bearer <token_from_local_client>',
-    'Content-Type': 'application/json',
-  },
-})
-localClient.interceptors.request.use((req, options) => {
-  if (
-    options.url === '/products/{id}' &&
-    options.method === 'GET'
-  ) {
-    req.headers.set('Authorization', 'Bearer <token_from_interceptor>');
-  }
-  return req
-})
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([])
   const [category, setCategory] = useState<string>("")
   const [page, setPage] = useState<number>(1);
   const [filter, setFilter] = useState<string>("");
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [totalPrice, setTotalPrice] = useState(0)
 
   const getProducts = async () => {
     try {
@@ -92,7 +41,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         }
       })
       const { data, response } = product
-      if (!response.ok) throw new Error(`Error fetch product ${id} from ${API_URL}`)
+      if (!response.ok) throw new Error(`Error fetch product with ${id}`)
       return data;
     } catch (error) {
       console.info(error)
@@ -151,12 +100,18 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       console.info(error);
     }
   }
-
+  const getTotalPrice = () => {
+    return cartItems.reduce((acc, {product, quantity}) => acc + product.price * quantity, 0)
+  }
   useEffect(() => {
     getProducts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, filter, category])
   
+  useEffect(() => {
+    setTotalPrice(getTotalPrice())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartItems])
   const values = {
     getProducts,
     getProductById,
@@ -167,10 +122,13 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setPage,
     setCategory,
     products,
-    API_URL,
     page,
     filter,
     category,
+    cartItems,
+    totalPrice,
+    setTotalPrice,
+    setCartItems,
   }
   return (
     <AppContext.Provider value={values}>

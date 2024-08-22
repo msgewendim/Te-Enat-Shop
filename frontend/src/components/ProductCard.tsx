@@ -1,11 +1,11 @@
 import star from "/star.svg"
 import { useState } from "react"
 import PopupProduct from "./PopupProduct"
-import { ProductCardProps } from "../client/types.gen";
+import { Product } from "../client/types.gen";
 
-const ProductCard = ({ _id, name, price, image, categories, rate, imageSize = 32, shortDescription } : ProductCardProps) => {
+const ProductCard = ({ product, imageSize = 32, }: { product: Product, imageSize?: number }) => {
   const [openProductId, setOpenProductId] = useState("");
-
+  const {images, name, categories, _id , price, rate } = product
   const handleOpenPopup = (productId: string) => {
     setOpenProductId(productId);
   };
@@ -19,18 +19,14 @@ const ProductCard = ({ _id, name, price, image, categories, rate, imageSize = 32
       <div className="flex flex-col w-full">
         {/* image */}
         <div onClick={() => handleOpenPopup(_id)}>
-          <img src={image} alt={name} className={`min-w-${imageSize} min-h-40 object-fit flex-1 cursor-pointer`} />
+          {images && <img src={images[0]} alt={name} className={`min-w-${imageSize} min-h-40 object-fit flex-1 cursor-pointer`} />}
         </div>
         {/* PopUp */}
         {openProductId === _id && (
-          <PopupProduct 
-            _id={_id} 
+          <PopupProduct
+            product={product}
             open={openProductId === _id}
-            setOpen={handleClosePopup} 
-            name={name} 
-            shortDescription={shortDescription} 
-            image={image} 
-            price={price} 
+            setOpen={handleClosePopup}
           />
         )}
         <div className="flex justify-between items-center">
@@ -38,7 +34,7 @@ const ProductCard = ({ _id, name, price, image, categories, rate, imageSize = 32
             {name}
           </div>
           {/* price */}
-          <p className="text-sm text-primary mr-2 font-medium">{price}$</p>
+          <p className="text-sm text-primary mr-2 font-medium">{price}₪</p>
         </div>
         <hr className="bg-primary h-0.5" />
         {/* rate */}

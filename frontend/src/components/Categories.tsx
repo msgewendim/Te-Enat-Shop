@@ -1,5 +1,5 @@
 import { MouseEvent, useContext } from "react"
-import { AppContext } from "../providers/ContextProvider"
+import { AppContext } from "../providers/interface/context"
 
 const Categories = () => {
   const categories = [

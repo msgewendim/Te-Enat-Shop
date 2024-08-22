@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext } from "react"
-import { AppContext } from "../providers/ContextProvider"
+import { AppContext } from "../providers/interface/context"
 import Categories from "./Categories"
 import { Link } from "react-router-dom"
 

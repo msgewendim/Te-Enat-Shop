@@ -1,10 +1,19 @@
 import { Link } from 'react-router-dom'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useContext, useState, MouseEvent } from 'react'
+import { AppContext } from '../providers/interface/context'
+import { CartItem, Product } from '../client'
 
-const PopupProduct = ({ _id, open, setOpen, image, shortDescription, name, price }:
-  { _id: string, open: boolean, setOpen: Dispatch<SetStateAction<boolean>>, image: string, shortDescription: string, name: string, price: number }) => {
+const PopupProduct = ({ product, open, setOpen }:
+  { open: boolean, setOpen: Dispatch<SetStateAction<boolean>>, product: Product }) => {
   const [quantity, setQuantity] = useState(1)
+  const { images, name, shortDescription, price, _id } = product
+  const { cartItems, setCartItems } = useContext(AppContext)
+  const handleAddProductToCart = (e: MouseEvent<HTMLButtonElement>, item: CartItem) => {
+    e.preventDefault()
+    setCartItems([...cartItems, item])
+    setOpen(false)
+  }
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
       <DialogBackdrop
@@ -20,7 +29,7 @@ const PopupProduct = ({ _id, open, setOpen, image, shortDescription, name, price
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start pb-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left ">
-                  {image && <img src={image} alt={name} className="h-[200px] w-[200px] object-cover rounded-md " />}
+                  {images && <img src={images[0]} alt={name} className="h-[200px] w-[200px] object-cover rounded-md " />}
                   <div className="flex flex-col gap-2">
                     <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
                       {name}
@@ -41,7 +50,7 @@ const PopupProduct = ({ _id, open, setOpen, image, shortDescription, name, price
                     </div>
                     <div className="flex justify-between items-center mt-3">
                       <button
-                        // onClick={() => addToCart()}
+                        onClick={(e) => handleAddProductToCart(e, { product, quantity })}
                         className="bg-green-900 text-white w-fit p-2 rounded-lg hover:bg-secondary">
                         Add to Cart
                       </button>

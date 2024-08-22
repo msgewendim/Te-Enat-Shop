@@ -4,7 +4,7 @@ export type Product = {
     /**
      * The unique identifier for the product.
      */
-    _id?: string;
+    _id: string;
     /**
      * The name of the product.
      */
@@ -190,9 +190,9 @@ export type Address = {
 
 export type CartItem = {
     /**
-     * The ID of the product in the cart
+     * The product in the cart
      */
-    productId: string;
+    product: Product;
     /**
      * Quantity of the product in the cart
      */

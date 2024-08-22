@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { topCategories } from "../utils/examples"
 import { useContext } from "react"
-import { AppContext } from "../providers/ContextProvider"
+import { AppContext } from "../providers/interface/context"
 
 const TopCategory = () => {
   const { setCategory } = useContext(AppContext)  

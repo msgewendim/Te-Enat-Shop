@@ -2,7 +2,7 @@ import { Product } from "./product.types";
 import { User } from "./user.types";
 
 interface CartItem {
-  productId: Product['_id'];
+  product: Product;
   quantity: number;
 }
 

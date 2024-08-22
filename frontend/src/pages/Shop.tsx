@@ -2,7 +2,7 @@ import ProductCard from "../components/ProductCard"
 import Filters from "../components/Filters"
 import ShopBanner from "/ShopBanner.svg"
 import Banner from "../components/Banner"
-import { AppContext } from "../providers/ContextProvider"
+import { AppContext } from "../providers/interface/context"
 import { useContext, useEffect, MouseEvent } from "react"
 import { Link } from "react-router-dom"
 
@@ -28,8 +28,8 @@ const Shop = () => {
         <Filters />
         <div className="w-fit grid gap-12 grid-cols-2 mx-auto lg:grid-cols-3 my-10 justify-center items-center ">
           {
-            products && products.map(({ _id, name, images, shortDescription, price, rate , categories}) => (
-              <ProductCard key={_id} _id={_id as string} image={images[0]} rate={rate} price={price} categories={categories} shortDescription={shortDescription} name={name} />
+            products && products.map((product) => (
+              <ProductCard key={product._id} product={product}/>
             ))
           }
         </div>

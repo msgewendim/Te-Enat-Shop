@@ -2,7 +2,7 @@
 
 export const $Product = {
     type: 'object',
-    required: ['name', 'shortDescription', 'price', 'images', 'rate', 'categories', 'InStock', 'availability', 'weights'],
+    required: ['_id', 'name', 'shortDescription', 'price', 'images', 'rate', 'categories', 'InStock', 'availability', 'weights'],
     properties: {
         _id: {
             type: 'string',
@@ -335,16 +335,17 @@ export const $Address = {
 export const $CartItem = {
     type: 'object',
     properties: {
-        productId: {
-            type: 'string',
-            description: 'The ID of the product in the cart'
+        product: {
+            type: 'object',
+            '$ref': '#/components/schemas/Product',
+            description: 'The product in the cart'
         },
         quantity: {
             type: 'integer',
             description: 'Quantity of the product in the cart'
         }
     },
-    required: ['productId', 'quantity']
+    required: ['product', 'quantity']
 } as const;
 
 export const $Recipe = {
