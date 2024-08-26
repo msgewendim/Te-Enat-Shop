@@ -1,8 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
 import { client, deleteProductsById, getAllProducts, getProduct, postProducts, putProductsById } from '../client/services.gen';
 import { CartItem, Product } from "../client/types.gen";
-import { AppContext } from "./interface/context";
+import { AppContext, query } from "./interface/context";
 import { localClient } from "../utils/client.config";
+
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([])
@@ -11,22 +12,23 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [filter, setFilter] = useState<string>("");
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [totalPrice, setTotalPrice] = useState(0)
-
-  const getProducts = async () => {
+  const query: query = {
+    page,
+    category,
+    filter,
+    limit: 9,
+  }
+  const getProducts = async (query?: query) => {
     try {
-      const { data, response } = await getAllProducts({
+      const { data, error } = await getAllProducts({
         client: localClient,
-        query: {
-          page: page,
-          category: category,
-          filter: filter,
-        }
+        query: query ? query : {}
       })
-      if (response.ok === false) {
-        throw new Error(`Field to fetch products status: ${response.status}`);
+      if (error) {
+        throw new Error(`Field to fetch products ${error}`);
       }
       setProducts(data as Product[])
-      return products
+      return data as Product[];
     } catch (error) {
       console.info(error)
     }
@@ -40,9 +42,10 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
           id: id,
         }
       })
-      const { data, response } = product
-      if (!response.ok) throw new Error(`Error fetch product with ${id}`)
-      return data;
+      const { data, error } = product
+      if (error) throw new Error(`Error fetch product with ${id} : ${error}`)
+      if (!data) throw new Error(`Product ${id} not found in database`)
+      return data as Product;
     } catch (error) {
       console.info(error)
     }
@@ -95,23 +98,25 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      await getProducts()
+      await getProducts(query)
     } catch (error) {
       console.info(error);
     }
   }
   const getTotalPrice = () => {
-    return cartItems.reduce((acc, {product, quantity}) => acc + product.price * quantity, 0)
+    return cartItems.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0)
   }
   useEffect(() => {
-    getProducts()
+    getProducts(query)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, filter, category])
-  
+
   useEffect(() => {
     setTotalPrice(getTotalPrice())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartItems])
+
+
   const values = {
     getProducts,
     getProductById,

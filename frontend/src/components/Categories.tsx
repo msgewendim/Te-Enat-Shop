@@ -3,11 +3,11 @@ import { AppContext } from "../providers/interface/context"
 
 const Categories = () => {
   const categories = [
-    "Spices",
-    "Flours",
-    "Legumes",
-    "Beverages",
-    "Kitchen Stuff"
+    "קמח",
+    "תבלינים",
+    "קטניות",
+    "שתייה",
+    "כלי מטבח"
   ]
   const { setCategory } = useContext(AppContext)
   const handleCategoryChange = (e : MouseEvent<HTMLButtonElement>, category : string) => {

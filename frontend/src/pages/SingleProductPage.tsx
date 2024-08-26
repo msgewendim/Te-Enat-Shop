@@ -1,20 +1,43 @@
 import videoProduct from "/videoProduct.png";
 import ProductPageBanner from "/ProductPageBanner.svg";
 import RelatedProducts from "../components/RelatedProducts";
-import { product } from "../utils/examples";
 import { divideDescriptionInfo } from "../utils/helperFunctions";
 import Banner from "../components/Banner";
-import { veggie } from "../utils/data";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../providers/interface/context";
+import { useParams } from "react-router-dom";
+import { Product } from "../client";
+import PopupProduct from "../components/PopupProduct";
 
 const SingleProduct = () => {
-  const {description, name, relatedProducts } = product
+  const { getProductById } = useContext(AppContext)
+  const [product, setProduct] = useState<Product>()
+  const [openProductId, setOpenProductId] = useState("");
+  const handleOpenPopup = (productId: string) => {
+    setOpenProductId(productId);
+  };
+
+  const handleClosePopup = () => {
+    setOpenProductId("");
+  };
+  const { productID } = useParams()
+  const getProduct = async () => {
+    const product = await getProductById(productID as string)
+    setProduct(product as Product)
+  }
+  useEffect(() => {
+    getProduct()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productID])
+  if (!product) return <h1>Product not found</h1>;
+  const { features, name, images, categories } = product
   // half descriptions
-  const [even_numbered_desc, odd_numbered_desc] = divideDescriptionInfo(description)
+  const [even_numbered_desc, odd_numbered_desc] = divideDescriptionInfo(features)
   return (
     <main className="flex flex-col">
       <Banner text={name} image={ProductPageBanner} />
       {/* Product details */}
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mt-4">
         {/* text of product */}
         <div className="relative">
           {/* nutrition */}
@@ -31,9 +54,9 @@ const SingleProduct = () => {
               }
             </div>
             {/* Product Image */}
-            <div className="order-2 w-[400px] object-cover">
+            <div className="order-2 w-[500px] object-cover">
               {/* <h1 className="text-4xl text-primary font-bold capitalize text-center my-3">{name}</h1> */}
-              <img src={veggie} alt={name} />
+              <img src={images[0]} alt={name} />
             </div>
             <div className="w-[300px] flex flex-col gap-12 ml-5 justify-end items-end order-3">
               {
@@ -48,21 +71,28 @@ const SingleProduct = () => {
           </div>
           {/* Buttons  */}
           <div className="flex justify-center items-center gap-10 my-3 mb-16">
-            <div className="bg-primary w-fit p-2 text-white rounded-lg cursor-pointer hover:bg-slate-800">
+            <button className="bg-primary w-fit p-2 text-white rounded-lg cursor-pointer hover:bg-slate-800">
               Recipes
-            </div>
-            <div className="bg-secondary w-fit p-2 px-3 text-white rounded-lg cursor-pointer hover:bg-slate-600">
+            </button>
+            {openProductId === productID && (
+              <PopupProduct
+                product={product}
+                open={openProductId === productID}
+                setOpen={handleClosePopup}
+              />
+            )}
+            <button onClick={() => handleOpenPopup(productID as string)} className="bg-secondary w-fit p-2 px-3 text-white rounded-lg cursor-pointer hover:bg-slate-600">
               Buy
-            </div>
+            </button>
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center my-3">
+      <div className="flex flex-col items-center justify-center my-14">
         <div className="mb-8">
           <img src={videoProduct} alt="" width={700} />
         </div>
         {/* Product related products */}
-        <RelatedProducts relatedProducts={relatedProducts} />
+        <RelatedProducts category={categories[0]} />
       </div>
     </main>
   )

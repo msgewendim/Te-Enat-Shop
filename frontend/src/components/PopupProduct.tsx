@@ -24,31 +24,42 @@ const PopupProduct = ({ product, open, setOpen }:
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
-            className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+            className="relative 
+              transform 
+              overflow-hidden 
+              rounded-lg 
+              bg-white 
+              text-left 
+              shadow-xl 
+              transition-all 
+              data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in 
+              sm:my-8 sm:w-full sm:max-w-2xl data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
-            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-              <div className="sm:flex sm:items-start pb-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left ">
-                  {images && <img src={images[0]} alt={name} className="h-[200px] w-[200px] object-cover rounded-md " />}
-                  <div className="flex flex-col gap-2">
-                    <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
+            <div className="bg-white px-2 pb-2 pt-5 sm:p-6 sm:pb-1 sm:my-4">
+              {/* <div className="sm:flex sm:items-start pb-2 pr-3"> */}
+                <div className="grid grid-cols-1 md:grid-cols-2 sm:ml-4 sm:mt-0 sm:text-right mb-3 ">
+                  {/* image */}
+                  {images && <img src={images[0]} alt={name} className="h-[250px] w-[280px] object-cover rounded-3xl " />}
+                  {/* content */}
+                  <div className="flex flex-col max-h-[230px] relative">
+                    <DialogTitle as="h3" className="text-base font-bold leading-6 text-primary">
                       {name}
                     </DialogTitle>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-800">
+                    <div className="my-1 relative">
+                      <p className="text-md text-gray-800 mb-8">
                         {shortDescription}
                       </p>
-                      <div className="flex gap-4 items-center mt-2 text-lg font-bold text-primary">
-                        Price: {price}₪
+                      <div className="flex gap-2 items-center justify-end mt-2 text-md font-semibold text-primary">
+                        Price : {(price * quantity).toFixed(2)}₪
                         {/* quantity */}
-                        <div className="flex gap-4 border-slate-800 border rounded-lg p-2 px-4 ">
+                        <div className="flex gap-1 border-slate-800 border rounded-lg p-2 px-3 ">
                           <button onClick={() => setQuantity(quantity - 1)} className="font-medium text-md disabled:cursor-not-allowed" disabled={quantity === 1}>-</button>
-                          <span>{quantity}</span>
+                          <input value={`${quantity}`} className='max-w-[30px] text-center outline-none' />
                           <button onClick={() => setQuantity(quantity + 1)} className='font-medium text-md'>+</button>
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-between items-center mt-3">
+                    <div className="absolute bottom-0 right-0 flex justify-end gap-4 items-center">
                       <button
                         onClick={(e) => handleAddProductToCart(e, { product, quantity })}
                         className="bg-green-900 text-white w-fit p-2 rounded-lg hover:bg-secondary">
@@ -60,7 +71,7 @@ const PopupProduct = ({ product, open, setOpen }:
                     </div>
                   </div>
                 </div>
-              </div>
+              {/* </div> */}
             </div>
           </DialogPanel>
         </div>

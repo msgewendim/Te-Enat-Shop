@@ -44,7 +44,7 @@ export type Product = {
     /**
      * An optional list of benefits associated with the product.
      */
-    features?: Array<(string)>;
+    features: Array<string[]>;
     /**
      * An optional list of reviews for the product.
      */

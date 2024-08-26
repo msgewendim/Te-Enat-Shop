@@ -1,9 +1,31 @@
 import { createContext } from "react";
-import { CartItem, DeleteProductsByIdError, DeleteProductsByIdResponse, GetAllProductsError, GetProductError, GetProductResponse, PostProductsError, PostProductsResponse, Product, PutProductsByIdError, PutProductsByIdResponse } from "../../client/types.gen";
+import {
+  CartItem,
+  DeleteProductsByIdError,
+  DeleteProductsByIdResponse,
+  GetAllProductsError,
+  GetAllProductsResponse,
+  GetProductError,
+  GetProductResponse,
+  PostProductsError,
+  PostProductsResponse,
+  Product,
+  PutProductsByIdError,
+  PutProductsByIdResponse,
+} from "../../client/types.gen";
+
+export type query = {
+  page?: number;
+  category?: string;
+  filter?: string;
+  limit?: number;
+};
 
 interface IContext {
   products: Product[];
-  getProducts: () => Promise<GetProductResponse | GetAllProductsError>;
+  getProducts: (
+    query?: query
+  ) => Promise<GetAllProductsResponse | GetAllProductsError>;
   getProductById: (id: string) => Promise<GetProductResponse | GetProductError>;
   addProduct: (
     productData: Partial<Product>
@@ -26,11 +48,10 @@ interface IContext {
   setCartItems: (product: CartItem[]) => void;
 }
 
-
 export const AppContext = createContext<IContext>({
   products: [],
   getProducts: () => Promise.resolve([]),
-  getProductById: () => Promise.resolve({}),
+  getProductById: () => Promise.resolve(),
   addProduct: () => Promise.resolve(),
   updateProduct: () => Promise.resolve(),
   deleteProduct: () => Promise.resolve(),
@@ -39,8 +60,8 @@ export const AppContext = createContext<IContext>({
   filter: "",
   cartItems: [],
   totalPrice: 0,
-  setCartItems: () => { },
-  setFilter: () => { },
-  setPage: () => { },
-  setCategory: () => { },
+  setCartItems: () => {},
+  setFilter: () => {},
+  setPage: () => {},
+  setCategory: () => {},
 });
