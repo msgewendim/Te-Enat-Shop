@@ -19,7 +19,7 @@ export class ProductService {
   async addProduct(product: Product): Promise<void> {
     try {
       await this.ProductDataAccess.addProduct(product);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
       throw new Error("Can not add Product!");
     }
@@ -27,12 +27,13 @@ export class ProductService {
 
   async getAllProducts(
     page: number,
+    limit?: number,
     searchTerm?: string,
     category?: string
   ): Promise<Product[] | unknown> {
     try {
-      const limit = 9;
-      page ? page : 1;
+      if (!page) page = 1;
+      if (!limit) limit = 9;
       return await this.ProductDataAccess.getAllProducts(
         page,
         limit,

@@ -3,6 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } fro
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import CartItemsList from '../components/CartItemsList'
 import { AppContext } from '../providers/interface/context'
+import { Link } from 'react-router-dom'
 
 const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<boolean>>, openCart: boolean, }) => {
   // const handleCheckout = () => {}
@@ -12,7 +13,7 @@ const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
-      />  
+      />
       <div className="fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
@@ -53,12 +54,13 @@ const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<
                   <div className="capitalize text-xl font-semibold text-center">
                     total price : {totalPrice}₪
                   </div>
-                  <a
-                    href="#"
+                  <Link
+                    onClick={() => setOpenCart(false)}
+                    to="/checkout"
                     className="rounded bg-teal-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-teal-800"
                   >
                     Checkout
-                  </a>
+                  </Link>
                 </div>
               </div>
             </DialogPanel>

@@ -12,6 +12,7 @@ import Shop from "../pages/Shop.tsx";
 import SingleProductPage from "../pages/SingleProductPage.tsx";
 import RecipePage from "../pages/RecipePage.tsx";
 import { ScrollToTop } from "../utils/helperFunctions.ts";
+import Checkout from "../pages/Checkout.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -48,8 +49,8 @@ export const routes = createBrowserRouter([
         element: <Recipes />
       },
       {
-        path: "/login",
-        element: <Login />,
+        path: "/checkout",
+        element: <Checkout />,
       },
       {
         path: "/register",
