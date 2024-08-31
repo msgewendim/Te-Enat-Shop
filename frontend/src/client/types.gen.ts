@@ -44,7 +44,7 @@ export type Product = {
     /**
      * An optional list of benefits associated with the product.
      */
-    features: Array<string[]>;
+    features?: Array<(string)>;
     /**
      * An optional list of reviews for the product.
      */
@@ -82,6 +82,34 @@ export enum availability {
     PRE_ORDER = 'Pre-order'
 }
 
+export type PaymentFormPayload = {
+    totalPrice: number;
+    clientInfo: {
+        $ref?: unknown;
+    };
+    products: Array<OrderItem>;
+};
+
+export type ClientDetails = {
+    name: string;
+    /**
+     * Customer email address
+     */
+    emails: Array<(string)>;
+    mobile: string;
+    address: string;
+    city: string;
+    zip: string;
+};
+
+export type OrderItem = {
+    description?: string;
+    quantity?: number;
+    price?: number;
+    currency?: string;
+    vatType?: number;
+};
+
 export type ProductCardProps = {
     /**
      * Unique identifier for the product
@@ -115,6 +143,16 @@ export type ProductCardProps = {
      * Optional size of the image (e.g., width or height)
      */
     imageSize?: number;
+};
+
+export type PaymentFormResponse = {
+    success?: boolean;
+    url?: string;
+    /**
+     * Error code if the payment failed
+     */
+    errorCode: number;
+    errorMessage: string;
 };
 
 export type Review = {
@@ -315,3 +353,17 @@ export type PutProductsByIdData = {
 export type PutProductsByIdResponse = (unknown);
 
 export type PutProductsByIdError = (unknown);
+
+export type PostOrdersV1PaymentsFormData = unknown;
+
+export type PostOrdersV1PaymentsFormResponse = ({
+    success: boolean;
+    errorMessage: string;
+    errorCode: number;
+    url: string;
+});
+
+export type PostOrdersV1PaymentsFormError = ({
+    errorCode: number;
+    errorMessage: string;
+});

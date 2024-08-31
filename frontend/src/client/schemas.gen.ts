@@ -122,6 +122,84 @@ export const $Product = {
     }
 } as const;
 
+export const $PaymentFormPayload = {
+    type: 'object',
+    properties: {
+        totalPrice: {
+            type: 'number',
+            format: 'float'
+        },
+        clientInfo: {
+            type: 'object',
+            properties: {
+                '$ref': '#/components/schemas/ClientDetails'
+            }
+        },
+        products: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/OrderItem'
+            }
+        }
+    },
+    required: ['totalPrice', 'clientInfo', 'products']
+} as const;
+
+export const $ClientDetails = {
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string'
+        },
+        emails: {
+            type: 'array',
+            description: 'Customer email address',
+            items: {
+                type: 'string',
+                format: 'email',
+                example: 'john.doe@example.com'
+            }
+        },
+        mobile: {
+            type: 'string'
+        },
+        address: {
+            type: 'string'
+        },
+        city: {
+            type: 'string'
+        },
+        zip: {
+            type: 'string'
+        }
+    },
+    required: ['name', 'emails', 'mobile', 'address', 'city', 'zip']
+} as const;
+
+export const $OrderItem = {
+    type: 'object',
+    properties: {
+        description: {
+            type: 'string'
+        },
+        quantity: {
+            type: 'integer'
+        },
+        price: {
+            type: 'number',
+            format: 'float'
+        },
+        currency: {
+            type: 'string',
+            default: 'ILS'
+        },
+        vatType: {
+            type: 'number',
+            default: 1
+        }
+    }
+} as const;
+
 export const $ProductCardProps = {
     type: 'object',
     properties: {
@@ -175,6 +253,26 @@ export const $ProductCardProps = {
         shortDescription: 'A traditional Ethiopian flatbread.',
         imageSize: 300
     }
+} as const;
+
+export const $PaymentFormResponse = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean'
+        },
+        url: {
+            type: 'string'
+        },
+        errorCode: {
+            type: 'integer',
+            description: 'Error code if the payment failed'
+        },
+        errorMessage: {
+            type: 'string'
+        }
+    },
+    required: ['errorCode', 'errorMessage']
 } as const;
 
 export const $Review = {

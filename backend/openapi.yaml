@@ -21,7 +21,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
+                  $ref: "#/components/schemas/Product"
     post:
       summary: Add a new product
       tags:
@@ -31,7 +31,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: "#/components/schemas/Product"
       responses:
         201:
           description: Product created
@@ -56,7 +56,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
         404:
           description: Product not found
     delete:
@@ -91,13 +91,60 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: "#/components/schemas/Product"
       responses:
         200:
           description: Product updated
         404:
           description: Product not found
 
+  /orders/v1/payments/form:
+    post:
+      summary: get payment form information from Morning
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+            $ref: "#/components/schemas/PaymentFormPayload"
+      responses:
+        200:
+          description: get Payment Form successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success :
+                    type: boolean
+                  errorMessage:
+                    type: string
+                  errorCode:
+                    type: number
+                    example: 0
+                  url:
+                    type: string
+                required:
+                  - success
+                  - errorMessage
+                  - errorCode
+                  - url
+        400:
+          description: Error getting payment form
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode : 
+                    type: integer
+                  errorMessage : 
+                    type: string
+                required:
+                  - errorCode
+                  - errorMessage
 components:
   schemas:
     Product:
@@ -207,6 +254,68 @@ components:
           description: An optional field for the total number of sales.
           example: 5000
 
+    PaymentFormPayload:
+      type: object
+      properties:
+        totalPrice:
+          type: number
+          format: float
+        clientInfo:
+          type: object
+          properties:
+            $ref: "#/components/schemas/ClientDetails"
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+      required:
+        - totalPrice
+        - clientInfo
+        - products
+    ClientDetails:
+      type: object
+      properties:
+        name: 
+          type: string
+        emails:
+          type: array
+          description: "Customer email address"
+          items:
+            type: string
+            format: email
+            example: "john.doe@example.com"
+        mobile:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+      required:
+        - name
+        - emails
+        - mobile
+        - address
+        - city
+        - zip
+    OrderItem:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+          format: float
+        currency:
+          type: string
+          default: "ILS"
+        vatType:
+          type: number
+          default: 1
+
     ProductCardProps:
       type: object
       properties:
@@ -256,7 +365,22 @@ components:
         rate: 4.5
         shortDescription: "A traditional Ethiopian flatbread."
         imageSize: 300
-
+    PaymentFormResponse:
+      type: object
+      properties:
+        success: 
+          type: boolean
+        url:
+          type: string
+        errorCode:
+          type: integer
+          description: Error code if the payment failed
+        errorMessage:
+          type: string
+      required:
+        - errorCode
+        - errorMessage
+    
     Review:
       type: object
       properties:
@@ -331,8 +455,7 @@ components:
             type: string
         productReviews:
           type: array
-          items:
-            $ref:"#components/schemas/Review"
+          items: $ref:"#components/schemas/Review"
         createdAt:
           type: string
           format: date-time
@@ -392,7 +515,7 @@ components:
       properties:
         product:
           type: object
-          $ref: '#/components/schemas/Product'
+          $ref: "#/components/schemas/Product"
           description: The product in the cart
         quantity:
           type: integer
@@ -400,7 +523,7 @@ components:
       required:
         - product
         - quantity
-    
+
     Recipe:
       type: object
       properties:
@@ -417,7 +540,7 @@ components:
         ingredients:
           type: array
           items:
-            $ref: '#/components/schemas/Ingredient'
+            $ref: "#/components/schemas/Ingredient"
         instructions:
           type: array
           items:
@@ -437,12 +560,12 @@ components:
         relatedRecipes:
           type: array
           items:
-            $ref: '#/components/schemas/PartialRecipe'
+            $ref: "#/components/schemas/PartialRecipe"
           nullable: true
         reviews:
           type: array
           items:
-            $ref: '#/components/schemas/Review'
+            $ref: "#/components/schemas/Review"
           nullable: true
         createdAt:
           type: string
@@ -486,7 +609,7 @@ components:
           nullable: true
       required:
         - name
-    
+
     PartialRecipe:
       type: object
       properties:
@@ -502,7 +625,7 @@ components:
         - _id
         - title
         - image
-    
+
     Ingredient:
       type: object
       properties:

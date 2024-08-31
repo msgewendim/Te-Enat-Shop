@@ -1,4 +1,4 @@
-import { CartItem } from "./cart.types";
+import { CartItem } from "./order.types";
 import { Product } from "./product.types";
 import { Recipe } from "./recipe.types";
 

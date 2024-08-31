@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
-import activityLogger from "./src/utils/middleware/log";
+import OrderRoute from "./src/Routes/OrderRoute";
 import ProductRoute from "./src/Routes/ProductRoute";
 import connectToMongoDB from "./src/utils/DB/MongoDB";
+import activityLogger from "./src/utils/middleware/log";
 import swagger from "./swagger"
 import dotenv from "dotenv";
 dotenv.config();
@@ -23,12 +24,11 @@ App.use(
 );
 
 App.use("/api/products", ProductRoute);
-// App.use("/api/users", UserRoute);
-// App.use("/api/cart", CartRoute);
+App.use("/api/orders", OrderRoute);
 
 App.use(swagger);
 App.listen(port, () => {
   connectToMongoDB(process.env.MONGO_ATLAS_URI as string);
   console.log(`App is listening on port ${port}`);
-  console.log(`Swagger UI is available at http://localhost:${port}/api-docs`)
+  // console.log(`Swagger UI is available at http://localhost:${port}/api-docs`)
 });

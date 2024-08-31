@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
-import { client, deleteProductsById, getAllProducts, getProduct, postProducts, putProductsById } from '../client/services.gen';
-import { CartItem, Product } from "../client/types.gen";
+import { client, deleteProductsById, getAllProducts, getProduct, postOrdersV1PaymentsForm, postProducts, putProductsById } from '../client/services.gen';
+import { CartItem, ClientDetails, OrderItem, Product } from "../client/types.gen";
 import { AppContext, query } from "./interface/context";
 import { localClient } from "../utils/client.config";
 
@@ -9,8 +9,10 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([])
   const [category, setCategory] = useState<string>("")
   const [page, setPage] = useState<number>(1);
+  const [paymentFormUrl, setPaymentFormUrl] = useState<string>("")
   const [filter, setFilter] = useState<string>("");
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([])
   const [totalPrice, setTotalPrice] = useState(0)
   const query: query = {
     page,
@@ -18,7 +20,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     filter,
     limit: 9,
   }
-  const getProducts = async (query?: query) => {
+  const getProducts = async (query?: query) => {  
     try {
       const { data, error } = await getAllProducts({
         client: localClient,
@@ -103,6 +105,27 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       console.info(error);
     }
   }
+  const getPaymentForm = async (clientData: ClientDetails, totalPrice: number, orderItems: OrderItem[]) => {
+    try {
+      const body = {
+        clientData: clientData,
+        totalPrice,
+        orderItems: orderItems,
+      }
+      const form = await postOrdersV1PaymentsForm({
+        client: client,
+        body: body,
+      })
+      const { data, error } = form
+      if (error) {
+        throw new Error(`Error fetching payment form ${error}`);
+      }
+      // console.log(data, "payment form data");
+      if (data.success) setPaymentFormUrl(data.url)
+    } catch (error) {
+      console.info(error);
+    }
+  }
   const getTotalPrice = () => {
     return cartItems.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0)
   }
@@ -112,7 +135,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   }, [page, filter, category])
 
   useEffect(() => {
-    setTotalPrice(getTotalPrice())
+    setTotalPrice(parseFloat(getTotalPrice().toFixed(2)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartItems])
 
@@ -127,6 +150,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setPage,
     setCategory,
     products,
+    orderItems,
+    setOrderItems,
+    getTotalPrice,
     page,
     filter,
     category,
@@ -134,6 +160,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     totalPrice,
     setTotalPrice,
     setCartItems,
+    getPaymentForm,
+    paymentFormUrl,
+    setPaymentFormUrl,
   }
   return (
     <AppContext.Provider value={values}>

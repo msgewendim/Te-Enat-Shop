@@ -8,10 +8,17 @@ const PopupProduct = ({ product, open, setOpen }:
   { open: boolean, setOpen: Dispatch<SetStateAction<boolean>>, product: Product }) => {
   const [quantity, setQuantity] = useState(1)
   const { images, name, shortDescription, price, _id } = product
-  const { cartItems, setCartItems } = useContext(AppContext)
+  const { cartItems, setCartItems, setOrderItems, orderItems } = useContext(AppContext)
   const handleAddProductToCart = (e: MouseEvent<HTMLButtonElement>, item: CartItem) => {
     e.preventDefault()
     setCartItems([...cartItems, item])
+    setOrderItems([...orderItems, {
+      description: item.product.name,
+      quantity: item.quantity,
+      price: item.product.price * quantity,
+      currency : "ILS",
+      vatType: 1,
+    }])
     setOpen(false)
   }
   return (

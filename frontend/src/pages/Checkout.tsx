@@ -1,73 +1,9 @@
 import { useContext } from "react"
 import { AppContext } from "../providers/interface/context"
 import CheckoutForm from "../components/CheckoutForm"
-interface OrderData {
-  description: string // Document description תיאור מסמך  Required
-  type: 320 | 400     // Document type 320 : חשבונית מס / קבלה  // 400  Required
-  lang: string        // Primary language  Required
-  currency: string    // Primary currency  Required
-  vatType: 0 | 1 | 2     // Vat type for that document Required 
-  amount: number      // The amount the customer needs to pay
-  group: number       // Required only when using 'Digital payments(Grow)' plugin. = 100
-  pluginId: string   // Clearence Plugin Id. Required unless you are using Cardcom plugin.
-  client: {
-    id: string
-    name: string
-    emails: string[]
-    taxId: string
-    address: string
-    city: string
-    zip: string
-    country: string
-    phone: string
-  }     // customer information
-  successUrl: string    // customer successfully paid (can be for example a "Thank you for your purchase" notification), if not set - uses the default "Thank you for your purchase" notification, This has to be a secured URL (https)
-  failureUrl?: string    // redirect to when the customer payment failed, if not set - uses the default "Purchase failed" notification, This has to be a secured URL (https)
-  notifyUrl?: string    // The URL to notify about regarding a successfully paid transaction and after a document has been created, parameters to this endpoint will be given as POST parameters, This has to be a secured URL (https)
-  custom?: string        // Set a custom data to pass to notification, success & failed URLs, such as your internal order ID that will be passed back to your system as a parameter
-}
-type IframePaymentResponse = {
-  errorCode: number,   // The state of the response (whether there was an error or everything is OK, 0 means OK).
-  url: string  // Payment form URL, use as IFrame or redirect to it wherever you like to show a payment form that the user can pay for the purchase.
-}
-const token = import.meta.env.token
-const pluginId = import.meta.env.pluginId
-const Checkout = () => {
-  const { cartItems, totalPrice } = useContext(AppContext)
-  const requestBody: OrderData = {
-    description: "",
-    type: 320,
-    lang: "he",
-    currency: "ILS",
-    vatType: 0,
-    amount: totalPrice,
-    pluginId: pluginId as string,
-    group: 100,
-    client: {
-      id: "123",
-      name: "kaku kak",
-      emails: ["example@gmail.com"],
-      taxId: "12323456",
-      address: "street address",
-      city: "חולון",
-      zip: "5820614",
-      country: "IL",
-      phone: "972549891981",
-    },
-    successUrl: "https://te-enat-shop.onrender.com/",
-    // failureUrl: "https://api.greeninvoice.co.il/api/v1",
-    custom: "12839828392"
-  }
 
-  const response: Promise<IframePaymentResponse> = fetch('https://api.greeninvoice.co.il/api/v1/payments/form', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(requestBody)
-  }).then(response => response.url).catch((err) => err)
-  response
+const Checkout = () => {
+  const { cartItems, totalPrice } = useContext(AppContext)  
   return (
     <div className="font-[sans-serif] bg-white">
       <div className="flex max-sm:flex-col gap-12 max-lg:gap-4 h-full">
