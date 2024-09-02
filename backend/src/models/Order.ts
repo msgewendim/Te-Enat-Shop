@@ -4,27 +4,23 @@ import { OrderItem } from "../utils/interfaces/IOrder";
 const orderSchema = new mongoose.Schema(
   {
     userDetails: {
-      type: {
-        name: { type: String, required: true },
-        email: { type: String, required: true },
-        mobile: { type: String, required: true },
-        address: { type: String, required: true },
-        city: { type: String, required: true },
-        state: { type: String, required: true },
-        zip: { type: String, required: true },
-      },
-      required: true,
+      name: { type: "string", required: true },
+      email: { type: "string", required: true },
+      mobile: { type: "string", required: true },
+      address: { type: "string", required: true },
+      city: { type: "string", required: true },
+      zip: { type: "string", required: true },
     },
     products: {
       type: Array<OrderItem>,
       required: true,
     },
     totalPrice: {
-      type: Number,
+      type: "number",
       required: true,
     },
     orderStatus: {
-      type: String,
+      type: "string",
       enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
       default: "pending",
     },

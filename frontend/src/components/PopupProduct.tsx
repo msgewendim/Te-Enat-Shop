@@ -61,7 +61,7 @@ const PopupProduct = ({ product, open, setOpen }:
                         {/* quantity */}
                         <div className="flex gap-1 border-slate-800 border rounded-lg p-2 px-3 ">
                           <button onClick={() => setQuantity(quantity - 1)} className="font-medium text-md disabled:cursor-not-allowed" disabled={quantity === 1}>-</button>
-                          <input value={`${quantity}`} className='max-w-[30px] text-center outline-none' />
+                          <input defaultValue={`${quantity}`} className='max-w-[30px] text-center outline-none' />
                           <button onClick={() => setQuantity(quantity + 1)} className='font-medium text-md'>+</button>
                         </div>
                       </div>

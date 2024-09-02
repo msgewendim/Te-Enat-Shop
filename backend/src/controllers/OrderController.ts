@@ -14,13 +14,33 @@ export class OrderController {
         orderItems,
         totalPrice
       );
+      console.log("PaymentForm data response:", data);
       if (data.success) {
-        response.json(data).status(200);
+        response
+          .json({
+            url: data.url,
+            success: data.success,
+            message: "getting payment request completed successfully",
+          })
+          .status(200);
       } else {
-        response.json(data).status(400);
+        response
+          .json({
+            message: "payment request failed with error: " + data.errorCode,
+            error: data.errorMessage,
+            url: null,
+            success: false,
+          })
+          .status(400);
       }
-    } catch (error) {
-      response.json("Error getting payment form").status(400);
+    } catch (error: any) {
+      response
+        .json({
+          message: "Error getting payment form",
+          error: error.message,
+          success: false,
+        })
+        .status(400);
     }
   }
 }

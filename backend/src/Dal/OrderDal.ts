@@ -2,20 +2,20 @@ import orderModel from "../models/Order";
 import { Client, IOrder, OrderItem } from "../utils/interfaces/IOrder";
 
 class OrderDal implements IOrder {
-  // userInfo: Client;
-  // products: OrderItem[];
-  // totalPrice: number;
-  // orderStatus: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
-
   async addOrder(userInfo: Client, products: OrderItem[], totalPrice: number) {
     const newOrder = {
-      userInfo,
+      userDetails : {
+        ...userInfo,
+        email : userInfo.emails[0]
+      },
       products,
       totalPrice,
       orderStatus: "pending",
     };
     try {
-      await orderModel.create(newOrder);
+      const order = await orderModel.insertMany(newOrder)
+      console.log("Order created successfully");
+      return order[0]._id;
     } catch (error) {
       throw new Error(`Error creating order in DB: ${error} `);
     }

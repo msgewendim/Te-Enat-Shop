@@ -1,6 +1,6 @@
+import axios from "axios";
 import { Client, OrderItem, PaymentFormPayload } from "../interfaces/IOrder";
 import env from "dotenv";
-
 env.config();
 export const getCheckoutFormPayload = (
   invoiceDescription: string,
@@ -23,40 +23,56 @@ export const getCheckoutFormPayload = (
     group: 100,
     client: {
       ...clientDetails,
-      taxId : "332459841",
-      add : true,
-      country: "IL"
+      taxId: "332459841",
+      add: true,
+      country: "IL",
     },
     income: income,
-    remarks: "Special Order",
-    successUrl: "https://te-enat-shop.onrender.com/",
-    failureUrl: "https://te-enat-shop.onrender.com/error",
-    notifyUrl: "https://te-enat-shop.onrender.com/notify", // TODO: replace with your notify URL  // notifyUrl: "https://your-domain.com/notify",  // TODO: replace with your notify URL  // notifyUrl: "https://your-domain.com/notify",  // TODO: replace with your notify URL
+    remarks: "",
+    // successUrl: "https://te-enat-shop.onrender.com/",
+    // failureUrl: "https://te-enat-shop.onrender.com/error",
+    // notifyUrl: "https://te-enat-shop.onrender.com/notify", // TODO: replace with your notify URL  // notifyUrl: "https://your-domain.com/notify",  // TODO: replace with your notify URL  // notifyUrl: "https://your-domain.com/notify",  // TODO: replace with your notify URL
     custom: custom,
   };
 };
 
-export const getToken = async () => {
+export const requestNewToken = async () => {
   const url = "https://sandbox.d.greeninvoice.co.il/api/v1/account/token";
   const body = {
     id: process.env.MORNING_API_KEY as string,
     secret: process.env.MORNING_SECRET_KEY as string,
   };
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    data: JSON.stringify(body),
+    url,
+  };
   try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    const { data, status } = await axios.request(config);
+    if (status >= 400) {
+      throw new Error(`HTTP error! status: ${status}`);
     }
-    const { token } = await response.json();
-    return token;
+    // console.log(data);
+    return {
+      token: data.token,
+      expiresAt: Date.now() + data.expires * 1000, // convert to milliseconds 1 hour
+    };
   } catch (error) {
     console.error("Error fetching token:", error);
     throw error;
   }
 };
+export const checkToken = async (token: string, expiresAt: number) => {
+  if (!token || Date.now() >= expiresAt) {
+    console.log("==========================Token expired=====================");
+    const newToken = await requestNewToken();
+    return newToken;
+  }else{
+    return { token, expiresAt };
+  }
+};
+
+

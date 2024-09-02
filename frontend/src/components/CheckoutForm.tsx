@@ -3,7 +3,7 @@ import { AppContext } from "../providers/interface/context";
 import { ClientDetails } from "../client/types.gen";
 
 const CheckoutForm = () => {
-  const { totalPrice, orderItems, getPaymentForm, paymentFormUrl } = useContext(AppContext)
+  const { totalPrice, orderItems, getPaymentForm } = useContext(AppContext)
   const [clientData, setClientData] = useState<ClientDetails>({
     name: "",
     emails: [],
@@ -19,7 +19,7 @@ const CheckoutForm = () => {
     const clientDetails: ClientDetails = {
       name: formData.get("name") as string,
       emails: [formData.get("email") as string],
-      mobile: "+972-54-1234567",
+      mobile: formData.get("mobile") as string,
       address: formData.get("address") as string,
       city: formData.get("city") as string,
       zip: formData.get("zip") as string,
@@ -46,10 +46,9 @@ const CheckoutForm = () => {
   }
   useEffect(() => {
     validateClientDataForm()
-    getPaymentForm(clientData, totalPrice, orderItems) 
-    window.location.replace(paymentFormUrl)
+    getPaymentForm(clientData, totalPrice, orderItems)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientData, orderItems]); 
+  }, [clientData, orderItems]);
 
   return (
     <div className="max-w-4xl w-full h-max rounded-md px-4 py-8 sticky top-0">
@@ -88,10 +87,6 @@ const CheckoutForm = () => {
               <input type="text" placeholder="City" name="city"
                 className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
             </div>
-            {/* <div>
-              <input type="text" placeholder="State" name=""
-                className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
-            </div> */}
             <div>
               <input type="text" placeholder="Zip Code" name="zip"
                 className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
@@ -109,14 +104,3 @@ const CheckoutForm = () => {
 }
 
 export default CheckoutForm
-// const formPayloadData: FormPayloadData = {
-//   invoiceDescription: "Checkout completed",
-//   price: 200,
-//   name: "John doe",
-//   email: "example@gmail.com",
-//   phone: "+972-54-9891981",
-//   address: "street address",
-//   city: "Holon",
-//   zipCode: "5820614",
-//   itemDescription: "Hummus",
-// };

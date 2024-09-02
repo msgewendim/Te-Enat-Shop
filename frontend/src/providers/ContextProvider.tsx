@@ -20,7 +20,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     filter,
     limit: 9,
   }
-  const getProducts = async (query?: query) => {  
+  const getProducts = async (query?: query) => {
     try {
       const { data, error } = await getAllProducts({
         client: localClient,
@@ -120,8 +120,13 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       if (error) {
         throw new Error(`Error fetching payment form ${error}`);
       }
-      // console.log(data, "payment form data");
-      if (data.success) setPaymentFormUrl(data.url)
+      console.log(data, "payment form data");
+      if (data.success) {
+        setPaymentFormUrl(data.url)
+        setTimeout(() => {
+          window.location.href = paymentFormUrl;
+        }, 1000);
+      }
     } catch (error) {
       console.info(error);
     }

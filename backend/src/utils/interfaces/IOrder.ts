@@ -8,16 +8,16 @@ interface IOrder<> {
   ): void;
 }
 type PaymentFormResponse = {
-  success: true;
   errorCode: number;
   errorMessage: string;
-  url: string
+  success?: true;
+  url?: string
 };
 interface Client {
   name: string;
   mobile: string;
   address: string;
-  email: string;
+  emails: string[];
   city: string;
   zip: string;
   taxId: string; // Unique identifier of my client in Morning
@@ -45,9 +45,9 @@ interface PaymentFormPayload {
   client: Client; // customer information
   income: OrderItem[]; // the items to be ordered
   remarks: string;
-  successUrl: string; // customer successfully paid (can be for example a "Thank you for your purchase" notification), if not set - uses the default "Thank you for your purchase" notification, This has to be a secured URL (https)
-  failureUrl: string; // redirect to when the customer payment failed, if not set - uses the default "Purchase failed" notification, This has to be a secured URL (https)
-  notifyUrl: string; // The URL to notify about regarding a successfully paid transaction and after a document has been created, parameters to this endpoint will be given as POST parameters, This has to be a secured URL (https)
+  successUrl?: string; // customer successfully paid (can be for example a "Thank you for your purchase" notification), if not set - uses the default "Thank you for your purchase" notification, This has to be a secured URL (https)
+  failureUrl?: string; // redirect to when the customer payment failed, if not set - uses the default "Purchase failed" notification, This has to be a secured URL (https)
+  notifyUrl?: string; // The URL to notify about regarding a successfully paid transaction and after a document has been created, parameters to this endpoint will be given as POST parameters, This has to be a secured URL (https)
   custom: string; // Set a custom data to pass to notification, success & failed URLs, such as your internal order ID that will be passed back to your system as a parameter
 }
 
