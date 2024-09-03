@@ -8,7 +8,7 @@
     "test": "jest",
     "start": "node out/index.js",
     "dev": "npx nodemon ./index.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p . && cp openapi.yaml out/"
   },
   "author": "Msganaw Wondemeneh",
   "license": "ISC",
