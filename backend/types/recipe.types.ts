@@ -1,7 +1,5 @@
+import { Client } from "../src/utils/interfaces/IOrder";
 import { Product } from "./product.types";
-import { User } from "./user.types";
-
-
 interface Recipe {
   _id: string;
   title: string;
@@ -32,7 +30,7 @@ interface Category {
 }
 interface Review {
   _id: string;
-  userId: User["_id"];
+  userId: Client["name"];
   recipeId: Recipe["_id"];
   rating: number;
   comment: string;

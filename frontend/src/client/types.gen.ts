@@ -145,9 +145,17 @@ export type ProductCardProps = {
     imageSize?: number;
 };
 
-export type PaymentFormResponse = {
-    success?: boolean;
-    url?: string;
+export type PaymentFormSuccessResponse = {
+    success: boolean;
+    url: string;
+    /**
+     * Error code if the payment failed
+     */
+    errorCode: number;
+    errorMessage: string;
+};
+
+export type PaymentFormErrorResponse = {
     /**
      * Error code if the payment failed
      */
@@ -354,16 +362,8 @@ export type PutProductsByIdResponse = (unknown);
 
 export type PutProductsByIdError = (unknown);
 
-export type PostOrdersV1PaymentsFormData = unknown;
+export type PostOrdersV1PaymentsFormData = (unknown);
 
-export type PostOrdersV1PaymentsFormResponse = ({
-    success: boolean;
-    errorMessage: string;
-    errorCode: number;
-    url: string;
-});
+export type PostOrdersV1PaymentsFormResponse = (PaymentFormSuccessResponse);
 
-export type PostOrdersV1PaymentsFormError = ({
-    errorCode: number;
-    errorMessage: string;
-});
+export type PostOrdersV1PaymentsFormError = (PaymentFormErrorResponse);

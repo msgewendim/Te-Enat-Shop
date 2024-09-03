@@ -46,7 +46,9 @@ interface IContext {
     clientInfo: ClientDetails,
     totalPrice: number,
     orderItems: OrderItem[]
-  ) => Promise<PostOrdersV1PaymentsFormData | PostOrdersV1PaymentsFormError | PostOrdersV1PaymentsFormResponse>;
+  ) => Promise<
+    PostOrdersV1PaymentsFormError | PostOrdersV1PaymentsFormResponse | PostOrdersV1PaymentsFormData
+  >;
   category: string;
   page: number;
   filter: string;
@@ -76,7 +78,7 @@ export const AppContext = createContext<IContext>({
   cartItems: [],
   orderItems: [],
   totalPrice: 0,
-  paymentFormUrl : "",
+  paymentFormUrl: "",
   setPaymentFormUrl: () => {},
   setOrderItems: () => {},
   setCartItems: () => {},

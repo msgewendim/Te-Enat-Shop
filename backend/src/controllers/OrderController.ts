@@ -18,9 +18,7 @@ export class OrderController {
       if (data.success) {
         response
           .json({
-            url: data.url,
-            success: data.success,
-            message: "getting payment request completed successfully",
+            ...data
           })
           .status(200);
       } else {

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../providers/interface/context";
 import { ClientDetails } from "../client/types.gen";
 
@@ -23,9 +23,16 @@ const CheckoutForm = () => {
       address: formData.get("address") as string,
       city: formData.get("city") as string,
       zip: formData.get("zip") as string,
-      // taxId: "332459841",
     }
     setClientData(clientDetails)
+    const isValid = validateClientDataForm()
+    if (!isValid) return;
+    try {
+      const response = await getPaymentForm(clientData, totalPrice, orderItems)
+      console.log(response);
+    } catch (error) {
+      console.log(error)
+    }
   }
   const validateClientDataForm = () => {
     const name = clientData.name.trim()
@@ -44,11 +51,6 @@ const CheckoutForm = () => {
     }
     return true
   }
-  useEffect(() => {
-    validateClientDataForm()
-    getPaymentForm(clientData, totalPrice, orderItems)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientData, orderItems]);
 
   return (
     <div className="max-w-4xl w-full h-max rounded-md px-4 py-8 sticky top-0">

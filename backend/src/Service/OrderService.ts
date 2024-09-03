@@ -56,7 +56,7 @@ export class OrderService {
       data: JSON.stringify(formPayload),
     };
     try {
-      // get payment form
+      // get payment form 
       const { status, data } = await axios.request(config);
       if (status >= 400) {
         console.log("Failed to fetch payment gateway", status);

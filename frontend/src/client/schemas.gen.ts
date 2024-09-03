@@ -255,7 +255,7 @@ export const $ProductCardProps = {
     }
 } as const;
 
-export const $PaymentFormResponse = {
+export const $PaymentFormSuccessResponse = {
     type: 'object',
     properties: {
         success: {
@@ -264,6 +264,20 @@ export const $PaymentFormResponse = {
         url: {
             type: 'string'
         },
+        errorCode: {
+            type: 'integer',
+            description: 'Error code if the payment failed'
+        },
+        errorMessage: {
+            type: 'string'
+        }
+    },
+    required: ['errorCode', 'errorMessage', 'success', 'url']
+} as const;
+
+export const $PaymentFormErrorResponse = {
+    type: 'object',
+    properties: {
         errorCode: {
             type: 'integer',
             description: 'Error code if the payment failed'

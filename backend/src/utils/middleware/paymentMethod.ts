@@ -55,7 +55,7 @@ export const requestNewToken = async () => {
     if (status >= 400) {
       throw new Error(`HTTP error! status: ${status}`);
     }
-    // console.log(data);
+    process.env.MORNING_TOKEN = data.token;
     return {
       token: data.token,
       expiresAt: Date.now() + data.expires * 1000, // convert to milliseconds 1 hour
@@ -67,9 +67,7 @@ export const requestNewToken = async () => {
 };
 export const checkToken = async (token: string, expiresAt: number) => {
   if (!token || Date.now() >= expiresAt) {
-    console.log("==========================Token expired=====================");
-    const newToken = await requestNewToken();
-    return newToken;
+    return await requestNewToken();
   }else{
     return { token, expiresAt };
   }

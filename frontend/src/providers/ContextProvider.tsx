@@ -13,7 +13,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [filter, setFilter] = useState<string>("");
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [orderItems, setOrderItems] = useState<OrderItem[]>([])
-  const [totalPrice, setTotalPrice] = useState(0)
+  const [totalPrice, setTotalPrice] = useState<number>(0)
   const query: query = {
     page,
     category,
@@ -112,20 +112,17 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         totalPrice,
         orderItems: orderItems,
       }
-      const form = await postOrdersV1PaymentsForm({
-        client: client,
+      const response = await postOrdersV1PaymentsForm({
+        client: localClient,
         body: body,
-      })
-      const { data, error } = form
-      if (error) {
-        throw new Error(`Error fetching payment form ${error}`);
-      }
-      console.log(data, "payment form data");
-      if (data.success) {
-        setPaymentFormUrl(data.url)
-        setTimeout(() => {
-          window.location.href = paymentFormUrl;
-        }, 1000);
+      }) 
+      console.log(response , "payment form");
+      if (response.data?.success) {
+        setPaymentFormUrl(response.data.url)
+        console.log(paymentFormUrl, "payment form url");
+        window.location.href = paymentFormUrl
+      } else {
+        console.log("Payment Failed", response.error)
       }
     } catch (error) {
       console.info(error);

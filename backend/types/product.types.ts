@@ -1,4 +1,3 @@
-import { Review } from "./recipe.types";
 interface Product {
   _id: string;
   name: string;

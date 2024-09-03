@@ -12,6 +12,7 @@ class OrderDal implements IOrder {
       totalPrice,
       orderStatus: "pending",
     };
+    console.log("new order", newOrder.userDetails);
     try {
       const order = await orderModel.insertMany(newOrder)
       console.log("Order created successfully");
