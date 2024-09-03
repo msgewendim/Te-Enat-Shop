@@ -32,7 +32,7 @@ const SingleProduct = () => {
   if (!product) return <h1>Product not found</h1>;
   const { features, name, images, categories } = product
   // half descriptions
-  const [even_numbered_desc, odd_numbered_desc] = divideDescriptionInfo(features)
+  const [even_numbered_desc, odd_numbered_desc] = divideDescriptionInfo(features ? features : [])
   return (
     <main className="flex flex-col">
       <Banner text={name} image={ProductPageBanner} />

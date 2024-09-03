@@ -44,7 +44,7 @@ export type Product = {
     /**
      * An optional list of benefits associated with the product.
      */
-    features?: Array<(string)>;
+    features?: Array<Array<(string)>>;
     /**
      * An optional list of reviews for the product.
      */
@@ -362,7 +362,7 @@ export type PutProductsByIdResponse = (unknown);
 
 export type PutProductsByIdError = (unknown);
 
-export type PostOrdersV1PaymentsFormData = (unknown);
+export type PostOrdersV1PaymentsFormData = unknown;
 
 export type PostOrdersV1PaymentsFormResponse = (PaymentFormSuccessResponse);
 

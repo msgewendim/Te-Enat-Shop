@@ -71,8 +71,10 @@ export const $Product = {
             type: 'array',
             description: 'An optional list of benefits associated with the product.',
             items: {
-                type: 'string',
-                example: 'Water-resistant'
+                type: 'array',
+                items: {
+                    type: 'string'
+                }
             }
         },
         reviews: {
