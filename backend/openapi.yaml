@@ -115,36 +115,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success :
-                    type: boolean
-                  errorMessage:
-                    type: string
-                  errorCode:
-                    type: number
-                    example: 0
-                  url:
-                    type: string
-                required:
-                  - success
-                  - errorMessage
-                  - errorCode
-                  - url
+                $ref: "#/components/schemas/PaymentFormSuccessResponse"
         400:
           description: Error getting payment form
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errorCode : 
-                    type: integer
-                  errorMessage : 
-                    type: string
-                required:
-                  - errorCode
-                  - errorMessage
+                $ref: "#/components/schemas/PaymentFormErrorResponse"
 components:
   schemas:
     Product:
@@ -365,7 +342,7 @@ components:
         rate: 4.5
         shortDescription: "A traditional Ethiopian flatbread."
         imageSize: 300
-    PaymentFormResponse:
+    PaymentFormSuccessResponse:
       type: object
       properties:
         success: 
@@ -380,7 +357,20 @@ components:
       required:
         - errorCode
         - errorMessage
-    
+        - success
+        - url
+    PaymentFormErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          description: Error code if the payment failed
+        errorMessage:
+          type: string
+      required:
+        - errorCode
+        - errorMessage
+
     Review:
       type: object
       properties:
