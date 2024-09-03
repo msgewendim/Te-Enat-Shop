@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "test": "jest",
-    "start": "node out/backend/index.js",
+    "start": "node out/index.js",
     "dev": "npx nodemon ./index.ts",
     "build": "tsc -p ."
   },
