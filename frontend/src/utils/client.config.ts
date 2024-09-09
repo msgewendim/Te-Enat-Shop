@@ -1,17 +1,16 @@
 import { createClient } from '@hey-api/client-fetch';
 import { client } from '../client/services.gen';
 
-const API_URL = import.meta.env.VITE_API_URL as string || "http://localhost:3005/api";
 
 client.setConfig({
-  baseUrl: API_URL,
+  baseUrl: import.meta.env.VITE_API_URL_PRODUCTION,
   headers: {
     'Content-Type': 'application/json',
   },
   fetch,
 });
 export const localClient = createClient({
-  baseUrl: 'http://localhost:3005/api',
+  baseUrl: import.meta.env.VITE_API_URL_PRODUCTION,
   headers: {
     Authorization: 'Bearer <token_from_local_client>',
     'Content-Type': 'application/json',
