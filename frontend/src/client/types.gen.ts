@@ -105,6 +105,7 @@ export type ClientDetails = {
 export type OrderItem = {
     description?: string;
     quantity?: number;
+    size?: string;
     price?: number;
     currency?: string;
     vatType?: number;
@@ -243,6 +244,10 @@ export type CartItem = {
      * Quantity of the product in the cart
      */
     quantity: number;
+    /**
+     * Size of the product in grams or kg
+     */
+    size: string;
 };
 
 export type Recipe = {

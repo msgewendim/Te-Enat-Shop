@@ -17,7 +17,8 @@ const Categories = () => {
   return (
     <div className="rounded-lg flex gap-3 items-center">
       {categories.map((cat) =>
-        <button onClick={(e) => handleCategoryChange(e, cat)} key={cat} className="text-sm border-secondary border-2 text-black w-fit p-2 rounded-lg hover:bg-emerald-300">
+        <button onClick={(e) => handleCategoryChange(e, cat)} key={cat} 
+          className="text-sm border-primary border-2 text-primary w-fit p-2 rounded-lg hover:bg-slate-100">
       {cat}
     </button>
   )

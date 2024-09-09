@@ -7,7 +7,7 @@ const createBanner = (image: string) => {
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    height: "45vh",
+    height: "20vh",
     width: "100%",
   };
   return bgImage;

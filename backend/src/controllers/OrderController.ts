@@ -8,6 +8,7 @@ export class OrderController {
 
   async getPaymentForm(request: Request, response: Response) {
     const { clientData, totalPrice, orderItems } = request.body;
+    console.log(orderItems[0], "OrderItems length");
     try {
       const data = await this.orderService.getPaymentForm(
         clientData,
@@ -16,20 +17,13 @@ export class OrderController {
       );
       console.log("PaymentForm data response:", data);
       if (data.success) {
-        response
-          .json({
-            ...data
-          })
-          .status(200);
+        response.json(data).status(200);
       } else {
-        response
-          .json({
-            message: "payment request failed with error: " + data.errorCode,
-            error: data.errorMessage,
-            url: null,
-            success: false,
-          })
-          .status(400);
+        const errorResponse = {
+          message: "Payment gateway error",
+          error: data.errorMessage + " with error code: " + data.errorCode,
+        };
+        response.json(errorResponse).status(400);
       }
     } catch (error: any) {
       response

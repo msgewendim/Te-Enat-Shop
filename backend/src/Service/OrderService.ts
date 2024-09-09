@@ -32,18 +32,18 @@ export class OrderService {
     // check if token is expired
     MORNING_TOKEN =  await checkToken(MORNING_TOKEN.token, MORNING_TOKEN.expiresAt)
     // save order information to Database
-    const newOrderId = await this.orderDal.addOrder(
-      userInfo,
-      products,
-      totalPrice
-    );
+    // const newOrderId = await this.orderDal.addOrder(
+    //   userInfo,
+    //   products,
+    //   totalPrice
+    // );
     const formPayload = getCheckoutFormPayload(
       "payment form",
       totalPrice,
       pluginId,
       userInfo,
       products,
-      newOrderId.toString()
+      "89898" // newOrderId.toString()
     );
     const config = {
       method: "POST",
@@ -62,6 +62,7 @@ export class OrderService {
         console.log("Failed to fetch payment gateway", status);
         throw new Error(`HTTP error! status: ${status}`);
       }
+      // console.log("Payment gateway returned data: " + JSON.parse(data));
       return data as PaymentFormResponse;
     } catch (error) {
       console.log("Payment gateway error: ", error);

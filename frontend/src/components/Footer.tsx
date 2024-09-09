@@ -1,215 +1,100 @@
 import { Link } from "react-router-dom"
-import Instagram from "/instagram.svg"
-import Tweeter from "/tweeter.svg"
-import Youtube from "/youtube.svg"
 
 const Footer = () => {
 
   return (
-    <>
-      <footer className="bg-gray-100 dark:bg-gray-900">
-        <div className="max-w-[1200px] mx-auto p-2 dark:text-gray-400">
-          <div className="h-32 flex items-center m-3 p-4 justify-between bg-blue-200 rounded-xl text-primary dark:bg-#37B5DE dark:text-white ">
-            <h1 className="font-semibold dark:text-white text-2xl ml-10">
-              Subscribe to <br /> our Newsletter
-            </h1>
-            <div className="p-3 gap-2">
-              <input type="text" placeholder="Your Email Address" className="rounded p-2 placeholder:text-sm" />
-              <button className="rounded p-2 ml-2 bg-primary text-white">Subscribe</button>
-            </div>
-            <div className="grid md:grid-cols-3 py-5">
+    <footer className="bg-gray-100">
+      <div className="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 lg:pt-24">
+        <div className="absolute end-4 top-4 sm:end-6 sm:top-6 lg:end-8 lg:top-8">
+          <div className="flex flex-row items-center self-center justify-center flex-shrink-0 shadow-md lg:justify-end">
+            <div className="flex flex-row">
+              <input type="text" placeholder="example@email.com" className="w-3/5 p-3 rounded-l-lg sm:w-2/3" />
+              <button type="button" className="w-2/5 p-3 font-semibold rounded-r-lg sm:w-1/3 dark:bg-violet-600 dark:text-gray-50">Subscribe</button>
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 col-span-2 md:pl-10 ">
-            <div className="flex flex-col m-2 pb-2">
-              <h3 className="font-semibold text-lg dark:text-white text-center">Contact Us</h3>
-              <div className="">
-                <span className="font-bold text-md">Email</span>
-                <p className="pl-2 ">needhelp@Tenat.com</p>
-              </div>
-              <div className="">
-                <span className="font-bold text-md">Phone</span>
-                <p className="pl-2 ">+972-542-1221-132</p>
-              </div>
-              <div className="">
-                <span className="font-bold text-md">Address</span>
-                <p className="pl-2 ">Menahem-Begin, TA Israel, 213411</p>
-              </div>
-            </div>
-            <div className="border-l-2 border-r-2 border-gray-200">
+        </div>
+
+        <div className="lg:flex lg:items-end lg:justify-between">
+          <div>
+            {/* Social Icons */}
+            <div className="flex justify-center text-teal-600 lg:justify-start">
               <div className="flex justify-center gap-2">
                 <img alt="" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" className="h-8 w-auto" />
                 <h3 className="text-lg dark:text-white text-center font-bold">Te-Enat</h3>
               </div>
-              <p className="text-sm text-center">Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
-              <div className="flex justify-center items-center mt-3">
-                <Link to="#" className="p-2 mt-2">
-                  <img src={Instagram} alt="instagram-icon" className="" width={24} />
-                </Link>
-                <Link to="#" className="p-2">
-                  <img src={Tweeter} alt="tweeter-icon" width={24} />
-                </Link>
-                <Link to="#" className="p-2 ">
-                  <img src={Youtube} alt="youtube-icon" width={24} />
-                </Link>
-              </div>
             </div>
-            <div className="px-4">
-              <h3 className="font-semibold text-lg dark:text-white text-center">Support</h3>
-              <ul className="pl-2 mb-1 text-gray-600 dark:text-gray-400 list-none ">
-                <li><Link to="#">Terms & Conditions</Link></li>
-                <li><Link to="#">Privacy Policy</Link></li>
-                <li><Link to="#">Refund Policy</Link></li>
-                <li><Link to="#">FAQ</Link></li>
-              </ul>
-            </div>
+
+            <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 lg:text-left">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt consequuntur amet culpa
+              cum ibague neue.
+            </p>
           </div>
-          <div className="flex justify-center items-center py-5 text-gray-600 dark:text-gray-400 border-t-2 mt-2">
-            <p className="text-sm">&copy; 2023 Te-Enat. All rights reserved.</p>
-          </div>
+          {/* Links to Pages */}
+          <ul
+            className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:mt-0 lg:justify-end lg:gap-12"
+          >
+            <li>
+              <Link className="text-gray-700 transition hover:text-gray-700/75" to="/about"> About </Link>
+            </li>
+
+            <li>
+              <Link className="text-gray-700 transition hover:text-gray-700/75" to="/products"> Shop </Link>
+            </li>
+
+            <li>
+              <Link className="text-gray-700 transition hover:text-gray-700/75" to="/recipes"> Recipes </Link>
+            </li>
+
+            <li>
+              <Link className="text-gray-700 transition hover:text-gray-700/75" to="/"> Home </Link>
+            </li>
+          </ul>
         </div>
-      </footer>
-    </>
+        <div className="flex justify-between items-center">
+
+          <ul className="mt-12 flex justify-center gap-6 md:gap-8">
+            <li>
+              <a
+                href="#"
+                rel="noreferrer"
+                target="_blank"
+                className="text-gray-700 transition hover:text-gray-700/75"
+              >
+                <span className="sr-only">Facebook</span>
+                <svg className="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill-rule="evenodd"
+                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="#"
+                rel="noreferrer"
+                target="_blank"
+                className="text-gray-700 transition hover:text-gray-700/75"
+              >
+                <span className="sr-only">Instagram</span>
+                <svg className="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </a>
+            </li>
+          </ul>
+          <p className="mt-12 text-center text-sm text-gray-500 lg:text-right">
+            Copyright &copy; 2024. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const Footer = () => {
-//   return (
-//     <footer className="w-xl">
-//       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-//         <div className="flex justify-between flex-col py-14 gap-14 lg:gap-20 min-[1124px]:flex-row">
-//           <div className="block  xl:max-w-lg">
-//             <p className="text-lg text-gray-500 mb-12 text-center min-[1124px]:text-left">
-//               Trusted in more than 100 countries & 5 million customers.
-//             </p>
-//             <div className="relative lg:flex-row gap-3 flex-col flex items-center justify-between max-[1124px]:max-w-2xl max-[1124px]:mx-auto ">
-//               <span className="absolute left-5 top-4 lg:top-5"><svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-//                 <path d="M1.25201 4L7.15881 7.89529C9.26862 9.16117 10.3235 9.79412 11.4825 9.76654C12.6416 9.73896 13.6652 9.05656 15.7124 7.69175L20.748 4M9 17H13C16.7712 17 18.6569 17 19.8284 15.8284C21 14.6569 21 12.7712 21 9C21 5.22876 21 3.34315 19.8284 2.17157C18.6569 1 16.7712 1 13 1H9C5.22876 1 3.34315 1 2.17157 2.17157C1 3.34315 1 5.22876 1 9C1 12.7712 1 14.6569 2.17157 15.8284C3.34315 17 5.22876 17 9 17Z" stroke="#4F46E5" strokeWidth="1.5" strokeLinecap="round" />
-//               </svg>
-//               </span>
-//               <input type="text" name="email" className="py-3 px-5 h-14 pl-14 border border-gray-300 rounded-full text-lg text-gray-900 placeholder:text-gray-400 focus:outline-none flex-1 w-full " placeholder="Contact" />
-//               <button type="submit" className="h-14 py-3.5 px-7 bg-indigo-600 transition-all duration-500 shadow-md rounded-full text-white font-semibold hover:bg-indigo-700">Subscribe</button>
-//             </div>
-//           </div>
-//           <div className="flex flex-col items-center sm:items-start min-[530px]:flex-row max-[1124px]:w-xl max-[1124px]:justify-between gap-12 xl:gap-24 max-[1124px]:max-w-2xl max-[1124px]:mx-auto relative">
-//             <div className="block absolute top-24 -left-20">
-//               <h4 className="text-lg text-gray-900 font-medium mb-7 text-center lg:text-left">TENAT</h4>
-//             </div>
-//             <div className="block border-x-2 p-10">
-//               <h4 className="text-lg text-gray-900 font-medium mb-7 text-center lg:text-left">מוצרים</h4>
-//               <ul className="grid gap-6 text-center lg:text-left" >
-//                 <li><Link to="#" className="text-gray-600 hover:text-gray-900">תבלינים</Link></li>
-//                 <li><Link to="#" className="text-gray-600 hover:text-gray-900">מתכונים</Link></li>
-//                 <li><Link to="#" className="text-gray-600 hover:text-gray-900">סדנאות</Link></li>
-//               </ul>
-//             </div>
-//             <div className="block">
-//               <h4 className="text-lg text-gray-900 font-medium mb-7 text-center lg:text-left">Support</h4>
-//               <ul className="grid gap-6 text-center lg:text-left">
-//                 <li><Link to="#" className="text-gray-600 hover:text-gray-900">Customer Support</Link></li>
-//                 <li><Link to="#" className="text-gray-600 hover:text-gray-900">Privacy Policy</Link></li>
-//                 <li><Link to="#" className="text-gray-600 hover:text-gray-900">License</Link></li>
-//                 <li><Link to="#" className="text-gray-600 hover:text-gray-900">Terms & Conditions</Link></li>
-//               </ul>
-//             </div>
-//           </div>
-
-//         </div>
-//         <div className="py-9 border-t border-gray-200">
-//           <div className="flex items-center justify-center flex-col gap-8 lg:gap-0 sm:flex-row sm:justify-between">
-
-//             <span className="text-sm text-gray-500 ">
-//               © 2024, All rights reserved.
-//             </span>
-
-
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </footer>
-//   )
-// }
-
-export default Footer
+export default Footer;

@@ -112,17 +112,17 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         totalPrice,
         orderItems: orderItems,
       }
-      const response = await postOrdersV1PaymentsForm({
+      const { data, error } = await postOrdersV1PaymentsForm({
         client: localClient,
         body: body,
-      }) 
-      console.log(response , "payment form");
-      if (response.data?.success) {
-        setPaymentFormUrl(response.data.url)
-        console.log(paymentFormUrl, "payment form url");
-        window.location.href = paymentFormUrl
+      })
+      if (error) {
+        throw new Error(`Error fetching payment form: ${error}`)
+      }
+      if (data.success) {
+        setPaymentFormUrl(data.url)
       } else {
-        console.log("Payment Failed", response.error)
+        console.log("Couldn't get payment form", data.errorMessage)
       }
     } catch (error) {
       console.info(error);

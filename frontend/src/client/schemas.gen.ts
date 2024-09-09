@@ -187,6 +187,9 @@ export const $OrderItem = {
         quantity: {
             type: 'integer'
         },
+        size: {
+            type: 'string'
+        },
         price: {
             type: 'number',
             format: 'float'
@@ -457,9 +460,13 @@ export const $CartItem = {
         quantity: {
             type: 'integer',
             description: 'Quantity of the product in the cart'
+        },
+        size: {
+            type: 'string',
+            description: 'Size of the product in grams or kg'
         }
     },
-    required: ['product', 'quantity']
+    required: ['product', 'quantity', 'size']
 } as const;
 
 export const $Recipe = {

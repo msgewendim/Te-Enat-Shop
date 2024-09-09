@@ -34,33 +34,36 @@ const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<
                   </button>
                 </div>
               </TransitionChild>
-              <div className="flex flex-col gap-2 justify-between h-full p-2 overflow-y-hidden bg-white py-6 shadow-xl">
+              <div className="flex flex-col max-w-3xl gap-2 p-6 space-y-4 sm:p-10 dark:bg-gray-50 dark:text-gray-800 justify-between h-full overflow-y-hidden bg-gray-200 py-6 shadow-xl">
                 {/* Title */}
-                <div className="grid-rows-1 px-4 sm:px-6 ">
+                <div className="px-4 sm:px-6 ">
                   <DialogTitle className="text-center font-bold leading-3 text-3xl text-primary ">
                     Shopping Cart
                   </DialogTitle>
                   {/* <hr className='h-1 bg-teal-800' /> */}
                 </div>
                 {/* Products */}
-                <div className="min-h-[400px] relative mt-6 px-4 sm:px-6">
-                  <div className="mt-4 space-y-2">
-                    <CartItemsList />
-                  </div>
-                </div>
+                <CartItemsList />
 
                 {/* checkout */}
-                <div className="flex justify-between items-center mx-4 text-center">
-                  <div className="capitalize text-xl font-semibold text-center">
-                    total price : {totalPrice}₪
+                <div className="flex items-center justify-between">
+
+                  <div className="flex justify-start space-x-4 mt-4">
+                    {/* <button type="button" className="px-6 py-2 border rounded-md dark:border-secondary">Back
+                    <span className="sr-only sm:not-sr-only">to shop</span>
+                    </button> */}
+                    <Link
+                      to="/checkout"
+                      onClick={() => setOpenCart(false)}
+                      type="button"
+                      className="px-6 py-2 border bg-teal-900 text-white rounded-md dark:bg-secondary dark:text-gray-50 dark:border-primary">
+                      <span className="sr-only sm:not-sr-only ">המשך</span> לתשלום
+                    </Link>
                   </div>
-                  <Link
-                    onClick={() => setOpenCart(false)}
-                    to="/checkout"
-                    className="rounded bg-teal-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-teal-800"
-                  >
-                    Checkout
-                  </Link>
+                  <div className="space-y-2">
+                    <span className="font-medium text-xl border p-2 border-teal-500 rounded-lg mb-1 ">₪ {totalPrice}</span>
+                    <p className="text-sm dark:text-gray-600 text-left">לא כולל דמי משלוח</p>
+                  </div>
                 </div>
               </div>
             </DialogPanel>

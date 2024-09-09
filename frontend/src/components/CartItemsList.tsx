@@ -4,27 +4,24 @@ import SingleCartItem from "./SingleCartItem"
 
 const CartItemsList = () => {
   const { cartItems } = useContext(AppContext)
-  
-  return (
-    <div className="grid">
-      <ul className="space-y-4 h-[350px] overflow-y-scroll">
-        {
-          cartItems && cartItems.map(({ product, quantity }, index) => {
-            return (
-              <SingleCartItem key={index} product={product} quantity={quantity} />
-            )
-          })
-        }
-      </ul>
 
-    </div>
+  return (
+    <ul className="flex flex-col divide-y dark:divide-gray-300 overflow-y-scroll max-h-[500px]">
+      {
+        cartItems && cartItems.map(({ product, quantity, size }, index) => {
+          return (
+            <SingleCartItem key={index} product={product} quantity={quantity} size={size} />
+          )
+        })
+      }
+    </ul>
   )
 }
 
 export default CartItemsList
-  // cartItems.forEach(({ product, quantity }) => {
-  //   setTotalPrice(totalPrice + product.price * quantity)
-  // })
+// cartItems.forEach(({ product, quantity }) => {
+//   setTotalPrice(totalPrice + product.price * quantity)
+// })
 {/* <div className="mt-0.5 space-y-px text-[10px] text-gray-600">
                                   <div className=''>
                                     <ul className="flex items-center justify-center g-2">Size: 

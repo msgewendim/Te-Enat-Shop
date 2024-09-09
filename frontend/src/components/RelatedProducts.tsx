@@ -48,7 +48,7 @@ const RelatedProducts = ({ category, }: { category: string }) => {
           </button>
           <div className="flex gap-4 mt-3">
             {relatedProducts.splice(loadMoreRelatedProducts.start, loadMoreRelatedProducts.end)?.map(({ _id, name, images }) => (
-              <Link to={`/products/${_id}`} key={_id} className="flex flex-col gap-4 justify-between items-center">
+              <Link to={`/products/${_id}/info`} key={_id} className="flex flex-col gap-4 justify-between items-center">
                 <img src={images[0]} alt={name} className="object-cover w-32 h-32 rounded-lg" />
                 <h2 className="text-xl ml-2 text-primary capitalize font-semibold">
                   {name}

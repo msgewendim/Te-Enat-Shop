@@ -284,6 +284,8 @@ components:
           type: string
         quantity:
           type: integer
+        size:
+          type: string
         price:
           type: number
           format: float
@@ -511,9 +513,13 @@ components:
         quantity:
           type: integer
           description: Quantity of the product in the cart
+        size:
+          type: string
+          description: Size of the product in grams or kg
       required:
         - product
         - quantity
+        - size
 
     Recipe:
       type: object

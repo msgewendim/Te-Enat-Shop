@@ -87,31 +87,31 @@ export const topRecipes = [recipe, recipe, recipe];
 export const topCategories: Category[] = [
   {
     _id: "123",
-    name: "Flour",
+    name: "קמחים",
     images: [kimem],
     recipes: [recipe._id, recipe._id],
   },
   {
     _id: "124",
-    name: "Spice",
+    name: "תבלינים",
     images: [kurkum],
     recipes: [recipe._id, recipe._id],
   },
   {
     _id: "125",
-    name: "Soup",
+    name: "קטניות",
     images: [soup],
     recipes: [recipe._id, recipe._id],
   },
   {
     _id: "126",
-    name: "Dessert",
+    name: "משקאות",
     images: [dessert],
     recipes: [recipe._id, recipe._id],
   },
   {
     _id: "126",
-    name: "Beverages",
+    name: "כלי מטבח",
     images: [dessert],
     recipes: [recipe._id, recipe._id],
   },
