@@ -1,12 +1,6 @@
 import banner from "../assets/banner.png";
-import beyaynetu from "../assets/beyaynetu.png";
-import teff_brownie from "../assets/teff_brownie.png";
-import krep from "../assets/cheese_krep.png";
-import mushrooms_tibis from "../assets/mushrooms_tibis.png";
-import mushrooms_wot from "../assets/mushrooms_wot.png";
+import beyaynetu from "../assets/beyaynetu.jpg";
 import rollInjera from "../assets/roll-injera.jpg";
-import hummus_full from "../assets/hummus_full.png";
-import gomen from "../assets/gomen.png";
 import tavlinim from "../assets/tavlinim.jpg";
 import testimonial from "../assets/testimonial.svg";
 import productPagePhoto from "../assets/singlePagePhoto.png";
@@ -24,18 +18,12 @@ import enjera from "../assets/enjera.jpg";
 import kitfo from "../assets/kitfo.jpg";
 import shiro from "../assets/shiro.jpg";
 export {
-  teff_brownie,
-  gomen,
   productPagePhoto,
   testimonial,
   banner,
   beyaynetu,
-  mushrooms_tibis,
-  mushrooms_wot,
   rollInjera,
-  hummus_full,
   tavlinim,
-  krep,
   menu,
   cookies,
   dessert,

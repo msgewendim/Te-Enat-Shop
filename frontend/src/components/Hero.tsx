@@ -1,11 +1,8 @@
-import { beyaynetu, hummus_full, krep, rollInjera, tavlinim, teff_brownie } from "../utils/data"
+import { awaze, beyaynetu, cookies, rollInjera, shiro, tavlinim } from "../utils/data"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 const homePageImages = [
-  beyaynetu,
-  hummus_full,
-  krep,
-  teff_brownie
+  beyaynetu,shiro, awaze, cookies
 ]
 const Hero = () => {
   let randomIndex = Math.floor(Math.random() * homePageImages.length)
