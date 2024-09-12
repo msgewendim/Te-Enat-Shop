@@ -3,7 +3,7 @@ import PopupProduct from "./PopupProduct"
 import { Product } from "../client/types.gen";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ product, imageSize = 32, }: { product: Product, imageSize?: number }) => {
+const ProductCard = ({ product }: { product: Product }) => {
   const [openProductId, setOpenProductId] = useState("");
   const { images, name, categories, _id, price } = product
   const handleOpenPopup = (productId: string) => {
@@ -14,9 +14,9 @@ const ProductCard = ({ product, imageSize = 32, }: { product: Product, imageSize
     setOpenProductId("");
   };
   return (
-    <div className="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-      <div onClick={() => handleOpenPopup(_id)} className="flex flex-col justify-center items-center rounded-t-xl">
-        {images && <img src={images[0]} alt={name} className={`min-w-${imageSize} rounded-t-xl min-h-40 flex-1 cursor-pointer`} />}
+    <div className="group flex flex-col max-w-[280px] bg-white shadow-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+      <div className="max-h-44 h-40">
+        {images && <img onClick={() => handleOpenPopup(_id)} src={images[0]} alt={name} className="w-fit flex-1 h-40 cursor-pointer" />}
       </div>
       {openProductId === _id && (
         <PopupProduct
@@ -39,14 +39,14 @@ const ProductCard = ({ product, imageSize = 32, }: { product: Product, imageSize
         </span>
       </div>
       <div className="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">
-        <button 
-          onClick={() => handleOpenPopup(_id)} 
-          className="w-full text-white py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-primary shadow-sm hover:bg-[#246580] focus:outline-none focus:bg-[#186787] disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" >
-          Buy
-        </button>
-        <Link to={`/products/${_id}/info`} className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-slate-200 text-gray-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:bg-slate-100 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" >
-          Learn More
+        <Link to={`/products/${_id}/info`} className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium bg-primary text-white shadow-sm hover: focus:outline-none focus:bg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" >
+          קרא עוד
         </Link>
+        <button
+          onClick={() => handleOpenPopup(_id)}
+          className="w-full text-white py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium  bg-btnColor2 shadow-sm hover:bg-hoverBtnColor2 focus:outline-none focus:bg-[#6da605] disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" >
+          הוסף לעגלה
+        </button>
       </div>
     </div>
   )

@@ -1,36 +1,67 @@
-// import { useState } from "react"
-import { useTranslation } from "react-i18next"
-import Card from "./Card"
-import { tavlinim, rollInjera, veggie } from "../utils/data"
-
+import { beyaynetu, hummus_full, krep, rollInjera, tavlinim, teff_brownie } from "../utils/data"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+const homePageImages = [
+  beyaynetu,
+  hummus_full,
+  krep,
+  teff_brownie
+]
 const Hero = () => {
-  // const [imageId, setImageId] = useState(veggie)
-  const { t } = useTranslation()
+  let randomIndex = Math.floor(Math.random() * homePageImages.length)
+  const [imageId, setImageId] = useState(homePageImages[randomIndex])
+  useEffect(() => {
+    setImageId(homePageImages[randomIndex])
+  }, [randomIndex])
+
+  setInterval(() => {
+    setTimeout(() => {
+      if (randomIndex >= homePageImages.length) {
+        randomIndex = 0
+      } else {
+        randomIndex++
+      }
+    }, 5000);
+  }, 5000);
   return (
     <>
-      <div style={{ backgroundColor: '#D2FCFF' }}
-        className="min-h-[550px] sm:min-h-[600px] bg-gray-100 dark:bg-gray-950 duration-200 flex justify-center items-center"
+      <div style={{ backgroundColor: "#ffdf40" }}
+        className="min-h-[80vh] sm:min-h-[60vh] bg-gray-100 dark:bg-gray-950 duration-200 flex justify-start items-start"
       >
-        <div className="container pb-8 sm:pb-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2">
-            {/* text content section */}
-            <div className="flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative">
-              {/* <div className="absolute -top-[20px] left-[20px]"> */}
-              <h1 className="text-5xl sm:text-4xl font-bold text-primary ml-4 mb-8">
-                We Do Creative <br />Things For Success</h1>
-              <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, molestias libero? Aut consequuntur deleniti consequatur neque dignissimos quae distinctio eos.</p>
-              {/* </div> */}
-              <div className="flex gap-4 m-4">
-                <Card imageUrl={tavlinim} title={t("shop")} link="products" />
-                <Card imageUrl={rollInjera} title={t("recipes")} link="recipes" />
-              </div>
+        {/* <div className=""> */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 mb-6">
+          {/* Image section */}
+          <div className="sm:order-1 order-2 min-h-[650px] sm:min-h-[450px] flex justify-center items-center relative">
+            {/* main image section */}
+            <div className="relative">
+              <img src={imageId} alt="" className="ease-in-out duration-150 w-[800px] sm:w-[550px] mx-auto" />
             </div>
-            {/* Image section */}
-            <div className="col-span- sm:order-2 min-h-[650px] sm:min-h-[450px] flex justify-center items-center relative">
-              {/* main image section */}
-              <div className="">
-                <img src={veggie} alt="" className="w-[600px] sm:w-[550px] mx-auto spin" />
-              </div>
+          </div>
+          {/* text content section */}
+          <div className="flex flex-col mt-14 mr-6 items-end gap-4 pt-2 sm:pt-0 text-right order-1 sm:order-1 relative">
+            <h1 dir="rtl" className="lg:text-4xl text-right text-3xl font-bold text-primary ml-4">
+              חדשנות ויצירתיות במטבח                <br />
+              <span className="indent">
+                מוצרים ומתכונים מלאי תרבות
+              </span>
+            </h1>
+            <p dir="rtl" className="text-sm text-emerald-950 mb-2">
+              אנחנו מביאים לכם את השילוב המושלם בין מסורת לטעמים חדשניים. כל מוצר ומתכון שלנו משלב יצירתיות וחדשנות, ומוסיף נגיעה חדשה למטבח שלכם.
+            </p>
+            {/* CARDS */}
+            <div className="flex gap-4">
+              <Link to="/recipes" className="cursor-pointer" >
+                <img className="object-cover rounded-t-lg h-32 w-40" src={rollInjera} />
+                <p className="text-white text-xl font-semibold text-center bg-emerald-700 rounded-b-md hover:text-gray-300">
+                  מתכונים
+                </p>
+              </Link>
+              <Link to="/products" className="cursor-pointer" >
+                <img className="object-cover rounded-t-lg h-32 w-40" src={tavlinim} />
+                <p className="text-white text-xl font-semibold text-center bg-emerald-700 rounded-b-md hover:text-gray-300">
+                  חנות
+                </p>
+              </Link>
             </div>
           </div>
         </div>

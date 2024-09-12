@@ -5,16 +5,14 @@ import { Product } from "../client/types.gen"
 import { useContext, useEffect, useState, MouseEvent } from "react"
 import { AppContext } from "../providers/interface/context"
 
-const RelatedProducts = ({ category, }: { category: string }) => {
+const RelatedProducts = ({ productCategory }: { productCategory: string }) => {
+  const { category, setCategory, getProducts } = useContext(AppContext)
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([])
   const [loadMoreRelatedProducts, setLoadMoreRelatedProducts] = useState({
     start: 1,
     end: 4,
   })
-  const { getProducts } = useContext(AppContext)
-  const query = {
-    // category: category,
-  }
+
   const handleLoad = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const { name } = e.currentTarget
@@ -30,12 +28,15 @@ const RelatedProducts = ({ category, }: { category: string }) => {
       }))
     }
   }
+  setCategory(productCategory)
   useEffect(() => {
-    const fetchProducts = async () => {
-      const products = await getProducts(query)
+    getProducts({
+      category: productCategory
+    }).then((products) => {
+      // console.log(products, "products with category : " + productCategory);
+      // console.log(relatedProducts, "related with category : " + productCategory);
       setRelatedProducts(products as Product[])
-    }
-    fetchProducts()
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category])
   return (

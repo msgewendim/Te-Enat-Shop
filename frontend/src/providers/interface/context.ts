@@ -62,6 +62,7 @@ interface IContext {
   setCartItems: (product: CartItem[]) => void;
   setOrderItems: (item: OrderItem[]) => void;
   setPaymentFormUrl: (url: string) => void;
+  setProducts : (products : Product[]) => void;
 }
 
 export const AppContext = createContext<IContext>({
@@ -85,4 +86,5 @@ export const AppContext = createContext<IContext>({
   setFilter: () => {},
   setPage: () => {},
   setCategory: () => {},
+  setProducts: () => {},
 });

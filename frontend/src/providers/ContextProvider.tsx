@@ -14,12 +14,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [orderItems, setOrderItems] = useState<OrderItem[]>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
-  const query: query = {
-    page,
-    category,
-    filter,
-    limit: 9,
-  }
+
   const getProducts = async (query?: query) => {
     try {
       const { data, error } = await getAllProducts({
@@ -29,7 +24,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       if (error) {
         throw new Error(`Field to fetch products ${error}`);
       }
-      setProducts(data as Product[])
       return data as Product[];
     } catch (error) {
       console.info(error)
@@ -100,7 +94,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      await getProducts(query)
+      await getProducts({
+        page, limit: 9, filter, category
+      })
     } catch (error) {
       console.info(error);
     }
@@ -132,17 +128,16 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     return cartItems.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0)
   }
   useEffect(() => {
-    getProducts(query)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, filter, category])
-
+    getProducts().then((products) => setProducts(products as Array<Product>))
+  }, [])
   useEffect(() => {
+    sessionStorage.setItem('cartItems', JSON.stringify(cartItems))
     setTotalPrice(parseFloat(getTotalPrice().toFixed(2)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartItems])
 
-
   const values = {
+    setProducts,
     getProducts,
     getProductById,
     addProduct,

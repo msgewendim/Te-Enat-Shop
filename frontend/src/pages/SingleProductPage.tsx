@@ -92,7 +92,7 @@ const SingleProduct = () => {
           <img src={videoProduct} alt="" width={700} />
         </div>
         {/* Product related products */}
-        <RelatedProducts category={categories[0]} />
+        <RelatedProducts productCategory={categories[0]} />
       </div>
     </main>
   )

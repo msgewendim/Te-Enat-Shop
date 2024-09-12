@@ -1,24 +1,15 @@
-import { useContext, MouseEvent } from "react"
-import { Product } from "../client"
+import { useContext } from "react"
+import { CartItem } from "../client"
 import { AppContext } from "../providers/interface/context"
+import { removeItemFromCartList } from "../utils/helperFunctions"
 
-interface SingleCartItemProps {
-  product: Product
-  quantity: number
-  size: string
-}
-const SingleCartItem = ({ product, quantity, size }: SingleCartItemProps) => {
+const SingleCartItem = ({ product, quantity, size }: CartItem) => {
   const { cartItems, setCartItems } = useContext(AppContext)
   const { name, price, images } = product
-  const handleRemoveItem = (e: MouseEvent<HTMLButtonElement>, item: Product) => {
-    e.preventDefault()
-    const updatedCartItems = cartItems.filter(({ product }, quantity) => {
-      if (product._id === item._id && quantity > 1) {
-        quantity--
-      } else if (product._id === item._id && quantity === 1) {
-        return false
-      }
-    })
+  const handleRemoveItem = (item: CartItem) => {
+    // console.log(cartItems);
+    const updatedCartItems = removeItemFromCartList(cartItems, item)
+    sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
     setCartItems(updatedCartItems)
   }
   return (
@@ -47,7 +38,7 @@ const SingleCartItem = ({ product, quantity, size }: SingleCartItemProps) => {
             </div>
           </div>
           <div className="flex text-sm divide-x">
-            <button type="button" className="flex items-center px-2 py-1 pl-0 space-x-1" onClick={(e) => handleRemoveItem(e, product)}>
+            <button type="button" className="flex items-center px-2 py-1 pl-0 space-x-1" onClick={() => handleRemoveItem({ product, size, quantity })}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-4 h-4 fill-current">
                 <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
                 <rect width="32" height="200" x="168" y="216"></rect>

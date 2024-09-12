@@ -16,7 +16,7 @@ const Recipes = () => {
 
   return (
     <main>
-      <Banner image={RecipesBanner} text="Discover Our Recipes" />
+      <Banner image={RecipesBanner} text="גלה את המתכונים שלנו" />
       {/* Add your recipes here */}
       <div className="m-24 grid grid-cols-1 md:grid-cols-2 items-center justify-center gap-8 ml-20 -mr-4">
         {recipes.map(({ id, title, description, image, date }) =>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import DarkMode from './DarkMode';
-import { useTranslation } from 'react-i18next';
 import SwitchLanguage from './SwitchLang';
 import Cart from '../pages/Cart';
 import { AppContext } from '../providers/interface/context';
@@ -12,7 +11,6 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [openCart, setOpenCart] = useState(false)
   const { cartItems } = useContext(AppContext)
-  const { t } = useTranslation()
   return (
     <>
       <header className="shadow-md bg-white dark:bg-gray-900 dark:text-white duration-200">
@@ -26,18 +24,18 @@ const Navbar = () => {
               </Link>
             </div>
             {/* Navbar Elements */}
-            <div className="hidden lg:flex lg:gap-x-8">
+            <div dir='rtl' className="hidden lg:flex lg:gap-x-8">
               <Link to="/" className="inline-block text-md font-medium text-primary hover:text-secondary dark:text-white">
-                {t('home')}
+                עמוד הבית
               </Link>
               <Link to="/products" className="inline-block text-md font-medium text-primary hover:text-secondary dark:text-white">
-                {t('shop')}
+                חנות
               </Link>
               <Link to="/recipes" className="inline-block text-md font-medium text-primary dark:text-white hover:text-secondary">
-                {t('recipes')}
+                מתכונים
               </Link>
               <Link to="/about" className="inline-block text-md font-medium text-primary dark:text-white hover:text-secondary">
-                {t('about')}
+                עלינו
               </Link>
             </div>
             {/* NAVBAR ICONS */}
@@ -104,36 +102,36 @@ const Navbar = () => {
               <div className="-my-6 divide-y divide-gray-500/10 bg ">
                 <div className="space-y-2 py-6">
                   <Link to="/" className="-mx-3 block rounded-lg px-3 py-2 text-sm font-semibold leading-7 hover:bg-secondary text-gray-900 dark:text-white" onClick={() => setMobileMenuOpen(false)}>
-                    {t('home')}
+                    עמוד הבית
                   </Link>
                   <Link
                     onClick={() => setMobileMenuOpen(false)}
                     to="/products"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-secondary"
                   >
-                    {t('shop')}
+                    חנות
                   </Link>
                   <Link
                     onClick={() => setMobileMenuOpen(false)}
                     to="/recipes"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-secondary"
                   >
-                    {t('recipes')}
+                    מתכונים
                   </Link>
                   <Link
                     onClick={() => setMobileMenuOpen(false)}
                     to="/about"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-secondary"
                   >
-                    {t('about')}
+                    עלינו
                   </Link>
-                  <Link
+                  {/* <Link
                     onClick={() => setMobileMenuOpen(false)}
                     to="/contact"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-secondary"
                   >
                     {t('contact')}
-                  </Link>
+                  </Link> */}
                 </div>
                 <div className="py-6 flex justify-between">
                   {/* <Link
