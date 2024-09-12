@@ -1,6 +1,6 @@
 import { Recipe } from "../client";
 import { Category } from "../client";
-import { cookies, dessert, kik, kimem, kimem2, kurkum, soup } from "./data";
+import { cookies, dessert, hotShiro, kik, kimem, kimem2, kurkum, hummus_full } from "./data";
 
 export const recipe : Recipe = {
   _id: "chocolate-chip-cookies",
@@ -88,7 +88,7 @@ export const topCategories: Category[] = [
   {
     _id: "123",
     name: "קמחים",
-    images: [kimem],
+    images: [hotShiro],
     recipes: [recipe._id, recipe._id],
   },
   {
@@ -100,7 +100,7 @@ export const topCategories: Category[] = [
   {
     _id: "125",
     name: "קטניות",
-    images: [soup],
+    images: [hummus_full],
     recipes: [recipe._id, recipe._id],
   },
   {

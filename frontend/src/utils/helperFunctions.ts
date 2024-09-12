@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { CartItem } from "../client";
 
 const createBanner = (image: string) => {
   const bgImage = {
@@ -52,7 +53,6 @@ const divideDescriptionInfo = (
   return [odd, even];
 };
 
-
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -63,4 +63,23 @@ const ScrollToTop = () => {
   return null;
 };
 
-export { createBanner, createRecipeCardImage, divideDescriptionInfo,  ScrollToTop};
+const removeItemFromCartList = (cartItems: CartItem[],itemToRemove: CartItem): CartItem[] => {
+  return cartItems.map((item) => {
+    if (
+      item.product._id === itemToRemove.product._id &&
+      item.size === itemToRemove.size) {
+        return {
+          ...item,
+          quantity: item.quantity - 1,
+        };
+      }
+      return item;
+    }).filter((item) => item.quantity > 0);
+}
+export {
+  createBanner,
+  createRecipeCardImage,
+  divideDescriptionInfo,
+  ScrollToTop,
+  removeItemFromCartList,
+};

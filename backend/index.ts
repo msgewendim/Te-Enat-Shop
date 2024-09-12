@@ -9,7 +9,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const App = express();
-const APP_REACT_URL = process.env.APP_REACT_URL || "http://localhost:5173"
 const port = 3005;
 App.use(express.json());
 App.use(activityLogger);
