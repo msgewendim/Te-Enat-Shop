@@ -9,7 +9,7 @@ const CartItemsList = () => {
     return <p className="text-center text-gray-500 dark:text-gray-400">No items in cart.</p>
   }
   return (
-    <ul className="flex flex-col justify-between divide-y no-scrollbar dark:divide-gray-300 overflow-y-scroll max-h-[500px]">
+    <ul role="list" className=" divide-y flex flex-col justify-between no-scrollbar overflow-y-scroll max-h-[500px] divide-gray-200">
       {
         cartItems && cartItems.map(({ product, quantity, size }, index) => {
           return (

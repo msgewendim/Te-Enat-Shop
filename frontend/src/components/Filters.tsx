@@ -5,6 +5,14 @@ import { Link } from "react-router-dom"
 
 const Filters = () => {
   const { setFilter, setCategory } = useContext(AppContext)
+  const categories = [
+    "קטגוריות",
+    "קמח",
+    "תבלינים",
+    "קטניות",
+    "שתייה",
+    "כלי מטבח"
+  ]
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value)
   }
@@ -14,8 +22,8 @@ const Filters = () => {
     const form = document.getElementById("form") as HTMLFormElement
     form.reset()
   }
-  return (
-    <form id="form" className="min-w-[70vw] sm:w-[80vw] w-[50vw] h-20 flex justify-end gap-2 sm:gap-10 items-center bg-slate-300 rounded-lg sm:px-14 px-2 relative">
+  return (  
+    <form id="form" className="sm:w-[80vw] w-full h-20 flex justify-center sm:justify-end gap-2 sm:gap-10 items-center bg-slate-300 rounded-lg sm:px-14 px-2">
       <Link to="/products">
         <button onClick={handleClearFilters} className="bg-primary text-white w-fit p-2 rounded-lg hover:bg-blue-950">
           נקה
@@ -40,7 +48,7 @@ const Filters = () => {
           </div>
         </fieldset>
         {/* Categories */}
-        <Categories />
+        <Categories categories={categories}/>
       </div>
     </form>
   )

@@ -23,5 +23,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-src/utils/data.ts
-src/utils/examples.ts
+./src/utils/data.ts
+./src/utils/examples.ts
+./src/i18n.ts

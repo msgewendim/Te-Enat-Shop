@@ -2,14 +2,7 @@ import { useContext, MouseEvent } from "react"
 import { AppContext } from "../providers/interface/context"
 import Select from "./Select"
 
-const Categories = () => {
-  const categories = [
-    "קמח",
-    "תבלינים",
-    "קטניות",
-    "שתייה",
-    "כלי מטבח"
-  ]
+const Categories = ({ categories }: { categories: Array<string> }) => {
   const { setCategory } = useContext(AppContext)
   const handleCategoryChange = (e: MouseEvent<HTMLButtonElement>, category: string) => {
     e.preventDefault()
@@ -17,7 +10,7 @@ const Categories = () => {
   }
   return (
     <div className="rounded-lg items-center">
-      <Select selectItems={categories} item={"קטגוריות"} handleClick={setCategory} classes="md:hidden" />
+      <Select selectItems={categories} item={categories[0]} handleClick={setCategory} classes="md:hidden" />
       <div className="md:flex gap-2 hidden">
         {
           categories.map((cat) => {

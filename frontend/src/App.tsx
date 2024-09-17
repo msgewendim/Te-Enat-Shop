@@ -1,24 +1,16 @@
 import { Outlet } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import i18next from 'i18next'
+import { Suspense } from 'react'
 
-function App() {
-  let direction : string 
-  const getLang = i18next.language
-  if (getLang === "en"){
-    direction = "ltr"
-  }else if (getLang === "he-IL"){
-    direction = "rtl"
-  }else{
-    direction = "ltr" // Default direction for other languages
-  }
+const App = () => {
+  
   return (
-    <div dir={direction}>
+    <Suspense fallback={<p>Loading...</p>}>
       <Navbar />
-      <Outlet/>
+      <Outlet />
       <Footer />
-    </div>
+    </Suspense>
   )
 }
 

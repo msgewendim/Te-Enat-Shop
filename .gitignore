@@ -24,3 +24,6 @@ dist-ssr
 *.sln
 *.sw?
 ngnix-file-server
+frontend/src/i18n.ts
+frontend/src/utils/examples.ts
+frontend/src/utils/data.ts

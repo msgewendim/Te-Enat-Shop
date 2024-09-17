@@ -6,7 +6,6 @@ import { AppContext } from '../providers/interface/context'
 import { Link } from 'react-router-dom'
 
 const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<boolean>>, openCart: boolean, }) => {
-  // const handleCheckout = () => {}
   const { totalPrice } = useContext(AppContext)
   return (
     <Dialog open={openCart} onClose={setOpenCart} className="relative z-10">
@@ -47,24 +46,33 @@ const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<
                   <CartItemsList />
 
                   {/* checkout */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex justify-start space-x-4 mt-4">
-                      {/* <button type="button" className="px-6 py-2 border rounded-md dark:border-secondary">Back
-                    <span className="sr-only sm:not-sr-only">to shop</span>
-                    </button> */}
-                      <Link
-                        to="/checkout"
-                        onClick={() => setOpenCart(false)}
-                        type="button"
-                        className="px-6 py-2 border bg-teal-900 text-white rounded-md dark:bg-secondary dark:text-gray-50 dark:border-primary">
-                        <span className="sr-only sm:not-sr-only ">המשך</span> לתשלום
-                      </Link>
-                    </div>
-                    <div className="space-y-2">
-                      <span className="font-medium text-xl border p-2 border-teal-500 rounded-lg mb-1 ">₪ {totalPrice}</span>
-                      <p className="text-md text-red-600 dark:text-gray-600 text-left underline">לא כולל דמי משלוח</p>
-                    </div>
+                  <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                  <div className="flex justify-between items-end text-base font-medium text-gray-900">
+                    <p>{totalPrice}₪</p>
+                    <p>סה"כ</p>
                   </div>
+                  <p className="mt-0.5text-right text-sm text-gray-500">לא כולל דמי משלוח </p>
+                  <div className="mt-6">
+                    <Link
+                      to="/checkout"
+                      className="flex items-center justify-center rounded-md border border-transparent bg-btnColor2 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hoverBtnColor2"
+                    >
+                      לתשלום
+                    </Link>
+                  </div>
+                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                    <p>
+                      <span aria-hidden="true"> &larr;</span>
+                      <button
+                        type="button"
+                        onClick={() => setOpenCart(false)}
+                        className="font-medium text-btnColor2 hover:text-hoverBtnColor2"
+                      >
+                        המשך בקנייה
+                      </button>
+                    </p>
+                  </div>
+                </div>
                 </div>
               </div>
             </DialogPanel>

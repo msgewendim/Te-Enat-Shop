@@ -3,6 +3,7 @@ import { client, deleteProductsById, getAllProducts, getProduct, postOrdersV1Pay
 import { CartItem, ClientDetails, OrderItem, Product } from "../client/types.gen";
 import { AppContext, query } from "./interface/context";
 import { localClient } from "../utils/client.config";
+import { getTotalPrice } from "../utils/helperFunctions";
 
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
@@ -11,7 +12,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [page, setPage] = useState<number>(1);
   const [paymentFormUrl, setPaymentFormUrl] = useState<string>("")
   const [filter, setFilter] = useState<string>("");
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<CartItem[]>(JSON.parse(sessionStorage.getItem("cartItems") as string) || [])
   const [orderItems, setOrderItems] = useState<OrderItem[]>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
 
@@ -124,16 +125,14 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       console.info(error);
     }
   }
-  const getTotalPrice = () => {
-    return cartItems.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0)
-  }
+  
   useEffect(() => {
+    // when the app is loaded at first => fetch the products
     getProducts().then((products) => setProducts(products as Array<Product>))
   }, [])
   useEffect(() => {
-    sessionStorage.setItem('cartItems', JSON.stringify(cartItems))
-    setTotalPrice(parseFloat(getTotalPrice().toFixed(2)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // when the cart items change, recalculate the total price
+    setTotalPrice(parseFloat(getTotalPrice(cartItems).toFixed(2)))
   }, [cartItems])
 
   const values = {
@@ -149,7 +148,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     products,
     orderItems,
     setOrderItems,
-    getTotalPrice,
     page,
     filter,
     category,

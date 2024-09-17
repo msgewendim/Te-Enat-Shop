@@ -56,6 +56,7 @@ interface IContext {
   paymentFormUrl: string;
   cartItems: CartItem[];
   totalPrice: number;
+  setTotalPrice: (price: number) => void;
   setFilter: (filter: string) => void;
   setPage: (newPage: number) => void;
   setCategory: (newCategory: string) => void;
@@ -86,5 +87,6 @@ export const AppContext = createContext<IContext>({
   setFilter: () => {},
   setPage: () => {},
   setCategory: () => {},
+  setTotalPrice: () => {},
   setProducts: () => {},
 });

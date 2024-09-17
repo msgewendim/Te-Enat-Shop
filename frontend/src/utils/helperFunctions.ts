@@ -10,6 +10,7 @@ const createBanner = (image: string) => {
     backgroundRepeat: "no-repeat",
     height: "20vh",
     width: "100%",
+    marginTop: "50px",
   };
   return bgImage;
 };
@@ -36,7 +37,9 @@ const createRecipeCardImage = (
   };
   return bgImage;
 };
-
+const getTotalPrice = (cartItems : CartItem[]) => {
+  return cartItems.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0)
+}
 // divide the nutrition of a product with in the description object
 const divideDescriptionInfo = (
   descriptions: Array<string[]>,
@@ -76,10 +79,28 @@ const removeItemFromCartList = (cartItems: CartItem[],itemToRemove: CartItem): C
       return item;
     }).filter((item) => item.quantity > 0);
 }
+
+const addItemToCartList = (cartList : CartItem[], newItem : CartItem) => {
+  const index = cartList.findIndex((item) => item.product._id === newItem.product._id && item.size === newItem.size);
+  if (index === -1) {
+    return [...cartList, newItem];
+  } else {
+    return [
+     ...cartList.slice(0, index),
+      {
+       ...cartList[index],
+        quantity: cartList[index].quantity + newItem.quantity,
+      },
+     ...cartList.slice(index + 1),
+    ];
+  }
+}
 export {
+  addItemToCartList,
   createBanner,
   createRecipeCardImage,
   divideDescriptionInfo,
   ScrollToTop,
   removeItemFromCartList,
+  getTotalPrice,
 };
