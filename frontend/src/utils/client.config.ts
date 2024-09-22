@@ -1,4 +1,3 @@
-import { createClient } from "@hey-api/client-fetch";
 import { client } from "../client/services.gen";
 
 const NODE_MODE = import.meta.env.NODE_MODE as string;
@@ -14,16 +13,16 @@ client.setConfig({
   },
   fetch,
 });
-export const localClient = createClient({
-  baseUrl: API_URL,
-  headers: {
-    Authorization: "Bearer <token_from_local_client>",
-    "Content-Type": "application/json",
-  },
-});
-localClient.interceptors.request.use((req, options) => {
-  if (options.url === "/products/{id}" && options.method === "GET") {
-    req.headers.set("Authorization", "Bearer <token_from_interceptor>");
-  }
-  return req;
-});
+// export const localClient = createClient({
+//   baseUrl: API_URL,
+//   headers: {
+//     Authorization: "Bearer <token_from_local_client>",
+//     "Content-Type": "application/json",
+//   },
+// });
+// localClient.interceptors.request.use((req, options) => {
+//   if (options.url === "/products/{id}" && options.method === "GET") {
+//     req.headers.set("Authorization", "Bearer <token_from_interceptor>");
+//   }
+//   return req;
+// });
