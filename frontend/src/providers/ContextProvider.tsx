@@ -9,6 +9,7 @@ import { getTotalPrice } from "../utils/helperFunctions";
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([])
   const [category, setCategory] = useState<string>("")
+  const [sizeIdx, setSizeIdx] = useState<number>(0)
   const [page, setPage] = useState<number>(1);
   const [paymentFormUrl, setPaymentFormUrl] = useState<string>("")
   const [filter, setFilter] = useState<string>("");
@@ -125,7 +126,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       console.info(error);
     }
   }
-  
+  // console.log(category ," current category");
   useEffect(() => {
     // when the app is loaded at first => fetch the products
     getProducts().then((products) => setProducts(products as Array<Product>))
@@ -150,6 +151,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setOrderItems,
     page,
     filter,
+    sizeIdx,
+    setSizeIdx,
     category,
     cartItems,
     totalPrice,

@@ -14,9 +14,18 @@ export type Product = {
      */
     shortDescription: string;
     /**
-     * The price of the product.
+     * An array of pricing and sizes options for the product.
      */
-    price: number;
+    pricing: Array<{
+        /**
+         * The weight option for the product.
+         */
+        size: string;
+        /**
+         * The price of the product for the given size.
+         */
+        price: number;
+    }>;
     /**
      * A list of image URLs for the product.
      */
@@ -24,7 +33,7 @@ export type Product = {
     /**
      * The average rating of the product.
      */
-    rate: number;
+    rate?: number;
     /**
      * A list of category names the product belongs to.
      */
@@ -37,10 +46,6 @@ export type Product = {
      * The availability status of the product.
      */
     availability: 'In Stock' | 'Out of Stock' | 'Pre-order';
-    /**
-     * A list of weight options for the product.
-     */
-    sizes?: Array<(string)>;
     /**
      * An optional list of benefits associated with the product.
      */
@@ -103,12 +108,12 @@ export type ClientDetails = {
 };
 
 export type OrderItem = {
-    description?: string;
-    quantity?: number;
-    size?: string;
-    price?: number;
-    currency?: string;
-    vatType?: number;
+    description: string;
+    quantity: number;
+    size: string;
+    price: number;
+    currency: string;
+    vatType: number;
 };
 
 export type ProductCardProps = {
@@ -248,6 +253,10 @@ export type CartItem = {
      * Size of the product in grams or kg
      */
     size: string;
+    /**
+     * Price of the product in the cart
+     */
+    price: number;
 };
 
 export type Recipe = {

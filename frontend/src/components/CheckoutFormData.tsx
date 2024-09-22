@@ -3,7 +3,7 @@ import { ClientDetails } from "../client/types.gen"
 import { AppContext } from "../providers/interface/context"
 
 const CheckoutFormData = () => {
-  const { totalPrice, orderItems, getPaymentForm} = useContext(AppContext)
+  const { totalPrice, orderItems, getPaymentForm } = useContext(AppContext)
   const [clientData, setClientData] = useState<ClientDetails>({
     name: "",
     emails: [],
@@ -53,47 +53,47 @@ const CheckoutFormData = () => {
   }
   return (
     <form className="mt-8" onSubmit={(e) => handleSubmit(e)}>
-            <div>
-              <h3 className="text-base text-gray-800 mb-4">Personal Details</h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <input type="text" placeholder="FullName" name="name"
-                    className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
-                </div>
-                <div>
-                  <input type="email" placeholder="Email" name="email"
-                    className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
-                </div>
-                <div>
-                  <input type="tel" placeholder="Phone No." max="10" name="mobile"
-                    className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
-                </div>
-              </div>
-            </div>
-            {/* Shipping Address Info */}
-            <div className="mt-8">
-              <h3 className="text-base text-gray-800 mb-4">Shipping Address</h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <input type="text" placeholder="Address" name="address"
-                    className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
-                </div>
-                <div>
-                  <input type="text" placeholder="City" name="city"
-                    className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
-                </div>
-                <div>
-                  <input type="text" placeholder="Zip Code" name="zip"
-                    className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-blue-600" />
-                </div>
-              </div>
-              {/* buttons */}
-              <div className="flex gap-4 max-md:flex-col mt-8">
-                <button type="button" className="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-transparent hover:bg-gray-100 border border-gray-300 text-gray-800 max-md:order-1">Cancel</button>
-                <button type="submit" className="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-blue-600 hover:bg-blue-700 text-white">Complete Purchase</button>
-              </div>
-            </div>
-          </form>
+      <div>
+        <h3 className="text-base text-gray-800 mb-4">פרטים אישיים</h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <input type="text" placeholder="שם מלא" name="name"
+              className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2" />
+          </div>
+          <div>
+            <input type="email" placeholder="מייל" name="email"
+              className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2" />
+          </div>
+          <div>
+            <input type="tel" placeholder="מס פלאפון" max="10" name="mobile"
+              className="px-4 py-3 text-right bg-gray-100 placeholder:text-right focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2" />
+          </div>
+        </div>
+      </div>
+      {/* Shipping Address Info */}
+      <div className="mt-8">
+        <h3 className="text-base text-gray-800 mb-4">כתובת למשלוח</h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <input type="text" placeholder="כתובת" name="address"
+              className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2" />
+          </div>
+          <div>
+            <input type="text" placeholder="עיר" name="city"
+              className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2" />
+          </div>
+          <div>
+            <input type="text" placeholder="מיקוד" name="zip"
+              className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2" />
+          </div>
+        </div>
+        {/* buttons */}
+        <div className="flex gap-4 max-md:flex-col mt-8">
+          <button type="button" className="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-transparent hover:bg-btnColor1 hover:text-white border border-gray-300 text-gray-800 max-md:order-1">ביטול</button>
+          <button type="submit" className="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-btnColor2 hover:bg-hoverBtnColor2 text-white">לתשלום</button>
+        </div>
+      </div>
+    </form>
   )
 }
 

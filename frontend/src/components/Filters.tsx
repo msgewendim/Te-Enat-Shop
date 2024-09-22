@@ -7,11 +7,11 @@ const Filters = () => {
   const { setFilter, setCategory } = useContext(AppContext)
   const categories = [
     "קטגוריות",
-    "קמח",
+    "כלי מטבח",
+    "משקאות",
+    "קמחים",
     "תבלינים",
-    "קטניות",
-    "שתייה",
-    "כלי מטבח"
+    "קטניות"
   ]
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value)

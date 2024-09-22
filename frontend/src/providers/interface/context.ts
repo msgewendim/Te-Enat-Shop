@@ -47,7 +47,9 @@ interface IContext {
     totalPrice: number,
     orderItems: OrderItem[]
   ) => Promise<
-    PostOrdersV1PaymentsFormError | PostOrdersV1PaymentsFormResponse | PostOrdersV1PaymentsFormData
+    | PostOrdersV1PaymentsFormError
+    | PostOrdersV1PaymentsFormResponse
+    | PostOrdersV1PaymentsFormData
   >;
   category: string;
   page: number;
@@ -56,6 +58,8 @@ interface IContext {
   paymentFormUrl: string;
   cartItems: CartItem[];
   totalPrice: number;
+  sizeIdx: number;
+  setSizeIdx: (sizeIdx: number) => void;
   setTotalPrice: (price: number) => void;
   setFilter: (filter: string) => void;
   setPage: (newPage: number) => void;
@@ -63,7 +67,7 @@ interface IContext {
   setCartItems: (product: CartItem[]) => void;
   setOrderItems: (item: OrderItem[]) => void;
   setPaymentFormUrl: (url: string) => void;
-  setProducts : (products : Product[]) => void;
+  setProducts: (products: Product[]) => void;
 }
 
 export const AppContext = createContext<IContext>({
@@ -77,6 +81,8 @@ export const AppContext = createContext<IContext>({
   category: "",
   page: 0,
   filter: "",
+  sizeIdx: 0,
+  setSizeIdx: () => {},
   cartItems: [],
   orderItems: [],
   totalPrice: 0,

@@ -7,7 +7,8 @@ export default {
       colors: {
         primary: "#274C5B",
         secondary: "#6da605",
-        bgColor1: "#f8efea",
+        secondary_btn: "#90b77d",
+        primary_btn: "#42855b",
         bgColor2: "#ded369",
         btnColor1: "#e0475b",
         btnColor2: "#166534",

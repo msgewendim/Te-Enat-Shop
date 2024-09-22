@@ -2,7 +2,7 @@
 
 export const $Product = {
     type: 'object',
-    required: ['_id', 'name', 'shortDescription', 'price', 'images', 'rate', 'categories', 'InStock', 'availability', 'weights'],
+    required: ['_id', 'name', 'shortDescription', 'pricing', 'images', 'categories', 'InStock', 'availability'],
     properties: {
         _id: {
             type: 'string',
@@ -19,11 +19,26 @@ export const $Product = {
             description: 'A brief description of the product.',
             example: 'A multi-functional gadget that makes your life easier.'
         },
-        price: {
-            type: 'number',
-            format: 'float',
-            description: 'The price of the product.',
-            example: 99.99
+        pricing: {
+            type: 'array',
+            description: 'An array of pricing and sizes options for the product.',
+            items: {
+                type: 'object',
+                properties: {
+                    size: {
+                        type: 'string',
+                        example: '100g',
+                        description: 'The weight option for the product.'
+                    },
+                    price: {
+                        type: 'number',
+                        format: 'float',
+                        description: 'The price of the product for the given size.',
+                        example: 19.99
+                    }
+                },
+                required: ['size', 'price']
+            }
         },
         images: {
             type: 'array',
@@ -58,14 +73,6 @@ export const $Product = {
             description: 'The availability status of the product.',
             enum: ['In Stock', 'Out of Stock', 'Pre-order'],
             example: 'In Stock'
-        },
-        sizes: {
-            type: 'array',
-            description: 'A list of weight options for the product.',
-            items: {
-                type: 'string',
-                example: '1kg'
-            }
         },
         features: {
             type: 'array',
@@ -202,7 +209,8 @@ export const $OrderItem = {
             type: 'number',
             default: 1
         }
-    }
+    },
+    required: ['description', 'quantity', 'size', 'price', 'currency', 'vatType']
 } as const;
 
 export const $ProductCardProps = {
@@ -464,9 +472,14 @@ export const $CartItem = {
         size: {
             type: 'string',
             description: 'Size of the product in grams or kg'
+        },
+        price: {
+            type: 'number',
+            format: 'float',
+            description: 'Price of the product in the cart'
         }
     },
-    required: ['product', 'quantity', 'size']
+    required: ['product', 'quantity', 'size', 'price']
 } as const;
 
 export const $Recipe = {

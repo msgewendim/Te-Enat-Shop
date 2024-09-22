@@ -37,9 +37,12 @@ const createRecipeCardImage = (
   };
   return bgImage;
 };
-const getTotalPrice = (cartItems : CartItem[]) => {
-  return cartItems.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0)
-}
+const getTotalPrice = (cartItems: CartItem[]) => {
+  return cartItems.reduce(
+    (acc, { quantity, price }) => acc + price * quantity,
+    0
+  );
+};
 // divide the nutrition of a product with in the description object
 const divideDescriptionInfo = (
   descriptions: Array<string[]>,
@@ -66,35 +69,44 @@ const ScrollToTop = () => {
   return null;
 };
 
-const removeItemFromCartList = (cartItems: CartItem[],itemToRemove: CartItem): CartItem[] => {
-  return cartItems.map((item) => {
-    if (
-      item.product._id === itemToRemove.product._id &&
-      item.size === itemToRemove.size) {
+const removeItemFromCartList = (
+  cartItems: CartItem[],
+  itemToRemove: CartItem
+): CartItem[] => {
+  return cartItems
+    .map((item) => {
+      if (
+        item.product._id === itemToRemove.product._id &&
+        item.size === itemToRemove.size
+      ) {
         return {
           ...item,
           quantity: item.quantity - 1,
         };
       }
       return item;
-    }).filter((item) => item.quantity > 0);
-}
+    })
+    .filter((item) => item.quantity > 0);
+};
 
-const addItemToCartList = (cartList : CartItem[], newItem : CartItem) => {
-  const index = cartList.findIndex((item) => item.product._id === newItem.product._id && item.size === newItem.size);
+const addItemToCartList = (cartList: CartItem[], newItem: CartItem) => {
+  const index = cartList.findIndex(
+    (item) =>
+      item.product._id === newItem.product._id && item.size === newItem.size
+  );
   if (index === -1) {
     return [...cartList, newItem];
   } else {
     return [
-     ...cartList.slice(0, index),
+      ...cartList.slice(0, index),
       {
-       ...cartList[index],
+        ...cartList[index],
         quantity: cartList[index].quantity + newItem.quantity,
       },
-     ...cartList.slice(index + 1),
+      ...cartList.slice(index + 1),
     ];
   }
-}
+};
 export {
   addItemToCartList,
   createBanner,

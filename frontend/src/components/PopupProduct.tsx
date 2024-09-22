@@ -8,12 +8,19 @@ import { addItemToCartList } from '../utils/helperFunctions'
 
 const PopupProduct = ({ product, open, setOpen }:
   { open: boolean, setOpen: Dispatch<SetStateAction<boolean>>, product: Product }) => {
-  const { images, name, shortDescription, price, sizes, _id } = product
+  const { cartItems, setCartItems, setOrderItems, orderItems, sizeIdx } = useContext(AppContext)
+  const { images, name, shortDescription, pricing, _id } = product
+  const sizes: Array<string> = []
+  const prices: Array<number> = []
+  pricing.forEach(({ price, size }) => {
+    sizes.push(size)
+    prices.push(price)
+  })
   const [productProperties, setProductProperties] = useState({
     quantity: 1,
-    size: sizes ? sizes[0] : ""
+    size: sizes[sizeIdx],
+    price : prices[sizeIdx]
   })
-  const { cartItems, setCartItems, setOrderItems, orderItems } = useContext(AppContext)
   const handleAddProductToCart = (item: CartItem) => {
     const updatedCartItems = addItemToCartList(cartItems, item)
     sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
@@ -21,7 +28,7 @@ const PopupProduct = ({ product, open, setOpen }:
     setOrderItems([...orderItems, {
       description: item.product.name,
       quantity: item.quantity,
-      price: item.product.price * item.quantity,
+      price: item.price * item.quantity,
       size: item.size,
       currency: "ILS",
       vatType: 1,
@@ -66,13 +73,11 @@ const PopupProduct = ({ product, open, setOpen }:
                       {shortDescription}
                     </p>
                     {/* SELECT SIZE OF PRODUCT */}
-                    <Select classes='' selectItems={product.sizes ? product.sizes : []} item={productProperties.size} handleClick={(size) => setProductProperties((prev) => {
-                      return { ...prev, size: size }
-                    })} />
+                    <Select classes='' selectItems={sizes ? sizes : []} item={productProperties.size} />
                   </div>
                   {/* price && quantity & size */}
                   <div className="flex items-center sm:justify-center justify-end gap-6 mb-2 sm:mb-8">
-                    <span className="text-sm font-semibold text-primary"><span className='text-lg font-bold'>{(price * productProperties.quantity).toFixed(2)}₪</span></span>
+                    <span className="text-sm font-semibold text-primary"><span className='text-lg font-bold'>{(prices[sizeIdx] * productProperties.quantity).toFixed(2)}₪</span></span>
                     <div className="border p-2 rounded-lg">
                       <button onClick={() => setProductProperties((prev) => {
                         return { ...prev, quantity: prev.quantity - 1 }
@@ -82,22 +87,20 @@ const PopupProduct = ({ product, open, setOpen }:
                         return { ...prev, quantity: prev.quantity + 1 }
                       })} className='font-medium text-md'>+</button>
                     </div>
-                    {/* </div> */}
                     {/* Btn-s */}
                     <div className="absolute right-0 -bottom-6 sm:bottom-5 sm:mr-8 mr-2 flex items-center gap-2">
-                      <Link to={`/products/${_id}/info`} className="bg-primary text-white w-fit p-2 rounded-lg hover:bg-primary">
+                      <Link to={`/products/${_id}/info`} className="bg-white text-primary w-fit p-2 rounded-lg border-gray-700 border-2">
                         קרא עוד
                       </Link>
                       <button
                         onClick={() => handleAddProductToCart({ product, ...productProperties })}
-                        className="bg-btnColor2 text-white w-[100px] py-2 rounded-lg hover:bg-hoverBtnColor2 ">
+                        className="bg-[#42855b] text-white w-[100px] py-2 rounded-lg hover:bg-hoverBtnColor2 ">
                         הוסף לעגלה
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
-              {/* </div> */}
             </div>
           </DialogPanel>
         </div>

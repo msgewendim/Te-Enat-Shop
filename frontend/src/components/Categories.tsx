@@ -10,10 +10,10 @@ const Categories = ({ categories }: { categories: Array<string> }) => {
   }
   return (
     <div className="rounded-lg items-center">
-      <Select selectItems={categories} item={categories[0]} handleClick={setCategory} classes="md:hidden" />
+      <Select selectItems={categories.slice(1)} item={categories[0]} classes="md:hidden" />
       <div className="md:flex gap-2 hidden">
         {
-          categories.map((cat) => {
+          categories.slice(1).map((cat) => {
             return (
               <button key={cat} onClick={(e) => handleCategoryChange(e, cat)}
                 className="text-sm border-primary border-2 text-primary w-fit p-2 rounded-lg hover:bg-slate-100" >

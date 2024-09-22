@@ -11,9 +11,9 @@ const CartItemsList = () => {
   return (
     <ul role="list" className=" divide-y flex flex-col justify-between no-scrollbar overflow-y-scroll max-h-[500px] divide-gray-200">
       {
-        cartItems && cartItems.map(({ product, quantity, size }, index) => {
+        cartItems && cartItems.map(({ product, quantity, size, price }, index) => {
           return (
-            <SingleCartItem key={index} product={product} quantity={quantity} size={size} />
+            <SingleCartItem key={index} product={product} quantity={quantity} size={size} price={price}/>
           )
         })
       }

@@ -71,8 +71,8 @@ const SingleProduct = () => {
           </div>
           {/* Buttons  */}
           <div className="flex justify-center items-center gap-10 my-3 mb-16">
-            <button className="bg-primary w-fit p-2 text-white rounded-lg cursor-pointer hover:bg-slate-800">
-              Recipes
+            <button className="bg-white w-fit p-2 text-primary rounded-lg cursor-pointer border-2 border-gray-700">
+              מתכונים
             </button>
             {openProductId === productID && (
               <PopupProduct
@@ -81,8 +81,8 @@ const SingleProduct = () => {
                 setOpen={handleClosePopup}
               />
             )}
-            <button onClick={() => handleOpenPopup(productID as string)} className="bg-secondary w-fit p-2 px-3 text-white rounded-lg cursor-pointer hover:bg-slate-600">
-              Buy
+            <button onClick={() => handleOpenPopup(productID as string)} className="bg-primary_btn w-fit p-2 px-3 text-white rounded-lg cursor-pointer hover:bg-hoverBtnColor2">
+              קנה
             </button>
           </div>
         </div>
@@ -90,6 +90,13 @@ const SingleProduct = () => {
       <div className="flex flex-col items-center justify-center my-14">
         <div className="mb-8">
           <img src={videoProduct} alt="" width={700} />
+          {/* <div className="h-0 pb-20  relative;">
+            <iframe src="https://giphy.com/embed/ZdIQvJDNIRKjIEdfgh" width={700} height={200} className="absolute" frameBorder="0" allowFullScreen>
+            </iframe>
+          </div> */}
+          {/* <p> */}
+            {/* <a href="https://giphy.com/gifs/arrowvideo-food-dinner-time-stew-ZdIQvJDNIRKjIEdfgh">via GIPHY</a> */}
+          {/* </p> */}
         </div>
         {/* Product related products */}
         <RelatedProducts productCategory={categories[0]} />

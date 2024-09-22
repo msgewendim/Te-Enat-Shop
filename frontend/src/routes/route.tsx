@@ -11,6 +11,7 @@ import SingleProductPage from "../pages/SingleProductPage.tsx";
 import RecipePage from "../pages/RecipePage.tsx";
 import { ScrollToTop } from "../utils/helperFunctions.ts";
 import Checkout from "../pages/Checkout.tsx";
+import Contact from "../pages/Contact.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ export const routes = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "*",

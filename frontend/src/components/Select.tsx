@@ -5,21 +5,24 @@ import { AppContext } from '../providers/interface/context'
 
 interface SelectSizeProps {
   selectItems: Array<string>
-  handleClick: (size: string) => void
   item: string
   classes: string
 }
-const Select = ({ selectItems, handleClick, item, classes }: SelectSizeProps) => {
+const Select = ({ selectItems,  item, classes }: SelectSizeProps) => {
   const [option, setOption] = useState("")
-  const { category } = useContext(AppContext)
+  const { category, setSizeIdx } = useContext(AppContext)
   useEffect(() => {
-    setOption(category ? category : selectItems[0])
+    const sizeIdx = selectItems.indexOf(option) === -1 ? 0 : selectItems.indexOf(option)
+    setSizeIdx(sizeIdx)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [option])
+  useEffect(() => {
+    setOption(category ? category : "")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category])
   return (
     <div className={`w-fit min-w-[80px] my-4 ${classes}`}>
       <Listbox value={item} onChange={(e) => {
-        handleClick(e)
         setOption(e)
       }}>
         <div className="relative mt-1">
@@ -41,6 +44,7 @@ const Select = ({ selectItems, handleClick, item, classes }: SelectSizeProps) =>
             <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
               {selectItems.map((option, index) => (
                 <ListboxOption
+                  onSelect={() => setSizeIdx(index)}
                   key={index}
                   className={({ focus }) =>
                     `relative cursor-default select-none py-2 text-right pr-4 ${focus ? 'bg-amber-100 text-amber-900' : 'text-gray-900'

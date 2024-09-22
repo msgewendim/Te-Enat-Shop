@@ -44,11 +44,10 @@ const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<
                 {/* Products */}
                 <div className="flex justify-between h-full flex-col ">
                   <CartItemsList />
-
                   {/* checkout */}
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex justify-between items-end text-base font-medium text-gray-900">
-                    <p>{totalPrice}₪</p>
+                    <p>₪ {totalPrice}</p>
                     <p>סה"כ</p>
                   </div>
                   <p className="mt-0.5text-right text-sm text-gray-500">לא כולל דמי משלוח </p>

@@ -11,8 +11,8 @@ const TopRecipes = () => {
           <h1 className="text-4xl font-bold text-primary capitalize">
             המתכונים שלנו
           </h1>
-          <p className="text-sm text-black text-center w-[60vw]">
-            טקסט על המתכונים
+          <p dir="rtl" className="text-sm px-10 text-black text-center w-[60vw]">
+            הכירו את המתכונים המיוחדים שלנו שיביאו טעמים חדשים למטבח שלכם. כל מתכון משלב בין מסורת לחדשנות וקל להכנה בבית.
           </p>
         </div>
         <div className="justify-between items-center mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-6">

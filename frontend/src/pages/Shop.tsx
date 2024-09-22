@@ -37,7 +37,7 @@ const Shop = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   )}, [])
   return (
-    <main >
+    <main>
       {/* CART ICON FLOATING */}
       <Cart openCart={openCart} setOpenCart={setOpenCart} />
       <button onClick={() => setOpenCart(true)} draggable={true} className="fixed right-2 top-16 sm:right-10 sm:top-[50vh] bg-primary rounded-full p-[15px]">
