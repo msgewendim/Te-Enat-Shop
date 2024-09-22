@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { client, deleteProductsById, getAllProducts, getProduct, postOrdersV1PaymentsForm, postProducts, putProductsById } from '../client/services.gen';
 import { CartItem, ClientDetails, OrderItem, Product } from "../client/types.gen";
 import { AppContext, query } from "./interface/context";
+import { localClient } from "../utils/client.config";
 import { getTotalPrice } from "../utils/helperFunctions";
 
 
@@ -19,7 +20,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const getProducts = async (query?: query) => {
     try {
       const { data, error } = await getAllProducts({
-        client: client,
+        client: localClient,
         query: query ? query : {}
       })
       if (error) {
@@ -110,7 +111,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         orderItems: orderItems,
       }
       const { data, error } = await postOrdersV1PaymentsForm({
-        client: client,
+        client: localClient,
         body: body,
       })
       if (error) {
