@@ -130,13 +130,11 @@ components:
         - _id
         - name
         - shortDescription
-        - price
+        - pricing
         - images
-        - rate
         - categories
         - InStock
         - availability
-        - weights
       properties:
         _id:
           type: string
@@ -150,11 +148,24 @@ components:
           type: string
           description: A brief description of the product.
           example: "A multi-functional gadget that makes your life easier."
-        price:
-          type: number
-          format: float
-          description: The price of the product.
-          example: 99.99
+        pricing:
+          type: array
+          description: An array of pricing and sizes options for the product.
+          items:
+            type: object
+            properties:
+              size: 
+                type: string
+                example : "100g"
+                description: The weight option for the product.
+              price:
+                type: number
+                format: float
+                description: The price of the product for the given size.
+                example: 19.99
+            required:
+              - size
+              - price
         images:
           type: array
           description: A list of image URLs for the product.
@@ -185,18 +196,12 @@ components:
             - "Out of Stock"
             - "Pre-order"
           example: "In Stock"
-        sizes:
-          type: array
-          description: A list of weight options for the product.
-          items:
-            type: string
-            example: "1kg"
         features:
           type: array
           description: An optional list of benefits associated with the product.
           items:
             type: array
-            items: 
+            items:
               type: string
         reviews:
           type: array
@@ -253,7 +258,7 @@ components:
     ClientDetails:
       type: object
       properties:
-        name: 
+        name:
           type: string
         emails:
           type: array
@@ -295,6 +300,13 @@ components:
         vatType:
           type: number
           default: 1
+      required:
+        - description
+        - quantity
+        - size
+        - price
+        - currency
+        - vatType
 
     ProductCardProps:
       type: object
@@ -348,7 +360,7 @@ components:
     PaymentFormSuccessResponse:
       type: object
       properties:
-        success: 
+        success:
           type: boolean
         url:
           type: string
@@ -516,10 +528,15 @@ components:
         size:
           type: string
           description: Size of the product in grams or kg
+        price:
+          type: number
+          format: float
+          description: Price of the product in the cart
       required:
         - product
         - quantity
         - size
+        - price
 
     Recipe:
       type: object

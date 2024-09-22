@@ -14,10 +14,21 @@ const productSchema = new mongoose.Schema({
     minlength: 5,
     max_length: 1000,
   },
-  price: {
-    type: Number,
+  pricing: {
+    type: Array<Object>,
     required: true,
-    min: 0, // default
+    validate: [
+      (v: any[]) => v.length > 0,
+      "At least one size and price item should be provided.",
+    ],
+    items: {
+      type: Object,
+      required: true,
+      properties: {
+        size: { type: String },
+        price: { type: Number },
+      },
+    },
   },
   InStock: {
     type: Number,
@@ -31,14 +42,6 @@ const productSchema = new mongoose.Schema({
     validate: [
       (v: string[]) => v.length <= 10,
       "Number of images should not exceed 10.",
-    ],
-  },
-  sizes : {
-    type : Array<String>,
-    required : true,
-    validate : [
-      (v: string[]) => v.length > 0,
-      "At least one weight should be provided.",
     ],
   }, 
   categories: {

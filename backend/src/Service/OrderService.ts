@@ -62,7 +62,7 @@ export class OrderService {
         console.log("Failed to fetch payment gateway", status);
         throw new Error(`HTTP error! status: ${status}`);
       }
-      // console.log("Payment gateway returned data: " + JSON.parse(data));
+      console.log("Payment gateway returned data: " + JSON.parse(data));
       return data as PaymentFormResponse;
     } catch (error) {
       console.log("Payment gateway error: ", error);

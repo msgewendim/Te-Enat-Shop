@@ -2,13 +2,12 @@ interface Product {
   _id: string;
   name: string;
   shortDescription: string;
-  price: number;
+  pricing: Array<Object>;
   images: string[];
   rate: number;
   categories: string[];
   InStock: number;
   availability: "In Stock" | "Out of Stock" | "Pre-order";
-  sizes: string[];
   features?: Array<String>;
   relatedProducts?: Partial<Product>[];
   totalSales?: number;

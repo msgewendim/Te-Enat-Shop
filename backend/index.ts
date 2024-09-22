@@ -8,12 +8,12 @@ import swagger from "./swagger"
 import dotenv from "dotenv";
 dotenv.config();
 
-const App = express();
+const server = express();
 const port = 3005;
-App.use(express.json());
-App.use(activityLogger);
+server.use(express.json());
+server.use(activityLogger);
 
-App.use(
+server.use(
   cors({
     origin: "*",
     credentials: true,
@@ -22,12 +22,12 @@ App.use(
   })
 );
 
-App.use("/api/products", ProductRoute);
-App.use("/api/orders", OrderRoute);
+server.use("/api/products", ProductRoute);
+server.use("/api/orders", OrderRoute);
 
-App.use(swagger);
-App.listen(port, () => {
+server.use(swagger);
+server.listen(port, () => {
   connectToMongoDB(process.env.MONGO_ATLAS_URI as string);
-  console.log(`App is listening on port ${port}`);
+  console.log(`server is listening on port ${port}`);
   // console.log(`Swagger UI is available at http://localhost:${port}/api-docs`)
 });

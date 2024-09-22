@@ -35,4 +35,10 @@ export class OrderController {
         .status(400);
     }
   }
+
+  async successful_payment(request: Request, response: Response){
+    // Successful payment handling code goes here
+    console.log(request, "response from morning service");
+    // response.json({ message: "Payment successful" }).status(200);
+  }
 }
