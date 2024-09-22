@@ -1,12 +1,11 @@
 import { createClient } from "@hey-api/client-fetch";
 import { client } from "../client/services.gen";
 
-// const NODE_MODE = import.meta.env.NODE_MODE as string;
-// const API_URL =
-//   NODE_MODE === "production"
-//     ? (import.meta.env.VITE_API_URL_PRODUCTION as string)
-//     : (import.meta.env.VITE_API_URL as string);
-const API_URL = import.meta.env.VITE_API_URL_PRODUCTION
+const NODE_MODE = import.meta.env.VITE_NODE_MODE as string;
+const API_URL =
+  NODE_MODE === "production"
+    ? (import.meta.env.VITE_API_URL_PRODUCTION as string)
+    : (import.meta.env.VITE_API_URL as string);
 client.setConfig({
   baseUrl: API_URL,
   headers: {
