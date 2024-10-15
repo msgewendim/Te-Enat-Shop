@@ -1,4 +1,4 @@
-import { Client } from "../src/utils/interfaces/IOrder";
+import { ClientDetails } from "./order.types";
 import { Product } from "./product.types";
 interface Recipe {
   _id: string;
@@ -24,13 +24,13 @@ interface Ingredient {
 interface Category {
   _id?: string;
   name: string;
-  images? : string[]
+  images?: string[];
   recipes?: Recipe["_id"][];
   products?: Product["_id"][];
 }
 interface Review {
   _id: string;
-  userId: Client["name"];
+  userId: ClientDetails["name"];
   recipeId: Recipe["_id"];
   rating: number;
   comment: string;

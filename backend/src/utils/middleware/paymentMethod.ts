@@ -1,18 +1,17 @@
 import axios from "axios";
-import { Client, OrderItem, PaymentFormPayload } from "../interfaces/IOrder";
-import env from "dotenv";
-env.config();
+import { ClientDetails, OrderItem } from "../../../types/order.types";
+import { PaymentFormPayload } from "../../../types/order.types";
+import { MORNING_API_KEY, MORNING_SECRET_KEY } from "../config/env.config";
+
 export const getCheckoutFormPayload = (
-  invoiceDescription: string,
   totalPrice: number,
   pluginId: string,
-  clientDetails: Client,
+  clientDetails: ClientDetails,
   income: OrderItem[],
   custom: string
 ): PaymentFormPayload => {
-  // const {name, address, add, email, city, mobile, taxId="33245984", zip} = clientDetails
   return {
-    description: invoiceDescription,
+    description: "פירוט שירותים ופריטים",
     type: 320,
     lang: "he",
     currency: "ILS",
@@ -23,24 +22,25 @@ export const getCheckoutFormPayload = (
     group: 100,
     client: {
       ...clientDetails,
+      emails: clientDetails.emails,
       taxId: "332459841",
       add: true,
       country: "IL",
     },
     income: income,
     remarks: "",
-    // successUrl: "https://te-enat-shop.onrender.com/",
-    // failureUrl: "https://te-enat-shop.onrender.com/error",
-    // notifyUrl: "https://te-enat-shop.onrender.com/notify", // TODO: replace with your notify URL  // notifyUrl: "https://your-domain.com/notify",  // TODO: replace with your notify URL  // notifyUrl: "https://your-domain.com/notify",  // TODO: replace with your notify URL
+    // successUrl: "https://d900-87-70-23-35.ngrok-free.app/payment-success",
+    // failureUrl: "https://87b0-87-70-23-35.ngrok-free.app/payment_error",
+    notifyUrl: "https://a88e-109-67-140-97.ngrok-free.app/api/orders/notify", // needs to be updated on deployment
     custom: custom,
   };
 };
 
-export const requestNewToken = async () => {
+export const requestNewToken = async (token: string) => {
   const url = "https://sandbox.d.greeninvoice.co.il/api/v1/account/token";
   const body = {
-    id: process.env.MORNING_API_KEY as string,
-    secret: process.env.MORNING_SECRET_KEY as string,
+    id: MORNING_API_KEY,
+    secret: MORNING_SECRET_KEY,
   };
   const config = {
     headers: {
@@ -55,7 +55,6 @@ export const requestNewToken = async () => {
     if (status >= 400) {
       throw new Error(`HTTP error! status: ${status}`);
     }
-    process.env.MORNING_TOKEN = data.token;
     return {
       token: data.token,
       expiresAt: Date.now() + data.expires * 1000, // convert to milliseconds 1 hour
@@ -67,10 +66,8 @@ export const requestNewToken = async () => {
 };
 export const checkToken = async (token: string, expiresAt: number) => {
   if (!token || Date.now() >= expiresAt) {
-    return await requestNewToken();
-  }else{
+    return await requestNewToken(token);
+  } else {
     return { token, expiresAt };
   }
 };
-
-
