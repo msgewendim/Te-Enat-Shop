@@ -1,5 +1,7 @@
+import { ObjectId } from "mongoose";
+
 interface Product {
-  _id: string;
+  _id: ObjectId | null;
   name: string;
   shortDescription: string;
   pricing: Array<Object>;
@@ -14,14 +16,14 @@ interface Product {
 }
 
 export interface ProductCardProps {
-  _id: string,
-  name: string,
-  price: number,
-  image: string,
-  categories: string[],
-  rate: number,
-  shortDescription: string
-  imageSize?: number,
+  _id: string;
+  name: string;
+  price: number;
+  image: string;
+  categories: string[];
+  rate: number;
+  shortDescription: string;
+  imageSize?: number;
 }
 
 interface Languages {

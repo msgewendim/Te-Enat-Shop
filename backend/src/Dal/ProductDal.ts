@@ -43,22 +43,32 @@ export class ProductDal implements IProduct<Product> {
   }
   async deleteProduct(id: string): Promise<void> {
     try {
-      await productModel.deleteOne({ _id: id });
+      await productModel.deleteOne({
+        _id: id,
+      });
     } catch (error) {
       throw error;
     }
   }
-  async updateProduct(id: string, postData: Partial<Product>): Promise<void> {
+  async updateProduct(
+    id: string,
+    postData: Partial<Product>
+  ): Promise<Product> {
     try {
-      await productModel.findByIdAndUpdate(id, postData);
+      const updatedProduct = (await productModel.findByIdAndUpdate(
+        id,
+        postData
+      )) as Product;
+      return updatedProduct;
     } catch (error) {
       throw error;
     }
   }
-  async addProduct(product: Product): Promise<void> {
+  async addProduct(product: Product): Promise<Product> {
     try {
-      const newProduct = await productModel.insertMany(product);
+      const newProduct = (await productModel.insertMany(product)) as Product[];
       console.log("Product created successfully", newProduct);
+      return newProduct[0];
     } catch (error) {
       throw error;
     }
