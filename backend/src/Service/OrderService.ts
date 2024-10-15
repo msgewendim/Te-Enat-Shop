@@ -1,49 +1,50 @@
 import axios from "axios";
-import OrderDal from "../Dal/OrderDal";
-import {
-  Client,
-  OrderItem,
-  PaymentFormResponse,
-} from "../utils/interfaces/IOrder";
 import {
   checkToken,
   getCheckoutFormPayload,
-  requestNewToken,
 } from "../utils/middleware/paymentMethod";
-import env from "dotenv";
+import {
+  ClientDetails,
+  OrderItem,
+  OrderTransaction,
+  PaymentFormResponse,
+} from "../../types/order.types";
+import {
+  MORNING_PAYMENT_FORM_URL,
+  MORNING_PLUGIN_ID,
+} from "../utils/config/env.config";
+import {
+  addOrder,
+  checkPaymentStatus,
+  updatePaymentStatus,
+} from "../Dal/OrderDal";
+import { clearCart } from "../Dal/UserDal";
 
-env.config();
-const pluginId = process.env.MORNING_PLUGIN_ID as string;
+const pluginId = MORNING_PLUGIN_ID;
 let MORNING_TOKEN = {
-  token : "",
-  expiresAt: Date.now()
+  token: "",
+  expiresAt: Date.now(),
 };
-const url = process.env.MORNING_PAYMENT_FORM_URL as string;
+const url = MORNING_PAYMENT_FORM_URL;
 export class OrderService {
-  private orderDal: OrderDal;
-  constructor(orderDal: OrderDal) {
-    this.orderDal = orderDal;
-  }
   async getPaymentForm(
-    userInfo: Client,
+    userInfo: ClientDetails,
     products: OrderItem[],
     totalPrice: number
   ): Promise<PaymentFormResponse> {
-    // check if token is expired
-    MORNING_TOKEN =  await checkToken(MORNING_TOKEN.token, MORNING_TOKEN.expiresAt)
+    // check if token is expired && get new token if expired
+    MORNING_TOKEN = await checkToken(
+      MORNING_TOKEN.token,
+      MORNING_TOKEN.expiresAt
+    );
     // save order information to Database
-    // const newOrderId = await this.orderDal.addOrder(
-    //   userInfo,
-    //   products,
-    //   totalPrice
-    // );
+    const newOrderId = await addOrder(userInfo, products, totalPrice);
     const formPayload = getCheckoutFormPayload(
-      "payment form",
       totalPrice,
       pluginId,
       userInfo,
       products,
-      "89898" // newOrderId.toString()
+      newOrderId.toString()
     );
     const config = {
       method: "POST",
@@ -56,17 +57,29 @@ export class OrderService {
       data: JSON.stringify(formPayload),
     };
     try {
-      // get payment form 
+      // get payment form
       const { status, data } = await axios.request(config);
       if (status >= 400) {
         console.log("Failed to fetch payment gateway", status);
-        throw new Error(`HTTP error! status: ${status}`);
+        throw new Error(`Internal server Error: ${status}`);
       }
-      console.log("Payment gateway returned data: " + JSON.parse(data));
-      return data as PaymentFormResponse;
-    } catch (error) {
-      console.log("Payment gateway error: ", error);
-      throw new Error("Error sending form payload" + error);
+      return { ...data, orderId: newOrderId.toString() } as PaymentFormResponse;
+    } catch (error: any) {
+      console.log("Payment gateway error: ", error.message);
+      throw new Error("Error sending form payload" + error.message);
     }
+  }
+  async checkPaymentStatus(orderId: string) {
+    try {
+      const paymentStatus = await checkPaymentStatus(orderId);
+      return paymentStatus;
+    } catch (error) {
+      throw new Error(`Error checking payment status for Order ${orderId}`);
+    }
+  }
+  async updatePaymentStatus(transactionInfo: OrderTransaction) {
+    const { external_data: orderId, ...transactionData } = transactionInfo;
+    // update payment status in database
+    await updatePaymentStatus(orderId as string, transactionData);
   }
 }

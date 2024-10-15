@@ -1,5 +1,8 @@
+import { OrderTransaction } from "../../types/order.types";
 import { OrderService } from "../Service/OrderService";
 import { Request, Response } from "express";
+import { sendPaymentNotification } from "../utils/middleware/sse.events";
+
 export class OrderController {
   private orderService: OrderService;
   constructor(orderService: OrderService) {
@@ -7,12 +10,14 @@ export class OrderController {
   }
 
   async getPaymentForm(request: Request, response: Response) {
-    const { clientData, totalPrice, orderItems } = request.body;
-    console.log(orderItems[0], "OrderItems length");
+    const { clientInfo, totalPrice, products } = request.body.formData;
+    // console.log(request.body, "request emails");
+    // console.log("--------------------------------------------------------");
+    console.log(products.length, "OrderItems length");
     try {
       const data = await this.orderService.getPaymentForm(
-        clientData,
-        orderItems,
+        { emails: [clientInfo.email], ...clientInfo },
+        products,
         totalPrice
       );
       console.log("PaymentForm data response:", data);
@@ -26,6 +31,7 @@ export class OrderController {
         response.json(errorResponse).status(400);
       }
     } catch (error: any) {
+      console.log("Error when getting payment form", error.message, error.code);
       response
         .json({
           message: "Error getting payment form",
@@ -35,10 +41,40 @@ export class OrderController {
         .status(400);
     }
   }
+  async checkPaymentStatus(request: Request, response: Response) {
+    const { orderId } = request.params;
+    console.log(orderId);
+    try {
+      const paymentStatus = await this.orderService.checkPaymentStatus(orderId);
+      if (paymentStatus === "succeeded") {
+        response.json({
+          status: true,
+          message: "Payment succeeded",
+        });
+      } else if (paymentStatus === "pending") {
+        response
+          .json({ status: false, message: "Payment processing" })
+          .status(200);
+      }
+    } catch (error: any) {
+      response
+        .json({
+          message: "Error checking payment status",
+          error: error.message,
+        })
+        .status(500);
+    }
+  }
 
-  async successful_payment(request: Request, response: Response){
-    // Successful payment handling code goes here
-    console.log(request, "response from morning service");
-    // response.json({ message: "Payment successful" }).status(200);
+  async successfulPayment(request: Request, response: Response) {
+    // Successful payment
+    try {
+      const transactionInfo = request.body as OrderTransaction;
+      await this.orderService.updatePaymentStatus(transactionInfo);
+      sendPaymentNotification(transactionInfo.external_data);
+      response.sendStatus(200); // send to Morning server
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 }

@@ -122,6 +122,40 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PaymentFormErrorResponse"
+
+  /orders/payment/status:
+    get:
+      summary: Get payment success page information from Morning
+      tags:
+        - Payments
+      responses:
+        200:
+          description: get Payment status Success successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: "succeeded is true"
+                  message:
+                    type: string
+                    example: "Payment successful!"
+        400:
+          description: Error getting payment status success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to get payment status"
+                  message:
+                    type: string
+                    example: "Failed to get payment status!"
+
 components:
   schemas:
     Product:
@@ -154,9 +188,9 @@ components:
           items:
             type: object
             properties:
-              size: 
+              size:
                 type: string
-                example : "100g"
+                example: "100g"
                 description: The weight option for the product.
               price:
                 type: number
@@ -244,9 +278,7 @@ components:
           type: number
           format: float
         clientInfo:
-          type: object
-          properties:
-            $ref: "#/components/schemas/ClientDetails"
+          type: ClientDetails
         products:
           type: array
           items:
@@ -255,18 +287,17 @@ components:
         - totalPrice
         - clientInfo
         - products
+
     ClientDetails:
       type: object
       properties:
         name:
           type: string
-        emails:
-          type: array
+        email:
+          type: string
           description: "Customer email address"
-          items:
-            type: string
-            format: email
-            example: "john.doe@example.com"
+          format: email
+          example: "john.doe@example.com"
         mobile:
           type: string
         address:
@@ -277,11 +308,11 @@ components:
           type: string
       required:
         - name
-        - emails
+        - email
         - mobile
         - address
         - city
-        - zip
+
     OrderItem:
       type: object
       properties:
@@ -369,11 +400,15 @@ components:
           description: Error code if the payment failed
         errorMessage:
           type: string
+        orderId:
+          type: string
+          description: ID of the order created for the payment
       required:
         - errorCode
         - errorMessage
         - success
         - url
+        - orderId
     PaymentFormErrorResponse:
       type: object
       properties:
@@ -382,10 +417,14 @@ components:
           description: Error code if the payment failed
         errorMessage:
           type: string
+          description: Description of the error if the payment failed
+        orderId:
+          type: string
+          description: ID of the order created for the payment, if the payment failed
       required:
         - errorCode
         - errorMessage
-
+        - orderId
     Review:
       type: object
       properties:

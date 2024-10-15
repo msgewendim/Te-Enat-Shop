@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { OrderItem } from "../utils/interfaces/IOrder";
+import { Order, OrderItem } from "../../types/order.types";
 
 const orderSchema = new mongoose.Schema(
   {
@@ -19,9 +19,9 @@ const orderSchema = new mongoose.Schema(
       type: "number",
       required: true,
     },
-    orderStatus: {
+    paymentStatus: {
       type: "string",
-      enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
+      enum: ["pending", "succeeded", "failed"],
       default: "pending",
     },
   },
@@ -30,5 +30,5 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-const orderModel = mongoose.model("orders", orderSchema);
+const orderModel = mongoose.model<Order>("orders", orderSchema);
 export default orderModel;
