@@ -1,5 +1,5 @@
-import Banner from "../components/Banner";
-import RecipeCard from "../components/RecipeCard";
+import RecipeCard from "../components/recipes/RecipeCard";
+import Banner from "../components/ui/Banner";
 import { awaze, buna, enjera, kik, kitfo, shiro } from "../utils/data";
 import RecipesBanner from "/RecipesBanner.svg";
 

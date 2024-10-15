@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction, useContext } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import CartItemsList from '../components/CartItemsList'
+import CartItemsList from '../components/cart/CartItemsList'
 import { AppContext } from '../providers/interface/context'
 import { Link } from 'react-router-dom'
 
 const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<boolean>>, openCart: boolean, }) => {
   const { totalPrice } = useContext(AppContext)
   return (
-    <Dialog open={openCart} onClose={setOpenCart} className="relative z-10">
+    <Dialog open={openCart} onClose={setOpenCart} className="relative z-30">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
@@ -46,21 +46,18 @@ const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<
                   <CartItemsList />
                   {/* checkout */}
                   <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                  <div className="flex justify-between items-end text-base font-medium text-gray-900">
-                    <p>₪ {totalPrice}</p>
-                    <p>סה"כ</p>
-                  </div>
-                  <p className="mt-0.5text-right text-sm text-gray-500">לא כולל דמי משלוח </p>
-                  <div className="mt-6">
+                    <div className="flex justify-between items-end text-base font-medium text-gray-900">
+                      <p>₪ {totalPrice}</p>
+                      <p>סה"כ</p>
+                    </div>
+                    <p className="mt-0.5text-right text-sm text-gray-500">לא כולל דמי משלוח </p>
                     <Link
                       to="/checkout"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-btnColor2 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hoverBtnColor2"
+                      className="flex items-center justify-center rounded-md border border-transparent bg-btnColor2 px-6 py-3 mt-6 text-base font-medium text-white shadow-sm hover:bg-hoverBtnColor2"
                     >
                       לתשלום
                     </Link>
-                  </div>
-                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                    <p>
+                    <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <span aria-hidden="true"> &larr;</span>
                       <button
                         type="button"
@@ -69,9 +66,8 @@ const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<
                       >
                         המשך בקנייה
                       </button>
-                    </p>
+                    </div>
                   </div>
-                </div>
                 </div>
               </div>
             </DialogPanel>

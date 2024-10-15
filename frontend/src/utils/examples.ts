@@ -83,7 +83,7 @@ export const product = {
   ],
 };
 
-export const topRecipes = [recipe, recipe, recipe];
+export const topRecipes = [recipe, recipe, recipe, recipe, recipe, recipe];
 export const topCategories: Category[] = [
   {
     _id: "123",
@@ -111,7 +111,7 @@ export const topCategories: Category[] = [
   },
   {
     _id: "126",
-    name: "כלי מטבח",
+    name: "מארזים",
     images: [dessert],
     recipes: [recipe._id, recipe._id],
   },

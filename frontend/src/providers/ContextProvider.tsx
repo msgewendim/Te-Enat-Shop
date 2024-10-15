@@ -1,13 +1,11 @@
 import { ReactNode, useEffect, useState } from "react";
-import { client, deleteProductsById, getAllProducts, getProduct, postOrdersV1PaymentsForm, postProducts, putProductsById } from '../client/services.gen';
-import { CartItem, ClientDetails, OrderItem, Product } from "../client/types.gen";
-import { AppContext, query } from "./interface/context";
-import { localClient } from "../utils/client.config";
+import { CartItem, OrderItem } from "../client/types.gen";
+import { AppContext } from "./interface/context";
 import { getTotalPrice } from "../utils/helperFunctions";
-
+import { BASE_API_URL } from "../utils/env.config";
+import { toast } from "react-toastify";
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<Product[]>([])
   const [category, setCategory] = useState<string>("")
   const [sizeIdx, setSizeIdx] = useState<number>(0)
   const [page, setPage] = useState<number>(1);
@@ -17,136 +15,34 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [orderItems, setOrderItems] = useState<OrderItem[]>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
 
-  const getProducts = async (query?: query) => {
-    try {
-      const { data, error } = await getAllProducts({
-        client: localClient,
-        query: query ? query : {}
-      })
-      if (error) {
-        throw new Error(`Field to fetch products ${error}`);
-      }
-      return data as Product[];
-    } catch (error) {
-      console.info(error)
-    }
-  }
-
-  const getProductById = async (id: string) => {
-    try {
-      const product = await getProduct({
-        client: client,
-        path: {
-          id: id,
-        }
-      })
-      const { data, error } = product
-      if (error) throw new Error(`Error fetch product with ${id} : ${error}`)
-      if (!data) throw new Error(`Product ${id} not found in database`)
-      return data as Product;
-    } catch (error) {
-      console.info(error)
-    }
-  }
-
-  const addProduct = async (productData: Partial<Product>) => {
-    try {
-      const product = await postProducts({
-        client: client,
-        body: productData as Product
-      })
-      const { response } = product
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      await getProducts()
-    } catch (error) {
-      console.info(error)
-    }
-  }
-
-  const deleteProduct = async (productId: string) => {
-    try {
-      const product = await deleteProductsById({
-        client: client,
-        path: {
-          id: productId,
-        }
-      })
-      const { response } = product;
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      await getProducts()
-    } catch (error) {
-      console.info(error)
-    }
-  }
-
-  const updateProduct = async (productId: string, productData: Partial<Product>) => {
-    try {
-      const product = await putProductsById({
-        client: client,
-        path: {
-          id: productId,
-        },
-        body: productData as Product
-      })
-      const { response } = product;
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      await getProducts({
-        page, limit: 9, filter, category
-      })
-    } catch (error) {
-      console.info(error);
-    }
-  }
-  const getPaymentForm = async (clientData: ClientDetails, totalPrice: number, orderItems: OrderItem[]) => {
-    try {
-      const body = {
-        clientData: clientData,
-        totalPrice,
-        orderItems: orderItems,
-      }
-      const { data, error } = await postOrdersV1PaymentsForm({
-        client: localClient,
-        body: body,
-      })
-      if (error) {
-        throw new Error(`Error fetching payment form: ${error}`)
-      }
-      if (data.success) {
-        setPaymentFormUrl(data.url)
-      } else {
-        console.log("Couldn't get payment form", data.errorMessage)
-      }
-    } catch (error) {
-      console.info(error);
-    }
-  }
-  // console.log(category ," current category");
-  useEffect(() => {
-    // when the app is loaded at first => fetch the products
-    getProducts().then((products) => setProducts(products as Array<Product>))
-  }, [])
   useEffect(() => {
     // when the cart items change, recalculate the total price
     setTotalPrice(parseFloat(getTotalPrice(cartItems).toFixed(2)))
   }, [cartItems])
 
+  // listen for payment notifications from the server
+  useEffect(() => {
+    const eventSource = new EventSource(`${BASE_API_URL}/events`)
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data)
+      if (data.event === 'payment_success') {
+        sessionStorage.removeItem("orderId")
+        sessionStorage.removeItem("cartItems")
+        setCartItems([])
+        setOrderItems([])
+        setPaymentFormUrl("")
+        window.location.href = "/thank-you"
+        toast.success("Payment received successfully")
+      }
+    }
+    return () => {
+      eventSource.close()
+    }
+  }, [])
   const values = {
-    setProducts,
-    getProducts,
-    getProductById,
-    addProduct,
-    deleteProduct,
-    updateProduct,
     setFilter,
     setPage,
     setCategory,
-    products,
     orderItems,
     setOrderItems,
     page,
@@ -158,7 +54,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     totalPrice,
     setTotalPrice,
     setCartItems,
-    getPaymentForm,
     paymentFormUrl,
     setPaymentFormUrl,
   }

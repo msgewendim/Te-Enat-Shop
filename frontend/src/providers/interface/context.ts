@@ -1,23 +1,5 @@
 import { createContext } from "react";
-import {
-  CartItem,
-  ClientDetails,
-  DeleteProductsByIdError,
-  DeleteProductsByIdResponse,
-  GetAllProductsError,
-  GetAllProductsResponse,
-  GetProductError,
-  GetProductResponse,
-  OrderItem,
-  PostOrdersV1PaymentsFormData,
-  PostOrdersV1PaymentsFormError,
-  PostOrdersV1PaymentsFormResponse,
-  PostProductsError,
-  PostProductsResponse,
-  Product,
-  PutProductsByIdError,
-  PutProductsByIdResponse,
-} from "../../client/types.gen";
+import { CartItem, OrderItem } from "../../client/types.gen";
 
 export type query = {
   page?: number;
@@ -27,30 +9,6 @@ export type query = {
 };
 
 interface IContext {
-  products: Product[];
-  getProducts: (
-    query?: query
-  ) => Promise<GetAllProductsResponse | GetAllProductsError>;
-  getProductById: (id: string) => Promise<GetProductResponse | GetProductError>;
-  addProduct: (
-    productData: Partial<Product>
-  ) => Promise<PostProductsResponse | PostProductsError>;
-  updateProduct: (
-    id: string,
-    productData: Partial<Product>
-  ) => Promise<PutProductsByIdResponse | PutProductsByIdError>;
-  deleteProduct: (
-    id: string
-  ) => Promise<DeleteProductsByIdResponse | DeleteProductsByIdError>;
-  getPaymentForm: (
-    clientInfo: ClientDetails,
-    totalPrice: number,
-    orderItems: OrderItem[]
-  ) => Promise<
-    | PostOrdersV1PaymentsFormError
-    | PostOrdersV1PaymentsFormResponse
-    | PostOrdersV1PaymentsFormData
-  >;
   category: string;
   page: number;
   filter: string;
@@ -67,17 +25,9 @@ interface IContext {
   setCartItems: (product: CartItem[]) => void;
   setOrderItems: (item: OrderItem[]) => void;
   setPaymentFormUrl: (url: string) => void;
-  setProducts: (products: Product[]) => void;
 }
 
 export const AppContext = createContext<IContext>({
-  products: [],
-  getProducts: () => Promise.resolve([]),
-  getProductById: () => Promise.resolve(),
-  addProduct: () => Promise.resolve(),
-  updateProduct: () => Promise.resolve(),
-  deleteProduct: () => Promise.resolve(),
-  getPaymentForm: () => Promise.resolve(),
   category: "",
   page: 0,
   filter: "",
@@ -94,5 +44,4 @@ export const AppContext = createContext<IContext>({
   setPage: () => {},
   setCategory: () => {},
   setTotalPrice: () => {},
-  setProducts: () => {},
 });

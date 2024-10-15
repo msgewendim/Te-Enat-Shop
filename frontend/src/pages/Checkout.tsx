@@ -1,6 +1,6 @@
 
-import CheckoutForm from "../components/CheckoutForm"
-import CheckoutSummary from "../components/CheckoutSummary";
+import CheckoutForm from "../components/checkout/CheckoutForm"
+import CheckoutSummary from "../components/checkout/CheckoutSummary";
 
 const Checkout = () => {
   return (

@@ -1,9 +1,9 @@
-import Testimonials from "../components/Testimonials"
+import AboutUs from "../components/home/WhoAreWe"
 
 const About = () => {
   return (
     <div className="mt-16">
-      <Testimonials />
+      <AboutUs />
     </div>
   )
 }

@@ -139,10 +139,7 @@ export const $PaymentFormPayload = {
             format: 'float'
         },
         clientInfo: {
-            type: 'object',
-            properties: {
-                '$ref': '#/components/schemas/ClientDetails'
-            }
+            type: 'ClientDetails'
         },
         products: {
             type: 'array',
@@ -160,14 +157,11 @@ export const $ClientDetails = {
         name: {
             type: 'string'
         },
-        emails: {
-            type: 'array',
+        email: {
+            type: 'string',
             description: 'Customer email address',
-            items: {
-                type: 'string',
-                format: 'email',
-                example: 'john.doe@example.com'
-            }
+            format: 'email',
+            example: 'john.doe@example.com'
         },
         mobile: {
             type: 'string'
@@ -182,7 +176,7 @@ export const $ClientDetails = {
             type: 'string'
         }
     },
-    required: ['name', 'emails', 'mobile', 'address', 'city', 'zip']
+    required: ['name', 'email', 'mobile', 'address', 'city']
 } as const;
 
 export const $OrderItem = {
@@ -283,9 +277,13 @@ export const $PaymentFormSuccessResponse = {
         },
         errorMessage: {
             type: 'string'
+        },
+        orderId: {
+            type: 'string',
+            description: 'ID of the order created for the payment'
         }
     },
-    required: ['errorCode', 'errorMessage', 'success', 'url']
+    required: ['errorCode', 'errorMessage', 'success', 'url', 'orderId']
 } as const;
 
 export const $PaymentFormErrorResponse = {
@@ -296,10 +294,15 @@ export const $PaymentFormErrorResponse = {
             description: 'Error code if the payment failed'
         },
         errorMessage: {
-            type: 'string'
+            type: 'string',
+            description: 'Description of the error if the payment failed'
+        },
+        orderId: {
+            type: 'string',
+            description: 'ID of the order created for the payment, if the payment failed'
         }
     },
-    required: ['errorCode', 'errorMessage']
+    required: ['errorCode', 'errorMessage', 'orderId']
 } as const;
 
 export const $Review = {

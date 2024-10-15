@@ -2,6 +2,7 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
+  dir: "rtl",
   theme: {
     extend: {
       colors: {
@@ -19,9 +20,9 @@ export default {
         padding: {
           DEFAULT: "1rem",
           sm: "3rem",
-          // md: '4rem',
-          // lg: '8rem',
-          // xl: '16rem',
+          md: "4rem",
+          lg: "8rem",
+          xl: "16rem",
         },
       },
     },

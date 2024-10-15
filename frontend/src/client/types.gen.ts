@@ -89,9 +89,7 @@ export enum availability {
 
 export type PaymentFormPayload = {
     totalPrice: number;
-    clientInfo: {
-        $ref?: unknown;
-    };
+    clientInfo: ClientDetails;
     products: Array<OrderItem>;
 };
 
@@ -100,11 +98,11 @@ export type ClientDetails = {
     /**
      * Customer email address
      */
-    emails: Array<(string)>;
+    email: string;
     mobile: string;
     address: string;
     city: string;
-    zip: string;
+    zip?: string;
 };
 
 export type OrderItem = {
@@ -159,6 +157,10 @@ export type PaymentFormSuccessResponse = {
      */
     errorCode: number;
     errorMessage: string;
+    /**
+     * ID of the order created for the payment
+     */
+    orderId: string;
 };
 
 export type PaymentFormErrorResponse = {
@@ -166,7 +168,14 @@ export type PaymentFormErrorResponse = {
      * Error code if the payment failed
      */
     errorCode: number;
+    /**
+     * Description of the error if the payment failed
+     */
     errorMessage: string;
+    /**
+     * ID of the order created for the payment, if the payment failed
+     */
+    orderId: string;
 };
 
 export type Review = {
@@ -381,3 +390,13 @@ export type PostOrdersV1PaymentsFormData = unknown;
 export type PostOrdersV1PaymentsFormResponse = (PaymentFormSuccessResponse);
 
 export type PostOrdersV1PaymentsFormError = (PaymentFormErrorResponse);
+
+export type GetOrdersPaymentStatusResponse = ({
+    status?: boolean;
+    message?: string;
+});
+
+export type GetOrdersPaymentStatusError = ({
+    error?: string;
+    message?: string;
+});
