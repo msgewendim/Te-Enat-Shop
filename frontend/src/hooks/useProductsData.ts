@@ -6,7 +6,7 @@ import {
   getProductById,
   getProducts,
   updateProduct,
-} from "../providers/apiFunctins";
+} from "../providers/apiFunctions";
 import { query } from "../providers/interface/context";
 import { PaymentFormPayload, Product } from "../client";
 

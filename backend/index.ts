@@ -36,7 +36,7 @@ server.use("/api/events", EventsMiddleware);
 
 server.use(swagger);
 server.listen(port, () => {
-  connectToMongoDB(MONGO_ATLAS_URI as string);
+  connectToMongoDB(MONGO_ATLAS_URI);
   console.log(`server is listening on port ${port}`);
   // console.log(`Swagger UI is available at http://localhost:${port}/api-docs`)
 });
