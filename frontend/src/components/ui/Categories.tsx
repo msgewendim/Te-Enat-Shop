@@ -1,12 +1,12 @@
 import { MouseEvent } from "react"
 import Select from "./Select"
-import { Product } from "../../client"
 import { useAppContext } from "../../hooks/useAppContext"
-const FilterCategories = ({ categories }: { categories: Product["categories"] }) => {
+import { categories } from "../../utils/constants"
+const FilterCategories = () => {
   const { setCategory } = useAppContext()
   const categoryNames: Array<string> = ["קטגוריות"]
   categories.forEach((cat) => {
-    categoryNames.push(cat)
+    categoryNames.push(cat.name)
   })
   const handleCategoryChange = (e: MouseEvent<HTMLButtonElement>, category: string) => {
     e.preventDefault()
@@ -18,7 +18,7 @@ const FilterCategories = ({ categories }: { categories: Product["categories"] })
       <Select selectItems={categoryNames} item={categoryNames[0]} classes="md:hidden" />
       <div className="md:flex gap-2 hidden">
         {
-          categories.map((cat, idx) => {
+          categoryNames.map((cat, idx) => {
             return (
               <button key={idx} onClick={(e) => handleCategoryChange(e, cat)}
                 className="text-sm border-primary border-2 text-primary w-fit p-2 rounded-lg hover:bg-slate-100" >

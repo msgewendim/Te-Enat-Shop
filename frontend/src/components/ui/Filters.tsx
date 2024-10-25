@@ -1,8 +1,7 @@
-import { ChangeEvent, useContext } from "react"
-import { AppContext } from "../../providers/interface/context"
+import { ChangeEvent } from "react"
 import { Link } from "react-router-dom"
+import { useAppContext } from "../../hooks/useAppContext"
 import Categories from "./Categories"
-import { categories } from "../../utils/constants"
 
 const Filters = () => {
   const { setFilter, setCategory } = useAppContext()
@@ -41,7 +40,7 @@ const Filters = () => {
           </div>
         </fieldset>
         {/* Categories */}
-        <Categories categories={categories} />
+        <Categories />
       </div>
     </form>
   )

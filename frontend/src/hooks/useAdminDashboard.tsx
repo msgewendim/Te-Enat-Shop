@@ -1,7 +1,6 @@
-import { useContext } from 'react';
-import { AppContext } from '../providers/interface/context';
 import { useAddProductMutation, useUpdateProductMutation } from '../hooks/useProductsData';
 import { Product } from '../client';
+import { useAppContext } from './useAppContext';
 
 const useAdminDashboard = () => {
   const { adminActiveSection, setAdminActiveSection, productToEdit, setProductToEdit } = useAppContext();

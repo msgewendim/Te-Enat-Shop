@@ -92,7 +92,7 @@ const SingleProduct = () => {
           <img src={videoProduct} alt="" width={700} />
         </div>
         {/* Product related products */}
-        <RelatedProducts productCategory={categories[0].name} />
+        <RelatedProducts productCategory={categories[0]} />
       </div>
     </main >
   )
@@ -109,16 +109,3 @@ const FeatureElement = ({ feature }: { feature: Feature }) => {
     </div>
   )
 }
-// const renderFeature = (feature: Feature[]) => {
-//   return (
-//     feature.map(({ title, description }, index) => {
-//       return (
-//         <div className="relative text-center" key={index} dir="rtl">
-//           {title &&
-//             <h3 className="text-2xl text-primary font-semibold" >{title}</h3>}
-//           {description && <p className="text-md" >{description}</p>}
-//         </div>
-//       )
-//     })
-//   )
-// }
