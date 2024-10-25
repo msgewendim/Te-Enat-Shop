@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
-import { CartItem, OrderItem } from "../client/types.gen";
-import { AppContext } from "./interface/context";
+import { CartItem, OrderItem, Product } from "../client/types.gen";
+import { AppContext, ModalState } from "./interface/context";
 import { getTotalPrice } from "../utils/helperFunctions";
 import { BASE_API_URL } from "../utils/env.config";
 import { toast } from "react-toastify";
@@ -14,6 +14,12 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>(JSON.parse(sessionStorage.getItem("cartItems") as string) || [])
   const [orderItems, setOrderItems] = useState<OrderItem[]>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
+  const [adminActiveSection, setAdminActiveSection] = useState<string>("products")
+  const [productToEdit, setProductToEdit] = useState<Product>();
+  const [modalState, setModalState] = useState<ModalState>({
+    isOpen: false,
+    onConfirm: () => { },
+  });
 
   useEffect(() => {
     // when the cart items change, recalculate the total price
@@ -39,6 +45,17 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       eventSource.close()
     }
   }, [])
+
+  const showModal = (onConfirm: () => void) => {
+    setModalState(prevState => {
+      console.log('Updating modal state', { ...prevState, isOpen: true, onConfirm });
+      return { ...prevState, isOpen: true, onConfirm };
+    });
+  };
+
+  const hideModal = () => {
+    setModalState({ isOpen: false, onConfirm: () => { } });
+  };
   const values = {
     setFilter,
     setPage,
@@ -56,6 +73,14 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setCartItems,
     paymentFormUrl,
     setPaymentFormUrl,
+    adminActiveSection,
+    setAdminActiveSection,
+    showModal,
+    hideModal,
+    modalState,
+    setModalState,
+    setProductToEdit,
+    productToEdit,
   }
   return (
     <AppContext.Provider value={values}>
@@ -63,5 +88,4 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     </AppContext.Provider>
   )
 }
-
 export default AppProvider;

@@ -14,6 +14,7 @@ import Checkout from "../pages/Checkout.tsx";
 import Contact from "../pages/Contact.tsx";
 import SuccessPayment from "../pages/SuccessPayment.tsx";
 import Login from "../components/Login.tsx";
+import AdminDashboard from "../pages/Admin.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -60,6 +61,11 @@ export const routes = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/admin",
+        element:
+          <AdminDashboard />
       },
       {
         path: "/thank-you",

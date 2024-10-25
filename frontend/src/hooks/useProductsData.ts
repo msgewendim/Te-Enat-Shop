@@ -5,6 +5,7 @@ import {
   getPaymentForm,
   getProductById,
   getProducts,
+  getRandomProducts,
   updateProduct,
 } from "../providers/apiFunctions";
 import { query } from "../providers/interface/context";
@@ -14,6 +15,34 @@ const useGetProducts = (query: query) => {
   return useQuery({
     queryKey: ["products", query],
     queryFn: () => getProducts(query),
+  });
+};
+
+// const useGetRandomProducts = (query: query) => {
+//   return useInfiniteQuery({
+//     queryKey: ["randomProducts", query],
+//     queryFn: () => getRandomProducts(query),
+//     placeholderData: (previousData) => previousData,
+//     initialPageParam: 0,
+//     getNextPageParam: (lastPage, _, lastPageParam) => {
+//       if (!lastPage.hasMore) {
+//         return undefined;
+//       }
+//       return lastPageParam + 1;
+//     },
+//     getPreviousPageParam: (_, __, firstPageParam) => {
+//       if (firstPageParam <= 1) {
+//         return undefined;
+//       }
+//       return firstPageParam - 1;
+//     },
+//   });
+// };
+const useGetRandomProducts = (query: query) => {
+  return useQuery({
+    queryKey: ["randomProducts", "topProducts", query],
+    queryFn: () => getRandomProducts(query),
+    placeholderData: (previousData) => previousData,
   });
 };
 
@@ -96,4 +125,5 @@ export {
   useDeleteProductMutation,
   useGetPaymentFormMutation,
   useUpdateProductMutation,
+  useGetRandomProducts,
 };

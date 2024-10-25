@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction, useContext } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import CartItemsList from '../components/cart/CartItemsList'
-import { AppContext } from '../providers/interface/context'
 import { Link } from 'react-router-dom'
+import { useAppContext } from '../hooks/useAppContext'
 
 const Cart = ({ openCart, setOpenCart }: { setOpenCart: Dispatch<SetStateAction<boolean>>, openCart: boolean, }) => {
-  const { totalPrice } = useContext(AppContext)
+  const { totalPrice } = useAppContext()
   return (
     <Dialog open={openCart} onClose={setOpenCart} className="relative z-30">
       <DialogBackdrop

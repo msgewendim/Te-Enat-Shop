@@ -5,10 +5,11 @@ import { Dialog, DialogPanel } from '@headlessui/react'
 import DarkMode from '../ui/DarkMode';
 import { useAuth0 } from '@auth0/auth0-react';
 import { TbLogin, TbLogout } from 'react-icons/tb';
+import Loader from '../ui/Loader';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { loginWithPopup, logout, isAuthenticated, user } = useAuth0()
+  const { loginWithPopup, logout, isAuthenticated, user, isLoading } = useAuth0()
   const [isOpen, setIsOpen] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -36,6 +37,10 @@ const Navbar = () => {
       };
     }
   }, [controlNavbar]);
+
+  if (isLoading) {
+    return <Loader />
+  }
   return (
     <>
       <header className={`fixed top-0 sm:w-[90vw] w-full shadow-md bg-white dark:bg-gray-900 dark:text-white duration-200 ${isOpen ? 'translate-y-0 z-20' : '-translate-y-full'}`}>
@@ -67,10 +72,11 @@ const Navbar = () => {
             <div className="hidden lg:flex lg:gap-x-6 items-center gap-4">
               {/* LOGIN BUTTON LINK */}
               {
-                isAuthenticated && (
+                isAuthenticated && user && (
                   <div className="flex items-center gap-2">
                     {/* <span className="text-sm font-medium text-gray-900 dark:text-white">{user?.name}</span> */}
-                    <img alt={user?.name} src={user?.picture} className="h-6 w-6 rounded-full" />
+                    <img alt={user.name} src={user.picture} className="h-6 w-6 rounded-full" />
+                    {user.roles?.includes("admin") && <Link to="/admin">Admin Panel</Link>}
                   </div>
                 )
               }

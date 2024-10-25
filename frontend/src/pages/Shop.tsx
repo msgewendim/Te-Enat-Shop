@@ -1,67 +1,15 @@
-import { useContext, useState, useMemo } from "react"
 import { Link } from "react-router-dom"
 import ProductCard from "../components/products/ProductCard"
 import ShopBanner from "/ShopBanner.svg"
-import { AppContext } from "../providers/interface/context"
-import { query } from "../providers/interface/context"
 import Cart from "./Cart"
 import Loader from "../components/ui/Loader";
-import { toast } from "react-toastify";
-
 import { Product } from "../client/types.gen";
-import { useGetProducts } from "../hooks/useProductsData"
 import Filters from "../components/ui/Filters"
 import Banner from "../components/ui/Banner"
+import useShop from "../hooks/useShop"
 
 const Shop = () => {
-  const [openCart, setOpenCart] = useState(false)
-  // const [products, setProducts] = useState<Product[]>([])
-  const { page, setPage, cartItems, category, filter } = useContext(AppContext)
-  const query: query = useMemo<query>(() => {
-    return {
-      page,
-      category,
-      filter,
-      limit: 12,
-    }
-  }, [page, filter, category])
-  const { data, error, isLoading, isError, isPlaceholderData } = useGetProducts(query)
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     setProducts(products as Product[])
-  //   }
-  // }, [products, isSuccess, getProducts, query, category, filter, page, setProducts])
-
-  // useEffect(() => {
-  //   window.addEventListener('reload', () => getProducts(query).then(products => setProducts(products as Product),[])), false
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   )
-  // })
-  if (isError) {
-    toast.error(error.message)
-  }
-
-  const handlePrevious = () => {
-    if (page > 1) setPage(page - 1);
-  };
-
-  const handleNext = () => {
-    if (!isPlaceholderData) {
-      setPage(page + 1)
-    }
-  };
-
-  // useEffect(() => {
-  //   // Event listener for reloading products
-  //   const handleReload = () => {
-  //     getProducts(query).then((products) => setProducts(products as Product[]));
-  //   };
-  //   window.addEventListener('reload', handleReload);
-
-  //   return () => {
-  //     window.removeEventListener('reload', handleReload); // Clean up
-  //   };
-  // }, [getProducts, query, setProducts]);
+  const { cartItems, data, isLoading, setOpenCart, openCart, page, handleNext, handlePrevious, } = useShop()
 
   if (isLoading) return <Loader />;
   return (
@@ -97,7 +45,6 @@ const Shop = () => {
               </svg>
             </Link>
             <button type="button" title="currentPage" className="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md dark:bg-gray-50 dark:text-violet-600 dark:border-violet-600">{page}</button>
-            {/* <button type="button" className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md dark:bg-gray-50 dark:border-gray-100" title="Page 2">{page + 1}</button>*/}
             <Link to={`/products?page=${page}`}
               onClick={() => handleNext()}
               title="next"

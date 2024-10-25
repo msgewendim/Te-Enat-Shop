@@ -21,9 +21,9 @@ const RelatedProducts = ({ productCategory }: { productCategory: string }) => {
             <img src={arrowLeft} alt="" width={36} />
           </button> */}
           <div className="flex gap-4 mt-3">
-            {data?.map(({ _id, name, images }) => (
+            {data?.map(({ _id, name, image }) => (
               <Link to={`/products/${_id}/info`} key={_id} className="flex flex-col gap-4 justify-between items-center">
-                <img src={images[0]} alt={name} className="object-cover w-32 h-32 rounded-lg" />
+                <img src={image} alt={name} className="object-cover w-32 h-32 rounded-lg" />
                 <h2 className="text-xl ml-2 text-primary capitalize font-semibold">
                   {name}
                 </h2>

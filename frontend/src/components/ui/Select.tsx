@@ -1,7 +1,8 @@
-import { Fragment, useContext, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { AppContext } from '../../providers/interface/context'
+import { useAppContext } from '../../hooks/useAppContext'
+
 
 interface SelectSizeProps {
   selectItems: Array<string>
@@ -10,7 +11,7 @@ interface SelectSizeProps {
 }
 const Select = ({ selectItems, item, classes }: SelectSizeProps) => {
   const [option, setOption] = useState("")
-  const { category, setSizeIdx } = useContext(AppContext)
+  const { category, setSizeIdx } = useAppContext()
   useEffect(() => {
     const sizeIdx = selectItems.indexOf(option) === -1 ? 0 : selectItems.indexOf(option)
     setSizeIdx(sizeIdx)

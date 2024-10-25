@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, className }: { product: Product, className?: string }) => {
   const [openProductId, setOpenProductId] = useState("");
-  const { images, name, categories, _id, pricing } = product
+  const { image, name, categories, _id, pricing } = product
   const handleOpenPopup = (productId: string) => {
     setOpenProductId(productId);
   };
@@ -16,7 +16,7 @@ const ProductCard = ({ product, className }: { product: Product, className?: str
   return (
     <div className={`group flex flex-col max-w-[340px] max-h-[400px] bg-white shadow-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70 ${className}`}>
       <div className="h-[300px]">
-        {images && <img onClick={() => handleOpenPopup(_id)} src={images[0]} alt={name} className="w-full flex-1 h-full cursor-pointer object-cover" />}
+        {image && <img onClick={() => handleOpenPopup(_id)} src={image} alt={name} className="w-full flex-1 h-full cursor-pointer object-cover" />}
       </div>
       {openProductId === _id && (
         <PopupProduct
@@ -34,8 +34,12 @@ const ProductCard = ({ product, className }: { product: Product, className?: str
             {name}
           </h3>
         </div>
-        <span className="block text-xs text-end font-semibold uppercase text-blue-800 dark:text-blue-500">
-          {categories ? categories[0] : ""}
+        <span className="flex justify-end gap-2 text-xs text-end font-semibold uppercase text-blue-800 dark:text-blue-500">
+          {
+            categories && categories.map((cat, idx) => {
+              return <span key={idx}>{cat}</span>
+            })
+          }
         </span>
       </div>
       <div className="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">

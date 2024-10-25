@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
-import { topCategories } from "../../utils/examples"
-import { useContext } from "react"
-import { AppContext } from "../../providers/interface/context"
+import { useAppContext } from "../../hooks/useAppContext"
+import { ourTopCategories } from "../../utils/constants"
+
 
 const TopCategory = () => {
-  const { setCategory } = useContext(AppContext)
+  const { setCategory } = useAppContext()
   return (
     <div style={{ backgroundColor: '#274C5B' }}
       className="min-h-fit sm:min-h-[55vh] flex flex-col"
@@ -15,11 +15,11 @@ const TopCategory = () => {
         </div>
         <div className="grid lg:grid-cols-5 sm:grid-cols-2 grid-cols-1 gap-8 md:gap-10">
           {
-            topCategories.map(({ name, images }, index) => {
+            ourTopCategories.map(({ name, image }, index) => {
               return (
                 <Link to={`/products?category=${name.toLowerCase()}`} onClick={() => setCategory(name)} key={index}
                   className="text-center">
-                  <img src={images ? images[0] : ""} alt={name} className="object-contain rounded-md w-[200px]" />
+                  <img src={image} alt={name} className="object-contain rounded-md w-[200px]" />
                   <div className="mt-2 sm:mt-4">
                     <h3 className="text-md font-medium text-white sm:text-base lg:text-lg dark:text-neutral-200 capitalize">{name}</h3>
                   </div>

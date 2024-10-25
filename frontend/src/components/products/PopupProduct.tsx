@@ -1,16 +1,16 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { Dispatch, SetStateAction, useContext, useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { CartItem, Product } from '../../client/types.gen'
-import { AppContext } from '../../providers/interface/context'
 import { addItemToCartList } from '../../utils/helperFunctions'
 import Select from '../ui/Select'
+import { useAppContext } from '../../hooks/useAppContext'
 
 const PopupProduct = ({ product, open, setOpen }:
   { open: boolean, setOpen: Dispatch<SetStateAction<boolean>>, product: Product }) => {
-  const { cartItems, setCartItems, setOrderItems, orderItems, sizeIdx } = useContext(AppContext)
-  const { images, name, shortDescription, pricing, _id } = product
+  const { cartItems, setCartItems, setOrderItems, orderItems, sizeIdx } = useAppContext()
+  const { image, name, shortDescription, pricing, _id } = product
   const sizes: Array<string> = []
   const prices: Array<number> = []
   pricing.forEach(({ price, size }) => {
@@ -63,7 +63,7 @@ const PopupProduct = ({ product, open, setOpen }:
               <div className="sm:grid flex flex-col justify-end sm:grid-cols-2 sm:text-end sm:items-start w-full">
                 {/* image*/}
                 <div className="pb-2 sm:px-2 sm:pb-4">
-                  {images && <img src={images[0]} alt={name} className="sm:rounded-xl object-cover sm:object-cover sm:h-[300px] sm:w-[300px]" />}
+                  <img src={image} alt={name} className="sm:rounded-xl object-cover sm:object-cover sm:h-[300px] sm:w-[300px]" />
                 </div>
                 {/* content */}
                 <div className="flex flex-col sm:justify-center sm:items-end mr-2 lg:mr-2">

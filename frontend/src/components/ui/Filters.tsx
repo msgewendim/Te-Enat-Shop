@@ -2,17 +2,10 @@ import { ChangeEvent, useContext } from "react"
 import { AppContext } from "../../providers/interface/context"
 import { Link } from "react-router-dom"
 import Categories from "./Categories"
+import { categories } from "../../utils/constants"
 
 const Filters = () => {
-  const { setFilter, setCategory } = useContext(AppContext)
-  const categories = [
-    "קטגוריות",
-    "כלי מטבח",
-    "משקאות",
-    "קמחים",
-    "תבלינים",
-    "קטניות"
-  ]
+  const { setFilter, setCategory } = useAppContext()
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value)
   }

@@ -1,12 +1,11 @@
-import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { CartItem } from "../../client/types.gen"
-import { AppContext } from "../../providers/interface/context"
 import { removeItemFromCartList } from "../../utils/helperFunctions"
+import { useAppContext } from "../../hooks/useAppContext"
 
 const SingleCartItem = ({ product, quantity, size, price }: CartItem) => {
-  const { cartItems, setCartItems } = useContext(AppContext)
-  const { name, images, _id } = product
+  const { cartItems, setCartItems } = useAppContext()
+  const { name, image, _id } = product
   const handleRemoveItem = (item: CartItem) => {
     // console.log(cartItems);
     const updatedCartItems = removeItemFromCartList(cartItems, item)
@@ -18,7 +17,7 @@ const SingleCartItem = ({ product, quantity, size, price }: CartItem) => {
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
         <img
           alt={name}
-          src={images[0]}
+          src={image}
           className="h-full w-full object-cover object-center"
         />
       </div>

@@ -10,19 +10,33 @@ import {
 } from "../client";
 
 const axiosInstance = axios.create({ baseURL: BASE_API_URL });
+export const getUsers = async (token: string) => {
+  return (
+    await axiosInstance.post(
+      "/users",
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+  ).data;
+};
 
-const fetchProducts = async (q: query) => {
-  return (await axios("/products?cursor=" + q.page)).data;
+const getRandomProducts = async (q: query): Promise<RandomProductsResponse> => {
+  return (
+    await axiosInstance.get("/products/top-products", {
+      params: q,
+    })
+  ).data;
 };
 const getProducts = async (q: query): Promise<Product[]> => {
   // Fetch data from your API endpoint with the provided query
-  return (await axiosInstance.get("/products?cursor=" + q.page, { params: q }))
-    .data;
+  return (await axiosInstance.get("/products", { params: q })).data;
 };
 
 const getProductById = async (id: string): Promise<Product> => {
   // Fetch data from your API endpoint with the provided ID
-  return await axiosInstance.get(`/products/${id}`);
+  return (await axiosInstance.get(`/products/${id}`)).data;
 };
 
 const addProduct = async (productData: Partial<Product>): Promise<Product> => {
@@ -75,7 +89,12 @@ const removeFromCart = async (cartItem: CartItem, userId: string) => {
     data: cartItem,
   });
 };
-
+type RandomProductsResponse = {
+  products: Product[];
+  totalPages: number;
+  currentPage: number;
+  hasMore: boolean;
+};
 export {
   removeFromCart,
   getProducts,
@@ -86,5 +105,5 @@ export {
   deleteProduct,
   getPaymentForm,
   checkPaymentStatus,
-  fetchProducts,
+  getRandomProducts,
 };

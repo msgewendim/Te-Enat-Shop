@@ -1,8 +1,16 @@
 import { Recipe } from "../client";
-import { Category } from "../client";
-import { cookies, dessert, hotShiro, kik, kimem, kimem2, kurkum, shiro } from "./data";
+import {
+  cookies,
+  dessert,
+  hotShiro,
+  kik,
+  kimem,
+  kimem2,
+  kurkum,
+  shiro,
+} from "./data";
 
-export const recipe : Recipe = {
+export const recipe: Recipe = {
   _id: "chocolate-chip-cookies",
 
   title: "Chocolate Chip Cookies",
@@ -40,7 +48,7 @@ export const recipe : Recipe = {
       reviewerName: "John Doe",
       rating: 5,
       comment: "Love this recipe!",
-      createdAt: "2023-08-20T12:45:00Z"
+      createdAt: "2023-08-20T12:45:00Z",
     },
   ],
   createdAt: "2023-08-20T12:45:00Z",
@@ -84,7 +92,7 @@ export const product = {
 };
 
 export const topRecipes = [recipe, recipe, recipe, recipe, recipe, recipe];
-export const topCategories: Category[] = [
+export const topCategories = [
   {
     _id: "123",
     name: "קמחים",

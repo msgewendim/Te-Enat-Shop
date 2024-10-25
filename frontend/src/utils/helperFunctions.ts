@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { CartItem } from "../client";
+import { CartItem, Feature, Product } from "../client";
 
 const createBanner = (image: string) => {
   const bgImage = {
@@ -43,20 +43,21 @@ const getTotalPrice = (cartItems: CartItem[]) => {
     0
   );
 };
+
 // divide the nutrition of a product with in the description object
-const divideDescriptionInfo = (
-  descriptions: Array<string[]>,
-  even: Array<string[]> = [],
-  odd: Array<string[]> = []
-): Array<string[][]> => {
-  descriptions.forEach((desc, index) => {
-    if (index % 2 !== 0) {
-      odd.push(desc);
+const divideFeatures = (features: Feature[]) => {
+  const leftFeatures: Feature[] = [];
+  const rightFeatures: Feature[] = [];
+
+  features.forEach((feature, index) => {
+    if (index % 2 === 0) {
+      leftFeatures.push(feature);
     } else {
-      even.push(desc);
+      rightFeatures.push(feature);
     }
   });
-  return [odd, even];
+
+  return { leftFeatures, rightFeatures };
 };
 
 const ScrollToTop = () => {
@@ -67,6 +68,10 @@ const ScrollToTop = () => {
   }, [pathname]);
 
   return null;
+};
+// Randomize products
+const randomizeArray = (array: Product[]) => {
+  return array.sort(() => Math.random() - 0.5);
 };
 
 const removeItemFromCartList = (
@@ -111,8 +116,9 @@ export {
   addItemToCartList,
   createBanner,
   createRecipeCardImage,
-  divideDescriptionInfo,
+  divideFeatures,
   ScrollToTop,
   removeItemFromCartList,
   getTotalPrice,
+  randomizeArray,
 };

@@ -1,8 +1,7 @@
-import { useContext } from "react"
-import { AppContext } from "../../providers/interface/context";
+import { useAppContext } from "../../hooks/useAppContext";
 
 const CheckoutSummary = () => {
-  const { cartItems, totalPrice } = useContext(AppContext)
+  const { cartItems, totalPrice } = useAppContext()
   return (
     <div className="bg-primary sm:h-screen sm:top-0 lg:min-w-[370px] sm:min-w-[300px]">
       <div className="relative h-full">
@@ -10,11 +9,11 @@ const CheckoutSummary = () => {
           <div className="space-y-4">
             {
               cartItems?.map(({ product, quantity, size, price }, index) => {
-                const { name, images } = product;
+                const { name, image } = product;
                 return (
                   <div className="flex items-start gap-4" key={index}>
                     <div className="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md">
-                      <img src={images[0]} className="w-full object-cover" />
+                      <img src={image} className="w-full object-cover" />
                     </div>
                     <div className="w-full">
                       <h3 className="text-base font-medium text-gray-100 text-right">{name}</h3>

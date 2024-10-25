@@ -2,7 +2,7 @@
 
 export const $Product = {
     type: 'object',
-    required: ['_id', 'name', 'shortDescription', 'pricing', 'images', 'categories', 'InStock', 'availability'],
+    required: ['_id', 'name', 'shortDescription', 'pricing', 'image', 'categories', 'features'],
     properties: {
         _id: {
             type: 'string',
@@ -40,48 +40,24 @@ export const $Product = {
                 required: ['size', 'price']
             }
         },
-        images: {
-            type: 'array',
-            description: 'A list of image URLs for the product.',
-            items: {
-                type: 'string',
-                format: 'uri',
-                example: 'https://example.com/product-image.jpg'
-            }
-        },
-        rate: {
-            type: 'number',
-            format: 'float',
-            description: 'The average rating of the product.',
-            example: 4.5
+        image: {
+            type: 'string',
+            description: 'A URL link for the product Image.',
+            format: 'uri',
+            example: 'https://example.com/product-image.jpg'
         },
         categories: {
             type: 'array',
             description: 'A list of category names the product belongs to.',
             items: {
-                type: 'string',
-                example: 'Spices'
+                type: 'Category'
             }
-        },
-        InStock: {
-            type: 'integer',
-            description: 'The number of items in stock.',
-            example: 150
-        },
-        availability: {
-            type: 'string',
-            description: 'The availability status of the product.',
-            enum: ['In Stock', 'Out of Stock', 'Pre-order'],
-            example: 'In Stock'
         },
         features: {
             type: 'array',
             description: 'An optional list of benefits associated with the product.',
             items: {
-                type: 'array',
-                items: {
-                    type: 'string'
-                }
+                type: 'FeatureObject'
             }
         },
         reviews: {
@@ -129,6 +105,36 @@ export const $Product = {
             example: 5000
         }
     }
+} as const;
+
+export const $FeatureObject = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            description: 'The unique identifier for the feature.'
+        },
+        value: {
+            type: 'array',
+            items: {
+                type: 'Feature'
+            }
+        }
+    },
+    required: ['value']
+} as const;
+
+export const $Feature = {
+    type: 'object',
+    properties: {
+        title: {
+            type: 'string'
+        },
+        description: {
+            type: 'string'
+        }
+    },
+    required: ['title', 'description']
 } as const;
 
 export const $PaymentFormPayload = {
@@ -417,7 +423,7 @@ export const $User = {
 export const $Order = {
     type: 'object',
     properties: {
-        id: {
+        _id: {
             type: 'string',
             description: 'Unique identifier for the order'
         },
@@ -464,8 +470,7 @@ export const $CartItem = {
     type: 'object',
     properties: {
         product: {
-            type: 'object',
-            '$ref': '#/components/schemas/Product',
+            type: 'Product',
             description: 'The product in the cart'
         },
         quantity: {
@@ -555,40 +560,18 @@ export const $Recipe = {
 export const $Category = {
     type: 'object',
     properties: {
-        _id: {
-            type: 'string',
-            description: 'Unique identifier for the category',
-            nullable: true
-        },
         name: {
-            type: 'string'
+            type: 'string',
+            description: 'The name of the product category in Hebrew',
+            example: 'תבלינים'
         },
-        images: {
-            type: 'array',
-            items: {
-                type: 'string',
-                description: 'URLs to images representing the category'
-            },
-            nullable: true
-        },
-        recipes: {
-            type: 'array',
-            items: {
-                type: 'string',
-                description: 'List of recipe IDs associated with the category'
-            },
-            nullable: true
-        },
-        products: {
-            type: 'array',
-            items: {
-                type: 'string',
-                description: 'List of product IDs associated with the category'
-            },
-            nullable: true
+        value: {
+            type: 'string',
+            description: 'The value of the product category in English',
+            example: 'Spices'
         }
     },
-    required: ['name']
+    required: ['name', 'value']
 } as const;
 
 export const $PartialRecipe = {

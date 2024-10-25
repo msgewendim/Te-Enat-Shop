@@ -7,9 +7,9 @@ import Support from "/support.svg"
 // Grantees Cards
 const Grantees = () => {
   return (
-    <div className="bg-[#D2FCFF] flex flex-col order-2 sm:order-1 py-3 sm:text-right relative w-full">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 justify-center items-center lg:mx-32 mx-20 my-8 -mt-4">
-        {/* Cards */}
+    <div className="bg-[#D2FCFF] pb-12 sm:text-right w-full">
+      {/* Cards */}
+      <div className="sm:flex sm:justify-center sm:items-center sm:gap-24 grid grid-cols-2 gap-12 mr-3 ml-3">
         <GranteesCard title="טריות 100%" text="אנו מתחייבים לספק את המוצרים הטריים והאיכותיים" icon={Globe} />
         <GranteesCard title="תמיכה" text="זמינים במגוון דרכי התקששרות לכל שאלה" icon={Support} />
         <GranteesCard title="מדיניות החזרה" text="ביטול רכישה בכל עת טרם יציאת המשלוח זמין מיידית" icon={Cart} />

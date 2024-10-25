@@ -1,10 +1,9 @@
-import { useContext } from "react"
-import { AppContext } from "../../providers/interface/context"
 import SingleCartItem from "./SingleCartItem"
+import { useAppContext } from "../../hooks/useAppContext"
 
 
 const CartItemsList = () => {
-  const { cartItems } = useContext(AppContext)
+  const { cartItems } = useAppContext()
 
   if (!cartItems.length) {
     return <p className="text-center text-gray-500 dark:text-gray-400">No items in cart.</p>
