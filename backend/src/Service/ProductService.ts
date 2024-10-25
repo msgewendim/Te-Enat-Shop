@@ -34,12 +34,12 @@ export class ProductService {
     try {
       if (!page) page = 1;
       if (!limit) limit = 9;
-      return await this.ProductDataAccess.getAllProducts(
+      return (await this.ProductDataAccess.getAllProducts(
         page,
         limit,
         searchTerm,
         category
-      );
+      )) as Product[];
     } catch (error) {
       throw new Error("NO Products Found!");
     }
@@ -58,6 +58,23 @@ export class ProductService {
       await this.ProductDataAccess.deleteProduct(productId);
     } catch (error) {
       throw new Error(`Can't delete Product ${(error as Error).message}`);
+    }
+  }
+  async getTopProducts(
+    page: number,
+    limit: number
+  ): Promise<Product[] | unknown> {
+    try {
+      const result = await this.ProductDataAccess.getRandomProducts(
+        page,
+        limit
+      );
+      console.log("productsService: products.len ", result.products.length);
+      return result;
+    } catch (error) {
+      throw new Error(
+        `Error getting random Products: ${(error as Error).message}`
+      );
     }
   }
 }

@@ -11,16 +11,15 @@ export class UseController {
     const accessToken = req.auth?.token;
     console.log(accessToken, "access token");
     if (!accessToken) {
-      return res.status(401).json({ message: "log in to proceed" });
+      throw new Error("Access token not provided");
     }
     const userInfo = await getUserInfo(accessToken);
-
+    console.log("userInfo", userInfo);
     if (!userInfo) {
-      return res.status(401).json({ message: "invalid access token" });
+      throw new Error("Invalid access token");
     }
-    const { userId } = req.params;
     const updatedUser = await this.userService.updateUserWithAuth(req.body);
-    res.status(200).json({ message: "User updated successfully", updatedUser });
+    return updatedUser;
   }
 
   async createUserWithoutAuth(req: Request, res: Response) {}

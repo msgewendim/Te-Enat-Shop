@@ -5,7 +5,7 @@ import {
   OrderItem,
   OrderTransaction,
 } from "../../types/order.types";
-import orderModel from "../models/Order";
+import orderModel from "../models/OrderSchema";
 
 const addOrder = async (
   userInfo: ClientDetails,

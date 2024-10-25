@@ -1,4 +1,4 @@
-import { User } from "../models/User";
+import { User } from "../models/UserSchema";
 
 export class UserService {
   async updateUserWithAuth(user: Partial<User>) {}

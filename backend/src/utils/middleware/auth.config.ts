@@ -20,6 +20,7 @@ export const getUserInfo = async (accessToken: string) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+    console.log(data, "userInfo");
     return {
       email: data.nickname,
       name: data.name,

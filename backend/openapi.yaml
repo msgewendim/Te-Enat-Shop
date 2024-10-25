@@ -165,10 +165,9 @@ components:
         - name
         - shortDescription
         - pricing
-        - images
+        - image
         - categories
-        - InStock
-        - availability
+        - features
       properties:
         _id:
           type: string
@@ -200,43 +199,21 @@ components:
             required:
               - size
               - price
-        images:
-          type: array
-          description: A list of image URLs for the product.
-          items:
-            type: string
-            format: uri
-            example: "https://example.com/product-image.jpg"
-        rate:
-          type: number
-          format: float
-          description: The average rating of the product.
-          example: 4.5
+        image:
+          type: string
+          description: A URL link for the product Image.
+          format: uri
+          example: "https://example.com/product-image.jpg"
         categories:
           type: array
           description: A list of category names the product belongs to.
           items:
-            type: string
-            example: "Spices"
-        InStock:
-          type: integer
-          description: The number of items in stock.
-          example: 150
-        availability:
-          type: string
-          description: The availability status of the product.
-          enum:
-            - "In Stock"
-            - "Out of Stock"
-            - "Pre-order"
-          example: "In Stock"
+            type: Category
         features:
           type: array
           description: An optional list of benefits associated with the product.
           items:
-            type: array
-            items:
-              type: string
+            type: FeatureObject
         reviews:
           type: array
           description: An optional list of reviews for the product.
@@ -270,6 +247,30 @@ components:
           type: integer
           description: An optional field for the total number of sales.
           example: 5000
+
+    FeatureObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the feature.
+        value:
+          type: array
+          items:
+            type: Feature
+      required:
+        - value
+
+    Feature:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - title
+        - description
 
     PaymentFormPayload:
       type: object
@@ -388,6 +389,7 @@ components:
         rate: 4.5
         shortDescription: "A traditional Ethiopian flatbread."
         imageSize: 300
+
     PaymentFormSuccessResponse:
       type: object
       properties:
@@ -409,6 +411,7 @@ components:
         - success
         - url
         - orderId
+
     PaymentFormErrorResponse:
       type: object
       properties:
@@ -425,6 +428,7 @@ components:
         - errorCode
         - errorMessage
         - orderId
+
     Review:
       type: object
       properties:
@@ -516,7 +520,7 @@ components:
     Order:
       type: object
       properties:
-        id:
+        _id:
           type: string
           description: Unique identifier for the order
         userId:
@@ -558,8 +562,7 @@ components:
       type: object
       properties:
         product:
-          type: object
-          $ref: "#/components/schemas/Product"
+          type: Product
           description: The product in the cart
         quantity:
           type: integer
@@ -636,32 +639,17 @@ components:
     Category:
       type: object
       properties:
-        _id:
-          type: string
-          description: Unique identifier for the category
-          nullable: true
         name:
           type: string
-        images:
-          type: array
-          items:
-            type: string
-            description: URLs to images representing the category
-          nullable: true
-        recipes:
-          type: array
-          items:
-            type: string
-            description: List of recipe IDs associated with the category
-          nullable: true
-        products:
-          type: array
-          items:
-            type: string
-            description: List of product IDs associated with the category
-          nullable: true
+          description: "The name of the product category in Hebrew"
+          example: "תבלינים"
+        value:
+          type: string
+          description: "The value of the product category in English"
+          example: "Spices"
       required:
         - name
+        - value
 
     PartialRecipe:
       type: object

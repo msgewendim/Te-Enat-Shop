@@ -37,6 +37,7 @@ export class ProductController {
 
   async addProduct(req: Request, res: Response) {
     const product = req.body;
+    console.log(product, "product data ");
     try {
       await this.productService.addProduct(product);
       res.status(201).json({ message: "Product Added to DB!" });
@@ -47,6 +48,7 @@ export class ProductController {
 
   async deleteProduct(req: Request, res: Response) {
     const productId = req.params._id;
+    console.log("Product Id to delete: " + productId);
     try {
       await this.productService.deleteProduct(productId);
       res.status(200).json({ message: "Product Deleted from DB!" });
@@ -61,6 +63,25 @@ export class ProductController {
     try {
       await this.productService.updateProduct(productId, productData);
       res.status(201).json({ message: "Product Updated!" });
+    } catch (error) {
+      res.status(400).json((error as Error).message);
+    }
+  }
+  async getTopProducts(req: Request, res: Response) {
+    const { page = 1, limit = 3 } = req.query;
+    console.log(
+      page,
+      "getTopProducts called, limit: " + limit,
+      "page: " + page
+    );
+    const parsedPage = parseInt(page as string, 10);
+    const parsedLimit = parseInt(limit as string, 10);
+    try {
+      const result = await this.productService.getTopProducts(
+        parsedPage,
+        parsedLimit
+      );
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json((error as Error).message);
     }

@@ -1,4 +1,4 @@
-import userModel, { User } from "../models/User";
+import userModel, { User } from "../models/UserSchema";
 
 const addUserWithAuth = async (userInfo: Partial<User>) => {
   try {

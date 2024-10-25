@@ -1,18 +1,46 @@
-import { ObjectId } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
-interface Product {
+export interface Product {
   _id: ObjectId | null;
   name: string;
+  image: string;
   shortDescription: string;
-  pricing: Array<Object>;
-  images: string[];
-  rate: number;
-  categories: string[];
-  InStock: number;
-  availability: "In Stock" | "Out of Stock" | "Pre-order";
-  features?: Array<String>;
-  relatedProducts?: Partial<Product>[];
+  pricing: Array<Pricing>;
+  categories: Category[];
+  features: FeatureObject;
+  relatedProducts: mongoose.Types.ObjectId[];
   totalSales?: number;
+}
+export interface Feature {
+  title: string;
+  description: string;
+}
+
+export interface FeatureObject {
+  id: string;
+  value: Feature[];
+}
+
+export interface Category {
+  /**
+   * The name of the product category in Hebrew
+   */
+  name: string;
+  /**
+   * The value of the product category in English
+   */
+  value: string;
+}
+
+export interface Pricing {
+  /**
+   * The weight option for the product.
+   */
+  size: string;
+  /**
+   * The price of the product for the given size.
+   */
+  price: number;
 }
 
 export interface ProductCardProps {
@@ -25,16 +53,3 @@ export interface ProductCardProps {
   shortDescription: string;
   imageSize?: number;
 }
-
-interface Languages {
-  en: {
-    nativeName: string;
-  };
-  "he-IL": {
-    nativeName: string;
-  };
-  [key: string]: {
-    nativeName: string;
-  };
-}
-export { Product, Languages };

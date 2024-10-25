@@ -1,6 +1,6 @@
 import { IProduct } from "../utils/interfaces/IProductDal";
-import { Product } from "../../types/product.types";
-import productModel from "../models/Product";
+import { FeatureObject, Product } from "../../types/product.types";
+import productModel from "../models/ProductSchema";
 import { QueryOptions } from "mongoose";
 
 export class ProductDal implements IProduct<Product> {
@@ -37,6 +37,24 @@ export class ProductDal implements IProduct<Product> {
         .limit(limit) // Limit the number of items returned
         .exec();
       return products;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getRandomProducts(page: number, limit: number) {
+    try {
+      const totalProducts = await productModel.countDocuments();
+      const totalPages = Math.ceil(totalProducts / limit);
+
+      // Calculate skip value for pagination
+      const skip = (page - 1) * limit;
+      const products = await productModel.find().skip(skip).limit(limit);
+
+      return {
+        products,
+        currentPage: page,
+        totalPages: totalPages,
+      };
     } catch (error) {
       throw error;
     }
