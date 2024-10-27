@@ -4,7 +4,7 @@ import { CgBowl } from "react-icons/cg";
 import { GiFlour, GiGrainBundle } from "react-icons/gi";
 import { PiGrains } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import { topRecipes } from "../../utils/examples";
+import { recipesList } from "../../utils/examples";
 
 const OurSpecialty = () => {
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ const OurSpecialty = () => {
           {t('homePage.ourSpecialty.title')}
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {topRecipes.map(({ _id, image, name }, index) => (
+          {recipesList.map(({ _id, image, name }, index) => (
             <RecipeCard key={index} id={_id} image={image} title={name} />
           ))}
         </div>

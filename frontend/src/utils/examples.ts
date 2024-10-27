@@ -33,13 +33,10 @@ export const recipe: Recipe = {
       reviewerName: "John Doe",
       rating: 5,
       comment: "Love this recipe!",
-      createdAt: new Date().toDateString(),
     },
   ],
-  createdAt: new Date().toDateString(),
 };
 
-export const topRecipes = [recipe, recipe, recipe, recipe, recipe, recipe];
 export const topCategories = [
   {
     _id: "123",
@@ -105,7 +102,6 @@ export const recipesList: Recipe[] = [
         comment: "Easy to make and delicious.",
       },
     ],
-    createdAt: new Date("2024-03-15T10:00:00Z").toDateString(),
   },
   {
     _id: "2",
@@ -140,7 +136,6 @@ export const recipesList: Recipe[] = [
         comment: "Takes practice but worth it.",
       },
     ],
-    createdAt: new Date("2024-03-10T14:30:00Z").toDateString(),
   },
   {
     _id: "3",
@@ -174,6 +169,5 @@ export const recipesList: Recipe[] = [
         comment: "Spicy but full of flavor.",
       },
     ],
-    createdAt: new Date("2024-03-20T09:15:00Z").toDateString(),
   },
 ];

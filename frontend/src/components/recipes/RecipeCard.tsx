@@ -4,8 +4,8 @@ import { createRecipeCardImage } from "../../utils/helperFunctions";
 import { Recipe } from '../../client/types.gen';
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
-  const { image, createdAt } = recipe;
-  const createdAtDate = new Date(createdAt)
+  const { image } = recipe;
+  const createdAtDate = new Date(2013, 12, 12)
   const monthName = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(createdAtDate);
   const day = createdAtDate.getDate();
 

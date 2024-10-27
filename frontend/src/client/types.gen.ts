@@ -162,7 +162,7 @@ export type Review = {
     /**
      * The date and time when the review was created
      */
-    createdAt?: string;
+    createdAt?: Date;
 };
 
 export type User = {
@@ -265,7 +265,7 @@ export type Recipe = {
     difficulty: 'Easy' | 'Medium' | 'Hard';
     categories: Array<(string)>;
     reviews?: Array<Review> | null;
-    createdAt: string;
+    createdAt?: string;
 };
 
 /**

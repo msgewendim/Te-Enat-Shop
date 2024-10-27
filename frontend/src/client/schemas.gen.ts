@@ -284,7 +284,7 @@ export const $Review = {
             description: 'Comment provided by the user for the recipe'
         },
         createdAt: {
-            type: 'string',
+            type: 'Date',
             format: 'date-time',
             description: 'The date and time when the review was created'
         }
@@ -504,7 +504,7 @@ export const $Recipe = {
             format: 'date-time'
         }
     },
-    required: ['_id', 'name', 'description', 'image', 'ingredients', 'instructions', 'prepTime', 'difficulty', 'categories', 'createdAt']
+    required: ['_id', 'name', 'description', 'image', 'ingredients', 'instructions', 'prepTime', 'difficulty', 'categories']
 } as const;
 
 export const $Category = {

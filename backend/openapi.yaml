@@ -601,7 +601,6 @@ components:
         - prepTime
         - difficulty
         - categories
-        - createdAt
 
     Category:
       type: object
