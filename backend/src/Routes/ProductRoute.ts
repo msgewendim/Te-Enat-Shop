@@ -37,7 +37,6 @@ router.delete(
 );
 router.put(
   "/:_id",
-  jwtCheck,
   async (req: Request, res: Response) =>
     await productController.updateProduct(req, res)
 );
