@@ -4,6 +4,7 @@ import { AppContext, ModalState } from "./interface/context";
 import { getTotalPrice } from "../utils/helperFunctions";
 import { BASE_API_URL } from "../utils/env.config";
 import { toast } from "react-toastify";
+import { useGetProducts } from "../hooks/useProductsData";
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [category, setCategory] = useState<string>("")
@@ -20,7 +21,9 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     isOpen: false,
     onConfirm: () => { },
   });
-
+  const { data: products, refetch: refetchProducts } = useGetProducts({
+    limit: 20
+  })
   useEffect(() => {
     // when the cart items change, recalculate the total price
     setTotalPrice(parseFloat(getTotalPrice(cartItems).toFixed(2)))
@@ -81,6 +84,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setModalState,
     setProductToEdit,
     productToEdit,
+    products,
+    refetchProducts,
   }
   return (
     <AppContext.Provider value={values}>

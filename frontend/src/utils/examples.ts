@@ -1,27 +1,18 @@
 import { Recipe } from "../client";
-import {
-  cookies,
-  dessert,
-  hotShiro,
-  kik,
-  kimem,
-  kimem2,
-  kurkum,
-  shiro,
-} from "./data";
+import { cookies, dessert, hotShiro, kurkum, shiro } from "./data";
 
 export const recipe: Recipe = {
   _id: "chocolate-chip-cookies",
 
-  title: "Chocolate Chip Cookies",
+  name: "Chocolate Chip Cookies",
   description:
     "Chocolate chip cookies are a delicious and healthy dessert that can be enjoyed with a variety of snacks. These cookies are filled with chocolate chips, which are a great source of fiber and healthy fats. They are also easy to make and can be enjoyed on a variety of days of the week.",
   ingredients: [
-    { _id: "1233", name: "unsalted butter", quantity: "100g" },
-    { _id: "1231", name: "granulated sugar", quantity: "50g" },
-    { _id: "1213", name: "light brown sugar", quantity: "25g" },
-    { _id: "1236", name: "salt", quantity: "1tsp" },
-    { _id: "1239", name: "vanilla extract", quantity: "1 cup" },
+    { name: "unsalted butter", quantity: "100g" },
+    { name: "granulated sugar", quantity: "50g" },
+    { name: "light brown sugar", quantity: "25g" },
+    { name: "salt", quantity: "1tsp" },
+    { name: "vanilla extract", quantity: "1 cup" },
   ],
   instructions: [
     "In a large bowl, cream butter and sugar until light and fluffy.",
@@ -35,12 +26,6 @@ export const recipe: Recipe = {
   difficulty: "Easy",
   categories: ["Dessert", "Cookie", "Chocolate Chip"],
   image: cookies,
-  relatedRecipes: [
-    { _id: "chocolate-chip-cookies", title: "cookie", image: dessert },
-    { _id: "doro-wet", title: "doro-wot", image: kik },
-    { _id: "chocolate-chip-cookies", title: "cookie", image: kimem },
-    { _id: "doro-wet", title: "doro-wot", image: kimem2 },
-  ],
   reviews: [
     // Add review objects here
     // Example:
@@ -48,47 +33,10 @@ export const recipe: Recipe = {
       reviewerName: "John Doe",
       rating: 5,
       comment: "Love this recipe!",
-      createdAt: "2023-08-20T12:45:00Z",
+      createdAt: new Date().toDateString(),
     },
   ],
-  createdAt: "2023-08-20T12:45:00Z",
-};
-
-export const product = {
-  _id: "123",
-  category: "dessert",
-  image: kik,
-  name: "cake",
-  price: 15.0,
-  rate: 4,
-  relatedProducts: [
-    { _id: "chocolate-chip-cookies", name: "cookie" },
-    { _id: "chocolate-chip-cookies", name: "cookie" },
-    { _id: "chocolate-chip-cookies", name: "cookie" },
-    { _id: "chocolate-chip-cookies", name: "cookie" },
-  ],
-  description: [
-    [
-      "Rich in Antioxidants",
-      " The chili peppers and spices in Berbere are loaded with antioxidants, which help protect your body from free radicals and reduce inflammation.",
-    ],
-    [
-      "Boosts Metabolism",
-      " The capsaicin in chili peppers has been shown to increase metabolism and promote fat burning, making Berbere not only flavorful but also beneficial for weight management.",
-    ],
-    [
-      "Immune-Boosting Properties",
-      "The blend includes several spices known for their immune-boosting effects, such as garlic and ginger, which can help ward off colds and infections.",
-    ],
-    [
-      "Supports Digestive Health",
-      "The blend includes several spices known for their immune-boosting effects, such as garlic and ginger, which can help ward off colds and infections.",
-    ],
-    [
-      "Anti-Inflammatory Effects",
-      "Many of the spices in Berbere, including turmeric and fenugreek, have anti-inflammatory properties, which can help reduce the risk of chronic diseases.",
-    ],
-  ],
+  createdAt: new Date().toDateString(),
 };
 
 export const topRecipes = [recipe, recipe, recipe, recipe, recipe, recipe];
@@ -124,45 +72,108 @@ export const topCategories = [
     recipes: [recipe._id, recipe._id],
   },
 ];
-export const products = [
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
-  product,
+export const recipesList: Recipe[] = [
+  {
+    _id: "1",
+    name: "Shiro Wot",
+    description: "A delicious Ethiopian chickpea stew",
+    image: "https://example.com/images/shiro-wot.jpg",
+    ingredients: [
+      { name: "Shiro powder", quantity: "1 cup" },
+      { name: "Onion", quantity: "1 large" },
+      { name: "Garlic", quantity: "3 cloves" },
+      { name: "Tomato", quantity: "1 medium" },
+      { name: "Vegetable oil", quantity: "1/4 cup" },
+      { name: "Water", quantity: "2 cups" },
+    ],
+    instructions: [
+      "Finely chop the onion and garlic.",
+      "Heat oil in a pot and sauté the onion and garlic until golden brown.",
+      "Add the tomato and cook for a few minutes.",
+      "Gradually add the shiro powder while stirring constantly.",
+      "Pour in the water and simmer for 15-20 minutes, stirring occasionally.",
+      "Serve hot with injera or bread.",
+    ],
+    prepTime: "30 minutes",
+    difficulty: "Easy",
+    categories: ["Ethiopian", "Vegetarian"],
+    reviews: [
+      { reviewerName: "user1", rating: 5, comment: "Authentic taste!" },
+      {
+        reviewerName: "user2",
+        rating: 4,
+        comment: "Easy to make and delicious.",
+      },
+    ],
+    createdAt: new Date("2024-03-15T10:00:00Z").toDateString(),
+  },
+  {
+    _id: "2",
+    name: "Injera",
+    description: "Traditional Ethiopian flatbread",
+    image: "https://example.com/images/injera.jpg",
+    ingredients: [
+      { name: "Teff flour", quantity: "2 cups" },
+      { name: "Water", quantity: "3 cups" },
+      { name: "Salt", quantity: "1/2 teaspoon" },
+    ],
+    instructions: [
+      "Mix teff flour with water and salt in a large bowl.",
+      "Cover and let ferment for 2-3 days at room temperature.",
+      "Heat a large non-stick pan or griddle over medium heat.",
+      "Pour a thin layer of batter in a spiral pattern.",
+      "Cook until bubbles form and the top is dry.",
+      "Remove from heat and let cool slightly before serving.",
+    ],
+    prepTime: "3 days (including fermentation)",
+    difficulty: "Medium",
+    categories: ["Ethiopian", "Bread"],
+    reviews: [
+      {
+        reviewerName: "user3",
+        rating: 5,
+        comment: "Perfect texture and taste!",
+      },
+      {
+        reviewerName: "user4",
+        rating: 4,
+        comment: "Takes practice but worth it.",
+      },
+    ],
+    createdAt: new Date("2024-03-10T14:30:00Z").toDateString(),
+  },
+  {
+    _id: "3",
+    name: "Doro Wat",
+    description: "Spicy Ethiopian chicken stew",
+    image: "https://example.com/images/doro-wat.jpg",
+    ingredients: [
+      { name: "Chicken", quantity: "1 whole, cut into pieces" },
+      { name: "Onions", quantity: "3 large" },
+      { name: "Berbere spice", quantity: "1/4 cup" },
+      { name: "Garlic", quantity: "4 cloves" },
+      { name: "Ginger", quantity: "1 inch piece" },
+      { name: "Eggs", quantity: "4" },
+    ],
+    instructions: [
+      "Sauté onions in oil until caramelized.",
+      "Add berbere spice, garlic, and ginger. Cook for a few minutes.",
+      "Add chicken pieces and cook until browned.",
+      "Pour in water or chicken stock and simmer for 40 minutes.",
+      "Add hard-boiled eggs and cook for an additional 5 minutes.",
+      "Serve hot with injera.",
+    ],
+    prepTime: "1 hour 30 minutes",
+    difficulty: "Medium",
+    categories: ["Ethiopian", "Chicken"],
+    reviews: [
+      { reviewerName: "user5", rating: 5, comment: "Absolutely delicious!" },
+      {
+        reviewerName: "user6",
+        rating: 4,
+        comment: "Spicy but full of flavor.",
+      },
+    ],
+    createdAt: new Date("2024-03-20T09:15:00Z").toDateString(),
+  },
 ];

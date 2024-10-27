@@ -7,7 +7,7 @@ const Login = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`, // Replace with your actual JWT token
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
 

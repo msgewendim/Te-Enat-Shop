@@ -1,11 +1,13 @@
 import { createContext } from "react";
 import { CartItem, OrderItem, Product } from "../../client/types.gen";
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
 export type query = {
   page?: number;
   category?: string;
   filter?: string;
   limit?: number;
+  type?: string;
 };
 
 export interface IContext {
@@ -33,6 +35,10 @@ export interface IContext {
   setModalState: (state: ModalState) => void;
   setProductToEdit: (product: Product | undefined) => void;
   productToEdit: Product | undefined;
+  products: Product[] | undefined;
+  refetchProducts: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<Product[], Error>>;
 }
 
 export const AppContext = createContext<IContext>({
@@ -60,6 +66,11 @@ export const AppContext = createContext<IContext>({
   setModalState: () => {},
   productToEdit: undefined,
   setProductToEdit: () => {},
+  products: [],
+  refetchProducts: async () =>
+    Promise.resolve<QueryObserverResult<Product[], Error>>(
+      {} as QueryObserverResult<Product[], Error>
+    ),
 });
 
 export interface ModalState {

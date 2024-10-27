@@ -1,13 +1,11 @@
-import { useDeleteProductMutation, useGetProducts } from "../../hooks/useProductsData";
+import { useDeleteProductMutation } from "../../hooks/useProductsData";
 import { Product } from "../../client";
 import { toast } from "react-toastify";
 import { useAppContext } from "../../hooks/useAppContext";
+import { translateProductCategories } from "../../utils/constants";
 
 const ProductList = () => {
-  const { setAdminActiveSection } = useAppContext()
-  const { data: products } = useGetProducts({
-    limit: 20
-  })
+  const { setAdminActiveSection, products } = useAppContext()
   if (!products) return null;
   return (
     <div className="mb-32" dir="rtl">
@@ -30,7 +28,7 @@ const ProductTableHeaderRow = () => {
   return (
     <tr className="text-center">
       <th scope="col" className="py-3 px-6">מס</th>
-      <th className="py-3 px-6" scope="col">שם מוצר</th>
+      <th scope="col" className="py-3 px-6">שם מוצר</th>
       <th scope="col" className="py-3 px-6">גודל</th>
       <th scope="col" className="py-3 px-6">מחיר</th>
       <th scope="col" className="px-6 py-3">קטגוריה</th>
@@ -39,12 +37,13 @@ const ProductTableHeaderRow = () => {
   )
 }
 const ProductTableBodyRow = ({ product, idx }: { product: Product, idx: number }) => {
-  const { showModal, setAdminActiveSection, setProductToEdit } = useAppContext();
+  const { showModal, setAdminActiveSection, setProductToEdit, refetchProducts } = useAppContext();
   const { mutate: deleteProductMutate, isSuccess, isError } = useDeleteProductMutation()
   const handleDeleteProduct = () => {
     showModal(
       () => {
         deleteProductMutate(product._id)
+        refetchProducts()
       }
     );
   };
@@ -59,6 +58,8 @@ const ProductTableBodyRow = ({ product, idx }: { product: Product, idx: number }
   if (isError) {
     toast.error("Failed to delete product")
   }
+  const { categories: englishCategories, name, pricing } = product
+  const categories = translateProductCategories(englishCategories) as string[]
   return (
     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
       <td className="px-6 py-4">
@@ -66,23 +67,23 @@ const ProductTableBodyRow = ({ product, idx }: { product: Product, idx: number }
       </td>
       {/* name */}
       <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        {product.name}
+        {name}
       </th>
       {/* sizes */}
-      <td className="py-4 px-6">{product.pricing.map((s, i) => {
+      <td className="py-4 px-6">{pricing.map((s, i) => {
         return (
           <p className="text-gray-500" key={i}>{s.size}</p>
         )
       })}</td>
       {/* price */}
-      <td className="py-4 px-6">{product.pricing.map((p, i) => {
+      <td className="py-4 px-6">{pricing.map((p, i) => {
         return (
           <p className="text-gray-500" key={i}>{p.price}</p>
         )
       })}</td>
       {/* category */}
       <td className="px-6 py-4">
-        {product.categories.map((cat, i) =>
+        {categories.map((cat, i) =>
           <div className="flex gap-4" key={i}>
             <span className="text-blue-900">{cat}</span>
           </div>

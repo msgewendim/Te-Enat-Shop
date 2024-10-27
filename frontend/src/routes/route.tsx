@@ -5,7 +5,6 @@ import App from '../App.tsx'
 import Home from "../pages/Home.tsx";
 import About from "../pages/About.tsx";
 import Recipes from "../pages/Recipes.tsx";
-import Error from "../components/error/Error.tsx";
 import Shop from "../pages/Shop.tsx";
 import SingleProductPage from "../pages/SingleProductPage.tsx";
 import RecipePage from "../pages/RecipePage.tsx";
@@ -71,10 +70,6 @@ export const routes = createBrowserRouter([
         path: "/thank-you",
         element: <SuccessPayment />,
       },
-      {
-        path: "*",
-        element: <Error />
-      }
     ]
   }
 ])

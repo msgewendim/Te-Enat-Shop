@@ -1,16 +1,30 @@
-import { createBanner } from "../../utils/helperFunctions"
+import { useTranslation } from 'react-i18next';
+import { createBanner } from "../../utils/helperFunctions";
 
-const Banner = ({ image, text }: { image: string, text: string }) => {
-  const bgImage = {
-    ...createBanner(image)
-  }
+const Banner = ({ image, text }: BannerProps) => {
+  const { t } = useTranslation();
+
+  const bgStyle = createBanner(image);
+
   return (
-    <div style={bgImage} className="h-[10vh] sm:h-[20vh]">
-      <div className="container mx-auto py-1">
-        <h1 className="text-4xl font-bold text-center mt-8 text-primary capitalize">{text}</h1>
+    <section
+      className="w-full mt-[50px]"
+      style={bgStyle}
+      role="banner"
+      aria-label={t('banner.ariaLabel', { text })}
+    >
+      <div className="container mx-auto px-4 h-full flex items-center justify-center">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-primary capitalize">
+          {text}
+        </h1>
       </div>
-    </div>
-  )
-}
+    </section>
+  );
 
-export default Banner
+};
+
+type BannerProps = {
+  image: string;
+  text: string;
+}
+export default Banner;

@@ -1,41 +1,43 @@
-import { useAuth0 } from "@auth0/auth0-react"
-import { useEffect } from "react"
-const ErrorBound = () => {
-  const { getAccessTokenSilently } = useAuth0()
+import React, { Component, ReactNode } from 'react';
 
-  const callProtectedApi = async () => {
-    try {
-
-      const token = await getAccessTokenSilently()
-      console.log(`Access token ${token}`)
-      // Make API call with token
-      const response = await fetch('http://localhost:3005/api/users/protected', {
-        headers: { Authorization: `Bearer ${token}` },
-        method: "GET",
-      })
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      console.log(data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    callProtectedApi()
-  }, [])
-  return (
-    <div className="mt-20">
-      <h1>Error Bound Component</h1>
-      <p>
-        This component demonstrates error handling using the Auth0 hook.
-        When you click the button, an error will be thrown from the protected API call.
-        The error will be caught in the error boundary and a message will be displayed instead.
-      </p>
-      <button onClick={callProtectedApi}>Fetch Protected Data</button>
-    </div>
-  )
+interface ErrorBoundaryProps {
+  children: ReactNode;
 }
 
-export default ErrorBound
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  static getDerivedStateFromError(_: Error) {
+    // Update state so the next render will show the fallback UI
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // You can also log the error to an error reporting service
+    console.error("Error caught by Error Boundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // Fallback UI
+      return (
+        <div className="error-boundary">
+          <h1>Something went wrong.</h1>
+          <p>Please try again later.</p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;

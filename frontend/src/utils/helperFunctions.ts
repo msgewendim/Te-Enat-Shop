@@ -14,28 +14,27 @@ const createBanner = (image: string) => {
   };
   return bgImage;
 };
+interface StyleProps {
+  [key: string]: string;
+}
+
 const createRecipeCardImage = (
   image: string,
-  width?: string,
-  height?: string,
-  classProps?: [
-    {
-      [key: string]: string;
-    }
-  ]
-) => {
-  const bgImage = {
+  width: string = "390px",
+  height: string = "300px",
+  additionalStyles: StyleProps = {}
+): React.CSSProperties => {
+  return {
     backgroundImage: `url(${image})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     borderRadius: "10px",
-    height: height ? height : "300px",
-    width: width ? width : "390px",
+    height,
+    width,
     marginBottom: "10px",
-    props: classProps ? classProps : "",
+    ...additionalStyles,
   };
-  return bgImage;
 };
 const getTotalPrice = (cartItems: CartItem[]) => {
   return cartItems.reduce(
@@ -94,24 +93,28 @@ const removeItemFromCartList = (
     .filter((item) => item.quantity > 0);
 };
 
-const addItemToCartList = (cartList: CartItem[], newItem: CartItem) => {
-  const index = cartList.findIndex(
+const addItemToCartList = (
+  cartList: CartItem[],
+  newItem: CartItem
+): CartItem[] => {
+  const existingItemIndex = cartList.findIndex(
     (item) =>
       item.product._id === newItem.product._id && item.size === newItem.size
   );
-  if (index === -1) {
+
+  if (existingItemIndex === -1) {
+    // If the item doesn't exist, add it to the cart
     return [...cartList, newItem];
   } else {
-    return [
-      ...cartList.slice(0, index),
-      {
-        ...cartList[index],
-        quantity: cartList[index].quantity + newItem.quantity,
-      },
-      ...cartList.slice(index + 1),
-    ];
+    // If the item exists, update its quantity
+    return cartList.map((item, index) =>
+      index === existingItemIndex
+        ? { ...item, quantity: item.quantity + newItem.quantity }
+        : item
+    );
   }
 };
+
 export {
   addItemToCartList,
   createBanner,

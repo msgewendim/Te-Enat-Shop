@@ -1,36 +1,53 @@
-import { Link } from "react-router-dom"
-import { useAppContext } from "../../hooks/useAppContext"
-import { ourTopCategories } from "../../utils/constants"
+import { FC } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { useAppContext } from "../../hooks/useAppContext";
+import { ourTopCategories } from "../../utils/constants";
 
+const OurCategory = () => {
+  const { t } = useTranslation();
+  const { setCategory } = useAppContext();
 
-const TopCategory = () => {
-  const { setCategory } = useAppContext()
   return (
-    <div style={{ backgroundColor: '#274C5B' }}
-      className="min-h-fit sm:min-h-[55vh] flex flex-col"
-    >
-      <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 py-10 mx-auto">
-        <div className="max-w-2xl mx-auto text-center mb-16 ">
-          <h2 className="text-2xl text-white font-bold md:text-4xl capitalize md:leading-tight dark:text-white">הקטגוריות שלנו</h2>
-        </div>
-        <div className="grid lg:grid-cols-5 sm:grid-cols-2 grid-cols-1 gap-8 md:gap-10">
-          {
-            ourTopCategories.map(({ name, image }, index) => {
-              return (
-                <Link to={`/products?category=${name.toLowerCase()}`} onClick={() => setCategory(name)} key={index}
-                  className="text-center">
-                  <img src={image} alt={name} className="object-contain rounded-md w-[200px]" />
-                  <div className="mt-2 sm:mt-4">
-                    <h3 className="text-md font-medium text-white sm:text-base lg:text-lg dark:text-neutral-200 capitalize">{name}</h3>
-                  </div>
-                </Link>
-              )
-            })
-          }
+    <section className="bg-[#274C5B] py-16" lang="he">
+      <div className="container mx-auto px-4">
+        <h2 className="text-2xl sm:text-4xl text-white font-bold text-center mb-16">
+          {t('homePage.ourCategory.title')}
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10">
+          {ourTopCategories.map((category, index) => (
+            <CategoryCard key={index} category={category} setCategory={setCategory} />
+          ))}
         </div>
       </div>
-    </div>
-  )
+    </section>
+  );
+};
+interface CategoryCardProps {
+  category: { name: string, image: string };
+  setCategory: (category: string) => void;
 }
+const CategoryCard: FC<CategoryCardProps> = ({ category, setCategory }) => {
+  const { name, image } = category;
 
-export default TopCategory
+  return (
+    <Link
+      to={`/products?category=${name.toLowerCase()}`}
+      onClick={() => setCategory(name)}
+      className="text-center group"
+    >
+      <div className="overflow-hidden rounded-md">
+        <img
+          src={image}
+          alt={name}
+          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+        />
+      </div>
+      <h3 className="mt-4 text-md sm:text-lg font-medium text-white capitalize group-hover:underline">
+        {name}
+      </h3>
+    </Link>
+  );
+};
+
+export default OurCategory;

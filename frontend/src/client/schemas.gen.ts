@@ -50,54 +50,25 @@ export const $Product = {
             type: 'array',
             description: 'A list of category names the product belongs to.',
             items: {
-                type: 'Category'
+                type: 'string'
             }
         },
         features: {
-            type: 'array',
+            type: 'object',
             description: 'An optional list of benefits associated with the product.',
-            items: {
-                type: 'FeatureObject'
-            }
-        },
-        reviews: {
-            type: 'array',
-            description: 'An optional list of reviews for the product.',
-            items: {
-                '$ref': '#/components/schemas/Review'
-            }
-        },
-        relatedProducts: {
-            type: 'array',
-            description: 'An optional list of related products.',
-            items: {
-                type: 'object',
-                description: 'A partial representation of a related product.',
-                properties: {
-                    _id: {
-                        type: 'string',
-                        description: 'The unique identifier for the related product.',
-                        example: '60d21b4667d0d8992e610c86'
-                    },
-                    name: {
-                        type: 'string',
-                        description: 'The name of the related product.',
-                        example: 'Gadget Accessory'
-                    },
-                    price: {
-                        type: 'number',
-                        format: 'float',
-                        description: 'The price of the related product.',
-                        example: 29.99
-                    },
-                    images: {
-                        type: 'array',
-                        items: {
-                            type: 'string'
-                        }
+            properties: {
+                id: {
+                    type: 'string',
+                    description: 'The unique identifier for the feature.'
+                },
+                value: {
+                    type: 'array',
+                    items: {
+                        type: 'Feature'
                     }
                 }
-            }
+            },
+            required: ['id', 'value']
         },
         totalSales: {
             type: 'integer',
@@ -105,23 +76,6 @@ export const $Product = {
             example: 5000
         }
     }
-} as const;
-
-export const $FeatureObject = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string',
-            description: 'The unique identifier for the feature.'
-        },
-        value: {
-            type: 'array',
-            items: {
-                type: 'Feature'
-            }
-        }
-    },
-    required: ['value']
 } as const;
 
 export const $Feature = {
@@ -497,11 +451,13 @@ export const $Recipe = {
             type: 'string',
             description: 'Unique identifier for the recipe'
         },
-        title: {
-            type: 'string'
+        name: {
+            type: 'string',
+            description: 'Name of the recipe'
         },
         description: {
-            type: 'string'
+            type: 'string',
+            description: 'A brief description of what the recipe is about'
         },
         image: {
             type: 'string',
@@ -510,13 +466,14 @@ export const $Recipe = {
         ingredients: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/Ingredient'
+                type: 'Ingredient'
             }
         },
         instructions: {
             type: 'array',
             items: {
-                type: 'string'
+                type: 'string',
+                description: 'Step-by-step instructions for preparing the recipe'
             }
         },
         prepTime: {
@@ -525,22 +482,15 @@ export const $Recipe = {
         },
         difficulty: {
             type: 'string',
-            enum: ['Easy', 'Medium', 'Hard']
+            enum: ['Easy', 'Medium', 'Hard'],
+            description: 'Difficulty level of the recipe'
         },
         categories: {
             type: 'array',
             items: {
                 type: 'string',
                 description: 'Names of categories the recipe belongs to'
-            },
-            nullable: true
-        },
-        relatedRecipes: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/PartialRecipe'
-            },
-            nullable: true
+            }
         },
         reviews: {
             type: 'array',
@@ -554,7 +504,7 @@ export const $Recipe = {
             format: 'date-time'
         }
     },
-    required: ['_id', 'title', 'description', 'image', 'ingredients', 'instructions', 'prepTime', 'difficulty']
+    required: ['_id', 'name', 'description', 'image', 'ingredients', 'instructions', 'prepTime', 'difficulty', 'categories', 'createdAt']
 } as const;
 
 export const $Category = {
@@ -597,7 +547,7 @@ export const $Ingredient = {
     properties: {
         _id: {
             type: 'string',
-            description: 'Unique identifier for the ingredient'
+            description: 'Unique identifier for the ingredient In DB'
         },
         name: {
             type: 'string'
@@ -607,5 +557,5 @@ export const $Ingredient = {
             description: 'Amount of the ingredient required (e.g., "1 cup", "2 tbsp")'
         }
     },
-    required: ['_id', 'name', 'quantity']
+    required: ['name', 'quantity']
 } as const;

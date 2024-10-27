@@ -1,24 +1,33 @@
-import SingleCartItem from "./SingleCartItem"
-import { useAppContext } from "../../hooks/useAppContext"
-
+import { useTranslation } from 'react-i18next';
+import SingleCartItem from "./SingleCartItem";
+import { useAppContext } from "../../hooks/useAppContext";
 
 const CartItemsList = () => {
-  const { cartItems } = useAppContext()
+  const { t } = useTranslation();
+  const { cartItems } = useAppContext();
 
   if (!cartItems.length) {
-    return <p className="text-center text-gray-500 dark:text-gray-400">No items in cart.</p>
+    return (
+      <div className="flex items-center justify-center h-40">
+        <p className="text-center text-gray-500 dark:text-gray-400">
+          {t('cart.emptyCart')}
+        </p>
+      </div>
+    );
   }
-  return (
-    <ul role="list" className=" divide-y flex flex-col justify-between no-scrollbar overflow-y-scroll max-h-[500px] divide-gray-200">
-      {
-        cartItems && cartItems.map(({ product, quantity, size, price }, index) => {
-          return (
-            <SingleCartItem key={index} product={product} quantity={quantity} size={size} price={price} />
-          )
-        })
-      }
-    </ul>
-  )
-}
 
-export default CartItemsList
+  return (
+    <ul
+      className="divide-y divide-gray-200 overflow-y-auto max-h-[500px] no-scrollbar"
+      aria-label={t('cart.itemsList')}
+    >
+      {cartItems.map((item, index) => (
+        <li key={`${item.product._id}-${item.size}-${index}`} className="py-4">
+          <SingleCartItem {...item} />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default CartItemsList;

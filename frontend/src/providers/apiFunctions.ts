@@ -7,6 +7,7 @@ import {
   PaymentFormPayload,
   PaymentFormSuccessResponse,
   Product,
+  Recipe,
 } from "../client";
 
 const axiosInstance = axios.create({ baseURL: BASE_API_URL });
@@ -43,7 +44,13 @@ const addProduct = async (productData: Partial<Product>): Promise<Product> => {
   // Create a new product in your API endpoint with the provided data
   return (await axiosInstance.post("/products", productData)).data;
 };
-
+const getRelatedItems = async (query: query): Promise<Product[] | Recipe[]> => {
+  return (
+    await axiosInstance.get(`/${query.type}`, {
+      params: { query },
+    })
+  ).data;
+};
 const updateProduct = async (
   id: string,
   productData: Partial<Product>
@@ -97,6 +104,7 @@ type RandomProductsResponse = {
 };
 export {
   removeFromCart,
+  getRelatedItems,
   getProducts,
   addToCart,
   getProductById,

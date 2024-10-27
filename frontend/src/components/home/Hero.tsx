@@ -1,93 +1,82 @@
 import { awaze, beyaynetu, cookies, rollInjera, shiro, tavlinim } from "../../utils/data"
-import { useEffect, useState } from "react"
+import { FC, useCallback, useEffect, useState } from "react"
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom"
 const homePageImages = [
   beyaynetu, shiro, awaze, cookies
 ]
 const Hero = () => {
-  let randomIndex = Math.floor(Math.random() * homePageImages.length)
-  const [imageId, setImageId] = useState(homePageImages[randomIndex])
+  const { t } = useTranslation();
+
+  const [imageId, setImageId] = useState(() => {
+    const randomIndex = Math.floor(Math.random() * homePageImages.length);
+    return homePageImages[randomIndex];
+  });
+
+  const changeImage = useCallback(() => {
+    setImageId((prevImage) => {
+      const currentIndex = homePageImages.indexOf(prevImage);
+      const nextIndex = (currentIndex + 1) % homePageImages.length;
+      return homePageImages[nextIndex];
+    });
+  }, []);
+
   useEffect(() => {
-    setImageId(homePageImages[randomIndex])
-  }, [randomIndex])
+    const intervalId = setInterval(changeImage, 5000);
+    return () => clearInterval(intervalId);
+  }, [changeImage]);
 
-  setInterval(() => {
-    setTimeout(() => {
-      if (randomIndex >= homePageImages.length) {
-        randomIndex = 0
-      } else {
-        randomIndex++
-      }
-    }, 5000);
-  }, 5000);
   return (
-    <>
-      <div style={{ backgroundColor: "#d3f5d3" }}
-        className="min-h-[80vh] sm:min-h-[60vh] bg-gray-100 dark:bg-gray-950 duration-200"
-      >
-        <div className="grid grid-cols-1 items-start sm:grid-cols-2">
-          {/* Image section */}
-          <div className="sm:order-1 order-2 w-fit sm:w-[600px] mx-auto sm:mt-14 mt-4 mb-6 sm:mb-0 flex justify-center items-center relative">
-            {/* main image section */}
-            <img src={imageId} alt="photo" className="ease-in-out duration-150 w-full object-contain" />
+    <section className="bg-gray-100 dark:bg-gray-950 min-h-[80vh] sm:min-h-[60vh] transition-colors duration-200" lang="he">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
+          <div className="order-2 sm:order-1">
+            <img src={imageId} alt="" className="w-full max-w-[600px] mx-auto object-contain transition-opacity duration-150" />
           </div>
-
-          {/* text content section */}
-          <div className="flex flex-col sm:mt-14 mt-4 mr-2 sm:mr-6 items-end gap-4 pt-2 sm:pt-0 text-right order-1 sm:order-1">
-            {/* TEXT */}
+          <div className="order-1 sm:order-2 flex flex-col gap-8">
             <HeroText />
-
-            {/* CARDS */}
-            <div className="flex gap-4 items-center justify-center">
-              <HeroCard
-                image={rollInjera}
-                title="מתכונים"
-                link="/recipes"
-              />
-              <HeroCard
-                image={tavlinim}
-                title="חנות"
-                link="/products"
-              />
+            <div className="flex gap-4 justify-center sm:justify-end">
+              <HeroCard image={rollInjera} title={t('homePage.hero.cards.recipes.title')} link="/recipes" />
+              <HeroCard image={tavlinim} title={t('homePage.hero.cards.store.title')} link="/products" />
             </div>
           </div>
         </div>
       </div>
-    </>
-  )
-}
+    </section>
 
-export default Hero
-
-type HeroCardProps = {
-  image: string,
-  title: string,
-  link: string,
+  );
+};
+interface HeroCardProps {
+  image: string;
+  title: string;
+  link: string;
 }
-const HeroCard = ({ image, title, link }: HeroCardProps) => {
+const HeroCard: FC<HeroCardProps> = ({ image, title, link }) => {
   return (
-    <Link to={link} className="cursor-pointer sm:w-[160px] w-[140px]" >
-      <img className="object-cover rounded-t-lg h-32 w-full" src={image} />
-      <p className="text-white text-xl font-semibold text-center bg-emerald-700 rounded-b-md hover:text-gray-300">
+    <Link to={link} className="block w-[140px] sm:w-[160px] rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
+      <img className="w-full h-32 object-cover" src={image} alt={title} />
+      <p className="bg-emerald-700 text-white text-xl font-semibold text-center py-2 hover:bg-emerald-800 transition-colors">
         {title}
       </p>
     </Link>
-  )
-}
+  );
+};
 
 const HeroText = () => {
+  const { t } = useTranslation();
+
   return (
-    <div className="flex flex-col gap-3">
-      <h1 dir="rtl" className="lg:text-5xl text-right text-3xl font-bold text-primary ml-4">
-        חווית הבישול שלכם
+    <div className="text-right">
+      <h1 className="text-3xl lg:text-5xl font-bold text-primary mb-4">
+        {t('homePage.hero.mainHeading')}
         <br />
-        <span className="indent">
-          עומדת להשתדרג
-        </span>
+        <span className="block mt-2">{t('homePage.hero.subHeading')}</span>
       </h1>
-      <p dir="rtl" className="font-normal text-emerald-950 mb-2 text-xl">
-        הזמינו חומרי גלם איכותיים, למדו ובשלו אוכל מושלם עבור האהובים שלכם
+      <p className="text-xl text-emerald-950">
+        {t('homePage.hero.description')}
       </p>
     </div>
-  )
-}
+  );
+};
+
+export default Hero;

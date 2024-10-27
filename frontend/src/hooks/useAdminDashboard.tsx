@@ -3,7 +3,7 @@ import { Product } from '../client';
 import { useAppContext } from './useAppContext';
 
 const useAdminDashboard = () => {
-  const { adminActiveSection, setAdminActiveSection, productToEdit, setProductToEdit } = useAppContext();
+  const { adminActiveSection, setAdminActiveSection, productToEdit, setProductToEdit, refetchProducts } = useAppContext();
   const { mutate: updateProduct } = useUpdateProductMutation();
   const { mutate: addProduct, } = useAddProductMutation();
   const handleProductSubmit = (productData: Partial<Product>) => {
@@ -20,6 +20,7 @@ const useAdminDashboard = () => {
     // Reset productToEdit and change active section back to products
     setProductToEdit(undefined);
     setAdminActiveSection('products');
+    refetchProducts();
   };
 
   return { handleProductSubmit, productToEdit, adminActiveSection, setAdminActiveSection };

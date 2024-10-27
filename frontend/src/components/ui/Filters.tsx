@@ -1,49 +1,89 @@
-import { ChangeEvent } from "react"
-import { Link } from "react-router-dom"
-import { useAppContext } from "../../hooks/useAppContext"
-import Categories from "./Categories"
+import { ChangeEvent, FC } from "react";
+import { useTranslation } from 'react-i18next';
+import { Link } from "react-router-dom";
+import { useAppContext } from "../../hooks/useAppContext";
+import Categories from "./Categories";
+import { productCategoriesMapping, recipeCategoriesMapping } from "../../utils/constants";
 
-const Filters = () => {
-  const { setFilter, setCategory } = useAppContext()
+interface FiltersProps {
+  clearFiltersPath: string;
+  type: "recipes" | "products"
+}
+const Filters: FC<FiltersProps> = ({ clearFiltersPath, type }) => {
+  const { setFilter, setCategory } = useAppContext();
+
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setFilter(e.target.value)
-  }
+    setFilter(e.target.value);
+  };
+
   const handleClearFilters = () => {
-    setCategory("")
-    setFilter("")
-    const form = document.getElementById("form") as HTMLFormElement
-    form.reset()
-  }
+    setCategory("");
+    setFilter("");
+    const form = document.getElementById("filtersForm") as HTMLFormElement;
+    form.reset();
+  };
+  const categoryMapping = type === "recipes" ? recipeCategoriesMapping : productCategoriesMapping
   return (
-    <form id="form" className="sm:w-[80%] w-full h-20 flex justify-center sm:justify-end gap-2 sm:gap-10 items-center bg-slate-300 rounded-lg sm:px-14 px-2">
-      <Link to="/products">
-        <button onClick={handleClearFilters} className="bg-primary text-white w-fit p-2 rounded-lg hover:bg-blue-950">
-          נקה
-        </button>
-      </Link>
-      <div className="flex items-center sm:gap-10 gap-2 justify-center">
-        {/* Search field */}
-        <fieldset className="dark:text-gray-800 px-1">
-          <label htmlFor="Search" className="hidden">Search</label>
-          <div dir="rtl" className="relative">
-            <input
-              type="search" name="search" id="searchProductsInput"
-              onChange={(e) => handleSearch(e)} placeholder="הקלד שם מוצר"
-              className="w-32 py-[10px] sm:py-2 pr-7 placeholder:absolute placeholder:right-7 text-sm rounded-md focus:outline-none dark:bg-gray-100 dark:text-gray-800 focus:dark:bg-gray-50 focus:dark:border-violet-600" />
-            <span className="absolute inset-y-0 right-0 flex items-center">
-              <button type="button" title="search" className="p-1 pr-2 focus:outline-none focus:ring">
-                <svg fill="currentColor" viewBox="0 0 512 512" className="w-4 h-4 dark:text-gray-800">
-                  <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
-                </svg>
-              </button>
-            </span>
-          </div>
-        </fieldset>
-        {/* Categories */}
-        <Categories />
+    <form id="filtersForm" className="bg-slate-300 rounded-lg p-4 sm:p-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 w-full">
+        <SearchInput handleSearch={handleSearch} />
+        <Categories categoryMapping={categoryMapping} />
+        <ClearFiltersButton handleClearFilters={handleClearFilters} clearFiltersPath={clearFiltersPath} />
       </div>
     </form>
-  )
+  );
+};
+
+interface SearchInputProps {
+  handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default Filters
+const SearchInput: FC<SearchInputProps> = ({ handleSearch }) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="relative">
+      <label htmlFor="searchProductsInput" className="sr-only">
+        {t('filters.searchLabel')}
+      </label>
+      <input
+        type="search"
+        id="searchProductsInput"
+        onChange={handleSearch}
+        placeholder={t('filters.searchPlaceholder')}
+        className="w-full sm:w-62 py-2 pr-10 pl-4 text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-100 dark:text-gray-800"
+      />
+      <SearchIcon />
+    </div>
+  );
+};
+
+const SearchIcon: FC = () => (
+  <span className="absolute inset-y-0 right-0 flex items-center pr-3">
+    <svg fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-gray-400">
+      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>
+    </svg>
+  </span>
+);
+
+interface ClearFiltersButtonProps {
+  handleClearFilters: () => void;
+  clearFiltersPath: string;
+}
+
+const ClearFiltersButton: React.FC<ClearFiltersButtonProps> = ({ handleClearFilters, clearFiltersPath }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Link to={clearFiltersPath}>
+      <button
+        onClick={handleClearFilters}
+        className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-950 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+      >
+        {t('filters.clearButton')}
+      </button>
+    </Link>
+  );
+};
+
+export default Filters;

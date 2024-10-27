@@ -38,11 +38,3 @@ export {
   kitfo,
   shiro,
 };
-// const insert = async (products: Product[]) => {
-//   for (const product of products) {
-//     await update(product._id, product)
-//   }
-// }
-// useEffect(() => {
-//   insert(productsForDB)
-// }, [])

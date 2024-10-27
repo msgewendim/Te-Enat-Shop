@@ -1,9 +1,9 @@
 import { Control, Path, useFieldArray, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import { Category, Product } from '../../client/types.gen';
 import { FormInput } from '../ui/FormInput';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
-type ArrayInputFieldProps = {
+interface ArrayInputFieldProps {
   control: Control<Product>,
   register: UseFormRegister<Product>
 }
@@ -11,6 +11,7 @@ interface AddCategoryInputProps {
   register: UseFormRegister<Product>;
   setValue: UseFormSetValue<Product>;
   categories: Category[];
+  initialCategories?: string[];
 }
 
 const AddFeatureGroupInput = ({ control, register }: ArrayInputFieldProps) => {
@@ -38,13 +39,13 @@ const AddFeatureGroupInput = ({ control, register }: ArrayInputFieldProps) => {
             </h3>
             <div className="flex flex-col space-y-2">
               <input
-                {...register(`features.value.${index}.title`)}
+                {...register(`features.value.${index}.title` as const)}
                 placeholder={`כותרת יתרון מס' ${index + 1}`}
                 required
                 className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2"
               />
               <textarea
-                {...register(`features.value.${index}.description`)}
+                {...register(`features.value.${index}.description` as const)}
                 placeholder={`תיאור יתרון מס' ${index + 1}`}
                 required
                 className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2"
@@ -114,8 +115,8 @@ const AddPricingInput = ({ control, register }: ArrayInputFieldProps) => {
   )
 }
 
-const AddCategoryInput: FC<AddCategoryInputProps> = ({ register, setValue, categories }) => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+const AddCategoryInput: FC<AddCategoryInputProps> = ({ register, setValue, categories, initialCategories }) => {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategories || []);
 
   const toggleCategory = (value: string) => {
     setSelectedCategories(prev => {
@@ -127,6 +128,10 @@ const AddCategoryInput: FC<AddCategoryInputProps> = ({ register, setValue, categ
       return newSelection;
     });
   };
+  useEffect(() => {
+    setValue('categories', selectedCategories);
+  }, [setValue, initialCategories, selectedCategories]);
+
   return (
     <div className='flex flex-col items-start justify-start mb-3'>
       <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">קטגוריות</h3>

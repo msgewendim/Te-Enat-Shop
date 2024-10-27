@@ -1,9 +1,10 @@
-import { shiro } from "../../utils/data"
-import { PiCookingPot } from "react-icons/pi"
-import { TfiTimer } from "react-icons/tfi"
-import { BsPeople } from "react-icons/bs"
-import { Link } from "react-router-dom"
-import { IconType } from "react-icons/lib"
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { PiCookingPot } from "react-icons/pi";
+import { TfiTimer } from "react-icons/tfi";
+import { BsPeople } from "react-icons/bs";
+import { IconType } from "react-icons/lib";
+import { shiro } from "../../utils/data";
 
 const packages = [
   {
@@ -33,32 +34,27 @@ const packages = [
     ingredientsQuantity: 40,
     peoplesQuantity: 100
   }
-]
+];
+
 const ProductPackages = () => {
+  const { t } = useTranslation();
+
   return (
-    <div style={{ backgroundColor: '#D2FCFF' }}
-      className="min-h-[350px] sm:min-h-[500px] pb-10"
-      dir="rtl"
-    >
-      <div className="flex flex-col justify-center items-center mb-3 pt-8">
-        <div className="flex flex-col justify-center items-center gap-2 mt-3">
-          <h1 className="text-4xl font-bold text-primary capitalize">
-            המארזים שלנו
-          </h1>
-          <p dir="rtl" className="text-sm px-10 text-black text-center w-[60vw]">
-          </p>
+    <section className="bg-[#D2FCFF] py-16" lang="he">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl font-bold text-primary text-center mb-12">
+          {t('homePage.productPackages.title')}
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {packages.map(pac => (
+            <PackageCard key={pac._id} data={pac} />
+          ))}
         </div>
       </div>
-      <div className="flex gap-2 items-center justify-center">
-        {
-          packages.slice(0, 3).map(pac =>
-            <PackageCard data={pac} key={pac._id} />
-          )
-        }
-      </div>
-    </div>
-  )
-}
+    </section>
+  );
+};
+
 type Package = {
   _id: string;
   title: string;
@@ -67,53 +63,45 @@ type Package = {
   cookingTime: number;
   ingredientsQuantity: number;
   peoplesQuantity: number;
-}
-{/*
-  tasks: 
-    - pop up when clicking
-    - link to single package page
-    - buy package button
-*/}
+};
+
 const PackageCard = ({ data }: { data: Package }) => {
-  const { price, cookingTime, image, title, peoplesQuantity, ingredientsQuantity } = data
+  const { t } = useTranslation();
+  const { price, cookingTime, image, title, peoplesQuantity, ingredientsQuantity } = data;
+
   return (
-    <Link to="/" className="block rounded-lg p-4 shadow-sm shadow-indigo-100 hover:bg-slate-200">
+    <Link to="/" className="block rounded-lg p-4 shadow-sm shadow-indigo-100 hover:bg-slate-200 transition duration-300">
       <img
         alt={title}
         src={image}
         className="h-56 w-full rounded-md object-cover"
       />
-      <div className="mt-2">
-        <dl>
-          <div>
-            <dt className="sr-only">מחיר</dt>
-            <dd className="text-sm text-gray-500">{price}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="sr-only">שם</dt>
-            <dd className="font-medium">{title}</dd>
-            <dd className="font-medium">buy</dd>
-          </div>
-        </dl>
-        <div className="mt-6 flex items-center gap-8 text-xs">
-          <PackageInfo icon={TfiTimer} label={cookingTime} title="זמן הכנה" />
-          <PackageInfo icon={BsPeople} label={peoplesQuantity} title="כמות סועדים" />
-          <PackageInfo icon={PiCookingPot} label={ingredientsQuantity} title="כמות מצרכים" />
+      <div className="mt-4">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="font-medium text-lg">{title}</h3>
+          <span className="text-sm text-gray-500">{t('homePage.productPackages.price')}: ₪{price}</span>
+        </div>
+        <button className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary-dark transition duration-300">
+          {t('homePage.productPackages.buy')}
+        </button>
+        <div className="mt-6 flex items-center justify-between text-xs">
+          <PackageInfo icon={TfiTimer} label={cookingTime} title={t('homePage.productPackages.cookingTime')} />
+          <PackageInfo icon={BsPeople} label={peoplesQuantity} title={t('homePage.productPackages.peopleQuantity')} />
+          <PackageInfo icon={PiCookingPot} label={ingredientsQuantity} title={t('homePage.productPackages.ingredientsQuantity')} />
         </div>
       </div>
     </Link>
-  )
-}
+  );
+};
 
-export const PackageInfo = ({ icon: Icon, title, label, size = 24, color = "blue" }: { icon: IconType, title: string | number, label: number | string, size?: number, color?: string }) => {
+export const PackageInfo = ({ icon: Icon, title, label }: { icon: IconType, title: string, label: number | string }) => {
   return (
-    <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
-      <Icon size={size} color={color} />
-      <div className="mt-1.5 sm:mt-0">
-        <p className="text-gray-500">{title}</p>
-        <p className="font-medium">{label}</p>
-      </div>
-    </div >
-  )
-}
-export default ProductPackages
+    <div className="flex flex-col items-center">
+      <Icon size={24} className="text-primary mb-1" />
+      <p className="text-gray-500">{title}</p>
+      <p className="font-medium">{label}</p>
+    </div>
+  );
+};
+
+export default ProductPackages;

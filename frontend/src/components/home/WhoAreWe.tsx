@@ -1,46 +1,69 @@
+import { FC } from "react";
 import { menu } from "../../utils/data";
+import { useTranslation } from "react-i18next";
 
 const WhoAreWe = () => {
+  const { t } = useTranslation();
+
   return (
-    <div dir="rtl" className="bg-[#D2FCFF] min-h-[550px]">
-      <div className="text-xl font-normal text-start font-['Yellowtail'] italic text-emerald-900 p-1">
-        מי אנחנו?
-      </div>
-      {/* text & image section */}
-      <div className="sm:flex">
-        {/* Text section */}
-        <TextSection />
-        {/* Image section */}
-        <div className="order-1 pb-12 sm:pb-0 sm:w-[800px] w-fit sm:mt-4 sm:mr-10">
-          <img src={menu} alt="about us" className="w-full" />
+    <section className="bg-[#D2FCFF] py-12" lang="he">
+      <div className="container mx-auto px-4">
+        <h2 className="text-xl font-normal font-['Yellowtail'] italic text-emerald-900 mb-6">
+          {t('homePage.whoAreWe.title')}
+        </h2>
+        <div className="flex flex-col sm:flex-row gap-8">
+          <TextSection />
+          <ImageSection />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 const TextSection = () => {
+  const { t } = useTranslation();
+
   return (
-    <div className="flex flex-col sm:mt-2 mx-2 sm:text-right max-w-[700px] mb-12">
-      <h1 className="font-bold text-3xl sm:text-4xl text-primary mb-6">
-        אנו ספקים של סחורה איכותית<br />
-        ומוצרי בישול מובילים
-      </h1>
-      <p className="font-normal mb-4 max-w-[600px]">
-        מביאים לכם מוצרים טבעיים ואותנטיים ממטבחים מגוונים ברחבי העולם. השילוב בין מסורת לחדשנות מאפשר לכם לגלות טעמים חדשים וליהנות ממוצרים איכותיים למטבח שלכם. כל מוצר נבחר בקפידה כדי להעשיר את חוויית הבישול והאכילה שלכם.
+    <div className="flex-1 space-y-6">
+      <h3 className="font-bold text-3xl sm:text-4xl text-primary">
+        {t('homePage.whoAreWe.mainHeading')}
+      </h3>
+      <p className="max-w-2xl">
+        {t('homePage.whoAreWe.description')}
       </p>
-      <span className="p-3 px-6 bg-gray-200 w-fit rounded-full text-primary mb-3">
-        100% מוצרים טבעיים
-      </span>
-      <p className="font-normal mb-4 max-w-[600px]">המוצרים שלנו עשויים מרכיבים טבעיים בלבד, ללא תוספים מלאכותיים. אנחנו מתחייבים לאיכות טהורה שמביאה את הטבע היישר למטבח שלכם.
-      </p>
-      <span className="p-3 px-6 bg-gray-200 w-fit rounded-full text-primary mb-3">
-        מוצרים המסייעים בבריאות
-      </span>
-      <p className="font-normal max-w-[600px]">
-        המוצרים שלנו תורמים לבריאות בעזרת רכיבים טבעיים ועשירים בוויטמינים ומינרלים. כל מוצר נועד לתמוך באורח חיים בריא ומאוזן.
-      </p>
+      <Feature
+        title={t('homePage.whoAreWe.naturalProducts.title')}
+        description={t('homePage.whoAreWe.naturalProducts.description')}
+      />
+      <Feature
+        title={t('homePage.whoAreWe.healthyProducts.title')}
+        description={t('homePage.whoAreWe.healthyProducts.description')}
+      />
     </div>
-  )
+  );
+
+};
+interface FeatureProps {
+  title: string;
+  description: string
 }
+const Feature: FC<FeatureProps> = ({ title, description }) => {
+  return (
+    <div className="space-y-2">
+      <span className="inline-block py-2 px-4 bg-gray-200 rounded-full text-primary font-medium">
+        {title}
+      </span>
+      <p className="max-w-2xl">{description}</p>
+    </div>
+  );
+};
+
+const ImageSection = () => {
+  return (
+    <div className="flex-1">
+      <img src={menu} alt="תמונה המציגה את המוצרים שלנו" className="w-full max-w-2xl mx-auto" />
+    </div>
+  );
+};
+
 export default WhoAreWe;

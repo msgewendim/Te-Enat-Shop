@@ -1,35 +1,59 @@
-import { MouseEvent } from "react"
-import Select from "./Select"
-import { useAppContext } from "../../hooks/useAppContext"
-import { categories } from "../../utils/constants"
-const FilterCategories = () => {
-  const { setCategory } = useAppContext()
-  const categoryNames: Array<string> = ["קטגוריות"]
-  categories.forEach((cat) => {
-    categoryNames.push(cat.name)
-  })
-  const handleCategoryChange = (e: MouseEvent<HTMLButtonElement>, category: string) => {
-    e.preventDefault()
-    setCategory(category)
-  }
+import React from 'react';
+import Select from "./Select";
+import { useAppContext } from "../../hooks/useAppContext";
+import { CategoryMapping } from "../../utils/constants";
+
+interface FilterCategoriesProps {
+  categoryMapping: CategoryMapping;
+}
+
+const FilterCategories: React.FC<FilterCategoriesProps> = ({ categoryMapping }) => {
+  const { setCategory } = useAppContext();
+  const categories = Object.values(categoryMapping);
+
+  const handleCategoryChange = (selectedCategory: string) => {
+    const englishCategory = Object.keys(categoryMapping).find(
+      key => categoryMapping[key] === selectedCategory
+    ) || '';
+    setCategory(englishCategory);
+  };
 
   return (
     <div className="rounded-lg items-center">
-      <Select selectItems={categoryNames} item={categoryNames[0]} classes="md:hidden" />
+      <Select
+        selectItems={categories}
+        initialItem={categories[0]}
+        type="category"
+        classes="md:hidden"
+        categoryMapping={categoryMapping}
+        onChange={handleCategoryChange}
+      />
       <div className="md:flex gap-2 hidden">
-        {
-          categoryNames.map((cat, idx) => {
-            return (
-              <button key={idx} onClick={(e) => handleCategoryChange(e, cat)}
-                className="text-sm border-primary border-2 text-primary w-fit p-2 rounded-lg hover:bg-slate-100" >
-                {cat}
-              </button>
-            )
-          })
-        }
+        {categories.map((hebrewCategory, idx) => (
+          <CategoryButton
+            key={idx}
+            category={hebrewCategory}
+            onClick={() => handleCategoryChange(hebrewCategory)}
+          />
+        ))}
       </div>
-    </div >
-  )
+    </div>
+  );
+};
+
+interface CategoryButtonProps {
+  category: string;
+  onClick: () => void;
 }
 
-export default FilterCategories
+const CategoryButton: React.FC<CategoryButtonProps> = ({ category, onClick }) => (
+  <button
+    onClick={onClick}
+    type="button"
+    className="text-sm border-primary border-2 text-primary w-fit p-2 rounded-lg hover:bg-slate-100"
+  >
+    {category}
+  </button>
+);
+
+export default FilterCategories;

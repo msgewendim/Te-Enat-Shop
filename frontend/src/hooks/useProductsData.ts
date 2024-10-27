@@ -6,6 +6,7 @@ import {
   getProductById,
   getProducts,
   getRandomProducts,
+  getRelatedItems,
   updateProduct,
 } from "../providers/apiFunctions";
 import { query } from "../providers/interface/context";
@@ -15,29 +16,11 @@ const useGetProducts = (query: query) => {
   return useQuery({
     queryKey: ["products", query],
     queryFn: () => getProducts(query),
+    placeholderData: (previousData) => previousData,
+    staleTime: 5000,
   });
 };
 
-// const useGetRandomProducts = (query: query) => {
-//   return useInfiniteQuery({
-//     queryKey: ["randomProducts", query],
-//     queryFn: () => getRandomProducts(query),
-//     placeholderData: (previousData) => previousData,
-//     initialPageParam: 0,
-//     getNextPageParam: (lastPage, _, lastPageParam) => {
-//       if (!lastPage.hasMore) {
-//         return undefined;
-//       }
-//       return lastPageParam + 1;
-//     },
-//     getPreviousPageParam: (_, __, firstPageParam) => {
-//       if (firstPageParam <= 1) {
-//         return undefined;
-//       }
-//       return firstPageParam - 1;
-//     },
-//   });
-// };
 const useGetRandomProducts = (query: query) => {
   return useQuery({
     queryKey: ["randomProducts", "topProducts", query],
@@ -45,7 +28,14 @@ const useGetRandomProducts = (query: query) => {
     placeholderData: (previousData) => previousData,
   });
 };
-
+const useGetRelatedItems = (query: query) => {
+  return useQuery({
+    queryKey: ["relatedProducts", query],
+    queryFn: () => getRelatedItems(query),
+    placeholderData: (previousData) => previousData,
+    staleTime: 5000,
+  });
+};
 const useGetProductById = (id: string) => {
   return useQuery({
     queryKey: ["product", id],
@@ -126,4 +116,5 @@ export {
   useGetPaymentFormMutation,
   useUpdateProductMutation,
   useGetRandomProducts,
+  useGetRelatedItems,
 };

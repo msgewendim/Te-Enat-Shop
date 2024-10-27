@@ -1,21 +1,21 @@
 import { DevTool } from '@hookform/devtools'
 import { Product } from '../../client/types.gen';
 import { FormInput } from '../ui/FormInput';
-import { categories } from '../../utils/constants';
-import useAddProductForm from '../../hooks/useAddProductForm';
+import useProductForm from '../../hooks/useProductForm';
 import { AddCategoryInput, AddFeatureGroupInput, AddPricingInput } from './AddArrayInputFields'
 import { SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../hooks/useAppContext';
+import { productCategories } from '../../utils/constants';
 
-interface ProducFormProps {
+interface ProductFormProps {
   product?: Product;
   onSubmit: (data: Product) => void;
   message: string;
 }
 
-const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProducFormProps) => {
-  const { register, control, errors, handleSubmit, setValue, reset } = useAddProductForm(product)
+const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProductFormProps) => {
+  const { register, control, errors, handleSubmit, setValue, reset, existingCategories } = useProductForm(product)
   const { setAdminActiveSection } = useAppContext()
   const onSubmit: SubmitHandler<Product> = (data) => {
     // send to server the new product
@@ -82,7 +82,7 @@ const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProducFormPro
           </div>
         </div>
         {/* Categories */}
-        <AddCategoryInput register={register} setValue={setValue} categories={categories} />
+        <AddCategoryInput register={register} setValue={setValue} categories={productCategories} initialCategories={existingCategories} />
         {errors.categories &&
           <span className="text-red-500">{errors.categories.message}</span>
         }
@@ -100,8 +100,8 @@ const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProducFormPro
             {isEditing ? 'Update' : 'Save'}
           </button>
         </div>
+        <DevTool control={control} />
       </form>
-      <DevTool control={control} />
     </>
   );
 };

@@ -18,14 +18,15 @@ const useProductForm = (initialProduct?: Product) => {
     },
     resolver: zodResolver(ProductSchema)  // validate the form
   });
-
+  const existingCategories = initialProduct?.categories || [];
   return {
     register,
     control,
     handleSubmit,
     errors,
     setValue,
-    reset
+    reset,
+    existingCategories
   }
 }
 

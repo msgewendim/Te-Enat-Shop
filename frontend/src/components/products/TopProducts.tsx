@@ -1,63 +1,100 @@
-import { useState } from "react"
-import { toast } from "react-toastify"
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
-import { useGetRandomProducts } from "../../hooks/useProductsData"
-import Loader from "../ui/Loader"
-import ProductCard from "./ProductCard"
-import { randomizeArray } from "../../utils/helperFunctions"
+import React, { useState, useEffect, FC } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useGetRandomProducts } from "../../hooks/useProductsData";
+import Loader from "../ui/Loader";
+import ProductCard from "./ProductCard";
+import { randomizeArray } from "../../utils/helperFunctions";
 
 const TopProducts = () => {
-  const [page, setPage] = useState<number>(1)
-  const isMobile = window.matchMedia('(max-width: 768px)');
-  const limit = isMobile.matches ? 1 : 3;
+  const { t } = useTranslation();
+  const [page, setPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 768px)').matches);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  const limit = isMobile ? 1 : 3;
   const { data, isError, isLoading, error } = useGetRandomProducts({
     page: page,
     limit: limit
-  })
+  });
+
   const randomizedProducts = randomizeArray(data?.products || []);
 
-  if (isError) toast.error(error.message)
-  return (
-    <div className="flex flex-col justify-center items-center mb-3 pt-8 bg-[#F9F8F8] pb-10">
-      {/* Text - Header */}
-      <div className="flex flex-col justify-center items-center gap-2 my-3">
-        <h1 className="text-4xl font-bold text-primary capitalize">
-          החנות שבנינו עבורכם
-        </h1>
-        <p dir="rtl" className="font-normal px-10 text-primary text-center max-w-[90%]">
-          גלו את המוצרים המובילים שלנו שמשלבים בין איכות לטעם ייחודי. כל מוצר נבחר בקפידה כדי להעניק לכם חוויית בישול טהורה, עשירה ומגוונת.
-        </p>
-      </div>
-      {/* Carousel - Gallery of products */}
-      <div id="controls-carousel" className="relative w-full" data-carousel="static">
-        {/* <!-- Carousel wrapper --> */}
-        <div className="relative my-5 flex justify-center items-center gap-10">
-          {/* <!-- Item 1 --> */}
-          {
-            isLoading ? <Loader /> :
-              randomizedProducts.map((product) => (
-                <div key={product._id} className="duration-700 ease-in-out" data-carousel-item>
-                  <ProductCard product={product} className="" />
-                </div>
-              ))
-          }
-        </div>
-        {/* <!-- Slider controls --> */}
-        <button onClick={() => setPage((old) => Math.max(old - 1, 1))} disabled={page === 1} name="start" type="button" className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-          <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-secondary_btn dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <IoIosArrowBack />
-            <span className="sr-only">Previous</span>
-          </span>
-        </button>
-        <button onClick={() => setPage((old) => (data?.totalPages && old < data.totalPages ? old + 1 : old))} disabled={page === data?.totalPages} name="end" type="button" className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-          <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-secondary_btn dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <IoIosArrowForward />
-            <span className="sr-only">Next</span>
-          </span>
-        </button>
-      </div>
-    </div >
-  )
-}
+  if (isError) toast.error(error.message);
 
-export default TopProducts
+  const handlePrevious = () => setPage((old) => Math.max(old - 1, 1));
+  const handleNext = () => setPage((old) => (data?.totalPages && old < data.totalPages ? old + 1 : old));
+
+  return (
+    <section className="bg-[#F9F8F8] py-12" lang="he">
+      <div className="container mx-auto px-4">
+        <header className="text-center mb-8">
+          <h2 className="text-4xl font-bold text-primary mb-4">
+            {t('homePage.topProducts.title')}
+          </h2>
+          <p className="text-primary max-w-3xl mx-auto">
+            {t('homePage.topProducts.description')}
+          </p>
+        </header>
+
+        <div className="relative">
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div className="flex justify-center items-center gap-10 my-5">
+              {randomizedProducts.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+          )}
+
+          <CarouselButton
+            onClick={handlePrevious}
+            disabled={page === 1}
+            direction="previous"
+            ariaLabel={t('homePage.topProducts.previous')}
+          >
+            <IoIosArrowBack />
+          </CarouselButton>
+
+          <CarouselButton
+            onClick={handleNext}
+            disabled={page === data?.totalPages}
+            direction="next"
+            ariaLabel={t('homePage.topProducts.next')}
+          >
+            <IoIosArrowForward />
+          </CarouselButton>
+        </div>
+      </div>
+    </section>
+  );
+};
+interface CarouselButtonProps {
+  onClick: () => void;
+  disabled: boolean;
+  direction: 'previous' | 'next';
+  children: React.ReactNode;
+  ariaLabel: string;
+}
+const CarouselButton: FC<CarouselButtonProps> = ({ onClick, disabled, direction, children, ariaLabel }) => (
+  <button
+    onClick={onClick}
+    disabled={disabled}
+    className={`absolute top-1/2 -translate-y-1/2 ${direction === 'previous' ? 'left-0' : 'right-0'} z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none`}
+    aria-label={ariaLabel}
+  >
+    <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-secondary_btn group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+      {children}
+    </span>
+  </button>
+);
+
+export default TopProducts;

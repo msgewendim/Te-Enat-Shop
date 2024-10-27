@@ -1,0 +1,263 @@
+{
+  "nav": {
+    "home": "עמוד הבית",
+    "shop": "חנות",
+    "recipes": "מתכונים",
+    "about": "עלינו",
+    "contact": "צרו קשר",
+    "adminPanel": "פאנל ניהול",
+    "login": "התחברות",
+    "logout": "התנתקות",
+    "closeMenu": "סגור תפריט"
+  },
+  "banner": {
+    "ariaLabel": "Banner for {{text}}"
+  },
+  "homePage": {
+    "hero": {
+      "mainHeading": "חווית הבישול שלכם",
+      "subHeading": "עומדת להשתדרג",
+      "description": "הזמינו חומרי גלם איכותיים, למדו ובשלו אוכל מושלם עבור האהובים שלכם",
+      "cards": {
+        "recipes": {
+          "title": "מתכונים"
+        },
+        "store": {
+          "title": "חנות"
+        }
+      }
+    },
+    "grantees": {
+      "title": "ההבטחות שלנו",
+      "freshness": {
+        "title": "טריות 100%",
+        "text": "אנו מתחייבים לספק את המוצרים הטריים והאיכותיים"
+      },
+      "support": {
+        "title": "תמיכה",
+        "text": "זמינים במגוון דרכי התקשרות לכל שאלה"
+      },
+      "returnPolicy": {
+        "title": "מדיניות החזרה",
+        "text": "ביטול רכישה בכל עת טרם יציאת המשלוח זמין מיידית"
+      },
+      "securePayment": {
+        "title": "תשלום מאובטח",
+        "text": "תשלום על ידי חברת 'חשבונית ירוקה'"
+      }
+    },
+    "whoAreWe": {
+      "title": "מי אנחנו?",
+      "mainHeading": "אנו ספקים של סחורה איכותית ומוצרי בישול מובילים",
+      "description": "מביאים לכם מוצרים טבעיים ואותנטיים ממטבחים מגוונים ברחבי העולם. השילוב בין מסורת לחדשנות מאפשר לכם לגלות טעמים חדשים וליהנות ממוצרים איכותיים למטבח שלכם. כל מוצר נבחר בקפידה כדי להעשיר את חוויית הבישול והאכילה שלכם.",
+      "naturalProducts": {
+        "title": "100% מוצרים טבעיים",
+        "description": "המוצרים שלנו עשויים מרכיבים טבעיים בלבד, ללא תוספים מלאכותיים. אנחנו מתחייבים לאיכות טהורה שמביאה את הטבע היישר למטבח שלכם."
+      },
+      "healthyProducts": {
+        "title": "מוצרים המסייעים בבריאות",
+        "description": "המוצרים שלנו תורמים לבריאות בעזרת רכיבים טבעיים ועשירים בוויטמינים ומינרלים. כל מוצר נועד לתמוך באורח חיים בריא ומאוזן."
+      }
+    },
+    "topProducts": {
+      "title": "החנות שבנינו עבורכם",
+      "description": "גלו את המוצרים המובילים שלנו שמשלבים בין איכות לטעם ייחודי. כל מוצר נבחר בקפידה כדי להעניק לכם חוויית בישול טהורה, עשירה ומגוונת.",
+      "previous": "הקודם",
+      "next": "הבא"
+    },
+    "ourSpecialty": {
+      "title": "המיוחדות שלנו אלו היצירות שלכם",
+      "readMore": "קרא עוד",
+      "features": {
+        "spices": {
+          "title": "תבלינים אקזוטיים",
+          "description": "גלו את הטעמים של העולם עם אוסף התבלינים האקזוטיים שלנו."
+        },
+        "legumes": {
+          "title": "קטניות אורגניות",
+          "description": "תהנו מהטוב של הטבע הגדל בשדות מופחתי ריסוסי הדברה מזיקים."
+        },
+        "blends": {
+          "title": "תערובות גורמה",
+          "description": "הרימו את היצירות הקולינריות שלכם עם תערובות התבלינים האיכותיות והבלעדיות שלנו."
+        },
+        "health": {
+          "title": "יתרונות בריאותיים",
+          "description": "שפרו את אורח החיים שלכם עם מבחר התבלינים והתערובות שנבחרו בקפידה עבורכם"
+        }
+      }
+    },
+    "ourCategory": {
+      "title": "הקטגוריות שלנו"
+    },
+    "productPackages": {
+      "title": "המארזים שלנו",
+      "price": "מחיר",
+      "buy": "קנה",
+      "cookingTime": "זמן הכנה",
+      "peopleQuantity": "כמות סועדים",
+      "ingredientsQuantity": "כמות מצרכים"
+    }
+  },
+  "footer": {
+    "brand": "טנאת",
+    "about": "עלינו",
+    "store": "חנות",
+    "recipes": "מתכונים",
+    "contact": "צור קשר",
+    "subscribe": {
+      "title": "הירשם לעדכונים",
+      "placeholder": "הזן כתובת מייל",
+      "button": "הרשמה",
+      "description": "מוצרים ומתכונים חדשים בהמשך"
+    },
+    "rights": "כל הזכויות שמורות",
+    "year": "2024 ©"
+  },
+  "recipe": {
+    "imageAlt": "Image of {{title}}",
+    "prepTime": "זמן הכנה",
+    "difficulty": "קושי",
+    "servings": "כמות סועדים",
+    "ingredients": "מצרכים",
+    "instructions": "הוראות הכנה",
+    "readMore": "קרא עוד"
+  },
+  "shop": {
+    "title": "חנות",
+    "productList": "רשימת מוצרים",
+    "openCart": "פתח עגלת קניות",
+    "pagination": "ניווט בין עמודים",
+    "previousPage": "לעמוד הקודם",
+    "nextPage": "לעמוד הבא"
+  },
+  "filters": {
+    "searchLabel": "חיפוש מוצרים",
+    "searchPlaceholder": "הקלד שם מוצר",
+    "clearButton": "נקה"
+  },
+  "product": {
+    "readMore": "קרא עוד",
+    "addToCart": "הוסף לעגלה"
+  },
+  "cart": {
+    "title": "עגלת קניות",
+    "close": "סגור עגלה",
+    "total": "סה\"כ",
+    "shippingNote": "לא כולל דמי משלוח",
+    "checkout": "לתשלום",
+    "or": "או",
+    "continueShopping": "המשך בקנייה",
+    "size": "גודל",
+    "quantity": "כמות",
+    "remove": "הסר",
+    "removeItem": "הסר את {{name}} מהעגלה"
+  },
+  "recipes": {
+    "bannerText": "גלה את המתכונים שלנו",
+    "sectionLabel": "רשימת מתכונים",
+    "recipe1": "מתכון 1",
+    "recipe2": "מתכון 2",
+    "recipe3": "מתכון 3",
+    "recipe4": "מתכון 4",
+    "recipe5": "מתכון 5",
+    "recipe6": "מתכון 6",
+    "description1": "תיאור למתכון 1",
+    "description2": "תיאור למתכון 2",
+    "description3": "תיאור למתכון 3",
+    "description4": "תיאור למתכון 4",
+    "description5": "תיאור למתכון 5",
+    "description6": "תיאור למתכון 6"
+  },
+  "errors": {
+    "genericError": "אירעה שגיאה כללית. אנא נסה שוב מאוחר יותר.",
+    "productNotAvailable": "המוצר אינו זמין כרגע.",
+    "outOfStock": "המוצר אזל מהמלאי.",
+    "invalidInput": "הקלט שסיפקת אינו תקין.",
+    "paymentFailed": "העסקה לא הצליחה. אנא בדוק את פרטי התשלום שלך.",
+    "sessionExpired": "הסשן שלך פג. אנא התחבר מחדש."
+  },
+  "buttons": {
+    "addToCart": "הוסף לעגלת הקניות",
+    "viewDetails": "הצג פרטים",
+    "checkout": "לתשלום",
+    "continueShopping": "המשך לקניות",
+    "buy": "קנה",
+    "readMore": "קרא עוד",
+    "remove": "הסר",
+    "clear": "נקה",
+    "update": "עדכן",
+    "subscribe": "הרשם",
+    "recipes": "מתכונים",
+    "close": "סגור",
+    "previous": "לעמוד הקודם",
+    "next": "לעמוד הבא"
+  },
+  "relatedProducts": {
+    "title": "מוצרים קשורים"
+  },
+  "relatedRecipes": {
+    "title": "מתכונים קשורים"
+  },
+  "relatedItems": {
+    "previous": "הקודם",
+    "next": "הבא"
+  },
+  "contact": {
+    "title": "צור קשר",
+    "subtitle": "נשמח לשמוע את דעתך",
+    "phone": {
+      "label": "פלאפון",
+      "number": "054-3287837"
+    },
+    "email": {
+      "label": "מייל",
+      "address": "hello@example.so"
+    },
+    "address": {
+      "label": "הכתובת שלנו",
+      "line1": "ארלוזורוב 123",
+      "city": "תל-אביב-יפו",
+      "zip": "ת.פ. 00000000"
+    },
+    "namePlaceholder": "שם",
+    "fullName": "שם מלא",
+    "emailPlaceholder": "מייל",
+    "phonePlaceholder": "פלאפון",
+    "messagePlaceholder": "איך נוכל לעזור",
+    "howCanWeHelp": "איך נוכל לעזור",
+    "requiredFields": "כל השדות הן חובה",
+    "submit": "שלח"
+  },
+  "checkout": {
+    "summaryTitle": "סיכום הזמנה",
+    "formTitle": "פרטי לקוח",
+    "size": "גודל",
+    "quantity": "כמות",
+    "total": "סה\"כ",
+    "grandTotal": "סה\"כ",
+    "completeOrder": "השלם את ההזמנה",
+    "paymentIframeTitle": "טופס תשלום",
+    "paymentIframeLabel": "טופס תשלום עבור ההזמנה",
+    "personalDetails": "פרטים אישיים",
+    "shippingAddress": "כתובת למשלוח",
+    "fullName": "שם מלא",
+    "email": "מייל",
+    "mobile": "מס פלאפון",
+    "address": "כתובת",
+    "city": "עיר",
+    "zip": "מיקוד",
+    "cancel": "ביטול",
+    "submit": "לתשלום",
+    "errorFetchingPaymentForm": "אירעה שגיאה בעת fetching טופס התשלום"
+  },
+  "admin": {
+    "dashboardTitle": "דף ניהול",
+    "products": "מוצרים",
+    "addProduct": "הוסף מוצר",
+    "recipes": "מתכונים",
+    "orders": "הזמנות",
+    "productUpdated": "מוצר עודכן בהצלחה",
+    "productAdded": "מוצר נוסף בהצלחה"
+  }
+}
