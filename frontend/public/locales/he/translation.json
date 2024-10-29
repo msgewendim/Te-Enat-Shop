@@ -97,6 +97,9 @@
       "cookingTime": "זמן הכנה",
       "peopleQuantity": "כמות סועדים",
       "ingredientsQuantity": "כמות מצרכים"
+    },
+    "q&a": {
+      "title": "שאלות ותשובות"
     }
   },
   "footer": {
@@ -253,11 +256,68 @@
   },
   "admin": {
     "dashboardTitle": "דף ניהול",
-    "products": "מוצרים",
     "addProduct": "הוסף מוצר",
     "recipes": "מתכונים",
     "orders": "הזמנות",
     "productUpdated": "מוצר עודכן בהצלחה",
-    "productAdded": "מוצר נוסף בהצלחה"
+    "productAdded": "מוצר נוסף בהצלחה",
+    "openMenu": "פתח תפריט",
+    "closeMenu": "סגור תפריט",
+    "products": {
+      "title": "מוצרים",
+      "noProducts": "אין מוצרים להצגה כרגע.",
+      "deleteConfirmation": "האם אתה בטוח שברצונך למחוק מוצר זה?",
+      "edit": "ערוך ",
+      "delete": "מחק ",
+      "add": "הוסף מוצר",
+      "tableCaption": "רשימת המוצרים עם פרטים ואפשרויות עריכה",
+      "deleteSuccess": "מוצר נמחק בהצלחה",
+      "deleteError": "בעיה במחיקת מוצר",
+      "table": {
+        "number": "מס",
+        "productName": "שם מוצר",
+        "size": "גודל",
+        "price": "מחיר",
+        "category": "קטגוריה",
+        "actions": "פעולות"
+      }
+    }
+  },
+  "form": {
+    "required": "Required",
+    "optional": "Optional",
+    "addFeatureGroup": {
+      "title": "יתרונות בריאותיים",
+      "featureTitle": "יתרון {{number}}",
+      "inputTitlePlaceholder": "כותרת יתרון מס' {{number}}",
+      "inputDescriptionPlaceholder": "תיאור יתרון מס' {{number}}",
+      "removeFeature": "הסר",
+      "removeFeatureLabel": "הסר יתרון {{number}}",
+      "addFeature": "הוסף יתרון"
+    },
+    "addPricing": {
+      "title": "מחירים",
+      "sizeLabel": "משקל / גודל {{number}}",
+      "priceLabel": "סכום",
+      "removePrice": "הסר",
+      "removePriceLabel": "הסר מחיר {{number}}",
+      "addPrice": "הוסף מחיר וגודל"
+    },
+    "addCategory": {
+      "title": "קטגוריות",
+      "categoriesAriaLabel": "קטגוריות"
+    },
+    "productForm": {
+      "editTitle": "עריכת מוצר",
+      "addTitle": "הוספת מוצר חדש",
+      "namePlaceholder": "שם מוצר",
+      "nameLabel": "שם מוצר",
+      "descriptionPlaceholder": "תיאור מוצר",
+      "descriptionLabel": "תיאור קצר",
+      "imagePlaceholder": "כתובת תמונה",
+      "imageLabel": "תמונת מוצר",
+      "updateButton": "עדכן",
+      "saveButton": "שמור"
+    }
   }
 }

@@ -5,12 +5,8 @@ import Loader from "../ui/Loader";
 import { FC, useState } from "react";
 import { useGetRelatedItems } from "../../hooks/useProductsData";
 import CarouselButton from "./CarouselButton";
-import { Product, Recipe } from "../../client";
+import { RelatedItemsProps, RelatedItemCardProps } from "../../providers/interface/general.props";
 
-interface RelatedItemsProps {
-  itemCategory: string;
-  type: string;
-}
 const RelatedItems: FC<RelatedItemsProps> = ({
   itemCategory,
   type
@@ -76,10 +72,7 @@ const RelatedItems: FC<RelatedItemsProps> = ({
     </section>
   );
 };
-interface RelatedItemCardProps {
-  item: Product | Recipe
-  linkPrefix: string;  // '/products' or '/recipes'
-}
+
 const RelatedItemCard = ({ item, linkPrefix }: RelatedItemCardProps) => {
   const { name, image, _id } = item
   return (

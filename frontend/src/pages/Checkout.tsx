@@ -6,25 +6,38 @@ const Checkout = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="bg-white my-[60px]">
-      <div className="flex flex-col max-sm:flex-col gap-12 max-lg:gap-4 h-full">
-        {/* Order Summary */}
-        <div aria-labelledby="checkout-summary-heading">
-          <h2 id="checkout-summary-heading" className="text-xl font-semibold text-primary">
-            {t('checkout.summaryTitle')}
-          </h2>
-          <CheckoutSummary />
-        </div>
+    <main className="bg-white my-20">
+      <div className="container mx-auto px-4">
+        <h1 className="sr-only">{t('checkout.pageTitle')}</h1>
+        <div className="lg:grid lg:grid-cols-3 lg:gap-8">
+          <section
+            aria-labelledby="checkout-summary-heading"
+            className="mb-8 lg:mb-0"
+          >
+            <h2
+              id="checkout-summary-heading"
+              className="text-2xl font-semibold text-primary mb-4"
+            >
+              {t('checkout.summaryTitle')}
+            </h2>
+            <CheckoutSummary />
+          </section>
 
-        {/* Client Info */}
-        <div aria-labelledby="checkout-form-heading">
-          <h2 id="checkout-form-heading" className="text-xl font-semibold text-primary">
-            {t('checkout.formTitle')}
-          </h2>
-          <CheckoutForm />
+          <section
+            aria-labelledby="checkout-form-heading"
+            className="col-span-2"
+          >
+            <h2
+              id="checkout-form-heading"
+              className="text-2xl font-semibold text-primary mb-4 "
+            >
+              {t('checkout.formTitle')}
+            </h2>
+            <CheckoutForm />
+          </section>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

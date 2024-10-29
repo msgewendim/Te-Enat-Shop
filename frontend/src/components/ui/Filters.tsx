@@ -4,11 +4,9 @@ import { Link } from "react-router-dom";
 import { useAppContext } from "../../hooks/useAppContext";
 import Categories from "./Categories";
 import { productCategoriesMapping, recipeCategoriesMapping } from "../../utils/constants";
+import { ClearFiltersButtonProps, FiltersProps } from "../../providers/interface/general.props";
 
-interface FiltersProps {
-  clearFiltersPath: string;
-  type: "recipes" | "products"
-}
+
 const Filters: FC<FiltersProps> = ({ clearFiltersPath, type }) => {
   const { setFilter, setCategory } = useAppContext();
 
@@ -34,11 +32,10 @@ const Filters: FC<FiltersProps> = ({ clearFiltersPath, type }) => {
   );
 };
 
-interface SearchInputProps {
-  handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
-}
 
-const SearchInput: FC<SearchInputProps> = ({ handleSearch }) => {
+const SearchInput = ({ handleSearch }: {
+  handleSearch: (e: ChangeEvent<HTMLInputElement>) => void
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -66,10 +63,7 @@ const SearchIcon: FC = () => (
   </span>
 );
 
-interface ClearFiltersButtonProps {
-  handleClearFilters: () => void;
-  clearFiltersPath: string;
-}
+
 
 const ClearFiltersButton: React.FC<ClearFiltersButtonProps> = ({ handleClearFilters, clearFiltersPath }) => {
   const { t } = useTranslation();

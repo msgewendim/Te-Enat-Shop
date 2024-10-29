@@ -1,15 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppContext } from './useAppContext'
-import { Product, CartItem } from '../client/types.gen'
+import { CartItem } from '../client/types.gen'
 import { addItemToCartList } from '../utils/helperFunctions'
 import { toast } from 'react-toastify'
+import { ProductModalProps } from '../providers/interface/products.props'
 
 
-type ProductModalProps = {
-  open: boolean,
-  setOpen: (open: boolean) => void,
-  product: Product
-}
 const useAddToCartModal = ({ product, setOpen }: ProductModalProps) => {
   const { cartItems, setCartItems, setOrderItems, orderItems, sizeIdx, setSizeIdx } = useAppContext()
   const { pricing } = product

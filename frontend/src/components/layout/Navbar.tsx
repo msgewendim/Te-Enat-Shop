@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -7,6 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { TbLogin, TbLogout } from 'react-icons/tb';
 import DarkMode from '../ui/DarkMode';
 import Loader from '../ui/Loader';
+import { MobileMenuButtonProps, MobileMenuProps } from '../../providers/interface/general.props';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -118,9 +119,7 @@ const AuthButton = () => {
     </button>
   );
 };
-interface MobileMenuButtonProps {
-  setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+
 const MobileMenuButton = ({ setMobileMenuOpen }: MobileMenuButtonProps) => (
   <button
     type="button"
@@ -131,10 +130,7 @@ const MobileMenuButton = ({ setMobileMenuOpen }: MobileMenuButtonProps) => (
     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
   </button>
 );
-interface MobileMenuProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+
 const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();
 

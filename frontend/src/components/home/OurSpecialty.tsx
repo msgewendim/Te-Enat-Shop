@@ -1,10 +1,11 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { CgBowl } from "react-icons/cg";
 import { GiFlour, GiGrainBundle } from "react-icons/gi";
 import { PiGrains } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { recipesList } from "../../utils/examples";
+import { FeatureCardType, RecipeCardType } from "../../providers/interface/general.props";
 
 const OurSpecialty = () => {
   const { t } = useTranslation();
@@ -66,13 +67,6 @@ const RecipeCard: FC<RecipeCardType> = ({ id, image, title }) => {
     </Link>
   );
 };
-
-interface RecipeCardType {
-  id: string;
-  image: string;
-  title: string;
-}
-
 const FeatureCard: FC<FeatureCardType> = ({ icon, title, description }) => (
   <div className="text-center p-4 flex flex-col items-center">
     <div className="mb-4">{icon}</div>
@@ -84,9 +78,5 @@ const FeatureCard: FC<FeatureCardType> = ({ icon, title, description }) => (
     </p>
   </div>
 );
-interface FeatureCardType {
-  icon: React.ReactElement;
-  title: string;
-  description: string;
-}
+
 export default OurSpecialty;

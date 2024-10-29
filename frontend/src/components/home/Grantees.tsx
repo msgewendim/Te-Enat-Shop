@@ -4,6 +4,7 @@ import { BiSupport } from "react-icons/bi";
 import { FaRegCreditCard } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
+import { GuaranteeCardProps } from "../../providers/interface/general.props";
 
 // Grantees Cards
 const Grantees = () => {
@@ -30,11 +31,7 @@ const Grantees = () => {
   );
 };
 
-interface GuaranteeCardProps {
-  icon: React.FC<React.SVGProps<SVGSVGElement>> | string;
-  text: string;
-  title: string;
-}
+
 const GuaranteeCard: FC<GuaranteeCardProps> = ({ icon: Icon, text, title }) => {
   return (
     <li className="w-full max-w-[200px]">

@@ -1,8 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../hooks/useAppContext";
 
 const ConfirmationModal = () => {
   const { modalState, hideModal } = useAppContext()
-
+  const { t } = useTranslation()
   if (!modalState.isOpen) return null;
 
   return (
@@ -22,7 +23,9 @@ const ConfirmationModal = () => {
             ></path>
           </svg>
 
-          <h2 className="text-xl font-bold py-4 text-gray-200">?האם אתה בטוח</h2>
+          <h2 className="text-xl font-bold py-4 text-gray-200">
+            {t('admin.products.deleteConfirmation')}
+          </h2>
         </div>
         <div className="p-3 mt-4 text-center space-x-4">
           <button

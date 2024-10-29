@@ -6,7 +6,6 @@ import testimonial from "../assets/testimonial.svg";
 import productPagePhoto from "../assets/singlePagePhoto.png";
 import menu from "../assets/menu.jpg";
 import cookies from "../assets/cookies.jpg";
-import dessert from "../assets/dessert.jpg";
 import hotShiro from "../assets/hot-shiro.jpg";
 import kik from "../assets/kik.jpg";
 import kimem from "../assets/kimem.jpg";
@@ -17,6 +16,10 @@ import buna from "../assets/buna.jpg";
 import enjera from "../assets/enjera.jpg";
 import kitfo from "../assets/kitfo.jpg";
 import shiro from "../assets/shiro.jpg";
+import Omlet from "../assets/omlet.jpg";
+import Mushrooms from "../assets/mushrooms.jpg";
+import Pasta from "../assets/pasta.jpg";
+import dessert from "../assets/dessert.jpg";
 export {
   productPagePhoto,
   testimonial,
@@ -26,6 +29,9 @@ export {
   tavlinim,
   menu,
   cookies,
+  Omlet,
+  Pasta,
+  Mushrooms,
   dessert,
   hotShiro,
   kimem,

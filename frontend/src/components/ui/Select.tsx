@@ -2,21 +2,10 @@ import { FC, useEffect, useState } from 'react';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useAppContext } from '../../hooks/useAppContext';
+import { SelectTypes } from '../../providers/interface/general.props';
 
-interface CategoryMapping {
-  [key: string]: string;
-}
 
-interface SelectProps {
-  selectItems: string[];
-  initialItem: string;
-  classes?: string;
-  type: 'size' | 'category';
-  categoryMapping?: CategoryMapping;
-  onChange?: (selectedOption: string) => void;
-}
-
-const Select: FC<SelectProps> = ({
+const Select: FC<SelectTypes> = ({
   selectItems,
   initialItem,
   classes = '',

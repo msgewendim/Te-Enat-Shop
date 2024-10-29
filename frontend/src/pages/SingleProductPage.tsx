@@ -9,9 +9,9 @@ import Loader from "../components/ui/Loader";
 import PopupProduct from "../components/products/PopupProduct";
 import videoProduct from "/videoProduct.png";
 import ProductPageBanner from "/ProductPageBanner.svg";
-import { Product } from '../client';
 import FeatureList from '../components/products/FeatureElement';
 import RelatedItems from '../components/ui/RelatedItems';
+import { ProductActionsProps } from '../providers/interface/products.props';
 
 const SingleProduct = () => {
   const { t } = useTranslation();
@@ -58,13 +58,7 @@ const SingleProduct = () => {
   );
 };
 
-interface ProductActionsProps {
-  openProductId: string | null;
-  productID: string;
-  product: Product;
-  handleClosePopup: () => void;
-  handleOpenPopup: () => void;
-}
+
 
 const ProductImage = ({ name, image }: { name: string, image: string }) => (
   <div className="order-2 w-full md:w-[680px]">

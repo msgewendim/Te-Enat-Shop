@@ -1,4 +1,4 @@
-import { dessert, hotShiro, kurkum, shiro } from "./data";
+import { dessert, hotShiro, kurkum, shiro, cookies } from "./data";
 // Define types for category mappings
 type CategoryMapping = {
   [key: string]: string;
@@ -87,37 +87,18 @@ type RecipeCategoryKey = keyof typeof recipeCategoriesMapping;
 type TopCategory = {
   _id: string;
   name: string;
+  value: string;
   image: string;
 };
-
-const ourTopCategories = [
-  {
-    _id: "123",
-    name: "קמחים",
-    image: hotShiro,
-  },
-  {
-    _id: "124",
-    name: "תבלינים",
-    image: kurkum,
-  },
-  {
-    _id: "125",
-    name: "קטניות",
-    image: shiro,
-  },
-  {
-    _id: "126",
-    name: "משקאות",
-    image: dessert,
-  },
-  {
-    _id: "126",
-    name: "מארזים",
-    image: dessert,
-  },
-];
-
+const categoryPhoto = [shiro, hotShiro, cookies, kurkum, dessert];
+const ourTopCategories = productCategories.map((category, idx) => {
+  return {
+    _id: idx + "12002",
+    name: category.name,
+    value: category.value,
+    image: categoryPhoto[idx],
+  };
+});
 export {
   productCategories,
   productCategoriesMapping,

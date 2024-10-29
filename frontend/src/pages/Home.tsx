@@ -7,6 +7,7 @@ import Grantees from "../components/home/Grantees"
 import OurSpecialty from "../components/home/OurSpecialty"
 import ProductPackages from "../components/products/ProductPackages"
 import TopProducts from "../components/products/TopProducts"
+import QASection from "../components/home/QAsection"
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <OurSpecialty />
       <TopCategory />
       <ProductPackages />
+      <QASection />
     </>
   )
 }

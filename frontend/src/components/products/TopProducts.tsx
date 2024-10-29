@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -6,6 +6,7 @@ import { useGetRandomProducts } from "../../hooks/useProductsData";
 import Loader from "../ui/Loader";
 import ProductCard from "./ProductCard";
 import { randomizeArray } from "../../utils/helperFunctions";
+import { CarouselButtonProps } from "../../providers/interface/general.props";
 
 const TopProducts = () => {
   const { t } = useTranslation();
@@ -77,13 +78,7 @@ const TopProducts = () => {
     </section>
   );
 };
-interface CarouselButtonProps {
-  onClick: () => void;
-  disabled: boolean;
-  direction: 'previous' | 'next';
-  children: React.ReactNode;
-  ariaLabel: string;
-}
+
 const CarouselButton: FC<CarouselButtonProps> = ({ onClick, disabled, direction, children, ariaLabel }) => (
   <button
     onClick={onClick}

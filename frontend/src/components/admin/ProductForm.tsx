@@ -1,111 +1,97 @@
-import { DevTool } from '@hookform/devtools'
+import { DevTool } from '@hookform/devtools';
 import { Product } from '../../client/types.gen';
 import { FormInput } from '../ui/FormInput';
 import useProductForm from '../../hooks/useProductForm';
-import { AddCategoryInput, AddFeatureGroupInput, AddPricingInput } from './AddArrayInputFields'
+import { AddCategoryInput, AddFeatureGroupInput, AddPricingInput } from './AddArrayInputFields';
 import { SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../hooks/useAppContext';
 import { productCategories } from '../../utils/constants';
-
-interface ProductFormProps {
-  product?: Product;
-  onSubmit: (data: Product) => void;
-  message: string;
-}
+import { ProductFormProps } from '../../providers/interface/admin.props';
+import { useTranslation } from 'react-i18next';
 
 const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProductFormProps) => {
-  const { register, control, errors, handleSubmit, setValue, reset, existingCategories } = useProductForm(product)
-  const { setAdminActiveSection } = useAppContext()
+  const { t } = useTranslation();
+  const { register, control, errors, handleSubmit, setValue, reset, existingCategories } = useProductForm(product);
+  const { setAdminActiveSection } = useAppContext();
+
   const onSubmit: SubmitHandler<Product> = (data) => {
-    // send to server the new product
-    onSubmitProp(data)
-    reset()
-    // navigate to the product list page or show a success message
-    setAdminActiveSection("products")
-    toast.success(`${message}`)
+    onSubmitProp(data);
+    reset();
+    setAdminActiveSection("products");
+    toast.success(message);
   };
 
   const isEditing = !!product;
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-md h-full relative flex flex-col items-start">
-        <div className="text-center">
-          <h2 className="font-bold text-2xl capitalize p-2">
-            {isEditing ? 'Edit Product' : 'Add New Product'}
-          </h2>
-        </div>
+        <h2 className="font-bold text-2xl capitalize p-2 w-full text-center mb-4">
+          {isEditing ? t('form.productForm.editTitle') : t('form.productForm.addTitle')}
+        </h2>
 
-        <div className="mb-4 grid sm:grid-cols-2 gap-6">
-          {/* Name */}
+        <div className="mb-4 sm:grid grid-cols-2 gap-6 w-full">
           <FormInput<Product>
             name="name"
-            placeholder="שם מוצר"
+            placeholder={t('form.productForm.namePlaceholder')}
             register={register}
-            classNames=""
             type="text"
+            label={t('form.productForm.nameLabel')}
+            error={errors.name?.message}
           />
-          {errors.name &&
-            <span className="text-red-500">{errors.name.message}</span>
-          }
-          {/* Short Description */}
+
           <FormInput<Product>
             name="shortDescription"
-            placeholder="תיאור מוצר"
+            placeholder={t('form.productForm.descriptionPlaceholder')}
             register={register}
-            classNames=""
             type="text"
+            label={t('form.productForm.descriptionLabel')}
+            error={errors.shortDescription?.message}
           />
-          {errors.shortDescription &&
-            <span className="text-red-500">{errors.shortDescription.message}</span>
-          }
-          {/* Images array */}
+
           <FormInput<Product>
             name="image"
-            placeholder="כתובת תמונה"
+            placeholder={t('form.productForm.imagePlaceholder')}
             register={register}
-            classNames="col-span-2"
+            className="col-span-2"
             type="text"
+            label={t('form.productForm.imageLabel')}
+            error={errors.image?.message}
           />
-          {errors.image &&
-            <span className="text-red-500">{errors.image.message}</span>
-          }
-          {/* Pricing array */}
-          <div className="col-span-2">
-            <AddPricingInput
-              control={control}
-              register={register}
-            />
-            {errors.pricing &&
-              <span className="text-red-500">{errors.pricing.message}</span>
-            }
-          </div>
+
         </div>
-        {/* Categories */}
-        <AddCategoryInput register={register} setValue={setValue} categories={productCategories} initialCategories={existingCategories} />
-        {errors.categories &&
-          <span className="text-red-500">{errors.categories.message}</span>
-        }
-        {/* Features Section (Array of Arrays) */}
+        <div className=" w-full">
+          <AddPricingInput
+            control={control}
+            register={register}
+          />
+          {errors.pricing && <span className="text-red-500">{errors.pricing.message}</span>}
+        </div>
+
+        <AddCategoryInput
+          register={register}
+          setValue={setValue}
+          categories={productCategories}
+          initialCategories={existingCategories}
+        />
+        {errors.categories && <span className="text-red-500">{errors.categories.message}</span>}
+
         <AddFeatureGroupInput control={control} register={register} />
-        {errors.features &&
-          <span className="text-red-500">{errors.features.message}</span>
-        }
-        {/* Save Btn */}
-        <div className="w-52">
+        {errors.features && <span className="text-red-500">{errors.features.message}</span>}
+
+        <div className="w-full mt-6">
           <button
             type="submit"
-            className="bg-green-500 text-white px-8 py-4 rounded-lg w-full"
+            className="bg-green-500 text-white px-8 py-4 rounded-lg w-full sm:w-52"
           >
-            {isEditing ? 'Update' : 'Save'}
+            {isEditing ? t('form.productForm.updateButton') : t('form.productForm.saveButton')}
           </button>
         </div>
-        <DevTool control={control} />
       </form>
+      <DevTool control={control} />
     </>
   );
 };
 
-
 export default ProductForm;
-

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { menu } from "../../utils/data";
 import { useTranslation } from "react-i18next";
+import { Feature } from "../../client";
 
 const WhoAreWe = () => {
   const { t } = useTranslation();
@@ -31,23 +32,19 @@ const TextSection = () => {
       <p className="max-w-2xl">
         {t('homePage.whoAreWe.description')}
       </p>
-      <Feature
+      <Features
         title={t('homePage.whoAreWe.naturalProducts.title')}
         description={t('homePage.whoAreWe.naturalProducts.description')}
       />
-      <Feature
+      <Features
         title={t('homePage.whoAreWe.healthyProducts.title')}
         description={t('homePage.whoAreWe.healthyProducts.description')}
       />
     </div>
   );
-
 };
-interface FeatureProps {
-  title: string;
-  description: string
-}
-const Feature: FC<FeatureProps> = ({ title, description }) => {
+
+const Features: FC<Feature> = ({ title, description }) => {
   return (
     <div className="space-y-2">
       <span className="inline-block py-2 px-4 bg-gray-200 rounded-full text-primary font-medium">

@@ -1,8 +1,9 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { SlSocialInstagram } from "react-icons/sl";
+import { SocialLinkProps } from "../../providers/interface/general.props";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -86,9 +87,5 @@ const SocialLink: FC<SocialLinkProps> = ({ href, icon: Icon, label }) => (
     <Icon />
   </Link>
 );
-interface SocialLinkProps {
-  href: string;
-  icon: FC<React.SVGProps<SVGSVGElement>>;
-  label: string;
-}
+
 export default Footer;

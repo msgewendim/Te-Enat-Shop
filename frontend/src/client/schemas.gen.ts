@@ -91,6 +91,38 @@ export const $Feature = {
     required: ['title', 'description']
 } as const;
 
+export const $Package = {
+    type: 'object',
+    properties: {
+        _id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        image: {
+            type: 'string'
+        },
+        price: {
+            type: 'integer',
+            format: 'float'
+        },
+        cookingTime: {
+            type: 'integer',
+            format: 'int'
+        },
+        ingredientsQuantity: {
+            type: 'integer',
+            format: 'int'
+        },
+        peoplesQuantity: {
+            type: 'integer',
+            format: 'int'
+        }
+    },
+    required: ['_id', 'name', 'image', 'price', 'cookingTime', 'ingredientsQuantity', 'peoplesQuantity']
+} as const;
+
 export const $PaymentFormPayload = {
     type: 'object',
     properties: {

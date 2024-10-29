@@ -1,4 +1,3 @@
-// useAppContext.ts
 import { useContext } from "react";
 import { AppContext, IContext } from "../providers/interface/context";
 

@@ -1,13 +1,11 @@
 import React from 'react';
 import Select from "./Select";
 import { useAppContext } from "../../hooks/useAppContext";
-import { CategoryMapping } from "../../utils/constants";
+import { CategoryButtonProps } from '../../providers/interface/general.props';
+import { CategoryMapping } from '../../utils/constants';
 
-interface FilterCategoriesProps {
-  categoryMapping: CategoryMapping;
-}
 
-const FilterCategories: React.FC<FilterCategoriesProps> = ({ categoryMapping }) => {
+const FilterCategories = ({ categoryMapping }: { categoryMapping: CategoryMapping }) => {
   const { setCategory } = useAppContext();
   const categories = Object.values(categoryMapping);
 
@@ -41,10 +39,7 @@ const FilterCategories: React.FC<FilterCategoriesProps> = ({ categoryMapping }) 
   );
 };
 
-interface CategoryButtonProps {
-  category: string;
-  onClick: () => void;
-}
+
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({ category, onClick }) => (
   <button

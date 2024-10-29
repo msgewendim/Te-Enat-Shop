@@ -2,6 +2,7 @@ import { awaze, beyaynetu, cookies, rollInjera, shiro, tavlinim } from "../../ut
 import { FC, useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom"
+import { HeroCardProps } from "../../providers/interface/general.props";
 const homePageImages = [
   beyaynetu, shiro, awaze, cookies
 ]
@@ -46,11 +47,7 @@ const Hero = () => {
 
   );
 };
-interface HeroCardProps {
-  image: string;
-  title: string;
-  link: string;
-}
+
 const HeroCard: FC<HeroCardProps> = ({ image, title, link }) => {
   return (
     <Link to={link} className="block w-[140px] sm:w-[160px] rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">

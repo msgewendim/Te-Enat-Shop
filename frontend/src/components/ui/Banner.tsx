@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { createBanner } from "../../utils/helperFunctions";
+import { BannerProps } from '../../providers/interface/general.props';
 
 const Banner = ({ image, text }: BannerProps) => {
   const { t } = useTranslation();
@@ -23,8 +24,4 @@ const Banner = ({ image, text }: BannerProps) => {
 
 };
 
-type BannerProps = {
-  image: string;
-  text: string;
-}
 export default Banner;

@@ -4,37 +4,9 @@ import { PiCookingPot } from "react-icons/pi";
 import { TfiTimer } from "react-icons/tfi";
 import { BsPeople } from "react-icons/bs";
 import { IconType } from "react-icons/lib";
-import { shiro } from "../../utils/data";
+import { Package } from "../../client/types.gen";
+import { packages } from "../../utils/examples";
 
-const packages = [
-  {
-    _id: '1',
-    title: 'מתכון קצר',
-    image: shiro,
-    price: 10,
-    cookingTime: 5,
-    ingredientsQuantity: 20,
-    peoplesQuantity: 50
-  },
-  {
-    _id: '2',
-    title: 'מתכון סופי',
-    image: shiro,
-    price: 20,
-    cookingTime: 10,
-    ingredientsQuantity: 30,
-    peoplesQuantity: 75
-  },
-  {
-    _id: '3',
-    title: 'מתכון ממוקד',
-    image: shiro,
-    price: 30,
-    cookingTime: 15,
-    ingredientsQuantity: 40,
-    peoplesQuantity: 100
-  }
-];
 
 const ProductPackages = () => {
   const { t } = useTranslation();
@@ -55,30 +27,20 @@ const ProductPackages = () => {
   );
 };
 
-type Package = {
-  _id: string;
-  title: string;
-  image: string;
-  price: number;
-  cookingTime: number;
-  ingredientsQuantity: number;
-  peoplesQuantity: number;
-};
-
 const PackageCard = ({ data }: { data: Package }) => {
   const { t } = useTranslation();
-  const { price, cookingTime, image, title, peoplesQuantity, ingredientsQuantity } = data;
+  const { price, cookingTime, image, name, peoplesQuantity, ingredientsQuantity } = data;
 
   return (
     <Link to="/" className="block rounded-lg p-4 shadow-sm shadow-indigo-100 hover:bg-slate-200 transition duration-300">
       <img
-        alt={title}
+        alt={name}
         src={image}
         className="h-56 w-full rounded-md object-cover"
       />
       <div className="mt-4">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="font-medium text-lg">{title}</h3>
+          <h3 className="font-medium text-lg">{name}</h3>
           <span className="text-sm text-gray-500">{t('homePage.productPackages.price')}: ₪{price}</span>
         </div>
         <button className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary-dark transition duration-300">

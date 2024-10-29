@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PiCookingPot } from "react-icons/pi";
 import { TfiTimer } from "react-icons/tfi";
@@ -8,6 +8,7 @@ import { createRecipeCardImage } from "../utils/helperFunctions";
 import { recipe } from "../utils/examples";
 import Banner from "../components/ui/Banner";
 import RelatedItems from '../components/ui/RelatedItems';
+import { IngredientItemProps, InstructionItemProps, RecipeInfoProps } from '../providers/interface/recipes.props';
 
 const RecipePage = () => {
   const { t } = useTranslation();
@@ -81,20 +82,6 @@ const InstructionItem: FC<InstructionItemProps> = ({ instruction, step }) => (
   </li>
 );
 
-type IngredientItemProps = {
-  quantity: string,
-  name: string,
-}
 
-type InstructionItemProps = {
-  instruction: string,
-  step: number,
-}
-
-type RecipeInfoProps = {
-  icon: React.ElementType,
-  label: string,
-  value: string,
-}
 
 export default RecipePage;

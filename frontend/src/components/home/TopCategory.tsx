@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../hooks/useAppContext";
 import { ourTopCategories } from "../../utils/constants";
+import { CategoryCardProps } from "../../providers/interface/general.props";
 
 const OurCategory = () => {
   const { t } = useTranslation();
@@ -23,17 +24,14 @@ const OurCategory = () => {
     </section>
   );
 };
-interface CategoryCardProps {
-  category: { name: string, image: string };
-  setCategory: (category: string) => void;
-}
+
 const CategoryCard: FC<CategoryCardProps> = ({ category, setCategory }) => {
-  const { name, image } = category;
+  const { name, image, value } = category;
 
   return (
     <Link
-      to={`/products?category=${name.toLowerCase()}`}
-      onClick={() => setCategory(name)}
+      to={`/products?category=${value.toLowerCase()}`}
+      onClick={() => setCategory(value)}
       className="text-center group"
     >
       <div className="overflow-hidden rounded-md">

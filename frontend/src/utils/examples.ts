@@ -1,5 +1,14 @@
 import { Recipe } from "../client";
-import { cookies, dessert, hotShiro, kurkum, shiro } from "./data";
+import {
+  cookies,
+  dessert,
+  hotShiro,
+  kitfo,
+  kurkum,
+  Mushrooms,
+  Pasta,
+  shiro,
+} from "./data";
 
 export const recipe: Recipe = {
   _id: "chocolate-chip-cookies",
@@ -74,7 +83,7 @@ export const recipesList: Recipe[] = [
     _id: "1",
     name: "Shiro Wot",
     description: "A delicious Ethiopian chickpea stew",
-    image: "https://example.com/images/shiro-wot.jpg",
+    image: kitfo,
     ingredients: [
       { name: "Shiro powder", quantity: "1 cup" },
       { name: "Onion", quantity: "1 large" },
@@ -107,7 +116,7 @@ export const recipesList: Recipe[] = [
     _id: "2",
     name: "Injera",
     description: "Traditional Ethiopian flatbread",
-    image: "https://example.com/images/injera.jpg",
+    image: Mushrooms,
     ingredients: [
       { name: "Teff flour", quantity: "2 cups" },
       { name: "Water", quantity: "3 cups" },
@@ -141,7 +150,7 @@ export const recipesList: Recipe[] = [
     _id: "3",
     name: "Doro Wat",
     description: "Spicy Ethiopian chicken stew",
-    image: "https://example.com/images/doro-wat.jpg",
+    image: Pasta,
     ingredients: [
       { name: "Chicken", quantity: "1 whole, cut into pieces" },
       { name: "Onions", quantity: "3 large" },
@@ -169,5 +178,66 @@ export const recipesList: Recipe[] = [
         comment: "Spicy but full of flavor.",
       },
     ],
+  },
+];
+
+export const packages = [
+  {
+    _id: "1",
+    name: "מתכון קצר",
+    image: shiro,
+    price: 10,
+    cookingTime: 5,
+    ingredientsQuantity: 20,
+    peoplesQuantity: 50,
+  },
+  {
+    _id: "2",
+    name: "מתכון סופי",
+    image: dessert,
+    price: 20,
+    cookingTime: 10,
+    ingredientsQuantity: 30,
+    peoplesQuantity: 75,
+  },
+  {
+    _id: "3",
+    name: "מתכון ממוקד",
+    image: hotShiro,
+    price: 30,
+    cookingTime: 15,
+    ingredientsQuantity: 40,
+    peoplesQuantity: 100,
+  },
+];
+
+export const qaItems = [
+  {
+    q: "מה מיוחד במוצרים שלכם?",
+    a: "המוצרים שלנו משלבים בין איכות גבוהה וטעמים ייחודיים המגיעים מתרבויות מגוונות, תוך הקפדה על רכיבים טבעיים ואותנטיים.",
+  },
+  {
+    q: "האם כל המוצרים טבעיים?",
+    a: "כן, כל המוצרים שלנו מיוצרים מרכיבים טבעיים בלבד, ללא חומרים משמרים או תוספים מלאכותיים, כך שתוכלו ליהנות מאיכות בריאה ואמיתית.",
+  },
+  {
+    q: "האם אתם מבצעים משלוחים?",
+    a: "בהחלט! אנו מבצעים משלוחים לכל רחבי הארץ כדי שתוכלו ליהנות מהמוצרים שלנו עד לפתח הבית.",
+  },
+  {
+    q: "האם ניתן למצוא מוצרים ללא גלוטן?",
+    a: "כן, בחנות שלנו תוכלו למצוא מוצרים רבים המתאימים לתזונה ללא גלוטן, כמו קמח טף ומוצרים נוספים שמותאמים לרגישים לגלוטן.",
+  },
+  {
+    q: "האם אתם מציעים מתכונים לשימוש במוצרים?",
+    a: "כן, באתר שלנו תוכלו למצוא מתכונים מגוונים שמדגימים כיצד להשתמש במוצרים כדי ליצור מנות טעימות ואותנטיות במטבח שלכם.",
+  },
+  {
+    q: "איך אני יכול לדעת אילו מוצרים מומלצים?",
+    a: "בחנות שלנו מופיע דירוג מוצרים, כך שתוכלו לראות את המוצרים המומלצים והפופולריים ביותר לפי חוות דעת של לקוחות אחרים.",
+  },
+  {
+    q: "האם המוצרים מתאימים לאנשים עם אורח חיים בריא?",
+    a: "בהחלט! כל המוצרים שלנו נבחרו בקפידה כדי לספק ערכים תזונתיים גבוהים ולתמוך באורח חיים בריא ומאוזן.",
   },
 ];

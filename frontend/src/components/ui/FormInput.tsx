@@ -1,19 +1,44 @@
-import { FieldValues, Path, RegisterOptions, UseFormRegister } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
+import { FormInputProps } from "../../providers/interface/general.props";
 
-type FormInputProps<T extends FieldValues> = {
-  register: UseFormRegister<T>,
-  type?: string,
-  placeholder: string,
-  name: Path<T>,
-  registerOptions?: RegisterOptions<T>,
-  classNames?: string,  // Optional class names for input field
-  required?: boolean,  // Optional required field flag
-}
-export const FormInput = <T extends FieldValues>({ register, type = "text", placeholder, name, classNames, required, registerOptions }: FormInputProps<T>) => {
+export const FormInput = <T extends FieldValues>({
+  register,
+  type = "text",
+  name,
+  className = "",
+  required = false,
+  registerOptions,
+  label,
+  placeholder,
+  error
+}: FormInputProps<T>) => {
+  const inputId = `input-${name}`;
+
   return (
-    <div>
-      <input type={type} placeholder={placeholder} {...register(name, registerOptions ? registerOptions : {})}
-        className={`px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-btnColor2 ${classNames}`} required={required} />
+    <div className="relative">
+      {label && <label
+        htmlFor={inputId}
+        className={`block text-sm font-medium text-gray-700 mb-1 ${required ? 'after:content-["*"] after:ml-0.5 after:text-red-500' : ''}`}
+      >
+        {label}
+      </label>}
+      <input
+        id={inputId}
+        type={type}
+        {...register(name, registerOptions)}
+        className={`
+          px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md
+          focus:outline-none focus:ring-2 focus:ring-btnColor2 focus:border-transparent placeholder:text-right
+          ${className}
+        `}
+        required={required}
+        placeholder={placeholder}
+        aria-required={required}
+      />
+      {error &&
+        <div className="mt-2 text-sm text-red-500">
+          {error}
+        </div>}
     </div>
   )
 }

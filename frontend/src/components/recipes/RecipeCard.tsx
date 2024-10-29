@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import { createRecipeCardImage } from "../../utils/helperFunctions";
 import { Recipe } from '../../client/types.gen';
+import { DateBadgeProps } from '../../providers/interface/general.props';
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   const { image } = recipe;
@@ -19,10 +20,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   );
 };
 
-type DateBadgeProps = {
-  day: number | undefined,
-  month: string | undefined,
-}
+
 const DateBadge = ({ day, month }: DateBadgeProps) => (
   <div className="absolute top-3 left-3 bg-primary text-white text-center py-4 px-6 rounded-full">
     <p className="text-sm font-bold">{day}</p>
@@ -42,9 +40,6 @@ const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
         className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg text-sm font-medium transition-colors hover:from-secondary hover:to-primary"
       >
         {t('recipe.readMore')}
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 ml-2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
       </Link>
     </div>
   );

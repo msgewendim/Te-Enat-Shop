@@ -7,23 +7,22 @@ const CheckoutForm = () => {
   const { t } = useTranslation();
 
   return (
-    <div dir="rtl" className="max-w-4xl w-full h-max rounded-md px-4 py-8 sticky top-0">
-      <h2 className="text-2xl font-bold text-gray-800" id="checkout-form-heading">
+    <div className="w-full max-w-4xl mx-auto px-4 py-8 lg:sticky lg:top-0">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6" id="checkout-form-heading">
         {t('checkout.completeOrder')}
       </h2>
-      {
-        paymentFormUrl ? (
+      {paymentFormUrl ? (
+        <div className="relative pb-[56.25%] h-0 overflow-hidden">
           <iframe
             src={paymentFormUrl}
-            width="100%"
-            height="600px"
+            className="absolute top-0 left-0 w-full h-full"
             title={t('checkout.paymentIframeTitle')}
             aria-label={t('checkout.paymentIframeLabel')}
           />
-        ) : (
-          <CheckoutFormData />
-        )
-      }
+        </div>
+      ) : (
+        <CheckoutFormData />
+      )}
     </div>
   );
 }

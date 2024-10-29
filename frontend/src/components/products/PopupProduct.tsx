@@ -1,15 +1,11 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { FC, Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import { Product } from '../../client/types.gen'
 import Select from '../ui/Select'
 import useAddToCartModal from '../../hooks/useAddToCartModal'
+import { ProductModalProps } from '../../providers/interface/products.props'
 
-type ProductModalProps = {
-  open: boolean,
-  setOpen: (open: boolean) => void,
-  product: Product
-}
+
 const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
   const { handleAddProductToCart, handleQuantityChange, handleSizeChange, prices, sizes, sizeIdx, productProperties, } = useAddToCartModal({
     product,
