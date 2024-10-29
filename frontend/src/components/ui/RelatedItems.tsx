@@ -51,7 +51,9 @@ const RelatedItems: FC<RelatedItemsProps> = ({
           <CarouselButton
             onClick={prevItems}
             disabled={currentIndex === 0}
-            direction="left"
+            direction="previous"
+            ariaLabel=""
+            children
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 flex-grow">
             {visibleItems.map((item) => (
@@ -65,7 +67,9 @@ const RelatedItems: FC<RelatedItemsProps> = ({
           <CarouselButton
             onClick={nextItems}
             disabled={currentIndex + itemsPerPage >= items.length}
-            direction="right"
+            direction="next"
+            ariaLabel="next-button"
+            children
           />
         </div>
       </div>
