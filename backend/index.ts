@@ -3,6 +3,7 @@ import cors from "cors";
 import OrderRoute from "./src/Routes/OrderRoute";
 import UserRoute from "./src/Routes/UserRoute";
 import ProductRoute from "./src/Routes/ProductRoute";
+import PackageRoute from "./src/Routes/PackageRoute";
 import connectToMongoDB from "./src/utils/DB/MongoDB";
 import activityLogger from "./src/utils/middleware/log";
 import EventsMiddleware from "./src/utils/middleware/sse.events";
@@ -28,6 +29,7 @@ server.use(
 );
 
 server.use("/api/products", ProductRoute);
+server.use("/api/packages", PackageRoute);
 server.use("/api/orders", OrderRoute);
 server.use("/api/users", UserRoute);
 

@@ -53,3 +53,13 @@ export interface ProductCardProps {
   shortDescription: string;
   imageSize?: number;
 }
+
+export interface Package {
+  _id: ObjectId | null;
+  name: string;
+  image: string;
+  price: number;
+  cookingTime: number;
+  ingredientsQuantity: number;
+  peoplesQuantity: number;
+}
