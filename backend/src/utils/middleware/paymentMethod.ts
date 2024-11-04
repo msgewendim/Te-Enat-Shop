@@ -1,7 +1,16 @@
 import axios from "axios";
 import { ClientDetails, OrderItem } from "../../../types/order.types";
 import { PaymentFormPayload } from "../../../types/order.types";
-import { MORNING_API_KEY, MORNING_SECRET_KEY } from "../config/env.config";
+import {
+  BACKEND_APP_URL,
+  BASE_URL_NGROK,
+  MORNING_API_KEY,
+  MORNING_SECRET_KEY,
+  NODE_ENV,
+} from "../config/env.config";
+
+const BASE_URL_API =
+  NODE_ENV === "production" ? BACKEND_APP_URL : BASE_URL_NGROK;
 
 export const getCheckoutFormPayload = (
   totalPrice: number,
@@ -29,9 +38,9 @@ export const getCheckoutFormPayload = (
     },
     income: income,
     remarks: "",
-    // successUrl: "https://d900-87-70-23-35.ngrok-free.app/payment-success",
-    // failureUrl: "https://87b0-87-70-23-35.ngrok-free.app/payment_error",
-    notifyUrl: "https://a88e-109-67-140-97.ngrok-free.app/api/orders/notify", // needs to be updated on deployment
+    // successUrl: `${BASE_URL_API}/payment-success`,
+    // failureUrl: `${BASE_URL_API}/payment_error`,
+    notifyUrl: `${BASE_URL_API}/api/orders/notify`, // needs to be updated on deployment
     custom: custom,
   };
 };

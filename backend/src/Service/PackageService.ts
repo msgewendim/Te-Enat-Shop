@@ -25,9 +25,15 @@ export class PackageService {
     }
   }
 
-  async getAllPackages(): Promise<Package[] | unknown> {
+  async getAllPackages(
+    page: number,
+    limit: number
+  ): Promise<Package[] | unknown> {
     try {
-      return (await this.PackageDataAccess.getAllPackages()) as Package[];
+      return (await this.PackageDataAccess.getAllPackages(
+        page,
+        limit
+      )) as Package[];
     } catch (error) {
       throw new Error("NO Packages Found!");
     }

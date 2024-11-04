@@ -1,11 +1,11 @@
-openapi: "3.0.0"
+openapi: "3.1.0"
 info:
   title: "Ethiopian Cuisine Products and Recipes Store API"
   version: "1.0.0"
   description: "This API allows users to explore and purchase authentic Ethiopian cuisine products and discover traditional recipes. The API provides routes to manage products, users, and shopping carts, ensuring a seamless shopping and culinary experience for those interested in Ethiopian culture and cuisine."
 servers:
   - url: "http:localhost:3005/api"
-  - description: Development server
+    description: Development server
 paths:
   /products:
     get:
@@ -599,8 +599,10 @@ components:
         instructions:
           type: array
           items:
-            type: string
-            description: Step-by-step instructions for preparing the recipe
+            $ref: "#/components/schemas/Instruction"
+        servings:
+          type: integer
+          description: Number of servings the recipe can be prepared for
         prepTime:
           type: string
           description: Preparation time for the recipe (e.g., "30 minutes")
@@ -628,8 +630,10 @@ components:
         - image
         - ingredients
         - instructions
+        - servings
         - prepTime
         - difficulty
+        - createdAt
         - categories
 
     Category:
@@ -677,3 +681,16 @@ components:
       required:
         - name
         - quantity
+
+    Instruction:
+      type: object
+      properties:
+        step:
+          type: integer
+        description:
+          type: string
+        _id:
+          type: string
+      required:
+        - step
+        - description

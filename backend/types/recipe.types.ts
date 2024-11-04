@@ -1,18 +1,20 @@
+import { ObjectId } from "mongoose";
 import { ClientDetails } from "./order.types";
 import { Product } from "./product.types";
+
 interface Recipe {
-  _id: string;
-  title: string;
+  _id: ObjectId | null;
+  name: string;
   description: string;
   image: string;
   ingredients: Ingredient[];
-  instructions: string[];
+  instructions: Instruction[];
   prepTime: string;
-  difficulty: "Easy" | "Medium" | "Hard";
-  categories?: Category["name"][];
-  relatedRecipes?: Partial<Recipe>[];
-  reviews?: Review[];
-  createdAt: Date;
+  servings: number;
+  cookTime: string;
+  difficulty: "easy" | "Medium" | "Hard";
+  categories: string[];
+  createdAt?: Date;
 }
 
 interface Ingredient {
@@ -20,7 +22,11 @@ interface Ingredient {
   name: string;
   quantity: string;
 }
-
+interface Instruction {
+  step: number;
+  description: string;
+  _id?: string;
+}
 interface Category {
   _id?: string;
   name: string;
@@ -37,4 +43,4 @@ interface Review {
   createdAt: Date;
 }
 
-export type { Recipe, Category, Review, Ingredient };
+export type { Recipe, Category, Review, Ingredient, Instruction };

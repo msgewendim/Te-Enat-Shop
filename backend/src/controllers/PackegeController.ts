@@ -20,8 +20,12 @@ export class PackageController {
 
   async getAllPackages(req: Request, res: Response) {
     try {
-      const packages = await this.packageService.getAllPackages();
-      res.status(200).json(packages);
+      const { page, limit } = req.query;
+      const packages = await this.packageService.getAllPackages(
+        Number(page),
+        Number(limit)
+      );
+      res.status(200).json({ packages });
     } catch (error) {
       res.status(400).json((error as Error).message);
     }

@@ -8,7 +8,6 @@ export interface Product {
   pricing: Array<Pricing>;
   categories: Category[];
   features: FeatureObject;
-  relatedProducts: mongoose.Types.ObjectId[];
   totalSales?: number;
 }
 export interface Feature {

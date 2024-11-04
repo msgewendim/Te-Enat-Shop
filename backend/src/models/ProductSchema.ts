@@ -64,14 +64,6 @@ const productSchema = new Schema<Product>({
     type: FeatureObjectSchema,
     default: () => ({ id: "", value: [] }),
   },
-  relatedProducts: {
-    type: [Schema.Types.ObjectId],
-    default: [],
-    validate: [
-      (v: mongoose.Types.ObjectId[]) => v.length <= 8,
-      "Number of related products should not exceed 8.",
-    ],
-  },
   totalSales: {
     type: Number,
     default: 0,

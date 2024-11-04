@@ -11,9 +11,15 @@ export class PackageDal implements IPackage<Package> {
       throw error;
     }
   }
-  async getAllPackages(): Promise<Package[] | unknown[]> {
+  async getAllPackages(
+    page: number,
+    limit: number
+  ): Promise<Package[] | unknown[]> {
     try {
-      const packages = await packageModel.find();
+      const packages = await packageModel
+        .find()
+        .skip((page - 1) * limit)
+        .limit(limit);
       return packages;
     } catch (error) {
       throw error;

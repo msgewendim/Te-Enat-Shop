@@ -2,14 +2,14 @@ import ProductDal from "../Dal/ProductDal";
 import { Product } from "../../types/product.types";
 
 export class ProductService {
-  private ProductDataAccess: ProductDal;
+  private productDataAccess: ProductDal;
 
-  constructor(ProductDataAccess: ProductDal) {
-    this.ProductDataAccess = ProductDataAccess;
+  constructor(productDataAccess: ProductDal) {
+    this.productDataAccess = productDataAccess;
   }
 
   async getProduct(productId: string): Promise<Product> {
-    const result = await this.ProductDataAccess.getProduct(productId);
+    const result = await this.productDataAccess.getProduct(productId);
     if (!result) {
       throw new Error(`Product with id : ${productId} Not found`);
     }
@@ -18,7 +18,7 @@ export class ProductService {
 
   async addProduct(product: Product): Promise<void> {
     try {
-      await this.ProductDataAccess.addProduct(product);
+      await this.productDataAccess.addProduct(product);
     } catch (error) {
       console.log(error);
       throw new Error("Can not add Product!");
@@ -34,7 +34,7 @@ export class ProductService {
     try {
       if (!page) page = 1;
       if (!limit) limit = 9;
-      return (await this.ProductDataAccess.getAllProducts(
+      return (await this.productDataAccess.getAllProducts(
         page,
         limit,
         searchTerm,
@@ -47,7 +47,7 @@ export class ProductService {
 
   async updateProduct(productId: string, productData: Product): Promise<void> {
     try {
-      await this.ProductDataAccess.updateProduct(productId, productData);
+      await this.productDataAccess.updateProduct(productId, productData);
     } catch (error) {
       throw new Error(`Can not update Product! ${(error as Error).message}`);
     }
@@ -55,7 +55,7 @@ export class ProductService {
 
   async deleteProduct(productId: string): Promise<void> {
     try {
-      await this.ProductDataAccess.deleteProduct(productId);
+      await this.productDataAccess.deleteProduct(productId);
     } catch (error) {
       throw new Error(`Can't delete Product ${(error as Error).message}`);
     }
@@ -65,7 +65,7 @@ export class ProductService {
     limit: number
   ): Promise<Product[] | unknown> {
     try {
-      const result = await this.ProductDataAccess.getRandomProducts(
+      const result = await this.productDataAccess.getRandomProducts(
         page,
         limit
       );
