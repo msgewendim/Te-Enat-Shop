@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { Path, useFieldArray } from 'react-hook-form'
-import { Product } from '../../client/types.gen';
-import { FormInput } from '../ui/FormInput';
-import { FC, useEffect, useState } from 'react';
-import { AddCategoryInputProps, ArrayInputFieldProps } from '../../providers/interface/admin.props';
+import { FieldValues, Path, PathValue, useFieldArray } from 'react-hook-form'
+import { Product } from '../../../client/types.gen';
+import { FormInput } from '../../ui/FormInput';
+import { useEffect, useState } from 'react';
+import { AddCategoryInputProps, ArrayInputFieldProps } from '../../../providers/interface/admin.props';
+import FormButton from '../../ui/FormButton';
 
 export const AddFeatureGroupInput = ({ control, register }: ArrayInputFieldProps) => {
   const { t } = useTranslation();
@@ -92,7 +93,7 @@ export const AddPricingInput = ({ control, register }: ArrayInputFieldProps) => 
               onClick={() => removePricing(index)}
               className="text-red-500 bg-yellow-100"
               aria-label={t('form.addPricing.removePriceLabel', { number: index + 1 })}
-              text={t('form.addPricing.removePrice')}
+              text={t('buttons.remove')}
             />
           </div>
         ))}
@@ -101,12 +102,12 @@ export const AddPricingInput = ({ control, register }: ArrayInputFieldProps) => 
         type="button"
         onClick={() => appendPricing({ size: '', price: 0 })}
         className="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-fit"
-        text={t('form.addPricing.addPrice')} />
+        text={t('buttons.add')} />
     </fieldset>
   );
 };
 
-export const AddCategoryInput: FC<AddCategoryInputProps> = ({ register, setValue, categories, initialCategories }) => {
+export const AddCategoryInput = <T extends FieldValues>({ register, setValue, categories, initialCategories }: AddCategoryInputProps<T>) => {
   const { t } = useTranslation();
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategories || []);
 
@@ -116,13 +117,13 @@ export const AddCategoryInput: FC<AddCategoryInputProps> = ({ register, setValue
         ? prev.filter(cat => cat !== value)
         : [...prev, value];
 
-      setValue('categories', newSelection);
+      setValue('categories' as Path<T>, newSelection as PathValue<T, Path<T>>);
       return newSelection;
     });
   };
 
   useEffect(() => {
-    setValue('categories', selectedCategories);
+    setValue('categories' as Path<T>, selectedCategories as PathValue<T, Path<T>>);
   }, [setValue, initialCategories, selectedCategories]);
 
   return (
@@ -148,29 +149,10 @@ export const AddCategoryInput: FC<AddCategoryInputProps> = ({ register, setValue
 
       <input
         type="hidden"
-        {...register('categories')}
+        {...register('categories' as Path<T>)}
         value={selectedCategories}
       />
     </fieldset>
   );
 };
 
-interface FormButtonProps {
-  type: "button" | "submit" | "reset";
-  onClick: () => void;
-  text: string;
-  ariaLabel?: string;
-  className?: string;
-}
-const FormButton = ({ type, onClick, ariaLabel, className, text }: FormButtonProps) => {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      className={`w-full md:w-fit py-2 px-4 rounded-md ${className || ''}`}
-      aria-label={ariaLabel}
-    >
-      {text}
-    </button>
-  )
-}

@@ -5,9 +5,11 @@ import BannerImg from "../assets/Image.svg"
 import TopCategory from "../components/home/TopCategory"
 import Grantees from "../components/home/Grantees"
 import OurSpecialty from "../components/home/OurSpecialty"
-import ProductPackages from "../components/products/ProductPackages"
 import TopProducts from "../components/products/TopProducts"
 import QASection from "../components/home/QAsection"
+import Features from "../components/home/Features"
+import OurPackages from "../components/packages/OurPackages"
+
 
 const Home = () => {
   return (
@@ -15,12 +17,13 @@ const Home = () => {
       <Banner image={BannerImg} text="Tenat" />
       <Hero />
       <WhoAreWe />
-      <Grantees />
+      <Features />
       <TopProducts />
       <OurSpecialty />
       <TopCategory />
-      <ProductPackages />
+      <OurPackages />
       <QASection />
+      <Grantees />
     </>
   )
 }

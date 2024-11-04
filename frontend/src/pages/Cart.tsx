@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 import CartItemsList from '../components/cart/CartItemsList';
 import { useAppContext } from '../hooks/useAppContext';
 
-const Cart = ({ openCart, setOpenCart }: { openCart: boolean, setOpenCart: (open: boolean) => void }) => {
-  const { totalPrice } = useAppContext();
+const Cart = () => {
+  const { totalPrice, openCart, setOpenCart } = useAppContext();
   return (
     <Transition show={openCart} as={React.Fragment}>
-      <Dialog onClose={() => setOpenCart(false)} className="relative z-30">
+      <Dialog onClose={() => setOpenCart(false)} className="relative z-40">
         <TransitionChild
           enter="ease-out duration-300"
           enterFrom="opacity-0"

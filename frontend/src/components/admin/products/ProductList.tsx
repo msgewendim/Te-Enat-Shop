@@ -1,12 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppContext } from "../../hooks/useAppContext";
+import { useAppContext } from "../../../hooks/useAppContext";
 import ProductTable from './ProductsTable';
+import useShop from '../../../hooks/useShop';
 
 const ProductList: React.FC = () => {
   const { t } = useTranslation();
-  const { setAdminActiveSection, products } = useAppContext();
-
+  const { setAdminActiveSection } = useAppContext();
+  const { products } = useShop({ limit: 20 });
   if (!products || products.length === 0) {
     return (
       <div className="text-center py-8">

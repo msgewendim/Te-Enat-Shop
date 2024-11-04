@@ -14,6 +14,10 @@ const Filters: FC<FiltersProps> = ({ clearFiltersPath, type }) => {
     setFilter(e.target.value);
   };
 
+  const handleCategoryChange = (selectedCategory: string) => {
+    setCategory(selectedCategory);
+  };
+
   const handleClearFilters = () => {
     setCategory("");
     setFilter("");
@@ -25,7 +29,10 @@ const Filters: FC<FiltersProps> = ({ clearFiltersPath, type }) => {
     <form id="filtersForm" className="bg-slate-300 rounded-lg p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full">
         <SearchInput handleSearch={handleSearch} />
-        <Categories categoryMapping={categoryMapping} />
+        <Categories
+          categoryMapping={categoryMapping}
+          onCategoryChange={handleCategoryChange}
+        />
         <ClearFiltersButton handleClearFilters={handleClearFilters} clearFiltersPath={clearFiltersPath} />
       </div>
     </form>

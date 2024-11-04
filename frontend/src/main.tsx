@@ -20,8 +20,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       clientId={AUTH0_CLIENT_ID}
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: AUTH0_AUDIENCE,
-        scope: "openid profile email"
+        audience: `${AUTH0_AUDIENCE}/`,
+        scope: "openid profile email roles"
       }}
     >
       <QueryClientProvider client={queryClient}>

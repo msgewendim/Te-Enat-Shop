@@ -30,13 +30,13 @@ const DateBadge = ({ day, month }: DateBadgeProps) => (
 
 const RecipeInfo = ({ recipe }: { recipe: Recipe }) => {
   const { t } = useTranslation();
-  const { description, name, _id } = recipe
+  const { description, name, _id: recipeId } = recipe
   return (
     <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-4">
       <h3 className="text-lg font-semibold text-primary mb-2">{name}</h3>
       <p className="text-gray-600 text-sm mb-4 line-clamp-2">{description}</p>
       <Link
-        to={`/recipes/${_id}`}
+        to={`/recipes/${recipeId}`}
         className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg text-sm font-medium transition-colors hover:from-secondary hover:to-primary"
       >
         {t('recipe.readMore')}

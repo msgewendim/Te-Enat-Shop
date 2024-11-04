@@ -8,42 +8,42 @@ import {
   getRandomProducts,
   getRelatedItems,
   updateProduct,
-} from "../providers/apiFunctions";
+} from "../providers/apiFunctionsProducts";
 import { query } from "../providers/interface/context";
 import { PaymentFormPayload, Product } from "../client";
 
-const useGetProducts = (query: query) => {
+function useGetProducts(query: query) {
   return useQuery({
     queryKey: ["products", query],
     queryFn: () => getProducts(query),
     placeholderData: (previousData) => previousData,
     staleTime: 5000,
   });
-};
+}
 
-const useGetRandomProducts = (query: query) => {
+function useGetRandomProducts(query: query) {
   return useQuery({
     queryKey: ["randomProducts", "topProducts", query],
-    queryFn: () => getRandomProducts(query),
+    queryFn: () => getRandomProducts<Product>(query),
     placeholderData: (previousData) => previousData,
   });
-};
-const useGetRelatedItems = (query: query) => {
+}
+function useGetRelatedItems(query: query) {
   return useQuery({
     queryKey: ["relatedProducts", query],
     queryFn: () => getRelatedItems(query),
     placeholderData: (previousData) => previousData,
     staleTime: 5000,
   });
-};
-const useGetProductById = (id: string) => {
+}
+function useGetProductById(id: string) {
   return useQuery({
     queryKey: ["product", id],
     queryFn: () => getProductById(id),
   });
-};
+}
 
-const useAddProductMutation = () => {
+function useAddProductMutation() {
   return useMutation({
     mutationFn: (productData: Partial<Product>) => addProduct(productData),
     onSuccess: (data) => {
@@ -56,9 +56,9 @@ const useAddProductMutation = () => {
       console.log("Mutation finished");
     },
   });
-};
+}
 
-const useDeleteProductMutation = () => {
+function useDeleteProductMutation() {
   return useMutation({
     mutationFn: (productId: string) => deleteProduct(productId),
     onSuccess: (data) => {
@@ -71,13 +71,13 @@ const useDeleteProductMutation = () => {
       console.log("Mutation finished");
     },
   });
-};
+}
 
 type UpdateProductProps = {
   productId: string;
   productData: Partial<Product>;
 };
-const useUpdateProductMutation = () => {
+function useUpdateProductMutation() {
   return useMutation({
     mutationFn: (data: UpdateProductProps) =>
       updateProduct(data.productId, data.productData),
@@ -91,9 +91,9 @@ const useUpdateProductMutation = () => {
       console.log("Mutation finished");
     },
   });
-};
+}
 
-const useGetPaymentFormMutation = () => {
+function useGetPaymentFormMutation() {
   return useMutation({
     mutationFn: (formData: PaymentFormPayload) => getPaymentForm(formData),
     onSuccess: (data) => {
@@ -106,7 +106,7 @@ const useGetPaymentFormMutation = () => {
       console.log("Mutation finished");
     },
   });
-};
+}
 
 export {
   useGetProducts,

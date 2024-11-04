@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useGetRelatedItems } from "./useProductsData";
 import Loader from "../components/ui/Loader";
 
-const useRelatedItems = (itemCategory: string, type: string) => {
+function useRelatedItems(itemCategory: string, type: string) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4
   const { data: items, isError, isLoading, error } = useGetRelatedItems({

@@ -8,7 +8,9 @@
     "adminPanel": "פאנל ניהול",
     "login": "התחברות",
     "logout": "התנתקות",
-    "closeMenu": "סגור תפריט"
+    "closeMenu": "סגור תפריט",
+    "packages": "מארזים",
+    "openMenu": "פתח תפריט"
   },
   "banner": {
     "ariaLabel": "Banner for {{text}}"
@@ -50,6 +52,7 @@
       "title": "מי אנחנו?",
       "mainHeading": "אנו ספקים של סחורה איכותית ומוצרי בישול מובילים",
       "description": "מביאים לכם מוצרים טבעיים ואותנטיים ממטבחים מגוונים ברחבי העולם. השילוב בין מסורת לחדשנות מאפשר לכם לגלות טעמים חדשים וליהנות ממוצרים איכותיים למטבח שלכם. כל מוצר נבחר בקפידה כדי להעשיר את חוויית הבישול והאכילה שלכם.",
+      "imageAlt": "תמונה המציגה את המוצרים שלנו",
       "naturalProducts": {
         "title": "100% מוצרים טבעיים",
         "description": "המוצרים שלנו עשויים מרכיבים טבעיים בלבד, ללא תוספים מלאכותיים. אנחנו מתחייבים לאיכות טהורה שמביאה את הטבע היישר למטבח שלכם."
@@ -124,15 +127,16 @@
     "servings": "כמות סועדים",
     "ingredients": "מצרכים",
     "instructions": "הוראות הכנה",
-    "readMore": "קרא עוד"
+    "readMore": "צפה"
   },
   "shop": {
     "title": "חנות",
     "productList": "רשימת מוצרים",
-    "openCart": "פתח עגלת קניות",
-    "pagination": "ניווט בין עמודים",
-    "previousPage": "לעמוד הקודם",
-    "nextPage": "לעמוד הבא"
+    "openCart": "פתח עגלת קניות"
+  },
+  "packages": {
+    "title": "המארזים שלנו",
+    "packagesList": "רשימת מארזים"
   },
   "filters": {
     "searchLabel": "חיפוש מוצרים",
@@ -154,7 +158,8 @@
     "size": "גודל",
     "quantity": "כמות",
     "remove": "הסר",
-    "removeItem": "הסר את {{name}} מהעגלה"
+    "removeItem": "הסר את {{name}} מהעגלה",
+    "emptyCart": "עגלה ריקה"
   },
   "recipes": {
     "bannerText": "גלה את המתכונים שלנו",
@@ -178,7 +183,9 @@
     "outOfStock": "המוצר אזל מהמלאי.",
     "invalidInput": "הקלט שסיפקת אינו תקין.",
     "paymentFailed": "העסקה לא הצליחה. אנא בדוק את פרטי התשלום שלך.",
-    "sessionExpired": "הסשן שלך פג. אנא התחבר מחדש."
+    "sessionExpired": "הסשן שלך פג. אנא התחבר מחדש.",
+    "unauthorized": "אין לך הרשאה לגשת לדף זה.",
+    "loginRequired": "נא להתחבר כדי לגשת לדף זה."
   },
   "buttons": {
     "addToCart": "הוסף לעגלת הקניות",
@@ -188,13 +195,20 @@
     "buy": "קנה",
     "readMore": "קרא עוד",
     "remove": "הסר",
+    "add": "הוסף",
     "clear": "נקה",
     "update": "עדכן",
     "subscribe": "הרשם",
     "recipes": "מתכונים",
     "close": "סגור",
     "previous": "לעמוד הקודם",
-    "next": "לעמוד הבא"
+    "next": "לעמוד הבא",
+    "save": "שמור",
+    "actions": {
+      "title": "פעולות",
+      "edit": "ערוך",
+      "delete": "מחק"
+    }
   },
   "relatedProducts": {
     "title": "מוצרים קשורים"
@@ -240,8 +254,8 @@
     "total": "סה\"כ",
     "grandTotal": "סה\"כ",
     "completeOrder": "השלם את ההזמנה",
-    "paymentIframeTitle": "טופס תשלום",
-    "paymentIframeLabel": "טופס תשלום עבור ההזמנה",
+    "paymentIFrameTitle": "טופס תשלום",
+    "paymentIFrameLabel": "טופס תשלום עבור ההזמנה",
     "personalDetails": "פרטים אישיים",
     "shippingAddress": "כתובת למשלוח",
     "fullName": "שם מלא",
@@ -257,12 +271,16 @@
   "admin": {
     "dashboardTitle": "דף ניהול",
     "addProduct": "הוסף מוצר",
-    "recipes": "מתכונים",
-    "orders": "הזמנות",
     "productUpdated": "מוצר עודכן בהצלחה",
     "productAdded": "מוצר נוסף בהצלחה",
     "openMenu": "פתח תפריט",
     "closeMenu": "סגור תפריט",
+    "addPackage": "הוסף מארז",
+    "addRecipe": "הוסף מתכון",
+    "orders": {
+      "title": "הזמנות",
+      "noOrders": "אין הזמנות להצגה כרגע."
+    },
     "products": {
       "title": "מוצרים",
       "noProducts": "אין מוצרים להצגה כרגע.",
@@ -278,6 +296,38 @@
         "productName": "שם מוצר",
         "size": "גודל",
         "price": "מחיר",
+        "category": "קטגוריה",
+        "actions": "פעולות"
+      }
+    },
+    "recipes": {
+      "title": "מתכונים",
+      "noProducts": "אין מתכונים להצגה כרגע.",
+      "deleteConfirmation": "האם אתה בטוח שברצונך למחוק מתכון זה?",
+      "edit": "ערוך ",
+      "delete": "מחק ",
+      "add": "הוסף מתכון",
+      "tableCaption": "רשימת המתכונים עם פרטים ואפשרויות עריכה",
+      "deleteSuccess": "מתכון נמחק בהצלחה",
+      "deleteError": "בעיה במחיקת מתכון",
+      "table": {
+        "number": "מס",
+        "recipeName": "שם מתכון",
+        "category": "קטגוריה",
+        "difficulty": "דרגת קושי",
+        "actions": "פעולות"
+      }
+    },
+    "packages": {
+      "title": "מארזים",
+      "add": "הוסף מארז",
+      "noPackages": "אין מארזים להצגה כרגע.",
+      "deleteConfirmation": "האם אתה בטוח שברצונך למחוק מארז זה?",
+      "deleteSuccess": "מארז נמחק בהצלחה",
+      "deleteError": "בעיה במחיקת מארז",
+      "table": {
+        "number": "מס",
+        "packageName": "שם מארז",
         "category": "קטגוריה",
         "actions": "פעולות"
       }
@@ -318,6 +368,36 @@
       "imageLabel": "תמונת מוצר",
       "updateButton": "עדכן",
       "saveButton": "שמור"
+    },
+    "recipeForm": {
+      "addTitle": "הוספת מתכון חדש",
+      "editTitle": "עריכת מתכון",
+      "updateButton": "עדכן",
+      "addIngredient": "הוסף מצרך",
+      "addInstruction": "הוסף הוראה",
+      "namePlaceholder": "שם מתכון",
+      "nameLabel": "שם מתכון",
+      "descriptionLabel": "תיאור מתכון",
+      "descriptionPlaceholder": "תיאור מתכון",
+      "prepTimePlaceholder": "זמן הכנה",
+      "prepTimeLabel": "זמן הכנה",
+      "difficultyPlaceholder": "דרגת קושי",
+      "difficultyLabel": "דרגת קושי",
+      "servingsPlaceholder": "כמות סועדים",
+      "servingsLabel": "כמות סועדים",
+      "imageLabel": "תמונת מתכון",
+      "imagePlaceholder": "כתובת תמונה",
+      "ingredientsLabel": "מצרכים",
+      "ingredientsPlaceholder": "מצרכים",
+      "ingredientQuantity": "כמות מצרך ",
+      "ingredientName": "שם מצרך ",
+      "instructionsLabel": "הוראות הכנה ",
+      "instructionDescription": "תיאור הוראת הכנה "
     }
+  },
+  "pagination": {
+    "previousPage": "לעמוד הקודם",
+    "nextPage": "לעמוד הבא",
+    "title": "ניווט בין עמודים"
   }
 }

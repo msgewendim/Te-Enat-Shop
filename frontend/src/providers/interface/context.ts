@@ -1,6 +1,5 @@
 import { createContext } from "react";
-import { CartItem, OrderItem, Product } from "../../client/types.gen";
-import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { CartItem, OrderItem, Product, Recipe } from "../../client/types.gen";
 
 export type query = {
   page?: number;
@@ -34,11 +33,11 @@ export interface IContext {
   modalState: ModalState;
   setModalState: (state: ModalState) => void;
   setProductToEdit: (product: Product | undefined) => void;
+  setRecipeToEdit: (product: Recipe | undefined) => void;
+  recipeToEdit: Recipe | undefined;
   productToEdit: Product | undefined;
-  products: Product[] | undefined;
-  refetchProducts: (
-    options?: RefetchOptions
-  ) => Promise<QueryObserverResult<Product[], Error>>;
+  openCart: boolean;
+  setOpenCart: (open: boolean) => void;
 }
 
 export const AppContext = createContext<IContext>({
@@ -65,12 +64,11 @@ export const AppContext = createContext<IContext>({
   modalState: { isOpen: false, onConfirm: () => {} },
   setModalState: () => {},
   productToEdit: undefined,
+  recipeToEdit: undefined,
   setProductToEdit: () => {},
-  products: [],
-  refetchProducts: async () =>
-    Promise.resolve<QueryObserverResult<Product[], Error>>(
-      {} as QueryObserverResult<Product[], Error>
-    ),
+  setRecipeToEdit: () => {},
+  openCart: false,
+  setOpenCart: () => {},
 });
 
 export interface ModalState {

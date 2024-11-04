@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 import { ClientDetails } from "../client/types.gen";
 import { useGetPaymentFormMutation } from "./useProductsData";
 import { useAppContext } from "./useAppContext";
-import { clientDetailsSchema } from "../providers/validation/ClientDetails.validation";
+import { clientDetailsSchema } from "../validation/ClientDetails.validation";
 
-const useCheckoutFormData = () => {
+function useCheckoutFormData() {
   const { totalPrice, orderItems, setPaymentFormUrl } = useAppContext();
   const { handleSubmit, register, reset, control } = useForm<ClientDetails>();
   const { t } = useTranslation();

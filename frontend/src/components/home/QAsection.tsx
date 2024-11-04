@@ -19,7 +19,7 @@ const QASection = () => {
                 <>
                   <dt className="text-lg">
                     <DisclosureButton className="text-left w-full flex justify-between items-start text-gray-400">
-                      <span className="font-medium text-primary">{item.q}</span>
+                      <span className="font-medium text-primary text-right">{item.q}</span>
                       <span className="ml-6 h-7 flex items-center">
                         {open ? (
                           <FiMinus className="h-6 w-6" aria-hidden="true" />
@@ -37,7 +37,7 @@ const QASection = () => {
                     leaveFrom="transform scale-100 opacity-100"
                     leaveTo="transform scale-95 opacity-0"
                   >
-                    <DisclosurePanel as="dd" className="mt-2 pr-12">
+                    <DisclosurePanel as="dd" className="mt-2 sm:pr-12 pr-2 sm:w-full max-w-xs">
                       <p className="text-base text-gray-500">{item.a}</p>
                     </DisclosurePanel>
                   </Transition>

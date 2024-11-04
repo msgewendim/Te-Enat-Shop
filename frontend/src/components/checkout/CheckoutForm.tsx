@@ -16,8 +16,8 @@ const CheckoutForm = () => {
           <iframe
             src={paymentFormUrl}
             className="absolute top-0 left-0 w-full h-full"
-            title={t('checkout.paymentIframeTitle')}
-            aria-label={t('checkout.paymentIframeLabel')}
+            title={t('checkout.paymentIFrameTitle')}
+            aria-label={t('checkout.paymentIFrameLabel')}
           />
         </div>
       ) : (

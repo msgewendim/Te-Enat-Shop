@@ -1,4 +1,4 @@
-import { dessert, hotShiro, kurkum, shiro, cookies } from "./data";
+import { dessert, hotShiro, kurkum, shiro, cookies } from "./imageFiles";
 // Define types for category mappings
 type CategoryMapping = {
   [key: string]: string;
@@ -16,6 +16,7 @@ const productCategories: CategoryObject[] = [
   { name: "קטניות", value: "legumes" },
   { name: "משקאות", value: "beverages" },
   { name: "תבלינים", value: "spices" },
+  { name: "מארזים", value: "packages" },
   { name: "שונות", value: "others" },
 ];
 
@@ -91,14 +92,17 @@ type TopCategory = {
   image: string;
 };
 const categoryPhoto = [shiro, hotShiro, cookies, kurkum, dessert];
-const ourTopCategories = productCategories.map((category, idx) => {
-  return {
-    _id: idx + "12002",
-    name: category.name,
-    value: category.value,
-    image: categoryPhoto[idx],
-  };
-});
+const ourTopCategories = productCategories
+  .filter((category) => category.value !== "packages")
+  .map((category, idx) => {
+    return {
+      _id: idx + "12002",
+      name: category.name,
+      value: category.value,
+      image: categoryPhoto[idx],
+    };
+  });
+
 export {
   productCategories,
   productCategoriesMapping,

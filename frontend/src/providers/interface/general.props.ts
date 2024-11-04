@@ -23,14 +23,9 @@ interface GuaranteeCardProps {
 }
 
 interface HeroCardProps {
-  image: string;
+  image: () => Promise<{ default: string }>;
   title: string;
   link: string;
-}
-interface RecipeCardType {
-  id: string;
-  image: string;
-  title: string;
 }
 
 interface FeatureCardType {
@@ -39,7 +34,11 @@ interface FeatureCardType {
   description: string;
 }
 interface CategoryCardProps {
-  category: { name: string; image: string; value: string };
+  category: {
+    name: string;
+    image: () => Promise<{ default: string }>;
+    value: string;
+  };
   setCategory: (category: string) => void;
 }
 
@@ -108,12 +107,14 @@ type PaginationButtonProps = {
   direction: "previous" | "next";
   ariaLabel: string;
   page: number;
+  path: string;
 };
 
 type PaginationProps = {
   page: number;
   handlePrevious: () => void;
   handleNext: () => void;
+  path: string;
 };
 type FloatingCartButtonProps = {
   cartItemsCount: number;
@@ -124,7 +125,6 @@ export {
   RelatedItemCardProps,
   GuaranteeCardProps,
   HeroCardProps,
-  RecipeCardType,
   FeatureCardType,
   CategoryCardProps,
   SocialLinkProps,

@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Product } from '../client/types.gen';
-import { ProductSchema } from '../providers/validation/AddProduct.validation';
+import { ProductSchema } from '../validation/AddProduct.validation';
 
-const useProductForm = (initialProduct?: Product) => {
+function useProductForm(initialProduct?: Product) {
   const { register, control, handleSubmit, formState: { errors }, setValue, reset } = useForm<Product>({
     defaultValues: initialProduct || {
       pricing: [{ size: '', price: 0 }],

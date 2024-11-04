@@ -1,4 +1,4 @@
-import { awaze, beyaynetu, cookies, rollInjera, shiro, tavlinim } from "../../utils/data"
+import { awaze, beyaynetu, cookies, rollInjera, shiro, tavlinim } from "../../utils/imageFiles"
 import { FC, useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom"
@@ -8,7 +8,7 @@ const homePageImages = [
 ]
 const Hero = () => {
   const { t } = useTranslation();
-
+  const [currentImage, setCurrentImage] = useState<string>('');
   const [imageId, setImageId] = useState(() => {
     const randomIndex = Math.floor(Math.random() * homePageImages.length);
     return homePageImages[randomIndex];
@@ -21,7 +21,9 @@ const Hero = () => {
       return homePageImages[nextIndex];
     });
   }, []);
-
+  useEffect(() => {
+    imageId().then(img => setCurrentImage(img.default));
+  }, [imageId]);
   useEffect(() => {
     const intervalId = setInterval(changeImage, 5000);
     return () => clearInterval(intervalId);
@@ -32,7 +34,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
           <div className="order-2 sm:order-1">
-            <img src={imageId} alt="" className="w-full max-w-[600px] mx-auto object-contain transition-opacity duration-150" />
+            <img loading="eager" src={currentImage} alt="" className="w-full max-w-[600px] mx-auto object-contain transition-opacity duration-150" />
           </div>
           <div className="order-1 sm:order-2 flex flex-col gap-8">
             <HeroText />
@@ -49,9 +51,14 @@ const Hero = () => {
 };
 
 const HeroCard: FC<HeroCardProps> = ({ image, title, link }) => {
+  const [imageSrc, setImageSrc] = useState<string>('');
+
+  useEffect(() => {
+    image().then(img => setImageSrc(img.default));
+  }, [image]);
   return (
     <Link to={link} className="block w-[140px] sm:w-[160px] rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
-      <img className="w-full h-32 object-cover" src={image} alt={title} />
+      <img className="w-full h-32 object-cover" src={imageSrc} alt={title} loading="eager" />
       <p className="bg-emerald-700 text-white text-xl font-semibold text-center py-2 hover:bg-emerald-800 transition-colors">
         {title}
       </p>

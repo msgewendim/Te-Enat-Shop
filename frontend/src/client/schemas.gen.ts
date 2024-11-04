@@ -504,9 +504,12 @@ export const $Recipe = {
         instructions: {
             type: 'array',
             items: {
-                type: 'string',
-                description: 'Step-by-step instructions for preparing the recipe'
+                '$ref': '#/components/schemas/Instruction'
             }
+        },
+        servings: {
+            type: 'integer',
+            description: 'Number of servings the recipe can be prepared for'
         },
         prepTime: {
             type: 'string',
@@ -536,7 +539,7 @@ export const $Recipe = {
             format: 'date-time'
         }
     },
-    required: ['_id', 'name', 'description', 'image', 'ingredients', 'instructions', 'prepTime', 'difficulty', 'categories']
+    required: ['_id', 'name', 'description', 'image', 'ingredients', 'instructions', 'servings', 'prepTime', 'difficulty', 'createdAt', 'categories']
 } as const;
 
 export const $Category = {
@@ -590,4 +593,20 @@ export const $Ingredient = {
         }
     },
     required: ['name', 'quantity']
+} as const;
+
+export const $Instruction = {
+    type: 'object',
+    properties: {
+        step: {
+            type: 'integer'
+        },
+        description: {
+            type: 'string'
+        },
+        _id: {
+            type: 'string'
+        }
+    },
+    required: ['step', 'description']
 } as const;

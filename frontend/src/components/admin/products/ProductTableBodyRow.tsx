@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useCallback } from 'react';
+import { FC, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from "react-toastify";
-import { Product } from "../../client";
-import { useAppContext } from "../../hooks/useAppContext";
-import { useDeleteProductMutation } from "../../hooks/useProductsData";
-import { translateProductCategories } from "../../utils/constants";
+import { Product } from "../../../client";
+import { useAppContext } from "../../../hooks/useAppContext";
+import { useDeleteProductMutation } from "../../../hooks/useProductsData";
+import { translateProductCategories } from "../../../utils/constants";
 
 interface ProductTableBodyRowProps {
   product: Product;
@@ -13,15 +13,16 @@ interface ProductTableBodyRowProps {
 
 const ProductTableBodyRow: FC<ProductTableBodyRowProps> = ({ product, idx }) => {
   const { t } = useTranslation();
-  const { showModal, setAdminActiveSection, setProductToEdit, refetchProducts } = useAppContext();
+  const { showModal, setAdminActiveSection, setProductToEdit } = useAppContext();
   const { mutate: deleteProductMutate, isSuccess, isError } = useDeleteProductMutation();
 
   const handleDeleteProduct = useCallback(() => {
     showModal(() => {
       deleteProductMutate(product._id);
-      refetchProducts();
+      toast.success(t('admin.products.deleteSuccess'));
+      setAdminActiveSection('products');
     });
-  }, [showModal, deleteProductMutate, product._id, refetchProducts, t]);
+  }, [showModal, deleteProductMutate, product._id, t, setAdminActiveSection]);
 
   const handleEditProduct = useCallback(() => {
     setProductToEdit(product);
@@ -85,4 +86,4 @@ const ProductTableBodyRow: FC<ProductTableBodyRowProps> = ({ product, idx }) => 
   );
 };
 
-export default React.memo(ProductTableBodyRow);
+export default ProductTableBodyRow

@@ -1,38 +1,17 @@
-import { useTranslation } from "react-i18next";
+import PackageInfo from "./PackageInfo";
 import { Link } from "react-router-dom";
 import { PiCookingPot } from "react-icons/pi";
 import { TfiTimer } from "react-icons/tfi";
 import { BsPeople } from "react-icons/bs";
-import { IconType } from "react-icons/lib";
 import { Package } from "../../client/types.gen";
-import { packages } from "../../utils/examples";
-
-
-const ProductPackages = () => {
-  const { t } = useTranslation();
-
-  return (
-    <section className="bg-[#D2FCFF] py-16" lang="he">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-primary text-center mb-12">
-          {t('homePage.productPackages.title')}
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {packages.map(pac => (
-            <PackageCard key={pac._id} data={pac} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
+import { useTranslation } from "react-i18next";
 
 const PackageCard = ({ data }: { data: Package }) => {
   const { t } = useTranslation();
   const { price, cookingTime, image, name, peoplesQuantity, ingredientsQuantity } = data;
 
   return (
-    <Link to="/" className="block rounded-lg p-4 shadow-sm shadow-indigo-100 hover:bg-slate-200 transition duration-300">
+    <Link to="/packages" className="block rounded-lg p-4 shadow-sm shadow-indigo-100 hover:bg-slate-200 transition duration-300">
       <img
         alt={name}
         src={image}
@@ -56,14 +35,4 @@ const PackageCard = ({ data }: { data: Package }) => {
   );
 };
 
-export const PackageInfo = ({ icon: Icon, title, label }: { icon: IconType, title: string, label: number | string }) => {
-  return (
-    <div className="flex flex-col items-center">
-      <Icon size={24} className="text-primary mb-1" />
-      <p className="text-gray-500">{title}</p>
-      <p className="font-medium">{label}</p>
-    </div>
-  );
-};
-
-export default ProductPackages;
+export default PackageCard;

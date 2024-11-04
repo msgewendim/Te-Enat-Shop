@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import ProductList from '../components/admin/ProductList';
-import ProductForm from '../components/admin/ProductForm';
+import ProductList from '../components/admin/products/ProductList';
+import ProductForm from '../components/admin/products/ProductForm';
 import useAdminDashboard from '../hooks/useAdminDashboard';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeftCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import RecipesList from '../components/admin/recipes/RecipesList';
+import RecipeForm from '../components/admin/recipes/RecipeForm';
 
 const AdminDashboard = () => {
   const { t } = useTranslation();
-  const { adminActiveSection, handleProductSubmit, productToEdit } = useAdminDashboard();
+  const { adminActiveSection, handleSubmit, productToEdit, recipeToEdit } = useAdminDashboard();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -46,11 +48,26 @@ const AdminDashboard = () => {
         {(adminActiveSection === 'add-product' || adminActiveSection === 'edit-product') && (
           <ProductForm
             product={productToEdit}
-            onSubmit={handleProductSubmit}
+            onSubmit={handleSubmit}
             message={adminActiveSection === 'edit-product' ? t('admin.productUpdated') : t('admin.productAdded')}
           />
         )}
-        {/* {adminActiveSection === 'recipes' && <AddProduct />} */}
+        {adminActiveSection === 'recipes' && <RecipesList />}
+        {(adminActiveSection === 'add-recipe' || adminActiveSection === 'edit-recipe') && (
+          <RecipeForm
+            recipe={recipeToEdit}
+            onSubmit={handleSubmit}
+            message={adminActiveSection === 'edit-recipe' ? t('admin.recipeUpdated') : t('admin.recipeAdded')}
+          />
+        )}
+        {/* {adminActiveSection === 'packages' && <PackagesList />}
+        {(adminActiveSection === 'add-package' || adminActiveSection === 'edit-package') && (
+          <PackageForm
+            recipe={recipeToEdit}
+            onSubmit={handleProductSubmit}
+            message={adminActiveSection === 'edit-package' ? t('admin.packageUpdated') : t('admin.packageAdded')}
+          />
+        )} */}
         {/* {adminActiveSection === 'orders' && <AddProduct />} */}
       </main>
     </div>
@@ -64,9 +81,12 @@ const NavList = ({ setIsMenuOpen }: {
 
   const navItems = [
     { id: 'products', label: t('admin.products.title') },
+    { id: 'recipes', label: t('admin.recipes.title') },
+    { id: 'packages', label: t('admin.packages.title') },
+    { id: 'orders', label: t('admin.orders.title') },
     { id: 'add-product', label: t('admin.addProduct') },
-    { id: 'recipes', label: t('admin.recipes') },
-    { id: 'orders', label: t('admin.orders') }
+    { id: 'add-package', label: t('admin.packages.add') },
+    { id: 'add-recipe', label: t('admin.addRecipe') },
   ];
   return (
     <ul>

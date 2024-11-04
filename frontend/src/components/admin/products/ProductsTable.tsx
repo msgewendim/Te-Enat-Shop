@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from "../../client";
+import { Product } from "../../../client";
 import ProductTableHeaderRowMemo from './ProductTableHeaderRow';
 import ProductTableBodyRowMemo from './ProductTableBodyRow';
 import { useTranslation } from 'react-i18next';

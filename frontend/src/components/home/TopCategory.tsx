@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../hooks/useAppContext";
@@ -27,7 +27,11 @@ const OurCategory = () => {
 
 const CategoryCard: FC<CategoryCardProps> = ({ category, setCategory }) => {
   const { name, image, value } = category;
+  const [imageSrc, setImageSrc] = useState<string>('');
 
+  useEffect(() => {
+    image().then(img => setImageSrc(img.default));
+  }, [image]);
   return (
     <Link
       to={`/products?category=${value.toLowerCase()}`}
@@ -36,7 +40,8 @@ const CategoryCard: FC<CategoryCardProps> = ({ category, setCategory }) => {
     >
       <div className="overflow-hidden rounded-md">
         <img
-          src={image}
+          src={imageSrc}
+          loading="lazy"
           alt={name}
           className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
         />

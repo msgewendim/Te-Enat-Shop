@@ -14,6 +14,8 @@ import Contact from "../pages/Contact.tsx";
 import SuccessPayment from "../pages/SuccessPayment.tsx";
 import Login from "../components/Login.tsx";
 import AdminDashboard from "../pages/Admin.tsx";
+import Packages from "../pages/Packages.tsx";
+import AdminRoute from "../components/admin/AdminRoute.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -50,6 +52,10 @@ export const routes = createBrowserRouter([
         element: <Recipes />
       },
       {
+        path: "/packages",
+        element: <Packages />
+      },
+      {
         path: "/checkout",
         element: <Checkout />,
       },
@@ -63,8 +69,11 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/admin",
-        element:
-          <AdminDashboard />
+        element: (
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
+        )
       },
       {
         path: "/thank-you",

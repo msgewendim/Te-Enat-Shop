@@ -3,28 +3,36 @@ import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../ui/Loader";
 import { toast } from "react-toastify";
+import { AUTH0_AUDIENCE } from "../../utils/env.config";
+import { useTranslation } from "react-i18next";
 
 const AdminRoute = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, user, isLoading } = useAuth0();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    if (isLoading) return; // Don't do anything while loading
+    if (isLoading) return;
 
     if (!isAuthenticated) {
-      toast.error("Log in failed");
+      toast.error(t("errors.loginRequired"));
       navigate("/");
-    } else if (!user) {
-      toast.error("You do not have admin rights");
+      return;
+    }
+
+    const isAdmin = user?.[`${AUTH0_AUDIENCE}/roles`]?.includes('Admin', 'admin');
+
+    if (!isAdmin) {
+      toast.error(t("errors.unauthorized"));
       navigate("/");
     }
-  }, [isAuthenticated, user, isLoading, navigate]);
+  }, [isAuthenticated, user, isLoading, navigate, t]);
 
   if (isLoading) {
     return <Loader />;
   }
 
-  return <>{children}</>; // Return children if authenticated and user exists
+  return <>{children}</>;
 };
 
 export default AdminRoute;

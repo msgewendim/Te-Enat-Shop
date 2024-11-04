@@ -5,22 +5,35 @@ import { TfiTimer } from "react-icons/tfi";
 import { BsPeople } from "react-icons/bs";
 import recipeBanner from "/RecipeBanner.svg";
 import { createRecipeCardImage } from "../utils/helperFunctions";
-import { recipe } from "../utils/examples";
 import Banner from "../components/ui/Banner";
 import RelatedItems from '../components/ui/RelatedItems';
-import { IngredientItemProps, InstructionItemProps, RecipeInfoProps } from '../providers/interface/recipes.props';
+import { RecipeInfoProps } from '../providers/interface/recipes.props';
+import { useGetRecipeById } from '../hooks/useRecipesData';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Loader from '../components/ui/Loader';
+import { Ingredient, Instruction } from '../client';
 
 const RecipePage = () => {
   const { t } = useTranslation();
+  const { recipeID } = useParams();
+  const { data: recipe, isError, isLoading, error } = useGetRecipeById(recipeID || "");
+  if (isLoading) return <Loader />;
+  if (isError) {
+    toast.error(error?.message || t('errors.genericError'));
+    return null;
+  }
+  if (!recipe) {
+    toast.error(t('errors.productNotAvailable'));
+    return null;
+  }
   const { name, prepTime, description, difficulty, image, ingredients, instructions, categories } = recipe;
   return (
     <article className="recipe-page" lang="he">
       <Banner image={recipeBanner} text={name} />
       <div className="container mx-auto px-4 mt-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <div style={createRecipeCardImage(image, "100%", "60vh")} className="w-full h-[60vh] rounded-lg shadow-lg" aria-label={t('recipe.imageAlt', { name })}></div>
-          </div>
+
           <div className="flex flex-col">
             <header>
               <h1 className="text-3xl font-bold text-primary dark:text-white mb-4">{name}</h1>
@@ -35,18 +48,22 @@ const RecipePage = () => {
             <section className="mb-6">
               <h2 className="text-xl font-bold text-primary mb-3">{t('recipe.ingredients')}</h2>
               <ul className="bg-gray-200 p-4 rounded-lg">
-                {ingredients.map((ingredient, index) => (
+                {ingredients?.map((ingredient, index) => (
                   <IngredientItem key={index} {...ingredient} />
                 ))}
               </ul>
             </section>
           </div>
+          {/* Image */}
+          <div className="lg:col-span-2">
+            <div style={createRecipeCardImage(image, "100%", "60vh")} className="w-full h-[60vh] rounded-lg shadow-lg" aria-label={t('recipe.imageAlt', { name })}></div>
+          </div>
         </div>
         <section className="mt-12">
           <h2 className="text-2xl font-bold text-primary mb-6">{t('recipe.instructions')}</h2>
           <ol className="space-y-4">
-            {instructions.map((instruction, index) => (
-              <InstructionItem key={index} instruction={instruction} step={index + 1} />
+            {instructions?.map((instruction, index) => (
+              <InstructionItem key={index} {...instruction} />
             ))}
           </ol>
         </section>
@@ -58,27 +75,27 @@ const RecipePage = () => {
 
 const RecipeInfo: FC<RecipeInfoProps> = ({ icon: Icon, label, value }) => (
   <div className="flex flex-col items-center">
-    <Icon className="text-2xl text-primary mb-2" />
+    <Icon className="text-2xl text-blue-700 mb-2" />
     <span className="text-sm font-semibold">{label}</span>
     <span className="text-sm">{value}</span>
   </div>
 );
 
-const IngredientItem: FC<IngredientItemProps> = ({ quantity, name }) => (
-  <li className="flex items-center mb-2">
+const IngredientItem = ({ name, quantity }: Ingredient) => (
+  <li className="flex items-center mb-2 gap-2">
     <input
       type="checkbox"
-      className={`w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 checked: `}
+      className={`w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 checked:line-through `}
     />
     <span className="font-semibold mr-2">{quantity}</span>
     <span>{name}</span>
   </li>
 );
 
-const InstructionItem: FC<InstructionItemProps> = ({ instruction, step }) => (
+const InstructionItem = ({ step, description }: Instruction) => (
   <li className="pb-4 border-b border-gray-300 last:border-b-0">
-    <span className="font-bold mr-2">{step}.</span>
-    {instruction}
+    <span className="font-bold mr-4">{step}. </span>
+    {description}
   </li>
 );
 

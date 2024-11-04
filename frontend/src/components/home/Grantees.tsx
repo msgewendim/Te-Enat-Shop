@@ -18,7 +18,7 @@ const Grantees = () => {
   ];
 
   return (
-    <section className="bg-[#D2FCFF] py-12" lang="he">
+    <section className="py-12 mb-3" lang="he">
       <div className="container mx-auto px-4">
         <h2 className="sr-only">{t('homePage.grantees.title')}</h2>
         <ul className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 justify-items-center">

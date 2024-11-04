@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { menu } from "../../utils/data";
+import { FC, useEffect, useState } from "react";
+import { menu } from "../../utils/imageFiles";
 import { useTranslation } from "react-i18next";
 import { Feature } from "../../client";
 
@@ -12,9 +12,9 @@ const WhoAreWe = () => {
         <h2 className="text-xl font-normal font-['Yellowtail'] italic text-emerald-900 mb-6">
           {t('homePage.whoAreWe.title')}
         </h2>
-        <div className="flex flex-col sm:flex-row gap-8">
+        <div className="flex flex-col sm:flex-row gap-8 items-center">
           <TextSection />
-          <ImageSection />
+          <ImageSection image={menu} />
         </div>
       </div>
     </section>
@@ -25,7 +25,7 @@ const TextSection = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex-1 space-y-6">
+    <div className="flex-1 space-y-6 h-full">
       <h3 className="font-bold text-3xl sm:text-4xl text-primary">
         {t('homePage.whoAreWe.mainHeading')}
       </h3>
@@ -55,10 +55,16 @@ const Features: FC<Feature> = ({ title, description }) => {
   );
 };
 
-const ImageSection = () => {
+const ImageSection = ({ image }: { image: () => Promise<{ default: string }> }) => {
+  const { t } = useTranslation();
+  const [imageSrc, setImageSrc] = useState<string>('');
+
+  useEffect(() => {
+    image().then(img => setImageSrc(img.default));
+  }, [image]);
   return (
-    <div className="flex-1">
-      <img src={menu} alt="תמונה המציגה את המוצרים שלנו" className="w-full max-w-2xl mx-auto" />
+    <div className="flex-1 h-full flex items-center">
+      <img loading="lazy" src={imageSrc} alt={t('homePage.whoAreWe.imageAlt')} className="w-full max-w-2xl mx-auto object-contain" />
     </div>
   );
 };

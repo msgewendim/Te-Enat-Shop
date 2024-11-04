@@ -1,19 +1,20 @@
 import React from 'react';
 import Select from "./Select";
-import { useAppContext } from "../../hooks/useAppContext";
 import { CategoryButtonProps } from '../../providers/interface/general.props';
 import { CategoryMapping } from '../../utils/constants';
 
 
-const FilterCategories = ({ categoryMapping }: { categoryMapping: CategoryMapping }) => {
-  const { setCategory } = useAppContext();
+const FilterCategories = ({ categoryMapping,
+  onCategoryChange,
+}: {
+  categoryMapping: CategoryMapping,
+  onCategoryChange: (category: string) => void,
+}) => {
   const categories = Object.values(categoryMapping);
 
   const handleCategoryChange = (selectedCategory: string) => {
-    const englishCategory = Object.keys(categoryMapping).find(
-      key => categoryMapping[key] === selectedCategory
-    ) || '';
-    setCategory(englishCategory);
+    const englishCategory = Object.keys(categoryMapping).find(key => categoryMapping[key] === selectedCategory) || '';
+    onCategoryChange(englishCategory);
   };
 
   return (

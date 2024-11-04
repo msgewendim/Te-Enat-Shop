@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { ProductModalProps } from '../providers/interface/products.props'
 
 
-const useAddToCartModal = ({ product, setOpen }: ProductModalProps) => {
+function useAddToCartModal({ product, setOpen }: ProductModalProps) {
   const { cartItems, setCartItems, setOrderItems, orderItems, sizeIdx, setSizeIdx } = useAppContext()
   const { pricing } = product
 

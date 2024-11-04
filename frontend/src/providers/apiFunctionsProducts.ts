@@ -23,7 +23,9 @@ export const getUsers = async (token: string) => {
   ).data;
 };
 
-const getRandomProducts = async (q: query): Promise<RandomProductsResponse> => {
+const getRandomProducts = async <T>(
+  q: query
+): Promise<RandomItemsResponse<T>> => {
   return (
     await axiosInstance.get("/products/top-products", {
       params: q,
@@ -96,8 +98,8 @@ const removeFromCart = async (cartItem: CartItem, userId: string) => {
     data: cartItem,
   });
 };
-type RandomProductsResponse = {
-  products: Product[];
+type RandomItemsResponse<T> = {
+  items: { [key: string]: T[] };
   totalPages: number;
   currentPage: number;
   hasMore: boolean;
@@ -114,4 +116,5 @@ export {
   getPaymentForm,
   checkPaymentStatus,
   getRandomProducts,
+  RandomItemsResponse,
 };

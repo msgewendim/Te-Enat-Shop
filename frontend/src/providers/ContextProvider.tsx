@@ -1,12 +1,12 @@
 import { ReactNode, useEffect, useState } from "react";
-import { CartItem, OrderItem, Product } from "../client/types.gen";
+import { CartItem, OrderItem, Product, Recipe } from "../client/types.gen";
 import { AppContext, ModalState } from "./interface/context";
 import { getTotalPrice } from "../utils/helperFunctions";
 import { BASE_API_URL } from "../utils/env.config";
 import { toast } from "react-toastify";
-import { useGetProducts } from "../hooks/useProductsData";
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
+  const [openCart, setOpenCart] = useState(false)
   const [category, setCategory] = useState<string>("")
   const [sizeIdx, setSizeIdx] = useState<number>(0)
   const [page, setPage] = useState<number>(1);
@@ -17,13 +17,11 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const [adminActiveSection, setAdminActiveSection] = useState<string>("products")
   const [productToEdit, setProductToEdit] = useState<Product>();
+  const [recipeToEdit, setRecipeToEdit] = useState<Recipe>();
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     onConfirm: () => { },
   });
-  const { data: products, refetch: refetchProducts } = useGetProducts({
-    limit: 20
-  })
   useEffect(() => {
     // when the cart items change, recalculate the total price
     setTotalPrice(parseFloat(getTotalPrice(cartItems).toFixed(2)))
@@ -84,8 +82,10 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setModalState,
     setProductToEdit,
     productToEdit,
-    products,
-    refetchProducts,
+    setRecipeToEdit,
+    recipeToEdit,
+    openCart,
+    setOpenCart,
   }
   return (
     <AppContext.Provider value={values}>

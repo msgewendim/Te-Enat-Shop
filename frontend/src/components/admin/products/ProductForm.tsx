@@ -1,13 +1,13 @@
 import { DevTool } from '@hookform/devtools';
-import { Product } from '../../client/types.gen';
-import { FormInput } from '../ui/FormInput';
-import useProductForm from '../../hooks/useProductForm';
+import { Product } from '../../../client/types.gen';
+import { FormInput } from '../../ui/FormInput';
+import useProductForm from '../../../hooks/useProductForm';
 import { AddCategoryInput, AddFeatureGroupInput, AddPricingInput } from './AddArrayInputFields';
 import { SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useAppContext } from '../../hooks/useAppContext';
-import { productCategories } from '../../utils/constants';
-import { ProductFormProps } from '../../providers/interface/admin.props';
+import { useAppContext } from '../../../hooks/useAppContext';
+import { productCategories } from '../../../utils/constants';
+import { ProductFormProps } from '../../../providers/interface/admin.props';
 import { useTranslation } from 'react-i18next';
 
 const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProductFormProps) => {
@@ -69,7 +69,7 @@ const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProductFormPr
           {errors.pricing && <span className="text-red-500">{errors.pricing.message}</span>}
         </div>
 
-        <AddCategoryInput
+        <AddCategoryInput<Product>
           register={register}
           setValue={setValue}
           categories={productCategories}
@@ -80,7 +80,7 @@ const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProductFormPr
         <AddFeatureGroupInput control={control} register={register} />
         {errors.features && <span className="text-red-500">{errors.features.message}</span>}
 
-        <div className="w-full mt-6">
+        <div className="w-full mt-6 flex justify-center">
           <button
             type="submit"
             className="bg-green-500 text-white px-8 py-4 rounded-lg w-full sm:w-52"
