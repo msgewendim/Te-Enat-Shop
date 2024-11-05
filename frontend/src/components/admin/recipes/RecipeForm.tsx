@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { AddInstructionsInput, AddIngredientsInput } from './AddArrayInputs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RecipeSchema } from '../../../validation/AddRecipe.validation';
+import { NODE_MODE } from '../../../utils/env.config';
 
 
 
@@ -137,7 +138,7 @@ const RecipeForm = ({ recipe, onSubmit: onSubmitProp, message }: RecipeFormProps
           </button>
         </div>
       </form>
-      {process.env.NODE_ENV === 'development' && <DevTool control={control} />}
+      {NODE_MODE === 'development' && <DevTool control={control} />}
     </>
   );
 };
