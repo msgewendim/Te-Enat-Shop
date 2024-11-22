@@ -217,7 +217,7 @@ components:
           type: object
           description: An optional list of benefits associated with the product.
           properties:
-            id:
+            _id:
               type: string
               description: The unique identifier for the feature.
             value:
@@ -238,7 +238,7 @@ components:
         sizeName:
           type: string
         sizeQuantity:
-          type: string
+          type: number
       required:
         - sizeName
         - sizeQuantity
@@ -587,9 +587,11 @@ components:
     CartItem:
       type: object
       properties:
-        product:
-          type: Product
-          description: The product in the cart
+        item:
+          oneOf:
+            - $ref: "#/components/schemas/Product"
+            - $ref: "#/components/schemas/Package"
+          description: The item in the cart
         quantity:
           type: integer
           description: Quantity of the product in the cart
@@ -601,7 +603,7 @@ components:
           format: float
           description: Price of the product in the cart
       required:
-        - product
+        - item
         - quantity
         - size
         - price
@@ -642,7 +644,7 @@ components:
         categories:
           type: array
           items:
-            type: string
+            $ref: "#/components/schemas/Category"
             description: Names of categories the recipe belongs to
         reviews:
           type: array

@@ -15,13 +15,13 @@ const FeatureSchema = new Schema<Feature>({
 });
 
 const FeatureObjectSchema = new Schema<FeatureObject>({
-  id: { type: String },
+  _id: { type: Schema.Types.ObjectId, auto: true },
   value: [FeatureSchema],
 });
 
 const SizeSchema = new Schema<ProductSize>({
   sizeName: { type: String, required: true },
-  sizeQuantity: { type: String, required: true },
+  sizeQuantity: { type: Number, required: true },
 });
 
 const PricingSchema = new Schema<Pricing>({
@@ -82,7 +82,10 @@ const productSchema = new Schema<Product>({
   },
   features: {
     type: FeatureObjectSchema,
-    default: () => ({ id: "", value: [] }),
+    validate: [
+      (v: FeatureObject) => v.value.length > 0,
+      "At least one feature should be provided.",
+    ],
   },
   totalSales: {
     type: Number,

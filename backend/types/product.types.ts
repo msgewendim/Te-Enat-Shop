@@ -17,7 +17,7 @@ export interface Feature {
 }
 
 export interface FeatureObject {
-  id: string;
+  _id: ObjectId | null;
   value: Feature[];
 }
 
@@ -57,7 +57,7 @@ export interface Pricing {
 }
 export interface ProductSize {
   sizeName: string;
-  sizeQuantity: string;
+  sizeQuantity: number;
 }
 export interface ProductCardProps {
   _id: string;
