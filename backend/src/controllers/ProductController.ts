@@ -20,14 +20,16 @@ export class ProductController {
 
   async getAllProducts(req: Request, res: Response) {
     try {
-      const { page, filter, category, limit } = req.query;
+      const { page, filter, category, limit, subCategory } = req.query;
       const parsedPage = parseInt(page as string, 10);
       const parsedLimit = parseInt(limit as string, 10);
+      console.log("query", req.query);
       const products = await this.productService.getAllProducts(
         parsedPage,
         parsedLimit,
         filter as string,
-        category as string
+        category as string,
+        subCategory as string
       );
       res.status(200).json(products);
     } catch (error) {

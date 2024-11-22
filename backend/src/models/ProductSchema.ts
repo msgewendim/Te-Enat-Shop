@@ -5,15 +5,14 @@ import {
   Pricing,
   Product,
   Feature,
+  SubCategory,
 } from "../../types/product.types";
 
-// Define the Feature schema
 const FeatureSchema = new Schema<Feature>({
   title: { type: String, required: true },
   description: { type: String, required: true },
 });
 
-// Define the FeatureObject schema
 const FeatureObjectSchema = new Schema<FeatureObject>({
   id: { type: String },
   value: [FeatureSchema],
@@ -22,6 +21,17 @@ const FeatureObjectSchema = new Schema<FeatureObject>({
 const PricingSchema = new Schema<Pricing>({
   size: { type: String, required: true },
   price: { type: Number, required: true },
+});
+
+const SubCategorySchema = new Schema<SubCategory>({
+  nameInHebrew: { type: String, required: true },
+  nameInEnglish: { type: String, required: true },
+  nameOfParentCategory: { type: String, required: true },
+});
+
+const CategorySchema = new Schema<Category>({
+  nameInHebrew: { type: String, required: true },
+  nameInEnglish: { type: String, required: true },
 });
 
 const productSchema = new Schema<Product>({
@@ -53,12 +63,16 @@ const productSchema = new Schema<Product>({
     validate: [(v: string) => v.length > 0, "An Image is Required"],
   },
   categories: {
-    type: [String],
+    type: [CategorySchema],
     required: true,
     validate: [
-      (v: string[]) => v.length > 0,
+      (v: Category[]) => v.length > 0,
       "At least one category should be provided.",
     ],
+  },
+  subCategories: {
+    type: [SubCategorySchema],
+    default: [],
   },
   features: {
     type: FeatureObjectSchema,

@@ -29,8 +29,9 @@ export class ProductService {
     page: number,
     limit?: number,
     searchTerm?: string,
-    category?: string
-  ): Promise<Product[] | unknown> {
+    category?: string,
+    subCategory?: string
+  ): Promise<Product[]> {
     try {
       if (!page) page = 1;
       if (!limit) limit = 9;
@@ -38,10 +39,11 @@ export class ProductService {
         page,
         limit,
         searchTerm,
-        category
+        category,
+        subCategory
       )) as Product[];
-    } catch (error) {
-      throw new Error("NO Products Found!");
+    } catch (error: any) {
+      throw new Error(`No Products Found! ${error.message}`);
     }
   }
 

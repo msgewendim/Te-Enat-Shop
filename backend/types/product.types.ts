@@ -7,6 +7,7 @@ export interface Product {
   shortDescription: string;
   pricing: Array<Pricing>;
   categories: Category[];
+  subCategories?: SubCategory[];
   features: FeatureObject;
   totalSales?: number;
 }
@@ -24,13 +25,26 @@ export interface Category {
   /**
    * The name of the product category in Hebrew
    */
-  name: string;
+  nameInHebrew: string;
   /**
    * The value of the product category in English
    */
-  value: string;
+  nameInEnglish: string;
 }
-
+export interface SubCategory {
+  /**
+   * The name of the product sub-category in Hebrew
+   */
+  nameInHebrew: string;
+  /**
+   * The value of the product sub-category in English
+   */
+  nameInEnglish: string;
+  /**
+   * Name of the parent category in English
+   */
+  nameOfParentCategory: string;
+}
 export interface Pricing {
   /**
    * The weight option for the product.

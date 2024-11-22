@@ -208,7 +208,12 @@ components:
           type: array
           description: A list of category names the product belongs to.
           items:
-            type: string
+            $ref: "#/components/schemas/Category"
+        subCategories:
+          type: array
+          description: A list of sub-category names the product belongs to.
+          items:
+            $ref: "#/components/schemas/SubCategory"
         features:
           type: object
           description: An optional list of benefits associated with the product.
@@ -520,22 +525,36 @@ components:
         _id:
           type: string
           description: Unique identifier for the order
-        userId:
-          type: string
-          description: The ID of the user who placed the order
+        userDetails:
+          type: ClientDetails
         products:
           type: array
           items:
-            $ref: "#/components/schemas/CartItem"
-        total:
+            type: OrderItem
+        totalPrice:
           type: number
           format: float
-          description: Total amount for the order
+        paymentStatus:
+          type: string
+          enum: ["pending", "succeeded", "failed"]
+          default: "pending"
+        orderStatus:
+          type: string
+          enum: ["pending", "processing", "shipped", "delivered", "cancelled"]
+          default: "pending"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
       required:
-        - id
-        - userId
+        - _id
+        - userDetails
         - products
-        - total
+        - totalPrice
+        - paymentStatus
+        - orderStatus
 
     Address:
       type: object
@@ -639,17 +658,31 @@ components:
     Category:
       type: object
       properties:
-        name:
+        nameInHebrew:
           type: string
           description: "The name of the product category in Hebrew"
           example: "תבלינים"
-        value:
+        nameInEnglish:
           type: string
           description: "The value of the product category in English"
           example: "Spices"
       required:
-        - name
-        - value
+        - nameInHebrew
+        - nameInEnglish
+
+    SubCategory:
+      type: object
+      properties:
+        nameInHebrew:
+          type: string
+        nameInEnglish:
+          type: string
+        nameOfParentCategory:
+          type: string
+      required:
+        - nameInHebrew
+        - nameInEnglish
+        - nameOfParentCategory
 
     PartialRecipe:
       type: object

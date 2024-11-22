@@ -16,9 +16,9 @@ import {
 import {
   addOrder,
   checkPaymentStatus,
+  getOrders,
   updatePaymentStatus,
 } from "../Dal/OrderDal";
-import { clearCart } from "../Dal/UserDal";
 
 const pluginId = MORNING_PLUGIN_ID;
 let MORNING_TOKEN = {
@@ -81,5 +81,9 @@ export class OrderService {
     const { external_data: orderId, ...transactionData } = transactionInfo;
     // update payment status in database
     await updatePaymentStatus(orderId as string, transactionData);
+  }
+  async getOrders(limit: number, page: number) {
+    const orders = await getOrders(limit, page);
+    return orders;
   }
 }

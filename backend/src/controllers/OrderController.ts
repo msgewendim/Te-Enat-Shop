@@ -8,7 +8,19 @@ export class OrderController {
   constructor(orderService: OrderService) {
     this.orderService = orderService;
   }
-
+  async getOrders(request: Request, response: Response) {
+    try {
+      const { limit, page } = request.query;
+      const orders = await this.orderService.getOrders(
+        Number(limit),
+        Number(page)
+      );
+      console.log(orders.length, "orders length");
+      response.json(orders).status(200);
+    } catch (error: any) {
+      response.json({ message: error.message }).status(500);
+    }
+  }
   async getPaymentForm(request: Request, response: Response) {
     const { clientInfo, totalPrice, products } = request.body.formData;
     // console.log(request.body, "request emails");

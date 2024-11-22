@@ -16,26 +16,58 @@ export class ProductDal implements IProduct<Product> {
     page: number,
     limit: number,
     searchTerm?: string,
-    category?: string
+    category?: string,
+    subCategory?: string
   ): Promise<Product[] | unknown[]> {
     try {
       const query: QueryOptions = {};
-      // Search both `name` and `shortDescription` with the same input
+
       if (searchTerm) {
         query.$or = [
           { name: { $regex: searchTerm, $options: "i" } },
           { shortDescription: { $regex: searchTerm, $options: "i" } },
         ];
       }
-      // Add category filter if provided
-      if (category) {
-        query.categories = { $regex: category };
+
+      // Category and SubCategory filters
+      if (category || subCategory) {
+        const filters: any[] = [];
+
+        if (category) {
+          filters.push({
+            categories: {
+              $elemMatch: {
+                nameInEnglish: { $regex: category },
+              },
+            },
+          });
+        }
+
+        if (subCategory) {
+          filters.push({
+            subCategories: {
+              $elemMatch: {
+                nameInEnglish: { $regex: subCategory },
+              },
+            },
+          });
+        }
+
+        // If both filters are present, use $and to ensure both conditions are met
+        if (filters.length > 1) {
+          query.$and = filters;
+        } else {
+          // If only one filter is present, use it directly
+          Object.assign(query, filters[0]);
+        }
       }
+
       const products = await productModel
         .find(query)
-        .skip((page - 1) * limit) // Skip items based on the page number
-        .limit(limit) // Limit the number of items returned
+        .skip((page - 1) * limit)
+        .limit(limit)
         .exec();
+
       return products;
     } catch (error) {
       throw error;

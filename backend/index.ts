@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
 import OrderRoute from "./src/Routes/OrderRoute";
 import UserRoute from "./src/Routes/UserRoute";
 import RecipeRoute from "./src/Routes/RecipeRoutes";
@@ -37,10 +38,22 @@ server.use("/api/users", UserRoute);
 
 // handle SSE (Server-Sent Events) requests for real-time updates - payment notifications
 server.use("/api/events", EventsMiddleware);
-
 server.use(swagger);
+
+const FRONTEND_BUILD_PATH = path.join(__dirname, "..", "frontend", "dist");
+
+// Add error handling for static files and catch-all route
+server.use(express.static(FRONTEND_BUILD_PATH, { fallthrough: true }));
+server.get("*", (req, res) => {
+  res.sendFile(path.join(FRONTEND_BUILD_PATH, "index.html"), (err) => {
+    if (err) {
+      console.error("Error loading client application:", err);
+      res.status(500).send("Error loading client application");
+    }
+  });
+});
+
 server.listen(port, () => {
   connectToMongoDB(MONGO_ATLAS_URI);
   console.log(`server is listening on port ${port}`);
-  // console.log(`Swagger UI is available at http://localhost:${port}/api-docs`)
 });

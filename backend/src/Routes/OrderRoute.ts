@@ -21,4 +21,8 @@ router.get(
     await orderController.checkPaymentStatus(req, res)
 );
 
+router.get("/", async (req: Request, res: Response) => {
+  await orderController.getOrders(req, res);
+});
+
 export default router;

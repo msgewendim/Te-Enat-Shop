@@ -80,4 +80,21 @@ const getOrderById = async (id: string): Promise<Order> => {
   }
 };
 
-export { addOrder, updatePaymentStatus, checkPaymentStatus, getOrderById };
+const getOrders = async (limit: number, page: number) => {
+  try {
+    const orders = await orderModel
+      .find()
+      .limit(limit)
+      .skip(page * limit);
+    return orders;
+  } catch (error) {
+    throw error;
+  }
+};
+export {
+  addOrder,
+  updatePaymentStatus,
+  checkPaymentStatus,
+  getOrderById,
+  getOrders,
+};
