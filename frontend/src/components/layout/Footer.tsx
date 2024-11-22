@@ -1,56 +1,111 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { SlSocialInstagram } from "react-icons/sl";
 import { SocialLinkProps } from "../../providers/interface/general.props";
+import { FormInput } from "../ui/FormInput";
+import { useForm, FieldValues } from "react-hook-form";
 
 const Footer = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
+  const { register, handleSubmit, formState: { errors }, } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      city: "",
+    }
+  });
+
+  const onSubmit = async (data: FieldValues) => {
+    console.log(data);
+  };
+
+  const handleNavigate = (to: string) => {
+    navigate(to);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   return (
-    <footer className="mt-auto bg-[#d3f5d3] w-full dark:bg-neutral-950" dir="rtl" lang="he">
+    <footer className="mt-auto bg-[#d3f5d3] w-full dark:bg-gray-900" lang="he">
       <div className="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <Link to="/" className="text-xl font-semibold hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label={t('footer.brand')}>
+            <Link to="/" className="text-xl font-semibold hover:text-gray-600 focus:outline-none focus:text-gray-600 dark:text-gray-50 dark:hover:text-gray-400" aria-label={t('footer.brand')}>
               {t('footer.brand')}
             </Link>
           </div>
 
           <nav aria-label={t('footer.brand')}>
-            <h2 className="font-semibold mb-4">{t('footer.brand')}</h2>
+            <h2 className="font-semibold mb-4 dark:text-gray-50">{t('footer.brand')}</h2>
             <ul className="space-y-3">
               {[
+                { to: "/", label: t('footer.home') },
                 { to: "/about", label: t('footer.about') },
                 { to: "/products", label: t('footer.store') },
                 { to: "/recipes", label: t('footer.recipes') },
                 { to: "/contact", label: t('footer.contact') },
               ].map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to} className="text-gray-900 hover:text-gray-600 focus:outline-none focus:text-gray-600 dark:text-neutral-400 dark:hover:text-neutral-200">
+                  <button onClick={() => handleNavigate(link.to)} className="text-gray-900 hover:text-gray-600 focus:outline-none focus:text-gray-600 dark:text-neutral-400 dark:hover:text-neutral-200">
                     {link.label}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
           </nav>
 
           <div className="md:col-span-2">
-            <h2 className="font-semibold mb-4">{t('footer.subscribe.title')}</h2>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-2">
-                <label htmlFor="email-input" className="sr-only">{t('footer.subscribe.placeholder')}</label>
-                <input
-                  type="email"
-                  id="email-input"
-                  className="flex-grow py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-btnColor focus:ring-blue-500 dark:bg-neutral-900 dark:text-neutral-400"
-                  placeholder={t('footer.subscribe.placeholder')}
-                  required
-                />
+            <h2 className="font-semibold mb-4 dark:text-gray-50">{t('footer.subscribe.title')}</h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-col sm:flex-row gap-2 w-full">
+                  <div className="w-full sm:w-1/2">
+                    <label htmlFor="name-input" className="sr-only">{t('footer.subscribe.name')}</label>
+                    <FormInput
+                      type="text"
+                      name="name"
+                      register={register}
+                      placeholder={t('footer.subscribe.name')}
+                      className="w-full py-3 px-4 block border-transparent rounded-lg text-sm focus:border-btnColor focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
+                      required
+                    />
+                    {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+                  </div>
+                  <div className="w-full sm:w-1/2">
+                    <label htmlFor="city-input" className="sr-only">{t('footer.subscribe.city')}</label>
+                    <FormInput
+                      type="text"
+                      name="city"
+                      register={register}
+                      className="w-full py-3 px-4 block border-transparent rounded-lg text-sm focus:border-btnColor focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
+                      placeholder={t('footer.subscribe.city')}
+                      required
+                    />
+                    {errors.city && <p className="text-red-500">{errors.city.message}</p>}
+                  </div>
+                </div>
+
+                <div className="w-full">
+                  <label htmlFor="email-input" className="sr-only">{t('footer.subscribe.email')}</label>
+                  <FormInput
+                    type="email"
+                    name="email"
+                    register={register}
+                    className="flex-grow py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-btnColor focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
+                    placeholder={t('footer.subscribe.email')}
+                    required
+                  />
+                  {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+                </div>
+
                 <button
                   type="submit"
-                  className="py-3 px-4 inline-flex justify-center items-center rounded-lg border border-transparent bg-secondary text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                  className="py-3 px-4 inline-flex justify-center items-center rounded-lg border border-transparent bg-secondary text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
                 >
                   {t('footer.subscribe.button')}
                 </button>

@@ -5,6 +5,7 @@ import Logo from '../ui/Logo';
 import DesktopMenu, { DesktopActions } from './nav/DesktopMenu';
 import MobileMenu from './nav/MobileMenu';
 import { MobileMenuButton } from './nav/MobileMenu';
+import Cart from '../../pages/Cart';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -42,6 +43,7 @@ const Navbar = () => {
         isOpen={mobileMenuOpen}
         setIsOpen={setMobileMenuOpen}
       />
+      <Cart />
     </header>
   );
 };

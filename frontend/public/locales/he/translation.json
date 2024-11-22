@@ -69,8 +69,8 @@
       "next": "הבא"
     },
     "ourSpecialty": {
-      "title": "המיוחדות שלנו אלו היצירות שלכם",
-      "readMore": "קרא עוד",
+      "title": "המומחיות שלנו, אלו היצירות שלכם",
+      "readMore": "בא לי",
       "features": {
         "spices": {
           "title": "תבלינים אקזוטיים",
@@ -96,7 +96,7 @@
     "productPackages": {
       "title": "המארזים שלנו",
       "price": "מחיר",
-      "buy": "קנה",
+      "buy": "הוסף לעגלה",
       "cookingTime": "זמן הכנה",
       "peopleQuantity": "כמות סועדים",
       "ingredientsQuantity": "כמות מצרכים"
@@ -107,6 +107,7 @@
   },
   "footer": {
     "brand": "טנאת",
+    "home": "עמוד הבית",
     "about": "עלינו",
     "store": "חנות",
     "recipes": "מתכונים",
@@ -115,7 +116,10 @@
       "title": "הירשם לעדכונים",
       "placeholder": "הזן כתובת מייל",
       "button": "הרשמה",
-      "description": "מוצרים ומתכונים חדשים בהמשך"
+      "description": "מוצרים ומתכונים חדשים בהמשך",
+      "email": "מייל",
+      "city": "עיר",
+      "name": "שם מלא"
     },
     "rights": "כל הזכויות שמורות",
     "year": "2024 ©"
@@ -140,8 +144,9 @@
   },
   "filters": {
     "searchLabel": "חיפוש מוצרים",
-    "searchPlaceholder": "הקלד שם מוצר",
-    "clearButton": "נקה"
+    "searchPlaceholderProducts": "הקלד שם מוצר",
+    "searchPlaceholderRecipes": "הקלד שם מתכון",
+    "clearButton": "נקה סינון"
   },
   "product": {
     "readMore": "קרא עוד",
@@ -159,23 +164,12 @@
     "quantity": "כמות",
     "remove": "הסר",
     "removeItem": "הסר את {{name}} מהעגלה",
-    "emptyCart": "עגלה ריקה"
+    "emptyCart": "עגלה ריקה",
+    "itemsList": "רשימת מוצרים בעגלה"
   },
   "recipes": {
     "bannerText": "גלה את המתכונים שלנו",
-    "sectionLabel": "רשימת מתכונים",
-    "recipe1": "מתכון 1",
-    "recipe2": "מתכון 2",
-    "recipe3": "מתכון 3",
-    "recipe4": "מתכון 4",
-    "recipe5": "מתכון 5",
-    "recipe6": "מתכון 6",
-    "description1": "תיאור למתכון 1",
-    "description2": "תיאור למתכון 2",
-    "description3": "תיאור למתכון 3",
-    "description4": "תיאור למתכון 4",
-    "description5": "תיאור למתכון 5",
-    "description6": "תיאור למתכון 6"
+    "sectionLabel": "רשימת מתכונים"
   },
   "errors": {
     "genericError": "אירעה שגיאה כללית. אנא נסה שוב מאוחר יותר.",
@@ -271,6 +265,8 @@
   "admin": {
     "dashboardTitle": "דף ניהול",
     "addProduct": "הוסף מוצר",
+    "packageAdded": "מארז נוסף בהצלחה",
+    "packageUpdated": "מארז עודכן בהצלחה",
     "productUpdated": "מוצר עודכן בהצלחה",
     "productAdded": "מוצר נוסף בהצלחה",
     "openMenu": "פתח תפריט",
@@ -347,7 +343,8 @@
     },
     "addPricing": {
       "title": "מחירים",
-      "sizeLabel": "משקל / גודל {{number}}",
+      "sizeLabel": "שם משקל / גודל",
+      "sizeQuantityLabel": "כמות משקל / גודל",
       "priceLabel": "סכום",
       "removePrice": "הסר",
       "removePriceLabel": "הסר מחיר {{number}}",
@@ -355,7 +352,8 @@
     },
     "addCategory": {
       "title": "קטגוריות",
-      "categoriesAriaLabel": "קטגוריות"
+      "categoriesAriaLabel": "קטגוריות",
+      "subCategories": "תת-קטגוריות"
     },
     "productForm": {
       "editTitle": "עריכת מוצר",
@@ -393,6 +391,24 @@
       "ingredientName": "שם מצרך ",
       "instructionsLabel": "הוראות הכנה ",
       "instructionDescription": "תיאור הוראת הכנה "
+    },
+    "packageForm": {
+      "editTitle": "עריכת מארז",
+      "addTitle": "הוספת מארז חדש",
+      "updateButton": "עדכן",
+      "saveButton": "שמור",
+      "peoplesQuantityLabel": "כמות סועדים",
+      "ingredientsQuantityLabel": "כמות מצרכים",
+      "cookingTimeLabel": "זמן הכנה",
+      "priceLabel": "מחיר",
+      "nameLabel": "שם מארז",
+      "namePlaceholder": "שם מארז",
+      "imageLabel": "תמונת מארז",
+      "imagePlaceholder": "כתובת תמונה",
+      "pricePlaceholder": "מחיר",
+      "peoplesQuantityPlaceholder": "כמות סועדים",
+      "ingredientsQuantityPlaceholder": "כמות מצרכים",
+      "cookingTimePlaceholder": "זמן הכנה"
     }
   },
   "pagination": {

@@ -8,7 +8,7 @@ import { RouterProvider } from 'react-router-dom'
 import './i18n'
 import { Auth0Provider } from "@auth0/auth0-react"
 import { routes } from './routes/route'
-import AppProvider from './providers/ContextProvider'
+import AppProvider from './providers/context/ContextProvider'
 import { AUTH0_AUDIENCE, AUTH0_CLIENT_ID, AUTH0_DOMAIN } from './utils/env.config'
 import './index.css'
 

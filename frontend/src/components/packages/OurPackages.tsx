@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import PackageCard from "./PackageCard";
-import useRandomCards from "../../hooks/useRandomCards";
+import useRandomCards from "../../hooks/app/useRandomCards";
 import { Package } from "../../client/types.gen";
-import { useGetRandomPackages } from "../../hooks/usePackagesData";
+import { useGetRandomPackages } from "../../hooks/package/usePackagesData";
 
 
 const OurPackages = () => {
@@ -12,9 +12,9 @@ const OurPackages = () => {
     dataKey: 'packages'
   })
   return (
-    <section className="bg-[#D2FCFF] py-16" lang="he">
+    <section className="bg-[#D2FCFF] dark:bg-gray-900 py-16" lang="he">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-primary text-center mb-12">
+        <h2 className="text-4xl font-bold text-primary text-center mb-12 dark:text-gray-50">
           {t('homePage.productPackages.title')}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

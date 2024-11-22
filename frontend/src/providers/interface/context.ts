@@ -1,9 +1,16 @@
 import { createContext } from "react";
-import { CartItem, OrderItem, Product, Recipe } from "../../client/types.gen";
+import {
+  CartItem,
+  OrderItem,
+  Product,
+  Recipe,
+  Package,
+} from "../../client/types.gen";
 
 export type query = {
   page?: number;
   category?: string;
+  subCategory?: string;
   filter?: string;
   limit?: number;
   type?: string;
@@ -38,6 +45,10 @@ export interface IContext {
   productToEdit: Product | undefined;
   openCart: boolean;
   setOpenCart: (open: boolean) => void;
+  packageToEdit: Package | undefined;
+  setPackageToEdit: (pkg: Package | undefined) => void;
+  subCategory: string;
+  setSubCategory: (subCategory: string) => void;
 }
 
 export const AppContext = createContext<IContext>({
@@ -69,6 +80,10 @@ export const AppContext = createContext<IContext>({
   setRecipeToEdit: () => {},
   openCart: false,
   setOpenCart: () => {},
+  packageToEdit: undefined,
+  setPackageToEdit: () => {},
+  subCategory: "",
+  setSubCategory: () => {},
 });
 
 export interface ModalState {

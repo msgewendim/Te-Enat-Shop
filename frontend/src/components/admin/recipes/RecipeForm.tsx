@@ -2,47 +2,29 @@ import { DevTool } from '@hookform/devtools';
 import { Recipe } from '../../../client/types.gen';
 import { FormInput } from '../../ui/FormInput';
 import { AddCategoryInput } from '../products/AddArrayInputFields';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useAppContext } from '../../../hooks/useAppContext';
+import { useAppContext } from '../../../hooks/app/useAppContext';
 import { recipeCategories } from '../../../utils/constants';
-import { RecipeFormProps } from '../../../providers/interface/admin.props';
 import { useTranslation } from 'react-i18next';
 import { AddInstructionsInput, AddIngredientsInput } from './AddArrayInputs';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { RecipeSchema } from '../../../validation/AddRecipe.validation';
 import { NODE_MODE } from '../../../utils/env.config';
+import { FormProps } from '../../../providers/interface/admin.props';
+import useRecipesForm from '../../../hooks/recipe/useRecipesForm';
 
 
-
-const RecipeForm = ({ recipe, onSubmit: onSubmitProp, message }: RecipeFormProps) => {
+const RecipeForm = ({ item: recipe, onSubmit: onSubmitProp, message }: FormProps<Recipe>) => {
   const { t } = useTranslation();
-  const { register, setValue, control, formState: { errors }, reset, handleSubmit } = useForm<Recipe>({
-    defaultValues: recipe || {
-      name: '',
-      image: '',
-      description: '',
-      categories: [],
-      prepTime: "",
-      servings: 1,
-      difficulty: "Easy",
-      ingredients: [],
-      instructions: []
-    },
-    resolver: zodResolver(RecipeSchema)
-  })
+  const { existingMainCategories, register, control, handleSubmit, errors, setValue, reset, recipeDifficulty } = useRecipesForm(recipe);
   const { setAdminActiveSection } = useAppContext();
-  const existingCategories = recipe?.categories || [];
+
   const onSubmit: SubmitHandler<Recipe> = (data) => {
-    console.log(data);
     onSubmitProp(data);
     reset();
     setAdminActiveSection("recipes");
     toast.success(message);
   };
-
   const isEditing = !!recipe;
-  const recipeDifficulty = ["Easy", "Medium", "Hard"];
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-md h-full relative flex flex-col items-start">
@@ -87,8 +69,8 @@ const RecipeForm = ({ recipe, onSubmit: onSubmitProp, message }: RecipeFormProps
               className="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md
           focus:outline-none focus:ring-2 focus:ring-btnColor2 focus:border-transparent placeholder:text-right"
             >
-              {recipeDifficulty.map((difficulty) => (
-                <option value={difficulty}>{difficulty}</option>
+              {recipeDifficulty.map((difficulty, i) => (
+                <option value={difficulty} key={i}>{difficulty}</option>
               ))}
             </select>
           </div>
@@ -98,7 +80,8 @@ const RecipeForm = ({ recipe, onSubmit: onSubmitProp, message }: RecipeFormProps
           register={register}
           setValue={setValue}
           categories={recipeCategories}
-          initialCategories={existingCategories}
+          initialMainCategories={existingMainCategories}
+          type="recipe"
         />
         {errors.categories && <span className="text-red-500">{errors.categories.message}</span>}
 

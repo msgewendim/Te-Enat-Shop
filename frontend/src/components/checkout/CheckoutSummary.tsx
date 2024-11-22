@@ -1,4 +1,4 @@
-import { useAppContext } from "../../hooks/useAppContext";
+import { useAppContext } from "../../hooks/app/useAppContext";
 import { useTranslation } from 'react-i18next';
 
 const CheckoutSummary = () => {
@@ -10,8 +10,8 @@ const CheckoutSummary = () => {
       <div className="lg:flex lg:flex-col lg:h-screen">
         <div className="p-4 lg:flex-grow lg:overflow-auto">
           <ul className="space-y-4">
-            {cartItems?.map(({ product, quantity, size, price }, index) => {
-              const { name, image } = product;
+            {cartItems?.map(({ item, quantity, size, price }, index) => {
+              const { name, image } = item;
               return (
                 <li className="flex items-start gap-4" key={`${name}-${size}-${index}`}>
                   <div className="w-24 h-24 lg:w-32 lg:h-28 flex p-3 shrink-0 bg-gray-300 rounded-md">

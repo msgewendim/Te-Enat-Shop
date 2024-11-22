@@ -26,8 +26,7 @@ export const $Product = {
                 type: 'object',
                 properties: {
                     size: {
-                        type: 'string',
-                        example: '100g',
+                        type: 'ProductSize',
                         description: 'The weight option for the product.'
                     },
                     price: {
@@ -50,14 +49,21 @@ export const $Product = {
             type: 'array',
             description: 'A list of category names the product belongs to.',
             items: {
-                type: 'string'
+                '$ref': '#/components/schemas/Category'
+            }
+        },
+        subCategories: {
+            type: 'array',
+            description: 'A list of sub-category names the product belongs to.',
+            items: {
+                '$ref': '#/components/schemas/SubCategory'
             }
         },
         features: {
             type: 'object',
             description: 'An optional list of benefits associated with the product.',
             properties: {
-                id: {
+                _id: {
                     type: 'string',
                     description: 'The unique identifier for the feature.'
                 },
@@ -76,6 +82,19 @@ export const $Product = {
             example: 5000
         }
     }
+} as const;
+
+export const $ProductSize = {
+    type: 'object',
+    properties: {
+        sizeName: {
+            type: 'string'
+        },
+        sizeQuantity: {
+            type: 'number'
+        }
+    },
+    required: ['sizeName', 'sizeQuantity']
 } as const;
 
 export const $Feature = {
@@ -413,23 +432,39 @@ export const $Order = {
             type: 'string',
             description: 'Unique identifier for the order'
         },
-        userId: {
-            type: 'string',
-            description: 'The ID of the user who placed the order'
+        userDetails: {
+            type: 'ClientDetails'
         },
         products: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/CartItem'
+                type: 'OrderItem'
             }
         },
-        total: {
+        totalPrice: {
             type: 'number',
-            format: 'float',
-            description: 'Total amount for the order'
+            format: 'float'
+        },
+        paymentStatus: {
+            type: 'string',
+            enum: ['pending', 'succeeded', 'failed'],
+            default: 'pending'
+        },
+        orderStatus: {
+            type: 'string',
+            enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
+            default: 'pending'
+        },
+        createdAt: {
+            type: 'string',
+            format: 'date-time'
+        },
+        updatedAt: {
+            type: 'string',
+            format: 'date-time'
         }
     },
-    required: ['id', 'userId', 'products', 'total']
+    required: ['_id', 'userDetails', 'products', 'totalPrice', 'paymentStatus', 'orderStatus']
 } as const;
 
 export const $Address = {
@@ -455,9 +490,16 @@ export const $Address = {
 export const $CartItem = {
     type: 'object',
     properties: {
-        product: {
-            type: 'Product',
-            description: 'The product in the cart'
+        item: {
+            oneOf: [
+                {
+                    '$ref': '#/components/schemas/Product'
+                },
+                {
+                    '$ref': '#/components/schemas/Package'
+                }
+            ],
+            description: 'The item in the cart'
         },
         quantity: {
             type: 'integer',
@@ -473,7 +515,7 @@ export const $CartItem = {
             description: 'Price of the product in the cart'
         }
     },
-    required: ['product', 'quantity', 'size', 'price']
+    required: ['item', 'quantity', 'size', 'price']
 } as const;
 
 export const $Recipe = {
@@ -523,7 +565,7 @@ export const $Recipe = {
         categories: {
             type: 'array',
             items: {
-                type: 'string',
+                '$ref': '#/components/schemas/Category',
                 description: 'Names of categories the recipe belongs to'
             }
         },
@@ -545,18 +587,34 @@ export const $Recipe = {
 export const $Category = {
     type: 'object',
     properties: {
-        name: {
+        nameInHebrew: {
             type: 'string',
             description: 'The name of the product category in Hebrew',
             example: 'תבלינים'
         },
-        value: {
+        nameInEnglish: {
             type: 'string',
             description: 'The value of the product category in English',
             example: 'Spices'
         }
     },
-    required: ['name', 'value']
+    required: ['nameInHebrew', 'nameInEnglish']
+} as const;
+
+export const $SubCategory = {
+    type: 'object',
+    properties: {
+        nameInHebrew: {
+            type: 'string'
+        },
+        nameInEnglish: {
+            type: 'string'
+        },
+        nameOfParentCategory: {
+            type: 'string'
+        }
+    },
+    required: ['nameInHebrew', 'nameInEnglish', 'nameOfParentCategory']
 } as const;
 
 export const $PartialRecipe = {

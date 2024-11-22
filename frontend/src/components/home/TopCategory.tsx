@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { useAppContext } from "../../hooks/useAppContext";
+import { useAppContext } from "../../hooks/app/useAppContext";
 import { ourTopCategories } from "../../utils/constants";
 import { CategoryCardProps } from "../../providers/interface/general.props";
 
@@ -26,7 +26,7 @@ const OurCategory = () => {
 };
 
 const CategoryCard: FC<CategoryCardProps> = ({ category, setCategory }) => {
-  const { name, image, value } = category;
+  const { nameInHebrew, nameInEnglish, image } = category;
   const [imageSrc, setImageSrc] = useState<string>('');
 
   useEffect(() => {
@@ -34,20 +34,20 @@ const CategoryCard: FC<CategoryCardProps> = ({ category, setCategory }) => {
   }, [image]);
   return (
     <Link
-      to={`/products?category=${value.toLowerCase()}`}
-      onClick={() => setCategory(value)}
+      to={`/products?category=${nameInEnglish.toLowerCase()}`}
+      onClick={() => setCategory(nameInEnglish)}
       className="text-center group"
     >
       <div className="overflow-hidden rounded-md">
         <img
           src={imageSrc}
           loading="lazy"
-          alt={name}
+          alt={nameInHebrew}
           className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
         />
       </div>
       <h3 className="mt-4 text-md sm:text-lg font-medium text-white capitalize group-hover:underline">
-        {name}
+        {nameInHebrew}
       </h3>
     </Link>
   );

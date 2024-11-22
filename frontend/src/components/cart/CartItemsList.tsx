@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import SingleCartItem from "./SingleCartItem";
-import { useAppContext } from "../../hooks/useAppContext";
+import { useAppContext } from "../../hooks/app/useAppContext";
 
 const CartItemsList = () => {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ const CartItemsList = () => {
       aria-label={t('cart.itemsList')}
     >
       {cartItems.map((item, index) => (
-        <li key={`${item.product._id}-${item.size}-${index}`} className="py-4">
+        <li key={`${item.item._id}-${item.size}-${index}`} className="py-4">
           <SingleCartItem {...item} />
         </li>
       ))}

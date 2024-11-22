@@ -1,6 +1,6 @@
 import { ClientDetails } from "../../client/types.gen";
 import { FormInput } from "../ui/FormInput";
-import useCheckoutFormData from "../../hooks/useCheckoutFormData";
+import useCheckoutFormData from "../../hooks/app/useCheckoutFormData";
 import { useTranslation } from 'react-i18next';
 
 const CheckoutFormData = () => {

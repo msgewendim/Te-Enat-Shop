@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useGetRandomProducts } from "../../hooks/useProductsData";
+import { useGetRandomProducts } from "../../hooks/product/useProductsData";
 import Loader from "../ui/Loader";
 import ProductCard from "./ProductCard";
 import { CarouselButtonProps } from "../../providers/interface/general.props";
 import { Link } from "react-router-dom";
-import useRandomCards from "../../hooks/useRandomCards";
 import { Product } from "../../client";
+import useRandomCards from "../../hooks/app/useRandomCards";
 
 const TopProducts = () => {
   const { t } = useTranslation();
@@ -19,15 +19,15 @@ const TopProducts = () => {
   const handlePrevious = () => setPage((old) => Math.max(old - 1, 1));
   const handleNext = () => setPage((old) => (totalPages && old < totalPages ? old + 1 : old));
   return (
-    <section className="bg-[#F9F8F8] py-12" lang="he">
+    <section className="bg-[#F9F8F8] dark:bg-gray-900 py-12" lang="he">
       <div className="container mx-auto px-4">
         <header className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-primary mb-4">
+          <h2 className="text-4xl font-bold text-primary mb-4 dark:text-gray-100">
             <Link to="/products" className="cursor-pointer">
               {t('homePage.topProducts.title')}
             </Link>
           </h2>
-          <p className="text-primary max-w-3xl mx-auto">
+          <p className="text-primary max-w-3xl mx-auto dark:text-gray-100">
             {t('homePage.topProducts.description')}
           </p>
         </header>

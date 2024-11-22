@@ -1,18 +1,18 @@
 import { DevTool } from '@hookform/devtools';
 import { Product } from '../../../client/types.gen';
 import { FormInput } from '../../ui/FormInput';
-import useProductForm from '../../../hooks/useProductForm';
+import useProductForm from '../../../hooks/product/useProductForm';
 import { AddCategoryInput, AddFeatureGroupInput, AddPricingInput } from './AddArrayInputFields';
 import { SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useAppContext } from '../../../hooks/useAppContext';
+import { useAppContext } from '../../../hooks/app/useAppContext';
 import { productCategories } from '../../../utils/constants';
-import { ProductFormProps } from '../../../providers/interface/admin.props';
 import { useTranslation } from 'react-i18next';
+import { FormProps } from '../../../providers/interface/admin.props';
 
-const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProductFormProps) => {
+const ProductForm = ({ item: product, onSubmit: onSubmitProp, message }: FormProps<Product>) => {
   const { t } = useTranslation();
-  const { register, control, errors, handleSubmit, setValue, reset, existingCategories } = useProductForm(product);
+  const { register, control, errors, handleSubmit, setValue, reset, existingMainCategories, existingSubCategories } = useProductForm(product);
   const { setAdminActiveSection } = useAppContext();
 
   const onSubmit: SubmitHandler<Product> = (data) => {
@@ -73,7 +73,9 @@ const ProductForm = ({ product, onSubmit: onSubmitProp, message }: ProductFormPr
           register={register}
           setValue={setValue}
           categories={productCategories}
-          initialCategories={existingCategories}
+          initialMainCategories={existingMainCategories}
+          initialSubCategories={existingSubCategories}
+          type="product"
         />
         {errors.categories && <span className="text-red-500">{errors.categories.message}</span>}
 

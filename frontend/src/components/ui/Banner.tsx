@@ -21,7 +21,7 @@ const Banner = ({ image, text }: BannerProps) => {
         aria-hidden="true"
       />
       <div className="container mx-auto px-4 h-full flex items-center justify-center">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-primary capitalize">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-primary capitalize pt-2">
           {text}
         </h1>
       </div>

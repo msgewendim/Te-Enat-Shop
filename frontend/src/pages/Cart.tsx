@@ -4,7 +4,7 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import CartItemsList from '../components/cart/CartItemsList';
-import { useAppContext } from '../hooks/useAppContext';
+import { useAppContext } from '../hooks/app/useAppContext';
 
 const Cart = () => {
   const { totalPrice, openCart, setOpenCart } = useAppContext();
@@ -82,6 +82,7 @@ const CartContent = ({ setOpenCart, totalPrice }: { setOpenCart: (open: boolean)
         <div className="mt-6">
           <Link
             to="/checkout"
+            onClick={() => setOpenCart(false)}
             className="flex items-center justify-center rounded-md border border-transparent bg-btnColor2 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hoverBtnColor2"
           >
             {t('cart.checkout')}

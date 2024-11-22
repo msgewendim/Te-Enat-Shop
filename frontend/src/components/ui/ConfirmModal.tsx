@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useAppContext } from "../../hooks/useAppContext";
+import { useAppContext } from "../../hooks/app/useAppContext";
 
 const ConfirmationModal = () => {
   const { modalState, hideModal } = useAppContext()

@@ -30,7 +30,7 @@ const Hero = () => {
   }, [changeImage]);
 
   return (
-    <section className="bg-gray-100 dark:bg-gray-950 min-h-[80vh] sm:min-h-[60vh] transition-colors duration-200" lang="he">
+    <section className="bg-gray-100 dark:bg-gray-900 min-h-[80vh] sm:min-h-[60vh] transition-colors duration-200" lang="he">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
           <div className="order-2 sm:order-1">
@@ -59,7 +59,7 @@ const HeroCard: FC<HeroCardProps> = ({ image, title, link }) => {
   return (
     <Link to={link} className="block w-[140px] sm:w-[160px] rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
       <img className="w-full h-32 object-cover" src={imageSrc} alt={title} loading="eager" />
-      <p className="bg-emerald-700 text-white text-xl font-semibold text-center py-2 hover:bg-emerald-800 transition-colors">
+      <p className="bg-emerald-700 text-white text-xl font-semibold text-center py-2 hover:bg-emerald-800 transition-colors dark:bg-emerald-900 dark:hover:bg-emerald-800">
         {title}
       </p>
     </Link>
@@ -71,12 +71,12 @@ const HeroText = () => {
 
   return (
     <div className="text-right">
-      <h1 className="text-3xl lg:text-5xl font-bold text-primary mb-4">
+      <h1 className="text-3xl lg:text-5xl font-bold text-primary mb-4 dark:text-gray-100">
         {t('homePage.hero.mainHeading')}
         <br />
         <span className="block mt-2">{t('homePage.hero.subHeading')}</span>
       </h1>
-      <p className="text-xl text-emerald-950">
+      <p className="text-xl text-emerald-900 dark:text-gray-100">
         {t('homePage.hero.description')}
       </p>
     </div>

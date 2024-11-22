@@ -1,32 +1,22 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTranslation } from "react-i18next";
-import { TbLogout } from "react-icons/tb";
-
-import { TbLogin } from "react-icons/tb";
+import { TbLogout, TbLogin } from "react-icons/tb";
 
 const AuthButton = () => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const { t } = useTranslation();
 
-  if (isAuthenticated) {
-    return (
-      <button
-        onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
-        className="text-md font-semibold leading-6 p-2 text-center"
-        aria-label={t('nav.logout')}
-      >
-        <TbLogout className="text-primary" size={24} />
-      </button>
-    );
-  }
-
   return (
     <button
-      onClick={() => loginWithRedirect()}
-      className="text-md font-semibold leading-6 p-2 text-center"
-      aria-label={t('nav.login')}
+      onClick={isAuthenticated ? () => logout({ logoutParams: { returnTo: window.location.origin } }) : () => loginWithRedirect()}
+      className="flex items-center justify-center p-2 transition-colors rounded-full text-primary dark:text-white hover:bg-secondary hover:text-white"
+      aria-label={isAuthenticated ? t('nav.logout') : t('nav.login')}
     >
-      <TbLogin color='black' size={24} />
+      {isAuthenticated ? (
+        <TbLogout size={24} />
+      ) : (
+        <TbLogin size={24} />
+      )}
     </button>
   );
 };

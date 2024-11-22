@@ -5,13 +5,16 @@ import {
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
-import { Product, Recipe } from "../../client/types.gen";
+import { Category, Product, ProductSize, Recipe } from "../../client/types.gen";
 import { CategoryMapping } from "../../utils/constants";
 
 interface RelatedItemsProps {
   itemCategory: string;
   type: string;
+  titleKey: string;
+  linkPrefix: string;
 }
+
 interface RelatedItemCardProps {
   item: Product | Recipe;
   linkPrefix: string; // '/products' or '/recipes'
@@ -35,9 +38,9 @@ interface FeatureCardType {
 }
 interface CategoryCardProps {
   category: {
-    name: string;
+    nameInHebrew: string;
+    nameInEnglish: string;
     image: () => Promise<{ default: string }>;
-    value: string;
   };
   setCategory: (category: string) => void;
 }
@@ -72,17 +75,30 @@ interface CarouselButtonProps {
 }
 interface CategoryButtonProps {
   category: string;
+  isSelected: boolean;
   onClick: () => void;
+  isSubCategory?: boolean;
 }
 interface FiltersProps {
   clearFiltersPath: string;
   type: "recipes" | "products";
+  className?: string;
+}
+
+interface FilterCategoriesProps {
+  categories: Category[];
+  onCategoryChange: (category: string) => void;
+  onSubCategoryChange: (subCategory: string) => void;
+  subCategoriesMapping: CategoryMapping;
 }
 interface ClearFiltersButtonProps {
   handleClearFilters: () => void;
   clearFiltersPath: string;
 }
-
+type UpdateHookProps<T> = {
+  itemId: string;
+  itemData: Partial<T>;
+};
 type FormInputProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
   type?: string;
@@ -94,13 +110,15 @@ type FormInputProps<T extends FieldValues> = {
   className?: string; // Optional class names for input field
   required?: boolean; // Optional required field flag
 };
-interface SelectTypes {
-  selectItems: string[];
-  initialItem: string;
-  classes?: string;
-  type: "size" | "category";
-  categoryMapping?: CategoryMapping;
-  onChange?: (selectedOption: string) => void;
+interface SelectProps {
+  items: Array<ProductSize | Category>;
+  value: string;
+  onChange: (value: string) => void;
+  displayKey: string;
+  valueKey: string;
+  placeholder: string;
+  className?: string;
+  type: "category" | "size";
 }
 type PaginationButtonProps = {
   onClick: () => void;
@@ -125,6 +143,7 @@ export {
   RelatedItemCardProps,
   GuaranteeCardProps,
   HeroCardProps,
+  UpdateHookProps,
   FeatureCardType,
   CategoryCardProps,
   SocialLinkProps,
@@ -137,8 +156,9 @@ export {
   FiltersProps,
   ClearFiltersButtonProps,
   FormInputProps,
-  SelectTypes,
+  SelectProps,
   PaginationButtonProps,
   PaginationProps,
   FloatingCartButtonProps,
+  FilterCategoriesProps,
 };

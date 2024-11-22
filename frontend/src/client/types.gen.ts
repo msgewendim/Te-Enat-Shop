@@ -20,7 +20,7 @@ export type Product = {
         /**
          * The weight option for the product.
          */
-        size: string;
+        size: ProductSize;
         /**
          * The price of the product for the given size.
          */
@@ -33,7 +33,11 @@ export type Product = {
     /**
      * A list of category names the product belongs to.
      */
-    categories: Array<(string)>;
+    categories: Array<Category>;
+    /**
+     * A list of sub-category names the product belongs to.
+     */
+    subCategories?: Array<SubCategory>;
     /**
      * An optional list of benefits associated with the product.
      */
@@ -41,13 +45,18 @@ export type Product = {
         /**
          * The unique identifier for the feature.
          */
-        id: string;
+        _id?: string;
         value: Array<(Feature)>;
     };
     /**
      * An optional field for the total number of sales.
      */
     totalSales?: number;
+};
+
+export type ProductSize = {
+    sizeName: string;
+    sizeQuantity: number;
 };
 
 export type Feature = {
@@ -205,17 +214,29 @@ export type Order = {
     /**
      * Unique identifier for the order
      */
-    _id?: string;
-    /**
-     * The ID of the user who placed the order
-     */
-    userId: string;
-    products: Array<CartItem>;
-    /**
-     * Total amount for the order
-     */
-    total: number;
+    _id: string;
+    userDetails: ClientDetails;
+    products: Array<(OrderItem)>;
+    totalPrice: number;
+    paymentStatus: 'pending' | 'succeeded' | 'failed';
+    orderStatus: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+    createdAt?: string;
+    updatedAt?: string;
 };
+
+export enum paymentStatus {
+    PENDING = 'pending',
+    SUCCEEDED = 'succeeded',
+    FAILED = 'failed'
+}
+
+export enum orderStatus {
+    PENDING = 'pending',
+    PROCESSING = 'processing',
+    SHIPPED = 'shipped',
+    DELIVERED = 'delivered',
+    CANCELLED = 'cancelled'
+}
 
 export type Address = {
     /**
@@ -229,9 +250,9 @@ export type Address = {
 
 export type CartItem = {
     /**
-     * The product in the cart
+     * The item in the cart
      */
-    product: Product;
+    item: (Product | Package);
     /**
      * Quantity of the product in the cart
      */
@@ -277,7 +298,7 @@ export type Recipe = {
      * Difficulty level of the recipe
      */
     difficulty: 'Easy' | 'Medium' | 'Hard';
-    categories: Array<(string)>;
+    categories: Array<Category>;
     reviews?: Array<Review> | null;
     createdAt: string;
 };
@@ -295,11 +316,17 @@ export type Category = {
     /**
      * The name of the product category in Hebrew
      */
-    name: string;
+    nameInHebrew: string;
     /**
      * The value of the product category in English
      */
-    value: string;
+    nameInEnglish: string;
+};
+
+export type SubCategory = {
+    nameInHebrew: string;
+    nameInEnglish: string;
+    nameOfParentCategory: string;
 };
 
 export type PartialRecipe = {

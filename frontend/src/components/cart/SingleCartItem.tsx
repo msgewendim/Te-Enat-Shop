@@ -2,15 +2,15 @@ import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import { CartItem } from "../../client/types.gen";
 import { removeItemFromCartList } from "../../utils/helperFunctions";
-import { useAppContext } from "../../hooks/useAppContext";
+import { useAppContext } from "../../hooks/app/useAppContext";
 
-const SingleCartItem = ({ product, quantity, size, price }: CartItem) => {
+const SingleCartItem = ({ item, quantity, size, price }: CartItem) => {
   const { t } = useTranslation();
   const { cartItems, setCartItems } = useAppContext();
-  const { name, image, _id } = product;
+  const { name, image, _id } = item;
 
   const handleRemoveItem = () => {
-    const updatedCartItems = removeItemFromCartList(cartItems, { product, quantity, size, price });
+    const updatedCartItems = removeItemFromCartList(cartItems, { item, quantity, size, price });
     sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     setCartItems(updatedCartItems);
   };

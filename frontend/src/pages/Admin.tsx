@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import ProductList from '../components/admin/products/ProductList';
 import ProductForm from '../components/admin/products/ProductForm';
-import useAdminDashboard from '../hooks/useAdminDashboard';
+import useAdminDashboard from '../components/admin/hooks/useDashboard';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeftCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import RecipesList from '../components/admin/recipes/RecipesList';
 import RecipeForm from '../components/admin/recipes/RecipeForm';
+import PackageList from '../components/admin/packages/PackageList';
+import PackageForm from '../components/admin/packages/PackageForm';
+import OrdersList from '../components/admin/orders';
 
 const AdminDashboard = () => {
   const { t } = useTranslation();
-  const { adminActiveSection, handleSubmit, productToEdit, recipeToEdit } = useAdminDashboard();
+  const { adminActiveSection, handleSubmit, productToEdit, recipeToEdit, packageToEdit } = useAdminDashboard();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -47,7 +50,7 @@ const AdminDashboard = () => {
         {adminActiveSection === 'products' && <ProductList />}
         {(adminActiveSection === 'add-product' || adminActiveSection === 'edit-product') && (
           <ProductForm
-            product={productToEdit}
+            item={productToEdit}
             onSubmit={handleSubmit}
             message={adminActiveSection === 'edit-product' ? t('admin.productUpdated') : t('admin.productAdded')}
           />
@@ -55,20 +58,20 @@ const AdminDashboard = () => {
         {adminActiveSection === 'recipes' && <RecipesList />}
         {(adminActiveSection === 'add-recipe' || adminActiveSection === 'edit-recipe') && (
           <RecipeForm
-            recipe={recipeToEdit}
+            item={recipeToEdit}
             onSubmit={handleSubmit}
             message={adminActiveSection === 'edit-recipe' ? t('admin.recipeUpdated') : t('admin.recipeAdded')}
           />
         )}
-        {/* {adminActiveSection === 'packages' && <PackagesList />}
+        {adminActiveSection === 'packages' && <PackageList />}
         {(adminActiveSection === 'add-package' || adminActiveSection === 'edit-package') && (
           <PackageForm
-            recipe={recipeToEdit}
-            onSubmit={handleProductSubmit}
+            item={packageToEdit}
+            onSubmit={handleSubmit}
             message={adminActiveSection === 'edit-package' ? t('admin.packageUpdated') : t('admin.packageAdded')}
           />
-        )} */}
-        {/* {adminActiveSection === 'orders' && <AddProduct />} */}
+        )}
+        {adminActiveSection === 'orders' && <OrdersList />}
       </main>
     </div>
   );

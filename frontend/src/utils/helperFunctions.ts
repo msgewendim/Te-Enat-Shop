@@ -1,16 +1,20 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { CartItem, Feature } from "../client";
+import { recipeCategories, recipeSubCategoriesMapping } from "./constants";
+import { productCategories } from "./constants";
+import { productSubCategoriesMapping } from "./constants";
 
 const createBanner = (image: string): React.CSSProperties => ({
   backgroundImage: `url(${image})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  height: "20vh",
+  height: "12vh",
   width: "100%",
   marginTop: "50px",
 });
+
 interface StyleProps {
   [key: string]: string;
 }
@@ -56,49 +60,65 @@ const divideFeatures = (features: Feature[]) => {
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [pathname]);
 
   return null;
 };
-// Randomize products
+
 const randomizeArray = <T>(array: T[]) => {
   return array.sort(() => Math.random() - 0.5);
 };
+
 const removeItemFromCartList = (
   cartItems: CartItem[],
   itemToRemove: CartItem
 ): CartItem[] =>
   cartItems
-    .map((item) =>
-      item.product._id === itemToRemove.product._id &&
-      item.size === itemToRemove.size
-        ? { ...item, quantity: item.quantity - 1 }
-        : item
+    .map((cartItem) =>
+      cartItem.item._id === itemToRemove.item._id &&
+      cartItem.size === itemToRemove.size
+        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+        : cartItem
     )
-    .filter((item) => item.quantity > 0);
+    .filter((cartItem) => cartItem.quantity > 0);
 
 const addItemToCartList = (
   cartList: CartItem[],
   newItem: CartItem
 ): CartItem[] => {
   const existingItem = cartList.find(
-    (item) =>
-      item.product._id === newItem.product._id && item.size === newItem.size
+    (cartItem) =>
+      cartItem.item._id === newItem.item._id && cartItem.size === newItem.size
   );
 
   return existingItem
-    ? cartList.map((item) =>
-        item === existingItem
-          ? { ...item, quantity: item.quantity + newItem.quantity }
-          : item
+    ? cartList.map((cartItem) =>
+        cartItem === existingItem
+          ? { ...cartItem, quantity: cartItem.quantity + newItem.quantity }
+          : cartItem
       )
     : [...cartList, newItem];
 };
 
+function categoriesBasedOnType(type: string) {
+  return type === "recipes"
+    ? {
+        categories: recipeCategories,
+        subCategoriesMapping: recipeSubCategoriesMapping,
+      }
+    : {
+        categories: productCategories,
+        subCategoriesMapping: productSubCategoriesMapping,
+      };
+}
+
 export {
+  categoriesBasedOnType,
   addItemToCartList,
   createBanner,
   createRecipeCardImage,

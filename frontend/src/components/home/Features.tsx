@@ -6,12 +6,12 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 const FeatureCard: FC<FeatureCardType> = ({ icon, title, description }) => (
-  <div className="text-center p-4 flex flex-col items-center">
-    <div className="mb-4">{icon}</div>
+  <div className="text-center p-4 flex flex-col items-center dark:text-white  ">
+    <div className="mb-4 dark:text-blue-950">{icon}</div>
     <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
       {title}
     </h3>
-    <p className="text-gray-700 dark:text-gray-400">
+    <p className="text-gray-700 dark:text-gray-100 ">
       {description}
     </p>
   </div>
@@ -20,7 +20,7 @@ const FeatureCard: FC<FeatureCardType> = ({ icon, title, description }) => (
 const Features = () => {
   const { t } = useTranslation();
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 bg-[#D2FCFF]">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 bg-[#D2FCFF] dark:bg-primary">
       <FeatureCard
         icon={<GiGrainBundle size={48} />}
         title={t('homePage.ourSpecialty.features.spices.title')}

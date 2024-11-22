@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { FieldValues, Path, PathValue, useFieldArray } from 'react-hook-form'
-import { Product } from '../../../client/types.gen';
+import { Category, Product, SubCategory } from '../../../client/types.gen';
 import { FormInput } from '../../ui/FormInput';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AddCategoryInputProps, ArrayInputFieldProps } from '../../../providers/interface/admin.props';
 import FormButton from '../../ui/FormButton';
+import { productSubCategoriesMapping } from '../../../utils/constants';
 
 export const AddFeatureGroupInput = ({ control, register }: ArrayInputFieldProps) => {
   const { t } = useTranslation();
@@ -69,15 +70,23 @@ export const AddPricingInput = ({ control, register }: ArrayInputFieldProps) => 
   return (
     <fieldset className='flex flex-col w-full'>
       <legend className="font-bold text-xl mb-4">{t('form.addPricing.title')}</legend>
-      <div className="grid sm:grid-cols-2 gap-3">
+      <div className="grid gap-3">
         {pricingFields.map((field, index) => (
           <div key={field.id} className="grid sm:flex items-center gap-2">
             <FormInput<Product>
               register={register}
-              name={`pricing.${index}.size` as Path<Product>}
+              name={`pricing.${index}.size.sizeName` as Path<Product>}
               placeholder={t('form.addPricing.sizeLabel', { number: index + 1 })}
               type="text"
               required
+            />
+            <FormInput<Product>
+              register={register}
+              name={`pricing.${index}.size.sizeQuantity` as Path<Product>}
+              placeholder={t('form.addPricing.sizeQuantityLabel')}
+              type="number"
+              required
+              registerOptions={{ valueAsNumber: true }}
             />
             <FormInput<Product>
               register={register}
@@ -86,7 +95,6 @@ export const AddPricingInput = ({ control, register }: ArrayInputFieldProps) => 
               type="number"
               required
               registerOptions={{ valueAsNumber: true }}
-              className=''
             />
             <FormButton
               type="button"
@@ -100,58 +108,114 @@ export const AddPricingInput = ({ control, register }: ArrayInputFieldProps) => 
       </div>
       <FormButton
         type="button"
-        onClick={() => appendPricing({ size: '', price: 0 })}
+        onClick={() => appendPricing({ size: { sizeName: '', sizeQuantity: 0 }, price: 0 })}
         className="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-fit"
         text={t('buttons.add')} />
     </fieldset>
   );
 };
 
-export const AddCategoryInput = <T extends FieldValues>({ register, setValue, categories, initialCategories }: AddCategoryInputProps<T>) => {
+export const AddCategoryInput = <T extends FieldValues>({ register, setValue, categories, initialMainCategories, initialSubCategories, type }: AddCategoryInputProps<T>) => {
   const { t } = useTranslation();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategories || []);
+  const [selectedMainCategories, setSelectedMainCategories] = useState<Category[]>(initialMainCategories || []);
+  const [selectedSubCategories, setSelectedSubCategories] = useState<SubCategory[]>(initialSubCategories || []);
 
-  const toggleCategory = (value: string) => {
-    setSelectedCategories(prev => {
+  const toggleMainCategory = (value: Category) => {
+    setSelectedMainCategories(prev => {
       const newSelection = prev.includes(value)
         ? prev.filter(cat => cat !== value)
         : [...prev, value];
 
-      setValue('categories' as Path<T>, newSelection as PathValue<T, Path<T>>);
+      // When deselecting a main category, remove its subcategories
+      if (!newSelection.includes(value)) {
+        setSelectedSubCategories(prev => {
+          return prev.filter(subCat => !selectedSubCategories.some(cat => cat === subCat));
+        });
+      }
+
+      setValue('categories.main' as Path<T>, newSelection as PathValue<T, Path<T>>);
       return newSelection;
     });
   };
 
-  useEffect(() => {
-    setValue('categories' as Path<T>, selectedCategories as PathValue<T, Path<T>>);
-  }, [setValue, initialCategories, selectedCategories]);
+  const toggleSubCategory = (value: SubCategory, parentValue: Category) => {
+    // Only allow selecting subcategories if parent is selected
+    if (!selectedMainCategories.includes(parentValue)) return;
+
+    setSelectedSubCategories(prev => {
+      const newSelection = prev.includes(value)
+        ? prev.filter(cat => cat !== value)
+        : [...prev, value];
+
+      setValue('categories.sub' as Path<T>, newSelection as PathValue<T, Path<T>>);
+      return newSelection;
+    });
+  };
 
   return (
     <fieldset className='flex flex-col items-start justify-start mb-3'>
-      <legend className="mb-4 font-semibold text-gray-900 dark:text-white">{t('form.addCategory.title')}</legend>
-      <div className="flex flex-wrap gap-2" role="group" aria-label={t('form.addCategory.categoriesAriaLabel')}>
-        {categories.map(({ name, value }) => (
+      <legend className="mb-4 font-semibold text-gray-900 dark:text-white">
+        {t('form.addCategory.title')}
+      </legend>
+
+      {/* Main Categories */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {categories.map((category) => (
           <button
-            key={value}
+            key={category.nameInEnglish}
             type="button"
-            onClick={() => toggleCategory(value)}
-            onKeyUp={(e) => e.key === 'Enter' && toggleCategory(value)}
-            className={`px-3 py-1 text-sm font-medium rounded-full ${selectedCategories.includes(value)
+            onClick={() => toggleMainCategory(category)}
+            className={`px-3 py-1 text-sm font-medium rounded-full ${selectedMainCategories.includes(category)
               ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+              : 'bg-gray-200 text-gray-800'
               }`}
-            aria-pressed={selectedCategories.includes(value)}
+            aria-pressed={selectedMainCategories.includes(category)}
           >
-            {name}
+            {category.nameInHebrew}
           </button>
         ))}
       </div>
 
+      {/* Subcategories - only show for selected main categories and for product only */}
+      {type === "product" && selectedMainCategories.length > 0 && (
+        <div className="mt-2">
+          <h4 className="text-sm font-medium mb-2">{t('form.addCategory.subCategories')}</h4>
+          <div className="flex flex-wrap gap-2">
+            {categories
+              .filter(cat => selectedMainCategories.includes(cat))
+              .map(category =>
+                (productSubCategoriesMapping[category.nameInEnglish] as SubCategory[]).map(subCat => (
+                  <button
+                    key={subCat.nameInEnglish}
+                    type="button"
+                    onClick={() => toggleSubCategory(subCat, category)}
+                    className={`px-3 py-1 text-sm font-medium rounded-full ${selectedSubCategories.includes(subCat)
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-100 text-gray-600'
+                      }`}
+                    aria-pressed={selectedSubCategories.includes(subCat)}
+                  >
+                    {subCat.nameInHebrew}
+                  </button>
+                ))
+              )}
+          </div>
+        </div>
+      )}
+
+      {/* Hidden inputs for form submission */}
       <input
         type="hidden"
-        {...register('categories' as Path<T>)}
-        value={selectedCategories}
+        {...register('categories.main' as Path<T>)}
+        value={selectedMainCategories.map(cat => cat.nameInEnglish)}
       />
+      {type === "product" && (
+        <input
+          type="hidden"
+          {...register('categories.sub' as Path<T>)}
+          value={selectedSubCategories.map(subCat => subCat.nameInEnglish)}
+        />
+      )}
     </fieldset>
   );
 };

@@ -18,16 +18,14 @@ const DarkMode = () => {
       element.classList.remove('dark')
       localStorage.setItem('theme', 'light')
     }
-  }, [theme, toggleTheme, element])
+  }, [theme, element])
   return (
-
-    <button onClick={toggleTheme}>
-      {
-        theme === "dark" ?
-          <TbSun className="text-primary" size={24} />
-          :
-          <TbMoonStars className="text-primary" size={24} />
-      }
+    <button
+      onClick={toggleTheme}
+      className="flex items-center justify-center p-2 transition-colors rounded-full text-primary dark:text-white bg-transparent hover:bg-secondary hover:text-white hover:p-2 hover:ring-offset-2 hover:ring-primary dark:hover:ring-gray-500"
+      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+    >
+      {theme === "dark" ? <TbSun size={24} /> : <TbMoonStars size={24} />}
     </button>
   )
 }

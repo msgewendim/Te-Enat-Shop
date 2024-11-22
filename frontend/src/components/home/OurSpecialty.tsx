@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { useGetRandomRecipes } from "../../hooks/useRecipesData";
-import useRandomCards from "../../hooks/useRandomCards";
+import { useGetRandomRecipes } from "../../hooks/recipe/useRecipesData";
+import useRandomCards from "../../hooks/app/useRandomCards";
 import { Recipe } from "../../client";
 
 const OurSpecialty = () => {
@@ -11,9 +11,9 @@ const OurSpecialty = () => {
     dataKey: "recipes"
   })
   return (
-    <section className="bg-[#D2FCFF] py-12" lang="he">
+    <section className="bg-[#D2FCFF] dark:bg-gray-800 py-12" lang="he">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-primary dark:text-white mb-12 text-center">
+        <h2 className="text-4xl font-bold text-primary dark:text-gray-50 mb-12 text-center">
           <Link to="/recipes">
             {t('homePage.ourSpecialty.title')}
           </Link>
@@ -40,7 +40,7 @@ const RecipeCard = ({ data }: { data: Recipe }) => {
         <h3 className="text-xl dark:text-neutral-300 dark:group-hover:text-white text-primary font-semibold">
           {data.name}
         </h3>
-        <p className="text-md text-gray-600 inline-flex items-center gap-x-1 font-semibold dark:text-neutral-200">
+        <p className="text-md ml-5 text-gray-600 inline-flex items-center gap-x-1 font-semibold dark:text-neutral-200">
           {t('homePage.ourSpecialty.readMore')}
         </p>
       </div>

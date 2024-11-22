@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { toast } from "react-toastify";
-import { useGetProductById } from "../hooks/useProductsData";
+import { useGetProductById } from "../hooks/product/useProductsData";
 import { divideFeatures } from "../utils/helperFunctions";
 import Banner from "../components/ui/Banner";
 import Loader from "../components/ui/Loader";
@@ -10,8 +10,9 @@ import PopupProduct from "../components/products/PopupProduct";
 import videoProduct from "/videoProduct.png";
 import ProductPageBanner from "/ProductPageBanner.svg";
 import FeatureList from '../components/products/FeatureElement';
-import RelatedItems from '../components/ui/RelatedItems';
+import RelatedItems from '../components/layout/RelatedItems';
 import { ProductActionsProps } from '../providers/interface/products.props';
+import { Product } from '../client/types.gen';
 
 const SingleProduct = () => {
   const { t } = useTranslation();
@@ -52,7 +53,7 @@ const SingleProduct = () => {
           handleOpenPopup={handleOpenPopup}
         />
         <ProductVideo />
-        <RelatedItems itemCategory={categories[0]} type='products' />
+        <RelatedItems<Product> itemCategory={categories[0].nameInEnglish} type='products' titleKey='relatedProducts.title' linkPrefix='/products' />
       </div>
     </main>
   );

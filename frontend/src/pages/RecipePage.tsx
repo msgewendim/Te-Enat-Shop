@@ -6,13 +6,13 @@ import { BsPeople } from "react-icons/bs";
 import recipeBanner from "/RecipeBanner.svg";
 import { createRecipeCardImage } from "../utils/helperFunctions";
 import Banner from "../components/ui/Banner";
-import RelatedItems from '../components/ui/RelatedItems';
+import RelatedItems from '../components/layout/RelatedItems';
 import { RecipeInfoProps } from '../providers/interface/recipes.props';
-import { useGetRecipeById } from '../hooks/useRecipesData';
+import { useGetRecipeById } from '../hooks/recipe/useRecipesData';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Loader from '../components/ui/Loader';
-import { Ingredient, Instruction } from '../client';
+import { Ingredient, Instruction, Recipe } from '../client/types.gen';
 
 const RecipePage = () => {
   const { t } = useTranslation();
@@ -67,7 +67,7 @@ const RecipePage = () => {
             ))}
           </ol>
         </section>
-        <RelatedItems itemCategory={categories[0]} type='recipes' />
+        <RelatedItems<Recipe> itemCategory={categories[0].nameInEnglish} type='recipes' titleKey='relatedRecipes.title' linkPrefix='/recipes' />
       </div>
     </article>
   );

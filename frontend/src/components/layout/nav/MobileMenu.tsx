@@ -9,6 +9,9 @@ import { MobileMenuButtonProps, MobileMenuProps } from "../../../providers/inter
 import { FC } from "react";
 import AuthButton from "./AuthButton";
 import Logo from "../../ui/Logo";
+import { AUTH0_AUDIENCE } from "../../../utils/env.config";
+import { useAuth0 } from "@auth0/auth0-react";
+import FloatingCartButton from "../../cart/FloatingCart";
 
 const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();
@@ -21,7 +24,8 @@ const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
     { to: "/contact", label: t('nav.contact') },
     { to: "/about", label: t('nav.about') },
   ];
-
+  const { user } = useAuth0()
+  const isAdmin = user?.[`${AUTH0_AUDIENCE}/roles`]?.includes('Admin', 'admin');
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="lg:hidden z-50">
       <div className="fixed inset-0 z-20" />
@@ -51,12 +55,13 @@ const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
                 </Link>
               ))}
             </div>
-            <div className="py-6 flex justify-between">
-              <Link to="/admin" className="text-md font-semibold leading-6 p-2 text-center">
-                <BiUserCircle />
-              </Link>
+            <div className="py-6 flex justify-between ">
+              {isAdmin && <Link to="/admin" className="flex items-center justify-center p-2 transition-colors rounded-full text-primary dark:text-white hover:bg-secondary hover:text-white">
+                <BiUserCircle size={24} className="dark:text-white text-primary hover:text-white" />
+              </Link>}
               <AuthButton />
               <DarkMode />
+              <FloatingCartButton />
             </div>
           </div>
         </div>
@@ -74,7 +79,7 @@ export const MobileMenuButton = ({ setMobileMenuOpen }: MobileMenuButtonProps) =
       className="lg:hidden -m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
       aria-label={t('nav.openMenu')}
     >
-      <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+      <Bars3Icon className="h-6 w-6 dark:text-white" aria-hidden="true" />
     </button>
   );
 };

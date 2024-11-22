@@ -1,20 +1,20 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppContext } from "../../../hooks/useAppContext";
-import ProductTable from './ProductsTable';
-import useShop from '../../../hooks/useShop';
+import { useAppContext } from "../../../hooks/app/useAppContext";
+import Table from "../../ui/Table";
+import useProductsDashboard from '../hooks/useProductsDashboard';
+import { ProductDashboardReturn, ProductTableData } from '../../../providers/interface/admin.props';
+import Filters from '../../ui/Filters';
 
-const ProductList: React.FC = () => {
+
+const ProductList = () => {
   const { t } = useTranslation();
   const { setAdminActiveSection } = useAppContext();
-  const { products } = useShop({ limit: 20 });
-  if (!products || products.length === 0) {
-    return (
-      <div className="text-center py-8">
-        <p>{t('admin.products.noProducts')}</p>
-      </div>
-    );
-  }
+  const {
+    tableData = [],
+    headers = [],
+    handleDelete: handleDeleteProduct,
+    handleEdit: handleEditProduct
+  } = (useProductsDashboard() as ProductDashboardReturn) || {};
 
   return (
     <section className="mb-32 px-4 md:px-0" aria-labelledby="product-list-title">
@@ -30,9 +30,16 @@ const ProductList: React.FC = () => {
           {t('admin.products.add')}
         </button>
       </div>
-      <ProductTable products={products} />
+      <Filters clearFiltersPath='/admin' type='products' className='mb-4' />
+      <Table<ProductTableData>
+        headers={headers}
+        data={tableData}
+        onEdit={handleEditProduct}
+        onDelete={handleDeleteProduct}
+        idField="_id"
+      />
     </section>
   );
-}
+};
 
 export default ProductList;

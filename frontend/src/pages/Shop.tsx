@@ -4,7 +4,7 @@ import ShopBanner from "/ShopBanner.svg";
 import Loader from "../components/ui/Loader";
 import Filters from "../components/ui/Filters";
 import Banner from "../components/ui/Banner";
-import useShop from "../hooks/useShop";
+import useShop from "../hooks/product/useShop";
 import Pagination from '../components/ui/Pagination';
 
 const Shop = () => {
@@ -23,7 +23,7 @@ const Shop = () => {
     <main className="shop-page">
       <Banner image={ShopBanner} text={t('shop.title')} />
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 sm:max-w-[78svw]">
         <Filters type="products" clearFiltersPath='/products' />
 
         <section

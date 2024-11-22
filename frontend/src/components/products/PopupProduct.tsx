@@ -2,12 +2,12 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { FC, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import Select from '../ui/Select'
-import useAddToCartModal from '../../hooks/useAddToCartModal'
+import useAddToCartModal from '../../hooks/app/useAddToCartModal'
 import { ProductModalProps } from '../../providers/interface/products.props'
 
 
 const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
-  const { handleAddProductToCart, handleQuantityChange, handleSizeChange, prices, sizes, sizeIdx, productProperties, } = useAddToCartModal({
+  const { handleAddProductToCart, handleQuantityChange, handleSizeChange, prices, sizes, sizeIdx, itemProperties } = useAddToCartModal({
     product,
     open,
     setOpen
@@ -28,7 +28,7 @@ const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
         </TransitionChild>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
             <TransitionChild
               enter="ease-out duration-300"
               enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
@@ -37,43 +37,61 @@ const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <DialogTitle as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                        {name}
-                      </DialogTitle>
-                      <div className="mt-2">
-                        <img src={image} alt={name} className="w-full h-48 object-cover rounded-md" />
-                        <p className="text-sm text-gray-500 mt-2">{shortDescription}</p>
+              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-right shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:max-h-[600px]">
+                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 h-full">
+                  <div className="sm:flex sm:items-start sm:gap-8 flex-row-reverse">
+                    {/* Right side - Image */}
+                    <div className="sm:w-1/2">
+                      <img src={image} alt={name} className="w-full h-[400px] object-cover rounded-md" />
+                    </div>
+
+                    {/* Left side - Content */}
+                    <div className="mt-4 sm:w-1/2 sm:mt-0 flex flex-col h-[300px]">
+                      {/* Top section - Text content */}
+                      <div className="mb-auto">
+                        <DialogTitle as="h3" className="text-2xl font-bold leading-6 text-gray-900 mb-4">
+                          {name}
+                        </DialogTitle>
+                        <p className="text-base text-gray-600">{shortDescription}</p>
                       </div>
-                      <Select type='size' selectItems={sizes} initialItem={productProperties.size} classes="mt-4" onChange={handleSizeChange} />
-                      <div className="mt-4 flex items-center justify-between">
-                        <span className="text-lg font-bold">{(prices[sizeIdx] * productProperties.quantity).toFixed(2)}₪</span>
-                        <div className="flex items-center">
-                          <button onClick={() => handleQuantityChange(-1)} className="px-2 py-1 border rounded-l">-</button>
-                          <span className="px-4 py-1 border-t border-b">{productProperties.quantity}</span>
-                          <button onClick={() => handleQuantityChange(1)} className="px-2 py-1 border rounded-r">+</button>
+
+                      {/* Bottom section - Interactive elements */}
+                      <div className="space-y-6">
+                        <Select
+                          items={sizes}
+                          value={itemProperties.size}
+                          displayKey="sizeName"
+                          valueKey="sizeName"
+                          placeholder='בחר גודל'
+                          onChange={handleSizeChange}
+                          type='size'
+                          className='w-fit'
+                        />
+                        <div className="flex items-center justify-between mb-6">
+                          <span className="text-2xl font-bold text-[#42855b] order-1">
+                            ₪{(prices[sizeIdx] * itemProperties.quantity).toFixed(2)}
+                          </span>
+                          <SelectQuantity handleChange={handleQuantityChange} quantity={itemProperties.quantity} />
+                        </div>
+
+                        <div className="flex gap-4 justify-start mt-auto">
+                          <button
+                            type="button"
+                            className="inline-flex justify-center rounded-md bg-[#42855b] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#3a7751] transition-colors sm:w-auto"
+                            onClick={handleAddProductToCart}
+                          >
+                            הוסף לעגלה
+                          </button>
+                          <Link
+                            to={`/products/${_id}/info`}
+                            className="inline-flex justify-center rounded-md bg-white px-5 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-colors sm:w-auto"
+                          >
+                            קרא עוד
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-[#42855b] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#3a7751] sm:ml-3 sm:w-auto"
-                    onClick={handleAddProductToCart}
-                  >
-                    הוסף לעגלה
-                  </button>
-                  <Link
-                    to={`/products/${_id}/info`}
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                  >
-                    קרא עוד
-                  </Link>
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -84,4 +102,27 @@ const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
   )
 }
 
+export const SelectQuantity = ({ handleChange, quantity }: { handleChange: (value: number) => void, quantity: number }) => {
+  return (
+    <div className="flex items-center order-2">
+      <button
+        type='button'
+        onClick={() => handleChange(1)}
+        className="px-4 py-2 border rounded-r hover:bg-gray-50 transition-colors"
+      >
+        +
+      </button>
+      <span className="px-6 py-2 border-t border-b min-w-[50px] text-center">
+        {quantity}
+      </span>
+      <button
+        type='button'
+        onClick={() => handleChange(-1)}
+        className="px-4 py-2 border rounded-l hover:bg-gray-50 transition-colors"
+      >
+        -
+      </button>
+    </div>
+  )
+}
 export default ProductModal
