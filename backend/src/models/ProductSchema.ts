@@ -6,6 +6,7 @@ import {
   Product,
   Feature,
   SubCategory,
+  ProductSize,
 } from "../../types/product.types";
 
 const FeatureSchema = new Schema<Feature>({
@@ -18,8 +19,13 @@ const FeatureObjectSchema = new Schema<FeatureObject>({
   value: [FeatureSchema],
 });
 
+const SizeSchema = new Schema<ProductSize>({
+  sizeName: { type: String, required: true },
+  sizeQuantity: { type: String, required: true },
+});
+
 const PricingSchema = new Schema<Pricing>({
-  size: { type: String, required: true },
+  size: SizeSchema,
   price: { type: Number, required: true },
 });
 

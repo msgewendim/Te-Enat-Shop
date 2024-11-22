@@ -13,7 +13,7 @@ interface Recipe {
   servings: number;
   cookTime: string;
   difficulty: "easy" | "Medium" | "Hard";
-  categories: string[];
+  categories: Category[];
   createdAt?: Date;
 }
 
@@ -28,11 +28,8 @@ interface Instruction {
   _id?: string;
 }
 interface Category {
-  _id?: string;
-  name: string;
-  images?: string[];
-  recipes?: Recipe["_id"][];
-  products?: Product["_id"][];
+  nameInHebrew: string;
+  nameInEnglish: string;
 }
 interface Review {
   _id: string;

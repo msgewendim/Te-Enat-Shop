@@ -1,5 +1,10 @@
 import mongoose, { Schema } from "mongoose";
-import { Ingredient, Instruction, Recipe } from "../../types/recipe.types";
+import {
+  Category,
+  Ingredient,
+  Instruction,
+  Recipe,
+} from "../../types/recipe.types";
 
 const IngredientSchema = new Schema<Ingredient>({
   name: {
@@ -27,6 +32,12 @@ const InstructionSchema = new Schema<Instruction>({
     required: false,
   },
 });
+
+const CategorySchema = new Schema<Category>({
+  nameInHebrew: { type: String, required: true },
+  nameInEnglish: { type: String, required: true },
+});
+
 const recipeSchema = new Schema<Recipe>({
   _id: {
     type: Schema.Types.ObjectId,
@@ -48,10 +59,10 @@ const recipeSchema = new Schema<Recipe>({
     validate: [(v: string) => v.length > 0, "An Image is Required"],
   },
   categories: {
-    type: [String],
+    type: [CategorySchema],
     required: true,
     validate: [
-      (v: string[]) => v.length > 0,
+      (v: Category[]) => v.length > 0,
       "At least one category should be provided.",
     ],
   },

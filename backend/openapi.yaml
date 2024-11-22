@@ -188,8 +188,7 @@ components:
             type: object
             properties:
               size:
-                type: string
-                example: "100g"
+                type: ProductSize
                 description: The weight option for the product.
               price:
                 type: number
@@ -232,6 +231,17 @@ components:
           type: integer
           description: An optional field for the total number of sales.
           example: 5000
+
+    ProductSize:
+      type: object
+      properties:
+        sizeName:
+          type: string
+        sizeQuantity:
+          type: string
+      required:
+        - sizeName
+        - sizeQuantity
 
     Feature:
       type: object

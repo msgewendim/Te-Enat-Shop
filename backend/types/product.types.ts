@@ -55,7 +55,10 @@ export interface Pricing {
    */
   price: number;
 }
-
+export interface ProductSize {
+  sizeName: string;
+  sizeQuantity: string;
+}
 export interface ProductCardProps {
   _id: string;
   name: string;
