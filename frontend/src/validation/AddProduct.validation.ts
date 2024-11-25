@@ -10,11 +10,22 @@ const FeatureObjectSchema = z.object({
   value: z.array(FeatureSchema).min(1, "At least one feature is required"),
 });
 
+const ProductSizeSchema = z.object({
+  sizeName: z.string().min(1, "Size name is required"),
+  sizeQuantity: z.number().positive("Size quantity must be positive"),
+});
 const PricingSchema = z.object({
-  size: z.string().min(1, "Size is required"),
+  size: ProductSizeSchema,
   price: z.number().positive("Price must be positive"),
 });
-
+const SubCategorySchema = z.object({
+  nameInEnglish: z.string().min(1, "Subcategory name is required"),
+  nameInHebrew: z.string().min(1, "Subcategory name is required"),
+});
+const CategorySchema = z.object({
+  nameInEnglish: z.string().min(1, "Category name is required"),
+  nameInHebrew: z.string().min(1, "Category name is required"),
+});
 export const ProductSchema = z.object({
   name: z.string().min(1, "Name is required"),
   shortDescription: z
@@ -25,7 +36,10 @@ export const ProductSchema = z.object({
     .array(PricingSchema)
     .min(1, "At least one pricing option is required"),
   image: z.string().url("Invalid image URL"),
-  categories: z.array(z.string()).min(1, "At least one category is required"),
+  categories: z
+    .array(CategorySchema)
+    .min(1, "At least one category is required"),
+  subCategories: z.array(SubCategorySchema).optional(),
   features: FeatureObjectSchema,
 });
 

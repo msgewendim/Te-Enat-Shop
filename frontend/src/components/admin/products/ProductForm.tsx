@@ -16,6 +16,7 @@ const ProductForm = ({ item: product, onSubmit: onSubmitProp, message }: FormPro
   const { setAdminActiveSection } = useAppContext();
 
   const onSubmit: SubmitHandler<Product> = (data) => {
+    console.log(data);
     onSubmitProp(data);
     reset();
     setAdminActiveSection("products");
@@ -66,21 +67,24 @@ const ProductForm = ({ item: product, onSubmit: onSubmitProp, message }: FormPro
             control={control}
             register={register}
           />
-          {errors.pricing && <span className="text-red-500">{errors.pricing.message}</span>}
+          {errors.pricing && <span className="text-red-500">{errors.pricing[0]?.size?.message}</span>}
+          {errors.pricing && <span className="text-red-500">{errors.pricing[0]?.price?.message}</span>}
+          {errors.pricing && <span className="text-red-500">{errors.pricing[0]?.message}</span>}
         </div>
 
         <AddCategoryInput<Product>
           register={register}
           setValue={setValue}
-          categories={productCategories}
+          listOfCategories={productCategories}
           initialMainCategories={existingMainCategories}
           initialSubCategories={existingSubCategories}
           type="product"
         />
-        {errors.categories && <span className="text-red-500">{errors.categories.message}</span>}
+        {errors.categories && <span className="text-red-500">{errors.categories[0]?.message}</span>}
+        {errors.subCategories && <span className="text-red-500">{errors.subCategories[0]?.message}</span>}
 
         <AddFeatureGroupInput control={control} register={register} />
-        {errors.features && <span className="text-red-500">{errors.features.message}</span>}
+        {errors.features && <span className="text-red-500">{errors.features.value?.message}</span>}
 
         <div className="w-full mt-6 flex justify-center">
           <button
@@ -90,6 +94,7 @@ const ProductForm = ({ item: product, onSubmit: onSubmitProp, message }: FormPro
             {isEditing ? t('form.productForm.updateButton') : t('form.productForm.saveButton')}
           </button>
         </div>
+        {errors.root && <span className="text-red-500">{errors.root.message}</span>}
       </form>
       <DevTool control={control} />
     </>

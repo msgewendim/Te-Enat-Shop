@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { CartItem, Feature } from "../client";
+import { CartItem, Feature, SubCategory } from "../client";
 import { recipeCategories, recipeSubCategoriesMapping } from "./constants";
 import { productCategories } from "./constants";
 import { productSubCategoriesMapping } from "./constants";
@@ -104,9 +104,15 @@ const addItemToCartList = (
       )
     : [...cartList, newItem];
 };
-
-function categoriesBasedOnType(type: string) {
-  return type === "recipes"
+const subCategoriesByParentCategoryKey = (
+  parentCategoryNameKey: string,
+  type: "recipe" | "product"
+): SubCategory[] => {
+  const { subCategoriesMapping } = categoriesBasedOnType(type);
+  return (subCategoriesMapping[parentCategoryNameKey] || []) as SubCategory[];
+};
+function categoriesBasedOnType(type: "recipe" | "product") {
+  return type === "recipe"
     ? {
         categories: recipeCategories,
         subCategoriesMapping: recipeSubCategoriesMapping,
@@ -127,4 +133,5 @@ export {
   removeItemFromCartList,
   getTotalPrice,
   randomizeArray,
+  subCategoriesByParentCategoryKey,
 };

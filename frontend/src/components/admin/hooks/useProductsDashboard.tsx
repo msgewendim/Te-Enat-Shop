@@ -6,7 +6,7 @@ import { Product } from '../../../client';
 
 function useProductsDashboard() {
   const { setProductToEdit } = useAppContext();
-  const { products, isLoading, isError, error } = useShop({ limit: 20 });
+  const { products, isLoading, isError, error, refetchProducts } = useShop({ limit: 20 });
   const deleteMutation = useDeleteProductMutation();
 
   const displayFields = {
@@ -50,6 +50,7 @@ function useProductsDashboard() {
     formatTableData,
     displayFields,
     setItemToEdit: (product) => setProductToEdit(product),
+    refetch: refetchProducts
   });
 }
 

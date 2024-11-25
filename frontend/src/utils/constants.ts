@@ -1,9 +1,9 @@
-import { Category } from "../client/types.gen";
+import { Category, SubCategory } from "../client/types.gen";
 import { dessert, hotShiro, kurkum, shiro, cookies } from "./imageFiles";
 
 // Define types for category mappings
 type CategoryMapping = {
-  [key: string]: Category[] | string[] | string;
+  [key: string]: Category[] | string[] | string | SubCategory[];
 };
 
 // Product categories
@@ -75,18 +75,6 @@ const recipeSubCategoriesMapping: CategoryMapping = {
   Breakfast: ["ארוחת בוקר", "ארוחת בוקר מוכנות"],
   Dinner: ["ארוחת ערב", "ארוחת ערב מוכנות"],
 };
-// Create reverse mappings
-const createReverseMapping = (mapping: CategoryMapping): CategoryMapping =>
-  Object.fromEntries(
-    Object.entries(mapping).map(([key, value]) => [value, key])
-  );
-
-const reverseProductCategoriesMapping = createReverseMapping(
-  productCategoriesMapping
-);
-const reverseRecipeCategoriesMapping = createReverseMapping(
-  recipeCategoriesMapping
-);
 
 // Generic function to translate categories
 const translateCategories = <T extends string>(
@@ -129,11 +117,9 @@ const ourTopCategories = productCategories
 export {
   productCategories,
   productCategoriesMapping,
-  reverseProductCategoriesMapping,
   translateProductCategories,
   recipeCategories,
   recipeCategoriesMapping,
-  reverseRecipeCategoriesMapping,
   translateRecipeCategories,
   ourTopCategories,
   TopCategory,

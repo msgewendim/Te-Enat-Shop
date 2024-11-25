@@ -6,28 +6,35 @@ import { BASE_API_URL } from "../../utils/env.config";
 import { toast } from "react-toastify";
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [openCart, setOpenCart] = useState(false)
-  const [category, setCategory] = useState<string>("")
-  const [subCategory, setSubCategory] = useState<string>("");
-  const [sizeIdx, setSizeIdx] = useState<number>(0)
-  const [page, setPage] = useState<number>(1);
+  // checkout
   const [paymentFormUrl, setPaymentFormUrl] = useState<string>("")
+  // pagination
+  const [page, setPage] = useState<number>(1);
   const [filter, setFilter] = useState<string>("");
+  const [subCategory, setSubCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>("")
+  // cart
+  const [openCart, setOpenCart] = useState(false)
+  const [sizeIdx, setSizeIdx] = useState<number>(0)
   const [cartItems, setCartItems] = useState<CartItem[]>(JSON.parse(sessionStorage.getItem("cartItems") as string) || [])
   const [orderItems, setOrderItems] = useState<OrderItem[]>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
+  // admin
   const [adminActiveSection, setAdminActiveSection] = useState<string>("products")
   const [productToEdit, setProductToEdit] = useState<Product>();
   const [recipeToEdit, setRecipeToEdit] = useState<Recipe>();
   const [packageToEdit, setPackageToEdit] = useState<Package>();
+  // delete product modal
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     onConfirm: () => { },
   });
+
   useEffect(() => {
     // when the cart items change, recalculate the total price
     setTotalPrice(parseFloat(getTotalPrice(cartItems).toFixed(2)))
   }, [cartItems])
+
   // listen for payment notifications from the server
   useEffect(() => {
     const eventSource = new EventSource(`${BASE_API_URL}/events`)
@@ -54,7 +61,13 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       return { ...prevState, isOpen: true, onConfirm };
     });
   };
-
+  useEffect(() => {
+    if (!adminActiveSection.includes("edit")) {
+      setProductToEdit(undefined)
+      setRecipeToEdit(undefined)
+      setPackageToEdit(undefined)
+    }
+  }, [adminActiveSection])
   const hideModal = () => {
     setModalState({ isOpen: false, onConfirm: () => { } });
   };

@@ -5,6 +5,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { Category, Product, SubCategory } from "../../client/types.gen";
+import { QueryObserverResult } from "@tanstack/react-query";
 
 interface ArrayInputFieldProps {
   control: Control<Product>;
@@ -14,7 +15,7 @@ interface ArrayInputFieldProps {
 interface AddCategoryInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   setValue: UseFormSetValue<T>;
-  categories: Category[];
+  listOfCategories: Category[];
   initialMainCategories?: Category[];
   initialSubCategories?: SubCategory[];
   type: "product" | "recipe";
@@ -49,6 +50,7 @@ interface ProductDashboardReturn {
   headers: string[];
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
+  refetch: () => Promise<QueryObserverResult<Product[], Error>>;
 }
 type OrderTableData = {
   _id: string;

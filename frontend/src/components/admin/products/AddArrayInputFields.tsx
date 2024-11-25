@@ -5,7 +5,7 @@ import { FormInput } from '../../ui/FormInput';
 import { useState } from 'react';
 import { AddCategoryInputProps, ArrayInputFieldProps } from '../../../providers/interface/admin.props';
 import FormButton from '../../ui/FormButton';
-import { productSubCategoriesMapping } from '../../../utils/constants';
+import { subCategoriesByParentCategoryKey } from '../../../utils/helperFunctions';
 
 export const AddFeatureGroupInput = ({ control, register }: ArrayInputFieldProps) => {
   const { t } = useTranslation();
@@ -115,39 +115,45 @@ export const AddPricingInput = ({ control, register }: ArrayInputFieldProps) => 
   );
 };
 
-export const AddCategoryInput = <T extends FieldValues>({ register, setValue, categories, initialMainCategories, initialSubCategories, type }: AddCategoryInputProps<T>) => {
+export const AddCategoryInput = <T extends FieldValues>({ register, setValue, listOfCategories, initialMainCategories, initialSubCategories, type }: AddCategoryInputProps<T>) => {
   const { t } = useTranslation();
   const [selectedMainCategories, setSelectedMainCategories] = useState<Category[]>(initialMainCategories || []);
   const [selectedSubCategories, setSelectedSubCategories] = useState<SubCategory[]>(initialSubCategories || []);
 
-  const toggleMainCategory = (value: Category) => {
-    setSelectedMainCategories(prev => {
-      const newSelection = prev.includes(value)
-        ? prev.filter(cat => cat !== value)
-        : [...prev, value];
+  const handleMainCategoryToggle = (category: Category) => {
+    setSelectedMainCategories((prev) => {
+      const isSelected = prev.includes(category);
+      const newSelection = isSelected
+        ? prev.filter((cat) => cat !== category)
+        : [...prev, category];
 
       // When deselecting a main category, remove its subcategories
-      if (!newSelection.includes(value)) {
-        setSelectedSubCategories(prev => {
-          return prev.filter(subCat => !selectedSubCategories.some(cat => cat === subCat));
-        });
+      if (!isSelected) {
+        setSelectedSubCategories([]);
+      } else {
+        setSelectedSubCategories((prev) =>
+          prev.filter((subCat) => !subCategoriesByParentCategoryKey(category.nameInEnglish, type).some((cat) => cat === subCat))
+        );
       }
 
-      setValue('categories.main' as Path<T>, newSelection as PathValue<T, Path<T>>);
+      // Update the form value for main categories
+      setValue('categories' as Path<T>, newSelection as PathValue<T, Path<T>>);
       return newSelection;
     });
   };
 
-  const toggleSubCategory = (value: SubCategory, parentValue: Category) => {
+  const handleSubCategoryToggle = (subCategory: SubCategory, mainParentCategory: Category) => {
     // Only allow selecting subcategories if parent is selected
-    if (!selectedMainCategories.includes(parentValue)) return;
+    if (!selectedMainCategories.includes(mainParentCategory)) return;
 
-    setSelectedSubCategories(prev => {
-      const newSelection = prev.includes(value)
-        ? prev.filter(cat => cat !== value)
-        : [...prev, value];
+    setSelectedSubCategories((prev) => {
+      const isSelected = prev.includes(subCategory);
+      const newSelection = isSelected
+        ? prev.filter((cat) => cat !== subCategory)
+        : [...prev, subCategory];
 
-      setValue('categories.sub' as Path<T>, newSelection as PathValue<T, Path<T>>);
+      // Update form value for subcategories
+      setValue('subCategories' as Path<T>, newSelection as PathValue<T, Path<T>>);
       return newSelection;
     });
   };
@@ -160,11 +166,11 @@ export const AddCategoryInput = <T extends FieldValues>({ register, setValue, ca
 
       {/* Main Categories */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {categories.map((category) => (
+        {listOfCategories.map((category) => (
           <button
             key={category.nameInEnglish}
             type="button"
-            onClick={() => toggleMainCategory(category)}
+            onClick={() => handleMainCategoryToggle(category)}
             className={`px-3 py-1 text-sm font-medium rounded-full ${selectedMainCategories.includes(category)
               ? 'bg-blue-600 text-white'
               : 'bg-gray-200 text-gray-800'
@@ -181,24 +187,22 @@ export const AddCategoryInput = <T extends FieldValues>({ register, setValue, ca
         <div className="mt-2">
           <h4 className="text-sm font-medium mb-2">{t('form.addCategory.subCategories')}</h4>
           <div className="flex flex-wrap gap-2">
-            {categories
-              .filter(cat => selectedMainCategories.includes(cat))
-              .map(category =>
-                (productSubCategoriesMapping[category.nameInEnglish] as SubCategory[]).map(subCat => (
-                  <button
-                    key={subCat.nameInEnglish}
-                    type="button"
-                    onClick={() => toggleSubCategory(subCat, category)}
-                    className={`px-3 py-1 text-sm font-medium rounded-full ${selectedSubCategories.includes(subCat)
-                      ? 'bg-green-600 text-white'
-                      : 'bg-gray-100 text-gray-600'
-                      }`}
-                    aria-pressed={selectedSubCategories.includes(subCat)}
-                  >
-                    {subCat.nameInHebrew}
-                  </button>
-                ))
-              )}
+            {selectedMainCategories.map(mainCategory =>
+              subCategoriesByParentCategoryKey(mainCategory.nameInEnglish, type)?.map(subCat => (
+                <button
+                  key={subCat.nameInEnglish}
+                  type="button"
+                  onClick={() => handleSubCategoryToggle(subCat, mainCategory)}
+                  className={`px-3 py-1 text-sm font-medium rounded-full ${selectedSubCategories.includes(subCat)
+                    ? 'bg-green-600 text-white'
+                    : 'bg-gray-100 text-gray-600'
+                    }`}
+                  aria-pressed={selectedSubCategories.includes(subCat)}
+                >
+                  {subCat.nameInHebrew}
+                </button>
+              ))
+            )}
           </div>
         </div>
       )}
@@ -206,14 +210,14 @@ export const AddCategoryInput = <T extends FieldValues>({ register, setValue, ca
       {/* Hidden inputs for form submission */}
       <input
         type="hidden"
-        {...register('categories.main' as Path<T>)}
-        value={selectedMainCategories.map(cat => cat.nameInEnglish)}
+        {...register('categories' as Path<T>)}
+        value={JSON.stringify(selectedMainCategories)}
       />
       {type === "product" && (
         <input
           type="hidden"
-          {...register('categories.sub' as Path<T>)}
-          value={selectedSubCategories.map(subCat => subCat.nameInEnglish)}
+          {...register('subCategories' as Path<T>)}
+          value={JSON.stringify(selectedSubCategories)}
         />
       )}
     </fieldset>

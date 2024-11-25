@@ -6,17 +6,19 @@ import { ProductSchema } from '../../validation/AddProduct.validation';
 function useProductForm(initialProduct?: Product) {
   const { register, control, handleSubmit, formState: { errors }, setValue, reset } = useForm<Product>({
     defaultValues: initialProduct || {
+      name: "",
+      shortDescription: "",
       pricing: [{ size: { sizeName: '', sizeQuantity: 0 }, price: 0 }],
       image: "",
       categories: [],
+      subCategories: [],
       features: {
         value: []
-      },
-      name: "",
-      shortDescription: ""
+      }
     },
     resolver: zodResolver(ProductSchema)  // validate the form
   });
+
   const existingMainCategories = initialProduct?.categories || [];
   const existingSubCategories = initialProduct?.subCategories || [];
   return {
