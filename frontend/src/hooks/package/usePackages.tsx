@@ -2,7 +2,8 @@ import { useState, useMemo } from "react"
 import { query } from "../../providers/interface/context"
 import { toast } from "react-toastify";
 import { useAppContext } from "../app/useAppContext"
-import { useGetPackages } from "./usePackagesData";
+import useGenericData from "../app/useGenericData";
+import { Package } from "../../client";
 
 function usePackages({ limit = 9 }: { limit?: number }) {
   const [openCart, setOpenCart] = useState(false)
@@ -14,7 +15,8 @@ function usePackages({ limit = 9 }: { limit?: number }) {
       limit,
     }
   }, [page, limit])
-  const { data, error, isLoading, isError, isPlaceholderData } = useGetPackages(query)
+  const { useGetItems } = useGenericData<Package>("/packages");
+  const { data, error, isLoading, isError, isPlaceholderData } = useGetItems(query)
 
   if (isError) {
     toast.error(error.message)

@@ -24,7 +24,7 @@ const Shop = () => {
       <Banner image={ShopBanner} text={t('shop.title')} />
 
       <div className="container mx-auto px-4 py-8 sm:max-w-[78svw]">
-        <Filters type="products" clearFiltersPath='/products' />
+        <Filters type="product" clearFiltersPath='/products' />
 
         <section
           className="my-8"

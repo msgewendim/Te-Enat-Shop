@@ -1,14 +1,14 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { useTranslation } from "react-i18next";
 import { TbLogout, TbLogin } from "react-icons/tb";
+import useAuth from "../../../hooks/auth/useAuth";
 
 const AuthButton = () => {
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const { loginWithPopup, logout, isAuthenticated } = useAuth();
   const { t } = useTranslation();
 
   return (
     <button
-      onClick={isAuthenticated ? () => logout({ logoutParams: { returnTo: window.location.origin } }) : () => loginWithRedirect()}
+      onClick={isAuthenticated ? () => logout({ logoutParams: { returnTo: window.location.origin } }) : () => loginWithPopup()}
       className="flex items-center justify-center p-2 transition-colors rounded-full text-primary dark:text-white hover:bg-secondary hover:text-white"
       aria-label={isAuthenticated ? t('nav.logout') : t('nav.login')}
     >

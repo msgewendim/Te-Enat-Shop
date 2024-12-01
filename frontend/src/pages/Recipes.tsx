@@ -17,7 +17,7 @@ const Recipes = () => {
     <main className="recipes-page">
       <Banner image={RecipesBanner} text={t('recipes.bannerText')} />
       <div className="container mx-auto px-4 py-8">
-        <Filters type="recipes" clearFiltersPath='/recipes' />
+        <Filters type="recipe" clearFiltersPath='/recipes' />
         <section className="container mx-auto px-4 py-12" aria-label={t('recipes.sectionLabel')}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {recipes?.map((recipe, idx) => (

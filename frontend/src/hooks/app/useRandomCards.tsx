@@ -1,62 +1,53 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useCallback, useEffect, useState } from "react";
 import { randomizeArray } from "../../utils/helperFunctions";
-import { query } from "../../providers/interface/context";
+import { toast } from "react-toastify";
+import { useGetRandomItems } from "../useAppData";
+import { RandomItem } from "../../client/types.gen";
 
-interface QueryResponse<T> {
-  products?: T[];
-  packages?: T[];
-  recipes?: T[];
-  totalPages?: number;
-  currentPage?: number;
-  hasMore?: boolean;
-}
+function useRandomCards<T extends RandomItem>({ endpoint }: { endpoint: string }) {
 
-interface HookResponse<T> {
-  data?: QueryResponse<T>;
-  isError: boolean;
-  isLoading: boolean;
-  error: Error | null;
-}
-function useRandomCards<T>(
-  {
-    fetchHook,
-    dataKey = 'products'
-  }: {
-    fetchHook: (query: query) => HookResponse<T>;
-    dataKey?: string;
-  }) {
-  const [page, setPage] = useState(1);
   const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 768px)').matches);
+  const limit = isMobile ? 1 : 3;
+  const [page, setPage] = useState(1);
 
+  const query = useCallback(() => ({ page, limit }), [page, limit]);
+
+  const { data, isLoading, isError, error } = useGetRandomItems(endpoint, query())
+  const { data: response } = data || {}
+  const { items, totalPages } = response || {}
+
+  // Media query listener to adjust items per page based on screen size
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    const handler = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches)
+      setPage(1)
+    };
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  const limit = isMobile ? 1 : 3;
-  const { data, isError, isLoading, error } = fetchHook({
-    page,
-    limit
-  });
+  const randomizedItems = randomizeArray<T>(items as T[] || []);
 
-  const randomizedItems = randomizeArray<T>(data?.[dataKey as keyof QueryResponse<T>] as T[] || []);
+  if (isError && error) toast.error(error.message);
 
-  if (isError) toast.error(error?.message);
+  const handlePrevious = () => setPage((old) => Math.max(old - 1, 1));
+  const handleNext = () => setPage((old) => (totalPages && old < totalPages ? old + 1 : old));
 
   return {
     data: randomizedItems,
     isLoading,
-    totalPages: data?.totalPages,
-    currentPage: page,
-    hasMore: page < (data?.totalPages || 0),
     isError,
     error,
+    setPage,
     page,
-    setPage
-  }
+    totalPages,
+    hasMore: page < (totalPages || 0),
+    currentPage: page,
+    handlePrevious,
+    handleNext,
+    limit,
+  };
 }
 
 export default useRandomCards;

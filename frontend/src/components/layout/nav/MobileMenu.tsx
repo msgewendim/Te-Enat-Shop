@@ -9,9 +9,8 @@ import { MobileMenuButtonProps, MobileMenuProps } from "../../../providers/inter
 import { FC } from "react";
 import AuthButton from "./AuthButton";
 import Logo from "../../ui/Logo";
-import { AUTH0_AUDIENCE } from "../../../utils/env.config";
-import { useAuth0 } from "@auth0/auth0-react";
 import FloatingCartButton from "../../cart/FloatingCart";
+import useAuth from "../../../hooks/auth/useAuth";
 
 const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();
@@ -24,8 +23,7 @@ const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
     { to: "/contact", label: t('nav.contact') },
     { to: "/about", label: t('nav.about') },
   ];
-  const { user } = useAuth0()
-  const isAdmin = user?.[`${AUTH0_AUDIENCE}/roles`]?.includes('Admin', 'admin');
+  const { isAdmin } = useAuth();
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="lg:hidden z-50">
       <div className="fixed inset-0 z-20" />

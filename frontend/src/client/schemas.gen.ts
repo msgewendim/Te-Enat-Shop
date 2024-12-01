@@ -668,3 +668,86 @@ export const $Instruction = {
     },
     required: ['step', 'description']
 } as const;
+
+export const $RandomItemsResponse = {
+    type: 'object',
+    properties: {
+        items: {
+            type: 'array',
+            items: {
+                oneOf: [
+                    {
+                        '$ref': '#/components/schemas/Product'
+                    },
+                    {
+                        '$ref': '#/components/schemas/Recipe'
+                    },
+                    {
+                        '$ref': '#/components/schemas/Package'
+                    }
+                ]
+            }
+        },
+        currentPage: {
+            type: 'integer'
+        },
+        totalPages: {
+            type: 'integer'
+        }
+    },
+    required: ['items', 'currentPage', 'totalPages']
+} as const;
+
+export const $RandomItem = {
+    oneOf: [
+        {
+            '$ref': '#/components/schemas/Product'
+        },
+        {
+            '$ref': '#/components/schemas/Recipe'
+        },
+        {
+            '$ref': '#/components/schemas/Package'
+        }
+    ]
+} as const;
+
+export const $SuccessResponse = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean'
+        },
+        message: {
+            type: 'string'
+        },
+        data: {
+            oneOf: [
+                {
+                    type: 'object',
+                    '$ref': '#/components/schemas/RandomItem'
+                },
+                {
+                    type: 'array',
+                    items: {
+                        '$ref': '#/components/schemas/RandomItem'
+                    }
+                }
+            ]
+        }
+    },
+    required: ['success', 'message', 'data']
+} as const;
+
+export const $ErrorResponse = {
+    type: 'object',
+    properties: {
+        success: {
+            type: 'boolean'
+        },
+        message: {
+            type: 'string'
+        }
+    },
+    required: ['success', 'message']
+} as const;

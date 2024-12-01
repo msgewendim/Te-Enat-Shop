@@ -1,13 +1,15 @@
 import { useAppContext } from "../../../hooks/app/useAppContext";
-import useGenericDashboard, { TableData } from '../../../hooks/app/useGenericDashboard';
+import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
+import { TableData } from "../../../providers/interface/general.props";
 import { Package } from '../../../client';
-import { useDeletePackageMutation } from "../../../hooks/package/usePackagesData";
 import usePackages from "../../../hooks/package/usePackages";
+import useGenericData from "../../../hooks/app/useGenericData";
 
 function usePackagesDashboard() {
   const { setPackageToEdit } = useAppContext();
   const { packages, isLoading, isError, error } = usePackages({ limit: 20 });
-  const deleteMutation = useDeletePackageMutation();
+  const { useDeleteItemMutation } = useGenericData<Package>("/packages");
+  const deleteMutation = useDeleteItemMutation();
 
   const displayFields = {
     name: "שם חבילה",

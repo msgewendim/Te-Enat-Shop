@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useGetRelatedItems } from "../useAppData";
 
-function useRelatedItems<T>(itemCategory: string, type: string) {
+function useRelatedItems(endpoint: string, itemCategory: string) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4;
 
-  const { data: items, isError, isLoading, error } = useGetRelatedItems<T>({
+  const { data, isError, isLoading, error } = useGetRelatedItems(endpoint, {
     category: itemCategory,
-    type: type,
     limit: itemsPerPage
   });
+  const { data: relatedItems } = data || {}
+  const items = Array.isArray(relatedItems) ? relatedItems : []
 
   const nextItems = () => {
     setCurrentIndex((prevIndex) =>

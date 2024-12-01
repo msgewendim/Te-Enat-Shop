@@ -31,7 +31,7 @@ const RecipeList = () => {
           {t('admin.recipes.add')}
         </button>
       </div>
-      <Filters clearFiltersPath='' type='recipes' className='mb-4' />
+      <Filters clearFiltersPath='' type='recipe' className='mb-4' />
       <Table<RecipeTableData>
         headers={headers}
         data={tableData}

@@ -1,16 +1,14 @@
 import { useTranslation } from "react-i18next";
 import PackageCard from "./PackageCard";
+import { Package } from "../../client";
 import useRandomCards from "../../hooks/app/useRandomCards";
-import { Package } from "../../client/types.gen";
-import { useGetRandomPackages } from "../../hooks/package/usePackagesData";
-
 
 const OurPackages = () => {
   const { t } = useTranslation();
   const { data: packages } = useRandomCards<Package>({
-    fetchHook: useGetRandomPackages,
-    dataKey: 'packages'
-  })
+    endpoint: '/packages/random',
+  });
+
   return (
     <section className="bg-[#D2FCFF] dark:bg-gray-900 py-16" lang="he">
       <div className="container mx-auto px-4">

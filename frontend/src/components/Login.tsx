@@ -1,9 +1,9 @@
-import { useAuth0 } from "@auth0/auth0-react"
+import useAuth from "../hooks/auth/useAuth"
 
 const Login = () => {
-  const { getAccessTokenSilently } = useAuth0()
+  const { getToken } = useAuth()
   const handleClick = async () => {
-    const token = await getAccessTokenSilently()
+    const token = await getToken()
     const response = await fetch('http://localhost:3005/api/users', {
       method: 'POST',
       headers: {

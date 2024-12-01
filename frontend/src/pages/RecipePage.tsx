@@ -8,16 +8,17 @@ import { createRecipeCardImage } from "../utils/helperFunctions";
 import Banner from "../components/ui/Banner";
 import RelatedItems from '../components/layout/RelatedItems';
 import { RecipeInfoProps } from '../providers/interface/recipes.props';
-import { useGetRecipeById } from '../hooks/recipe/useRecipesData';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Loader from '../components/ui/Loader';
 import { Ingredient, Instruction, Recipe } from '../client/types.gen';
+import useGenericData from '../hooks/app/useGenericData';
 
 const RecipePage = () => {
   const { t } = useTranslation();
   const { recipeID } = useParams();
-  const { data: recipe, isError, isLoading, error } = useGetRecipeById(recipeID || "");
+  const { useGetItemById } = useGenericData<Recipe>("/recipes");
+  const { data: recipe, isError, isLoading, error } = useGetItemById(recipeID || "");
   if (isLoading) return <Loader />;
   if (isError) {
     toast.error(error?.message || t('errors.genericError'));
@@ -67,7 +68,7 @@ const RecipePage = () => {
             ))}
           </ol>
         </section>
-        <RelatedItems<Recipe> itemCategory={categories[0].nameInEnglish} type='recipes' titleKey='relatedRecipes.title' linkPrefix='/recipes' />
+        <RelatedItems endpoint='/recipes' itemCategory={categories[0].nameInEnglish} titleKey='relatedRecipes.title' linkPrefix='/recipes' />
       </div>
     </article>
   );

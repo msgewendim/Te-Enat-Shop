@@ -1,13 +1,15 @@
 import { useAppContext } from "../../../hooks/app/useAppContext";
 import useShop from '../../../hooks/product/useShop';
-import { useDeleteProductMutation } from '../../../hooks/product/useProductsData';
-import useGenericDashboard, { TableData } from '../../../hooks/app/useGenericDashboard';
+import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import { Product } from '../../../client';
+import { TableData } from "../../../providers/interface/general.props";
+import useGenericData from "../../../hooks/app/useGenericData";
 
 function useProductsDashboard() {
   const { setProductToEdit } = useAppContext();
+  const { useDeleteItemMutation } = useGenericData<Product>("/products");
+  const deleteMutation = useDeleteItemMutation();
   const { products, isLoading, isError, error, refetchProducts } = useShop({ limit: 20 });
-  const deleteMutation = useDeleteProductMutation();
 
   const displayFields = {
     name: "שם מוצר",

@@ -3,30 +3,7 @@ import { useAppContext } from "./useAppContext";
 import { toast } from "react-toastify";
 import { useCallback, useEffect } from "react";
 import Loader from "../../components/ui/Loader";
-import { QueryObserverResult } from '@tanstack/react-query';
-import { RefetchOptions } from '@tanstack/react-query';
-
-type DashboardConfig<T> = {
-  items: T[] | undefined;
-  isLoading: boolean;
-  isError: boolean;
-  error: Error | null;
-  deleteMutation: {
-    mutate: (id: string) => void;
-    isSuccess: boolean;
-    isError: boolean;
-  };
-  itemType: string;
-  formatTableData: (items: T[]) => TableData[];
-  displayFields: Record<string, string>;
-  setItemToEdit: (item: T) => void;
-  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<T[], Error>>;
-};
-
-export type TableData = {
-  _id: string;
-  [key: string]: string | number | React.ReactNode;
-};
+import { DashboardConfig } from '../../providers/interface/general.props';
 
 function useGenericDashboard<T extends { _id: string }>({
   items,
@@ -64,7 +41,7 @@ function useGenericDashboard<T extends { _id: string }>({
   useEffect(() => {
     if (deleteMutation.isSuccess) {
       toast.success(t(`admin.${itemType}s.deleteSuccess`));
-      refetch();
+      refetch && refetch();
     }
     if (deleteMutation.isError) {
       toast.error(t(`admin.${itemType}s.deleteError`));

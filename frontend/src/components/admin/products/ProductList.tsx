@@ -40,7 +40,7 @@ const ProductList = () => {
           {t('admin.products.add')}
         </button>
       </div>
-      <Filters clearFiltersPath='/admin' type='products' className='mb-4' />
+      <Filters clearFiltersPath='/admin' type='product' className='mb-4' />
       <Table<ProductTableData>
         headers={headers}
         data={tableData}

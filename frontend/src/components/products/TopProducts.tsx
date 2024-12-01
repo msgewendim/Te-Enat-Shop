@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useGetRandomProducts } from "../../hooks/product/useProductsData";
 import Loader from "../ui/Loader";
 import ProductCard from "./ProductCard";
 import { CarouselButtonProps } from "../../providers/interface/general.props";
@@ -11,13 +10,10 @@ import useRandomCards from "../../hooks/app/useRandomCards";
 
 const TopProducts = () => {
   const { t } = useTranslation();
-  const { data, isLoading, setPage, page, totalPages } = useRandomCards<Product>({
-    fetchHook: useGetRandomProducts,
-    dataKey: 'products'
-  });
+  const { data: products, isLoading, handleNext, handlePrevious, page, totalPages } = useRandomCards<Product>({
+    endpoint: '/products/random',
+  })
 
-  const handlePrevious = () => setPage((old) => Math.max(old - 1, 1));
-  const handleNext = () => setPage((old) => (totalPages && old < totalPages ? old + 1 : old));
   return (
     <section className="bg-[#F9F8F8] dark:bg-gray-900 py-12" lang="he">
       <div className="container mx-auto px-4">
@@ -37,7 +33,7 @@ const TopProducts = () => {
             <Loader />
           ) : (
             <div className="flex justify-center items-center gap-10 my-5">
-              {Array.isArray(data) && data.map((product) => (
+              {products.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>

@@ -1,13 +1,15 @@
 import { useAppContext } from "../../../hooks/app/useAppContext";
-import useGenericDashboard, { TableData } from '../../../hooks/app/useGenericDashboard';
+import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import { Recipe } from '../../../client';
 import useRecipes from "../../../hooks/recipe/useRecipes";
-import { useDeleteRecipeMutation } from "../../../hooks/recipe/useRecipesData";
+import useGenericData from "../../../hooks/app/useGenericData";
+import { TableData } from "../../../providers/interface/general.props";
 
 function useRecipesDashboard() {
   const { setRecipeToEdit } = useAppContext();
+  const { useDeleteItemMutation } = useGenericData<Recipe>("/recipes");
+  const deleteMutation = useDeleteItemMutation();
   const { recipes, isLoading, isError, error } = useRecipes({ limit: 20 });
-  const deleteMutation = useDeleteRecipeMutation();
 
   const displayFields = {
     name: "שם מתכון",

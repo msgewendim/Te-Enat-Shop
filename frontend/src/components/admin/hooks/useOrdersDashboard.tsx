@@ -1,9 +1,11 @@
-import useGenericDashboard, { TableData } from '../../../hooks/app/useGenericDashboard';
+import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import { Order } from '../../../client';
-import { useGetOrders } from "../../../providers/api/Orders";
+import useGenericData from "../../../hooks/app/useGenericData";
+import { TableData } from "../../../providers/interface/general.props";
 
 function useOrdersDashboard() {
-  const { data: orders, isLoading, isError, error } = useGetOrders({
+  const { useGetItems } = useGenericData<Order>("/orders");
+  const { data: orders, isLoading, isError, error } = useGetItems({
     limit: 10
   });
   const displayFields = {

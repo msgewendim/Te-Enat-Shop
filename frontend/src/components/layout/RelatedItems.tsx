@@ -5,19 +5,17 @@ import Loader from "../ui/Loader";
 import CarouselButton from "../ui/CarouselButton";
 import { RelatedItemCardProps, RelatedItemsProps } from "../../providers/interface/general.props";
 import useRelatedItems from "../../hooks/app/useRelatedItems";
-import { Recipe } from "../../client/types.gen";
-import { Product } from "../../client/types.gen";
 
 
-const RelatedItems = <T extends Recipe | Product>({
+const RelatedItems = ({
+  endpoint,
   itemCategory,
-  type,
   titleKey,
   linkPrefix
 }: RelatedItemsProps) => {
   const { t } = useTranslation();
 
-  const { items, isError, isLoading, error, currentIndex, nextItems, prevItems, visibleItems, hasMore } = useRelatedItems<T>(itemCategory, type);
+  const { items, isError, isLoading, error, currentIndex, nextItems, prevItems, visibleItems, hasMore } = useRelatedItems(endpoint, itemCategory);
 
   if (isLoading) return <Loader />;
   if (isError) {
@@ -45,7 +43,7 @@ const RelatedItems = <T extends Recipe | Product>({
             {visibleItems.map((item) => (
               <RelatedItemCard
                 key={item._id}
-                item={item as T}
+                item={item}
                 linkPrefix={linkPrefix}
               />
             ))}

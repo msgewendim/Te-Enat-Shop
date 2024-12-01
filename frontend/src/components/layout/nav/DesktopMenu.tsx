@@ -4,8 +4,7 @@ import AuthButton from "./AuthButton";
 import { BiUserCircle } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 import FloatingCartButton from "../../cart/FloatingCart";
-import { useAuth0 } from "@auth0/auth0-react";
-import { AUTH0_AUDIENCE } from "../../../utils/env.config";
+import useAuth from "../../../hooks/auth/useAuth";
 
 const DesktopMenu = () => {
   const { t } = useTranslation();
@@ -29,8 +28,7 @@ const DesktopMenu = () => {
 };
 
 export const DesktopActions = () => {
-  const { user } = useAuth0();
-  const isAdmin = user?.[`${AUTH0_AUDIENCE}/roles`]?.includes('Admin', 'admin');
+  const { isAdmin } = useAuth();
   return (
     <div className="hidden lg:flex lg:gap-x-6 items-center">
       {isAdmin && (

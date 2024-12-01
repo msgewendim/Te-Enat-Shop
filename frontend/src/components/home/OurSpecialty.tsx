@@ -1,15 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { useGetRandomRecipes } from "../../hooks/recipe/useRecipesData";
-import useRandomCards from "../../hooks/app/useRandomCards";
 import { Recipe } from "../../client";
+import useRandomCards from "../../hooks/app/useRandomCards";
 
 const OurSpecialty = () => {
   const { t } = useTranslation();
   const { data: recipes } = useRandomCards<Recipe>({
-    fetchHook: useGetRandomRecipes,
-    dataKey: "recipes"
+    endpoint: '/recipes/random',
   })
+
   return (
     <section className="bg-[#D2FCFF] dark:bg-gray-800 py-12" lang="he">
       <div className="container mx-auto px-4">
@@ -19,7 +18,7 @@ const OurSpecialty = () => {
           </Link>
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {recipes.map((recipe, index) => (
+          {recipes?.map((recipe, index) => (
             <RecipeCard key={index} data={recipe} />
           ))}
         </div>

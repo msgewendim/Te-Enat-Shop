@@ -5,18 +5,20 @@ import {
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
-import { Category, Product, ProductSize, Recipe } from "../../client/types.gen";
+import { Category, ProductSize, RandomItem } from "../../client/types.gen";
 import { CategoryMapping } from "../../utils/constants";
+import { QueryObserverResult } from "@tanstack/react-query";
+import { RefetchOptions } from "@tanstack/react-query";
 
 interface RelatedItemsProps {
+  endpoint: string;
   itemCategory: string;
-  type: string;
   titleKey: string;
   linkPrefix: string;
 }
 
 interface RelatedItemCardProps {
-  item: Product | Recipe;
+  item: RandomItem;
   linkPrefix: string; // '/products' or '/recipes'
 }
 interface GuaranteeCardProps {
@@ -81,7 +83,7 @@ interface CategoryButtonProps {
 }
 interface FiltersProps {
   clearFiltersPath: string;
-  type: "recipes" | "products";
+  type: "recipe" | "product";
   className?: string;
 }
 
@@ -138,6 +140,31 @@ type FloatingCartButtonProps = {
   cartItemsCount: number;
   setOpenCart: (isOpen: boolean) => void;
 };
+
+type DashboardConfig<T> = {
+  items: T[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+  deleteMutation: {
+    mutate: (id: string) => void;
+    isSuccess: boolean;
+    isError: boolean;
+  };
+  itemType: string;
+  formatTableData: (items: T[]) => TableData[];
+  displayFields: Record<string, string>;
+  setItemToEdit: (item: T) => void;
+  refetch?: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<T[], Error>>;
+};
+
+type TableData = {
+  _id: string;
+  [key: string]: string | number | React.ReactNode;
+};
+
 export {
   RelatedItemsProps,
   RelatedItemCardProps,
@@ -161,4 +188,6 @@ export {
   PaginationProps,
   FloatingCartButtonProps,
   FilterCategoriesProps,
+  DashboardConfig,
+  TableData,
 };

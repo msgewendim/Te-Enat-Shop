@@ -2,7 +2,8 @@ import { useMemo } from "react";
 import { query } from "../../providers/interface/context";
 import { toast } from "react-toastify";
 import { useAppContext } from "../app/useAppContext";
-import { useGetRecipes } from "./useRecipesData";
+import useGenericData from "../app/useGenericData";
+import { Recipe } from "../../client";
 
 function useRecipes({ limit = 12 }: { limit?: number }) {
   const { page, setPage, category, filter } = useAppContext();
@@ -14,6 +15,7 @@ function useRecipes({ limit = 12 }: { limit?: number }) {
       limit,
     };
   }, [page, filter, category, limit]);
+  const { useGetItems } = useGenericData<Recipe>("/recipes");
   const {
     data: recipes,
     error,
@@ -21,7 +23,7 @@ function useRecipes({ limit = 12 }: { limit?: number }) {
     isError,
     isPlaceholderData,
     refetch: refetchRecipes,
-  } = useGetRecipes(query);
+  } = useGetItems(query);
 
   if (isError) {
     toast.error(error.message);

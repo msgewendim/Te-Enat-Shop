@@ -79,7 +79,7 @@ const RecipeForm = ({ item: recipe, onSubmit: onSubmitProp, message }: FormProps
         <AddCategoryInput<Recipe>
           register={register}
           setValue={setValue}
-          categories={recipeCategories}
+          listOfCategories={recipeCategories}
           initialMainCategories={existingMainCategories}
           type="recipe"
         />

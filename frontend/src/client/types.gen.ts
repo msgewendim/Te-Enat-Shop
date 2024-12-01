@@ -324,17 +324,8 @@ export type Category = {
 };
 
 export type SubCategory = {
-  /**
-   * The name of the product sub-category in Hebrew
-   */
   nameInHebrew: string;
-  /**
-   * The name of the product sub-category in English
-   */
   nameInEnglish: string;
-  /**
-   * The name of the parent category of the sub-category
-   */
   nameOfParentCategory: string;
 };
 
@@ -368,6 +359,29 @@ export type Instruction = {
   _id?: string;
 };
 
+export type RandomItemsResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    items: Array<RandomItem>;
+    currentPage: number;
+    totalPages: number;
+  };
+};
+
+export type RandomItem = Product | Recipe | Package;
+
+export type SuccessResponse = {
+  success: boolean;
+  message: string;
+  data: RandomItem | Array<RandomItem>;
+};
+
+export type ErrorResponse = {
+  success: boolean;
+  message: string;
+};
+
 export type GetAllProductsResponse = Array<Product>;
 
 export type GetAllProductsError = unknown;
@@ -376,9 +390,9 @@ export type PostProductsData = {
   body: Product;
 };
 
-export type PostProductsResponse = unknown;
+export type PostProductsResponse = SuccessResponse;
 
-export type PostProductsError = unknown;
+export type PostProductsError = ErrorResponse;
 
 export type GetProductData = {
   path: {
@@ -389,9 +403,9 @@ export type GetProductData = {
   };
 };
 
-export type GetProductResponse = Product;
+export type GetProductResponse = SuccessResponse;
 
-export type GetProductError = unknown;
+export type GetProductError = ErrorResponse;
 
 export type DeleteProductsByIdData = {
   path: {
@@ -402,9 +416,9 @@ export type DeleteProductsByIdData = {
   };
 };
 
-export type DeleteProductsByIdResponse = void;
+export type DeleteProductsByIdResponse = SuccessResponse;
 
-export type DeleteProductsByIdError = unknown;
+export type DeleteProductsByIdError = ErrorResponse;
 
 export type PutProductsByIdData = {
   body: Product;
@@ -416,9 +430,125 @@ export type PutProductsByIdData = {
   };
 };
 
-export type PutProductsByIdResponse = unknown;
+export type PutProductsByIdResponse = SuccessResponse;
 
-export type PutProductsByIdError = unknown;
+export type PutProductsByIdError = ErrorResponse;
+
+export type GetTopProductsResponse = RandomItemsResponse;
+
+export type GetTopProductsError = ErrorResponse;
+
+export type GetAllRecipesResponse = Array<Recipe>;
+
+export type GetAllRecipesError = unknown;
+
+export type PostRecipesData = {
+  body: Recipe;
+};
+
+export type PostRecipesResponse = unknown;
+
+export type PostRecipesError = unknown;
+
+export type GetRecipeData = {
+  path: {
+    /**
+     * The recipe ID
+     */
+    id: string;
+  };
+};
+
+export type GetRecipeResponse = SuccessResponse;
+
+export type GetRecipeError = ErrorResponse;
+
+export type DeleteRecipesByIdData = {
+  path: {
+    /**
+     * The recipe ID
+     */
+    id: string;
+  };
+};
+
+export type DeleteRecipesByIdResponse = SuccessResponse;
+
+export type DeleteRecipesByIdError = ErrorResponse;
+
+export type PutRecipesByIdData = {
+  body: Recipe;
+  path: {
+    /**
+     * The recipe ID
+     */
+    id: string;
+  };
+};
+
+export type PutRecipesByIdResponse = SuccessResponse;
+
+export type PutRecipesByIdError = ErrorResponse;
+
+export type GetTopRecipesResponse = RandomItemsResponse;
+
+export type GetTopRecipesError = ErrorResponse;
+
+export type GetAllPackagesResponse = Array<Package>;
+
+export type GetAllPackagesError = unknown;
+
+export type PostPackagesData = {
+  body: Package;
+};
+
+export type PostPackagesResponse = SuccessResponse;
+
+export type PostPackagesError = ErrorResponse;
+
+export type GetPackageData = {
+  path: {
+    /**
+     * The package ID
+     */
+    id: string;
+  };
+};
+
+export type GetPackageResponse = SuccessResponse;
+
+export type GetPackageError = ErrorResponse;
+
+export type DeletePackagesByIdData = {
+  path: {
+    /**
+     * The package ID
+     */
+    id: string;
+  };
+};
+
+export type DeletePackagesByIdResponse = SuccessResponse;
+
+export type DeletePackagesByIdError = ErrorResponse;
+
+export type PutPackagesByIdData = {
+  body: Package;
+  path: {
+    /**
+     * The package ID
+     */
+    id: string;
+  };
+};
+
+export type PutPackagesByIdResponse = SuccessResponse;
+
+export type PutPackagesByIdError = ErrorResponse;
+
+export type GetTopPackagesResponse = RandomItemsResponse;
+
+export type GetTopPackagesError = ErrorResponse;
 
 export type PostOrdersV1PaymentsFormData = unknown;
 
@@ -435,3 +565,27 @@ export type GetOrdersPaymentStatusError = {
   error?: string;
   message?: string;
 };
+
+export type GetAllOrdersResponse = Array<Order>;
+
+export type GetAllOrdersError = unknown;
+
+export type PostOrdersNotifyResponse = unknown;
+
+export type PostOrdersNotifyError = unknown;
+
+export type PostUsersData = {
+  body: User;
+};
+
+export type PostUsersResponse = unknown;
+
+export type PostUsersError = unknown;
+
+export type PostUsersAddToCartData = {
+  body: ProductCardProps;
+};
+
+export type PostUsersAddToCartResponse = unknown;
+
+export type PostUsersAddToCartError = unknown;

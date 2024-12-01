@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { ClientDetails } from "../../client/types.gen";
-import { useGetPaymentFormMutation } from "../product/useProductsData";
 import { useAppContext } from "./useAppContext";
 import { clientDetailsSchema } from "../../validation/ClientDetails.validation";
+import { useGetPaymentFormMutation } from "../useAppData";
 
 function useCheckoutFormData() {
   const { totalPrice, orderItems, setPaymentFormUrl } = useAppContext();

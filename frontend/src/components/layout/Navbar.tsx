@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import Loader from '../ui/Loader'
 import Logo from '../ui/Logo';
 import DesktopMenu, { DesktopActions } from './nav/DesktopMenu';
 import MobileMenu from './nav/MobileMenu';
 import { MobileMenuButton } from './nav/MobileMenu';
 import Cart from '../../pages/Cart';
+import useAuth from '../../hooks/auth/useAuth';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { isLoading } = useAuth0();
+  const { isLoading } = useAuth();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 

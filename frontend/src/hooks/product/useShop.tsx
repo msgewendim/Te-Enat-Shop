@@ -1,8 +1,9 @@
 import { useMemo } from "react"
 import { query } from "../../providers/interface/context"
 import { toast } from "react-toastify";
-import { useGetProducts } from "./useProductsData"
 import { useAppContext } from "../app/useAppContext"
+import useGenericData from "../app/useGenericData";
+import { Product } from "../../client";
 
 function useShop({ limit = 12 }: { limit?: number }) {
   const { page, setPage, cartItems, category, filter, openCart, setOpenCart, subCategory } = useAppContext()
@@ -15,7 +16,9 @@ function useShop({ limit = 12 }: { limit?: number }) {
       subCategory,
     }
   }, [page, filter, category, limit, subCategory])
-  const { data, error, isLoading, isError, isPlaceholderData, refetch: refetchProducts } = useGetProducts(query)
+
+  const { useGetItems } = useGenericData<Product>("/products");
+  const { data: products, error, isLoading, isError, isPlaceholderData, refetch: refetchProducts } = useGetItems(query)
 
   if (isError) {
     toast.error(error.message)
@@ -34,7 +37,7 @@ function useShop({ limit = 12 }: { limit?: number }) {
   return {
     openCart,
     setOpenCart,
-    products: data,
+    products,
     error,
     isLoading,
     isError,

@@ -1,17 +1,24 @@
-import { useAddProductMutation, useUpdateProductMutation } from '../../../hooks/product/useProductsData';
 import { Package, Product, Recipe } from '../../../client';
 import { useAppContext } from '../../../hooks/app/useAppContext';
-import { useAddRecipeMutation, useUpdateRecipeMutation } from '../../../hooks/recipe/useRecipesData';
-import { useAddPackageMutation, useUpdatePackageMutation } from '../../../hooks/package/usePackagesData';
+import useGenericData from '../../../hooks/app/useGenericData';
 
 function useAdminDashboard() {
   const { adminActiveSection, setAdminActiveSection, productToEdit, setProductToEdit, recipeToEdit, setRecipeToEdit, packageToEdit, setPackageToEdit } = useAppContext();
-  const { mutate: updateProduct } = useUpdateProductMutation();
-  const { mutate: addProduct, } = useAddProductMutation();
-  const { mutate: addRecipe, } = useAddRecipeMutation();
-  const { mutate: updateRecipe } = useUpdateRecipeMutation();
-  const { mutate: updatePackage } = useUpdatePackageMutation();
-  const { mutate: addPackage } = useAddPackageMutation();
+
+  // Generic Data Hooks  
+  const { useAddItemMutation: addProductMutation, useUpdateItemMutation: updateProductMutation } = useGenericData<Product>(`/products`);
+
+  const { useAddItemMutation: addRecipeMutation, useUpdateItemMutation: updateRecipeMutation } = useGenericData<Recipe>(`/recipes`);
+
+  const { useAddItemMutation: addPackageMutation, useUpdateItemMutation: updatePackageMutation } = useGenericData<Package>(`/packages`);
+
+  // Mutations
+  const { mutate: addProduct } = addProductMutation();
+  const { mutate: updateProduct } = updateProductMutation();
+  const { mutate: addRecipe } = addRecipeMutation();
+  const { mutate: updateRecipe } = updateRecipeMutation();
+  const { mutate: addPackage } = addPackageMutation();
+  const { mutate: updatePackage } = updatePackageMutation();
 
   const handleSubmit = (data: Partial<Product> | Partial<Recipe> | Partial<Package>) => {
     const isProduct = adminActiveSection.includes('product');
@@ -19,20 +26,11 @@ function useAdminDashboard() {
     if (adminActiveSection.includes('edit')) {
       // Update existing item
       if (isPackage) {
-        updatePackage({
-          itemId: packageToEdit?._id || "",
-          itemData: data as Partial<Package>,
-        });
+        updatePackage({ itemId: packageToEdit?._id || "", itemData: data as Partial<Package> });
       } else if (isProduct) {
-        updateProduct({
-          itemId: productToEdit?._id || "",
-          itemData: data as Partial<Product>,
-        });
+        updateProduct({ itemId: productToEdit?._id || "", itemData: data as Partial<Product> });
       } else {
-        updateRecipe({
-          itemId: recipeToEdit?._id || "",
-          itemData: data as Partial<Recipe>,
-        });
+        updateRecipe({ itemId: recipeToEdit?._id || "", itemData: data as Partial<Recipe> });
       }
     } else {
       // Add new item
