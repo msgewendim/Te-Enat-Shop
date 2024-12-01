@@ -1,5 +1,6 @@
 import RecipeDal from "../Dal/RecipeDal";
 import { Recipe } from "../../types/recipe.types";
+import { BadRequestError, NotFoundError } from "../utils/customErrors";
 
 export class RecipeService {
   private recipeDataAccess: RecipeDal;
@@ -9,19 +10,22 @@ export class RecipeService {
   }
 
   async getRecipe(recipeId: string): Promise<Recipe> {
-    const result = await this.recipeDataAccess.getRecipe(recipeId);
-    if (!result) {
-      throw new Error(`Recipe with id : ${recipeId} Not found`);
+    try {
+      const result = await this.recipeDataAccess.getRecipe(recipeId);
+      if (!result) {
+        throw new NotFoundError(`Recipe with id: ${recipeId} not found`);
+      }
+      return result;
+    } catch (error) {
+      throw error;
     }
-    return result;
   }
 
   async addRecipe(recipe: Recipe): Promise<void> {
     try {
       await this.recipeDataAccess.addRecipe(recipe);
     } catch (error) {
-      console.log(error);
-      throw new Error("Can not add Recipe!");
+      throw new BadRequestError("Can not add Recipe!");
     }
   }
 
@@ -41,7 +45,7 @@ export class RecipeService {
         category
       )) as Recipe[];
     } catch (error) {
-      throw new Error("NO Recipes Found!");
+      throw new NotFoundError("No Recipes Found!");
     }
   }
 
@@ -49,7 +53,9 @@ export class RecipeService {
     try {
       await this.recipeDataAccess.updateRecipe(recipeId, recipeData);
     } catch (error) {
-      throw new Error(`Can not update Recipe! ${(error as Error).message}`);
+      throw new BadRequestError(
+        `Can not update Recipe! ${(error as Error).message}`
+      );
     }
   }
 
@@ -57,19 +63,21 @@ export class RecipeService {
     try {
       await this.recipeDataAccess.deleteRecipe(recipeId);
     } catch (error) {
-      throw new Error(`Can't delete Recipe ${(error as Error).message}`);
+      throw new BadRequestError(
+        `Can't delete Recipe ${(error as Error).message}`
+      );
     }
   }
-  async getTopRecipes(
+
+  async getRandomRecipes(
     page: number,
     limit: number
   ): Promise<Recipe[] | unknown> {
     try {
       const result = await this.recipeDataAccess.getRandomRecipes(page, limit);
-      console.log("recipesService: recipes.len ", result.recipes.length);
       return result;
     } catch (error) {
-      throw new Error(
+      throw new NotFoundError(
         `Error getting random Recipes: ${(error as Error).message}`
       );
     }

@@ -13,7 +13,7 @@ router.post("/", jwtCheck, async (req: Request, res: Response) => {
 });
 router.post("/addToCart", jwtCheck, async (req: Request, res: Response) => {
   const user = await userController.addToCart(req, res);
-  res.json({ message: "user updated in db", user }).status(201);
+  res.json({ message: "product added to cart", user }).status(201);
 });
 
 export default router;

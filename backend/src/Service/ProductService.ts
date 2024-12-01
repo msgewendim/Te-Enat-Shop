@@ -1,5 +1,6 @@
 import ProductDal from "../Dal/ProductDal";
 import { Product } from "../../types/product.types";
+import { BadRequestError, NotFoundError } from "../utils/customErrors";
 
 export class ProductService {
   private productDataAccess: ProductDal;
@@ -11,7 +12,7 @@ export class ProductService {
   async getProduct(productId: string): Promise<Product> {
     const result = await this.productDataAccess.getProduct(productId);
     if (!result) {
-      throw new Error(`Product with id : ${productId} Not found`);
+      throw new NotFoundError(`Product with id: ${productId} not found`);
     }
     return result;
   }
@@ -20,8 +21,7 @@ export class ProductService {
     try {
       await this.productDataAccess.addProduct(product);
     } catch (error) {
-      console.log(error);
-      throw new Error("Can not add Product!");
+      throw new BadRequestError("Failed to add product");
     }
   }
 
@@ -43,7 +43,7 @@ export class ProductService {
         subCategory
       )) as Product[];
     } catch (error: any) {
-      throw new Error(`No Products Found! ${error.message}`);
+      throw new NotFoundError(`No Products Found! ${error.message}`);
     }
   }
 
@@ -51,7 +51,9 @@ export class ProductService {
     try {
       await this.productDataAccess.updateProduct(productId, productData);
     } catch (error) {
-      throw new Error(`Can not update Product! ${(error as Error).message}`);
+      throw new BadRequestError(
+        `Can not update Product! ${(error as Error).message}`
+      );
     }
   }
 
@@ -59,10 +61,12 @@ export class ProductService {
     try {
       await this.productDataAccess.deleteProduct(productId);
     } catch (error) {
-      throw new Error(`Can't delete Product ${(error as Error).message}`);
+      throw new BadRequestError(
+        `Can't delete Product ${(error as Error).message}`
+      );
     }
   }
-  async getTopProducts(
+  async getRandomProducts(
     page: number,
     limit: number
   ): Promise<Product[] | unknown> {
@@ -71,10 +75,10 @@ export class ProductService {
         page,
         limit
       );
-      console.log("productsService: products.len ", result.products.length);
+      console.log("productsService: products.len ", result.items.length);
       return result;
     } catch (error) {
-      throw new Error(
+      throw new NotFoundError(
         `Error getting random Products: ${(error as Error).message}`
       );
     }

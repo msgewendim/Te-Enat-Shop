@@ -6,14 +6,15 @@ import UserRoute from "./src/Routes/UserRoute";
 import RecipeRoute from "./src/Routes/RecipeRoutes";
 import ProductRoute from "./src/Routes/ProductRoute";
 import PackageRoute from "./src/Routes/PackageRoute";
-import connectToMongoDB from "./src/utils/DB/MongoDB";
-import activityLogger from "./src/utils/middleware/log";
+import { connectToMongoDB } from "./src/utils/DB/MongoDB";
 import EventsMiddleware from "./src/utils/middleware/sse.events";
 import swagger from "./swagger";
-import { MONGO_ATLAS_URI } from "./src/utils/config/env.config";
+import { FRONTEND_URL, MONGO_ATLAS_URI } from "./src/utils/config/env.config";
+import errorHandler from "./src/utils/middleware/errorHandler";
+import activityLogger from "./src/utils/middleware/activityLogger";
 
-const server = express();
-const port = 3005;
+export const server = express();
+const port = process.env.PORT || 3005;
 
 // parse incoming request bodies as json and urlencoded
 server.use(express.json());
@@ -24,7 +25,7 @@ server.use(activityLogger);
 server.use(
   cors({
     credentials: true,
-    origin: "*",
+    origin: FRONTEND_URL,
     allowedHeaders: ["Content-Type", "Authorization"],
     exposedHeaders: ["Authorization"],
   })
@@ -38,8 +39,11 @@ server.use("/api/users", UserRoute);
 
 // handle SSE (Server-Sent Events) requests for real-time updates - payment notifications
 server.use("/api/events", EventsMiddleware);
+
+// handle swagger documentation
 server.use(swagger);
 
+// handle static files for the frontend
 const FRONTEND_BUILD_PATH = path.join(__dirname, "..", "frontend", "dist");
 
 // Add error handling for static files and catch-all route
@@ -52,6 +56,9 @@ server.get("*", (req, res) => {
     }
   });
 });
+
+// handle errors
+server.use(errorHandler);
 
 server.listen(port, () => {
   connectToMongoDB(MONGO_ATLAS_URI);

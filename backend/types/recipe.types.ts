@@ -12,7 +12,7 @@ interface Recipe {
   prepTime: string;
   servings: number;
   cookTime: string;
-  difficulty: "easy" | "Medium" | "Hard";
+  difficulty: "easy" | "medium" | "hard";
   categories: Category[];
   createdAt?: Date;
 }

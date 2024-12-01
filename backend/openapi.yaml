@@ -4,8 +4,11 @@ info:
   version: "1.0.0"
   description: "This API allows users to explore and purchase authentic Ethiopian cuisine products and discover traditional recipes. The API provides routes to manage products, users, and shopping carts, ensuring a seamless shopping and culinary experience for those interested in Ethiopian culture and cuisine."
 servers:
-  - url: "http:localhost:3005/api"
+  - url: "http://localhost:3005/api"
     description: Development server
+  - url: "https://te-enat-shop-api.onrender.com/api"
+    description: Production server
+
 paths:
   /products:
     get:
@@ -35,8 +38,17 @@ paths:
       responses:
         201:
           description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
         400:
           description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /products/{id}:
     get:
       summary: Get a product by ID
@@ -56,9 +68,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Product"
+                $ref: "#/components/schemas/SuccessResponse"
         404:
           description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     delete:
       summary: Delete a product by ID
       tags:
@@ -73,8 +89,16 @@ paths:
       responses:
         204:
           description: Product deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
         404:
           description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     put:
       summary: Update a product by ID
       tags:
@@ -95,8 +119,308 @@ paths:
       responses:
         200:
           description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
         404:
           description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /products/top-products:
+    get:
+      summary: Get top products
+      tags:
+        - Products
+      operationId: getTopProducts
+      responses:
+        200:
+          description: A list of top products
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RandomItemsResponse"
+        404:
+          description: Products not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /recipes:
+    get:
+      summary: Get all recipes
+      tags:
+        - Recipes
+      operationId: getAllRecipes
+      responses:
+        200:
+          description: A list of recipes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Recipe"
+    post:
+      summary: Add a new recipe
+      tags:
+        - Recipes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Recipe"
+      responses:
+        201:
+          description: Recipe created
+        400:
+          description: Invalid input
+
+  /recipes/{id}:
+    get:
+      summary: Get a recipe by ID
+      tags:
+        - Recipes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The recipe ID
+          schema:
+            type: string
+      operationId: getRecipe
+      responses:
+        200:
+          description: A single recipe
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        404:
+          description: Recipe not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Delete a recipe by ID
+      tags:
+        - Recipes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The recipe ID
+          schema:
+            type: string
+      responses:
+        204:
+          description: Recipe deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        404:
+          description: Recipe not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      summary: Update a recipe by ID
+      tags:
+        - Recipes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The recipe ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Recipe"
+      responses:
+        200:
+          description: Recipe updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        404:
+          description: Recipe not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /recipes/top-recipes:
+    get:
+      summary: Get top recipes
+      tags:
+        - Recipes
+      operationId: getTopRecipes
+      responses:
+        200:
+          description: A list of top recipes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RandomItemsResponse"
+        404:
+          description: Recipes not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /packages:
+    get:
+      summary: Get all packages
+      tags:
+        - Packages
+      operationId: getAllPackages
+      responses:
+        200:
+          description: A list of packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Package"
+    post:
+      summary: Add a new package
+      tags:
+        - Packages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Package"
+      responses:
+        201:
+          description: Package created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /packages/{id}:
+    get:
+      summary: Get a package by ID
+      tags:
+        - Packages
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The package ID
+          schema:
+            type: string
+      operationId: getPackage
+      responses:
+        200:
+          description: A single package
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        404:
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Delete a package by ID
+      tags:
+        - Packages
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The package ID
+          schema:
+            type: string
+      responses:
+        204:
+          description: Package deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        404:
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      summary: Update a package by ID
+      tags:
+        - Packages
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The package ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Package"
+      responses:
+        200:
+          description: Package updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        404:
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /packages/top-packages:
+    get:
+      summary: Get top packages
+      tags:
+        - Packages
+      operationId: getTopPackages
+      responses:
+        200:
+          description: A list of top packages
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RandomItemsResponse"
+        404:
+          description: Packages not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /orders/v1/payments/form:
     post:
@@ -155,6 +479,69 @@ paths:
                   message:
                     type: string
                     example: "Failed to get payment status!"
+
+  /orders:
+    get:
+      summary: Get all orders
+      tags:
+        - Orders
+      operationId: getAllOrders
+      responses:
+        200:
+          description: A list of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        404:
+          description: Orders not found
+
+  /orders/notify:
+    post:
+      summary: Notify about payment success
+      tags:
+        - Orders
+      responses:
+        200:
+          description: Payment successful
+        400:
+          description: Payment failed
+
+  /users:
+    post:
+      summary: Update user information
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        201:
+          description: User updated in db
+        400:
+          description: Error updating user
+
+  /users/addToCart:
+    post:
+      summary: Add to cart
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductCardProps"
+      responses:
+        201:
+          description: Product added to cart
+        400:
+          description: Error adding product to cart
 
 components:
   schemas:
@@ -739,3 +1126,58 @@ components:
       required:
         - step
         - description
+
+    RandomItemsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/Product"
+              - $ref: "#/components/schemas/Recipe"
+              - $ref: "#/components/schemas/Package"
+        currentPage:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+        - items
+        - currentPage
+        - totalPages
+
+    RandomItem:
+      oneOf:
+        - $ref: "#/components/schemas/Product"
+        - $ref: "#/components/schemas/Recipe"
+        - $ref: "#/components/schemas/Package"
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          oneOf:
+            - type: object
+              $ref: "#/components/schemas/RandomItem"
+            - type: array
+              items:
+                $ref: "#/components/schemas/RandomItem"
+      required:
+        - success
+        - message
+        - data
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+        - message

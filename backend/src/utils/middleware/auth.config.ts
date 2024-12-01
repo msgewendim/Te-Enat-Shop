@@ -6,32 +6,33 @@ import {
   TOKEN_SIGNING_ALG,
 } from "../config/env.config";
 
+// middleware to check if the user is authenticated and is authorized to access the resource
 const jwtCheck = auth({
   audience: AUDIENCE,
   issuerBaseURL: ISSUER_BASE_URL,
   tokenSigningAlg: TOKEN_SIGNING_ALG,
 });
 
+// function to get user info from Auth0
 export const getUserInfo = async (accessToken: string) => {
   try {
-    console.log("Getting user info from Auth0");
     const { data } = await axios.get(`${ISSUER_BASE_URL}/userInfo`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(data, "userInfo");
     return {
-      email: data.nickname,
+      email: data.email,
       name: data.name,
+      image: data.picture,
     };
   } catch (error: any) {
-    console.error("Error fetching user info:", error.message);
     throw error;
   }
 };
 
-const getUserToken = async () => {
+// function to get user token from Auth0
+export const getUserToken = async () => {
   const options = {
     method: `${ISSUER_BASE_URL}/oauth/token`,
     headers: { "content-type": "application/json" },
@@ -43,5 +44,7 @@ const getUserToken = async () => {
     },
   };
   const token = await axios.request(options);
+  return token;
 };
+
 export default jwtCheck;

@@ -2,10 +2,13 @@ import env from "dotenv";
 env.config();
 
 const NODE_ENV = process.env.NODE_ENV as string;
+
 // # FRONTEND APP
 const APP_REACT_URL = process.env.APP_REACT_URL as string;
+
 // BACK-END APP URL
 const BACKEND_APP_URL = process.env.APP_URL as string;
+
 // # DB
 const MONGO_ATLAS_URI = process.env.MONGO_ATLAS_URI as string;
 
@@ -26,6 +29,8 @@ const TOKEN_SIGNING_ALG = process.env.TOKEN_SIGNING_ALG as string;
 // # NGROK
 const BASE_URL_NGROK = process.env.BASE_URL_NGROK as string;
 
+const FRONTEND_URL =
+  NODE_ENV === "production" ? APP_REACT_URL : "http://localhost:5173";
 export {
   NODE_ENV,
   APP_REACT_URL,
@@ -41,4 +46,6 @@ export {
   TOKEN_SIGNING_ALG,
   BASE_URL_NGROK,
   BACKEND_APP_URL,
+  MORNING_TOKEN,
+  FRONTEND_URL,
 };

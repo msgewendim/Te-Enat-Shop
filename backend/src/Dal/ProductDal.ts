@@ -2,11 +2,15 @@ import { IProduct } from "../utils/interfaces/IProductDal";
 import { Product } from "../../types/product.types";
 import productModel from "../models/ProductSchema";
 import { QueryOptions } from "mongoose";
+import { BadRequestError, NotFoundError } from "../utils/customErrors";
 
 export class ProductDal implements IProduct<Product> {
   async getProduct(id: string): Promise<Product | null> {
     try {
       const product = (await productModel.findById(id)) as Product;
+      if (!product) {
+        throw new NotFoundError(`Product with id: ${id} not found`);
+      }
       return product;
     } catch (error) {
       throw error;
@@ -67,12 +71,15 @@ export class ProductDal implements IProduct<Product> {
         .skip((page - 1) * limit)
         .limit(limit)
         .exec();
-
+      if (!products) {
+        throw new NotFoundError("No products found");
+      }
       return products;
     } catch (error) {
       throw error;
     }
   }
+
   async getRandomProducts(page: number, limit: number) {
     try {
       const totalProducts = await productModel.countDocuments();
@@ -81,9 +88,11 @@ export class ProductDal implements IProduct<Product> {
       // Calculate skip value for pagination
       const skip = (page - 1) * limit;
       const products = await productModel.find().skip(skip).limit(limit);
-
+      if (!products) {
+        throw new NotFoundError("No random products found");
+      }
       return {
-        products,
+        items: products,
         currentPage: page,
         totalPages: totalPages,
       };
@@ -93,9 +102,12 @@ export class ProductDal implements IProduct<Product> {
   }
   async deleteProduct(id: string): Promise<void> {
     try {
-      await productModel.deleteOne({
+      const result = await productModel.deleteOne({
         _id: id,
       });
+      if (!result.deletedCount) {
+        throw new NotFoundError(`Product with id: ${id} not found`);
+      }
     } catch (error) {
       throw error;
     }
@@ -109,6 +121,9 @@ export class ProductDal implements IProduct<Product> {
         id,
         postData
       )) as Product;
+      if (!updatedProduct) {
+        throw new NotFoundError(`Product with id: ${id} not found`);
+      }
       return updatedProduct;
     } catch (error) {
       throw error;
@@ -117,7 +132,9 @@ export class ProductDal implements IProduct<Product> {
   async addProduct(product: Product): Promise<Product> {
     try {
       const newProduct = (await productModel.insertMany(product)) as Product[];
-      console.log("Product created successfully", newProduct);
+      if (!newProduct) {
+        throw new BadRequestError("Failed to add product");
+      }
       return newProduct[0];
     } catch (error) {
       throw error;

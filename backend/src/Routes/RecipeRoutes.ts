@@ -1,5 +1,5 @@
 import { RecipeService } from "../Service/RecipeService";
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import RecipeDal from "../Dal/RecipeDal";
 import { RecipeController } from "../controllers/RecipeController";
 import jwtCheck from "../utils/middleware/auth.config";
@@ -11,34 +11,36 @@ const recipeController = new RecipeController(
 
 router.get(
   "/",
-  async (req: Request, res: Response) =>
-    await recipeController.getAllRecipes(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await recipeController.getAllRecipes(req, res, next)
 );
 router.get(
-  "/top-recipes",
-  async (req: Request, res: Response) =>
-    await recipeController.getTopRecipes(req, res)
+  "/random",
+  async (req: Request, res: Response, next: NextFunction) =>
+    await recipeController.getRandomRecipes(req, res, next)
 );
 router.get(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await recipeController.getRecipe(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await recipeController.getRecipe(req, res, next)
 );
 router.post(
   "/",
-
-  async (req: Request, res: Response) =>
-    await recipeController.addRecipe(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await recipeController.addRecipe(req, res, next)
 );
 router.delete(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await recipeController.deleteRecipe(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await recipeController.deleteRecipe(req, res, next)
 );
 router.put(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await recipeController.updateRecipe(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await recipeController.updateRecipe(req, res, next)
 );
 
 export default router;

@@ -45,7 +45,7 @@ interface OrderItem {
   vatType: 1 | 2 | 0; // Vat type for that document
 }
 
-export type PaymentForm = {
+export type PaymentFormRequest = {
   clientInfo: ClientDetails;
   totalPrice: number;
   orderItems: OrderItem[];

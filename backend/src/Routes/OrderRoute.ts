@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { OrderService } from "../Service/OrderService";
 import { OrderController } from "../controllers/OrderController";
 
@@ -7,22 +7,22 @@ const orderController = new OrderController(new OrderService());
 
 router.post(
   "/v1/payments/form",
-  async (req: Request, res: Response) =>
-    await orderController.getPaymentForm(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await orderController.getPaymentForm(req, res, next)
 );
 router.post(
   "/notify",
-  async (req: Request, res: Response) =>
-    await orderController.successfulPayment(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await orderController.successfulPayment(req, res, next)
 );
 router.get(
   "/payments/status",
-  async (req: Request, res: Response) =>
-    await orderController.checkPaymentStatus(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await orderController.checkPaymentStatus(req, res, next)
 );
 
-router.get("/", async (req: Request, res: Response) => {
-  await orderController.getOrders(req, res);
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  await orderController.getOrders(req, res, next);
 });
 
 export default router;

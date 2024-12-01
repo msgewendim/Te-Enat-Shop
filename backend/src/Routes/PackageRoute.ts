@@ -1,7 +1,8 @@
 import { PackageService } from "../Service/PackageService";
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import PackageDal from "../Dal/PackageDal";
-import { PackageController } from "../controllers/PackegeController";
+import { PackageController } from "../controllers/PackageController";
+import jwtCheck from "../utils/middleware/auth.config";
 
 const router = express.Router();
 const packageController = new PackageController(
@@ -10,29 +11,38 @@ const packageController = new PackageController(
 
 router.get(
   "/",
-  async (req: Request, res: Response) =>
-    await packageController.getAllPackages(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await packageController.getAllPackages(req, res, next)
+);
+router.get(
+  "/random",
+  async (req: Request, res: Response, next: NextFunction) => {
+    console.log("packagesRoute: random request started");
+    await packageController.getRandomPackages(req, res, next);
+  }
 );
 router.get(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await packageController.getPackage(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await packageController.getPackage(req, res, next)
 );
 router.post(
   "/",
-
-  async (req: Request, res: Response) =>
-    await packageController.addPackage(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await packageController.addPackage(req, res, next)
 );
 router.delete(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await packageController.deletePackage(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await packageController.deletePackage(req, res, next)
 );
 router.put(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await packageController.updatePackage(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await packageController.updatePackage(req, res, next)
 );
 
 export default router;

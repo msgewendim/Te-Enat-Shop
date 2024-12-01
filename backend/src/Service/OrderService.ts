@@ -19,6 +19,7 @@ import {
   getOrders,
   updatePaymentStatus,
 } from "../Dal/OrderDal";
+import { BadRequestError, ExternalServiceError } from "../utils/customErrors";
 
 const pluginId = MORNING_PLUGIN_ID;
 let MORNING_TOKEN = {
@@ -46,7 +47,7 @@ export class OrderService {
       products,
       newOrderId.toString()
     );
-    const config = {
+    const requestConfig = {
       method: "POST",
       maxBodyLength: Infinity,
       url: url,
@@ -58,15 +59,17 @@ export class OrderService {
     };
     try {
       // get payment form
-      const { status, data } = await axios.request(config);
+      const { status, data } = await axios.request(requestConfig);
       if (status >= 400) {
-        console.log("Failed to fetch payment gateway", status);
-        throw new Error(`Internal server Error: ${status}`);
+        throw new ExternalServiceError(
+          `Error fetching payment form: ${data.errorMessage}`
+        );
       }
       return { ...data, orderId: newOrderId.toString() } as PaymentFormResponse;
     } catch (error: any) {
-      console.log("Payment gateway error: ", error.message);
-      throw new Error("Error sending form payload" + error.message);
+      throw new ExternalServiceError(
+        `Error sending form payload: ${error.message}`
+      );
     }
   }
   async checkPaymentStatus(orderId: string) {
@@ -80,7 +83,11 @@ export class OrderService {
   async updatePaymentStatus(transactionInfo: OrderTransaction) {
     const { external_data: orderId, ...transactionData } = transactionInfo;
     // update payment status in database
-    await updatePaymentStatus(orderId as string, transactionData);
+    try {
+      await updatePaymentStatus(orderId as string, transactionData);
+    } catch (error) {
+      throw error;
+    }
   }
   async getOrders(limit: number, page: number) {
     const orders = await getOrders(limit, page);

@@ -1,5 +1,7 @@
 import PackageDal from "../Dal/PackageDal";
 import { Package } from "../../types/product.types";
+import { RandomItemsResponse } from "../../types";
+import { BadRequestError, NotFoundError } from "../utils/customErrors";
 
 export class PackageService {
   private PackageDataAccess: PackageDal;
@@ -9,33 +11,37 @@ export class PackageService {
   }
 
   async getPackage(packageId: string): Promise<Package> {
-    const result = await this.PackageDataAccess.getPackage(packageId);
-    if (!result) {
-      throw new Error(`Package with id : ${packageId} Not found`);
+    try {
+      const result = await this.PackageDataAccess.getPackage(packageId);
+      if (!result) {
+        throw new NotFoundError(`Package with id: ${packageId} not found`);
+      }
+      return result;
+    } catch (error) {
+      throw error;
     }
-    return result;
   }
 
   async addPackage(packageData: Package): Promise<void> {
     try {
       await this.PackageDataAccess.addPackage(packageData);
     } catch (error) {
-      console.log(error);
-      throw new Error("Can not add Package!");
+      throw new BadRequestError(
+        "Cannot add Package! " + (error as Error).message
+      );
     }
   }
 
-  async getAllPackages(
-    page: number,
-    limit: number
-  ): Promise<Package[] | unknown> {
+  async getAllPackages(page: number, limit: number): Promise<Package[]> {
     try {
       return (await this.PackageDataAccess.getAllPackages(
         page,
         limit
       )) as Package[];
     } catch (error) {
-      throw new Error("NO Packages Found!");
+      throw new BadRequestError(
+        "No Packages Found! " + (error as Error).message
+      );
     }
   }
 
@@ -43,7 +49,9 @@ export class PackageService {
     try {
       await this.PackageDataAccess.updatePackage(packageId, packageData);
     } catch (error) {
-      throw new Error(`Can not update Package! ${(error as Error).message}`);
+      throw new BadRequestError(
+        `Cannot update Package! ${(error as Error).message}`
+      );
     }
   }
 
@@ -51,7 +59,28 @@ export class PackageService {
     try {
       await this.PackageDataAccess.deletePackage(packageId);
     } catch (error) {
-      throw new Error(`Can't delete Package ${(error as Error).message}`);
+      throw new NotFoundError(
+        `Can't delete Package with id: ${packageId}. ${
+          (error as Error).message
+        }`
+      );
+    }
+  }
+
+  async getRandomPackages(
+    page: number,
+    limit: number
+  ): Promise<RandomItemsResponse> {
+    try {
+      const result = await this.PackageDataAccess.getRandomPackages(
+        page,
+        limit
+      );
+      return result;
+    } catch (error) {
+      throw new BadRequestError(
+        `Can't get Random Packages: ${(error as Error).message}`
+      );
     }
   }
 }

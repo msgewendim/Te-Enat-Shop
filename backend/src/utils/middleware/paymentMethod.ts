@@ -8,6 +8,7 @@ import {
   MORNING_SECRET_KEY,
   NODE_ENV,
 } from "../config/env.config";
+import { ExternalServiceError } from "../customErrors";
 
 const BASE_URL_API =
   NODE_ENV === "production" ? BACKEND_APP_URL : BASE_URL_NGROK;
@@ -62,14 +63,13 @@ export const requestNewToken = async (token: string) => {
   try {
     const { data, status } = await axios.request(config);
     if (status >= 400) {
-      throw new Error(`HTTP error! status: ${status}`);
+      throw new ExternalServiceError(`Error fetching token: ${data.error}`);
     }
     return {
       token: data.token,
       expiresAt: Date.now() + data.expires * 1000, // convert to milliseconds 1 hour
     };
   } catch (error) {
-    console.error("Error fetching token:", error);
     throw error;
   }
 };

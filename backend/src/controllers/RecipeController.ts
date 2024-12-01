@@ -1,5 +1,9 @@
-import { Response, Request } from "express";
+import mongoose from "mongoose";
+import { Response, Request, NextFunction } from "express";
 import { RecipeService } from "../Service/RecipeService";
+import { validateAddRecipe, validateUpdateRecipe } from "../validators/recipes";
+import { BadRequestError, ValidationError } from "../utils/customErrors";
+import { validateObjectId } from "../validators";
 
 export class RecipeController {
   private recipeService: RecipeService;
@@ -8,17 +12,24 @@ export class RecipeController {
     this.recipeService = RecipeService;
   }
 
-  async getRecipe(req: Request, res: Response) {
+  async getRecipe(req: Request, res: Response, next: NextFunction) {
     const recipeId = req.params._id;
+    if (!validateObjectId(recipeId)) {
+      return next(new BadRequestError("Invalid recipe ID format"));
+    }
     try {
-      const recipe = await this.recipeService.getRecipe(recipeId);
-      res.status(200).json(recipe);
+      const recipeData = await this.recipeService.getRecipe(recipeId);
+      res.status(200).json({
+        success: true,
+        message: "Recipe fetched successfully",
+        data: recipeData,
+      });
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      next(error);
     }
   }
 
-  async getAllRecipes(req: Request, res: Response) {
+  async getAllRecipes(req: Request, res: Response, next: NextFunction) {
     try {
       const { page, filter, category, limit } = req.query;
       const parsedPage = parseInt(page as string, 10);
@@ -29,57 +40,85 @@ export class RecipeController {
         filter as string,
         category as string
       );
-      res.status(200).json(recipes);
+      res.status(200).json({
+        success: true,
+        message: "Recipes fetched successfully",
+        data: recipes,
+      });
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      next(error);
     }
   }
 
-  async addRecipe(req: Request, res: Response) {
+  async addRecipe(req: Request, res: Response, next: NextFunction) {
     const recipe = req.body;
-    console.log(recipe, "recipe data ");
+    const { error } = validateAddRecipe(recipe);
+    if (error) {
+      return next(new ValidationError(error.message));
+    }
     try {
       await this.recipeService.addRecipe(recipe);
-      res.status(201).json({ message: "Recipe Added to DB!" });
+      res.status(201).json({
+        success: true,
+        message: "Recipe Added to DB!",
+      });
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      next(error);
     }
   }
 
-  async deleteRecipe(req: Request, res: Response) {
+  async deleteRecipe(req: Request, res: Response, next: NextFunction) {
     const recipeId = req.params._id;
-    console.log("Recipe Id to delete: " + recipeId);
+    if (!validateObjectId(recipeId)) {
+      return next(new BadRequestError("Invalid recipe ID format"));
+    }
     try {
       await this.recipeService.deleteRecipe(recipeId);
-      res.status(200).json({ message: "Recipe Deleted from DB!" });
+      res.status(200).json({
+        success: true,
+        message: "Recipe Deleted from DB!",
+      });
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      next(error);
     }
   }
 
-  async updateRecipe(req: Request, res: Response) {
+  async updateRecipe(req: Request, res: Response, next: NextFunction) {
     const recipeId = req.params._id;
     const recipeData = req.body;
+    if (!validateObjectId(recipeId)) {
+      return next(new BadRequestError("Invalid recipe ID format"));
+    }
+    const { error } = validateUpdateRecipe(recipeData);
+    if (error) {
+      return next(new ValidationError(error.message));
+    }
     try {
       await this.recipeService.updateRecipe(recipeId, recipeData);
-      res.status(201).json({ message: "Recipe Updated!" });
+      res.status(201).json({
+        success: true,
+        message: "Recipe Updated!",
+      });
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      next(error);
     }
   }
-  async getTopRecipes(req: Request, res: Response) {
+  async getRandomRecipes(req: Request, res: Response, next: NextFunction) {
     const { page = 1, limit = 3 } = req.query;
-    console.log(page, "getTopRecipes called, limit: " + limit, "page: " + page);
     const parsedPage = parseInt(page as string, 10);
     const parsedLimit = parseInt(limit as string, 10);
     try {
-      const result = await this.recipeService.getTopRecipes(
+      const randomRecipes = await this.recipeService.getRandomRecipes(
         parsedPage,
         parsedLimit
       );
-      res.status(200).json(result);
+      res.status(200).json({
+        success: true,
+        message: "Random recipes fetched successfully",
+        data: randomRecipes,
+      });
     } catch (error) {
-      res.status(400).json((error as Error).message);
+      next(error);
     }
   }
 }

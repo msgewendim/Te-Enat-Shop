@@ -8,4 +8,8 @@ const connectToMongoDB = async (mongoUri: string) => {
     console.log(error);
   }
 };
-export default connectToMongoDB;
+
+const disconnectFromMongoDB = async () => {
+  await mongoose.connection.close();
+};
+export { connectToMongoDB, disconnectFromMongoDB };

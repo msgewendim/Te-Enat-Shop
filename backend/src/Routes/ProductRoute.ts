@@ -11,34 +11,36 @@ const productController = new ProductController(
 
 router.get(
   "/",
-  async (req: Request, res: Response) =>
-    await productController.getAllProducts(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await productController.getAllProducts(req, res, next)
 );
 router.get(
-  "/top-products",
-  async (req: Request, res: Response) =>
-    await productController.getTopProducts(req, res)
+  "/random",
+  async (req: Request, res: Response, next: NextFunction) =>
+    await productController.getRandomProducts(req, res, next)
 );
 router.get(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await productController.getProduct(req, res)
+  async (req: Request, res: Response, next: NextFunction) =>
+    await productController.getProduct(req, res, next)
 );
 router.post(
   "/",
-
-  async (req: Request, res: Response) =>
-    await productController.addProduct(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await productController.addProduct(req, res, next)
 );
 router.delete(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await productController.deleteProduct(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await productController.deleteProduct(req, res, next)
 );
 router.put(
   "/:_id",
-  async (req: Request, res: Response) =>
-    await productController.updateProduct(req, res)
+  jwtCheck,
+  async (req: Request, res: Response, next: NextFunction) =>
+    await productController.updateProduct(req, res, next)
 );
 
 export default router;

@@ -2,11 +2,15 @@ import { IRecipe } from "../utils/interfaces/IRecipe";
 import { Recipe } from "../../types/recipe.types";
 import recipeModel from "../models/RecipeSchema";
 import { QueryOptions } from "mongoose";
+import { BadRequestError, NotFoundError } from "../utils/customErrors";
 
 export class RecipeDal implements IRecipe<Recipe> {
   async getRecipe(id: string): Promise<Recipe | null> {
     try {
       const recipe = (await recipeModel.findById(id)) as Recipe;
+      if (!recipe) {
+        throw new NotFoundError(`Recipe with id: ${id} not found`);
+      }
       return recipe;
     } catch (error) {
       throw error;
@@ -36,6 +40,9 @@ export class RecipeDal implements IRecipe<Recipe> {
         .skip((page - 1) * limit) // Skip items based on the page number
         .limit(limit) // Limit the number of items returned
         .exec();
+      if (!recipes) {
+        throw new NotFoundError("No recipes found");
+      }
       return recipes;
     } catch (error) {
       throw error;
@@ -51,8 +58,11 @@ export class RecipeDal implements IRecipe<Recipe> {
         { $sample: { size: limit } },
         { $skip: skip },
       ]);
+      if (!recipes) {
+        throw new NotFoundError("No random recipes found");
+      }
       return {
-        recipes,
+        items: recipes,
         currentPage: page,
         totalPages: totalPages,
       };
@@ -62,9 +72,12 @@ export class RecipeDal implements IRecipe<Recipe> {
   }
   async deleteRecipe(id: string): Promise<void> {
     try {
-      await recipeModel.deleteOne({
+      const result = await recipeModel.deleteOne({
         _id: id,
       });
+      if (!result.deletedCount) {
+        throw new NotFoundError(`Recipe with id: ${id} not found`);
+      }
     } catch (error) {
       throw error;
     }
@@ -75,6 +88,9 @@ export class RecipeDal implements IRecipe<Recipe> {
         id,
         postData
       )) as Recipe;
+      if (!updatedRecipe) {
+        throw new NotFoundError(`Recipe with id: ${id} not found`);
+      }
       return updatedRecipe;
     } catch (error) {
       throw error;
@@ -83,7 +99,9 @@ export class RecipeDal implements IRecipe<Recipe> {
   async addRecipe(recipe: Recipe): Promise<Recipe> {
     try {
       const newRecipe = (await recipeModel.insertMany(recipe)) as Recipe[];
-      console.log("Recipe created successfully", newRecipe);
+      if (!newRecipe) {
+        throw new BadRequestError("Failed to add recipe");
+      }
       return newRecipe[0];
     } catch (error) {
       throw error;
