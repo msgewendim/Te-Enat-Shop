@@ -12,7 +12,7 @@ const PackageList = () => {
     headers,
     handleDelete: handleDeletePackage,
     handleEdit: handleEditPackage
-  } = (usePackagesDashboard() as PackageDashboardReturn) || {};
+  } = (usePackagesDashboard() as unknown as PackageDashboardReturn) || {};
 
   return (
     <section className="mb-32 px-4 md:px-0" aria-labelledby="package-list-title">

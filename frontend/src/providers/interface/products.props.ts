@@ -5,6 +5,11 @@ type ProductModalProps = {
   setOpen: (open: boolean) => void;
   product: Product;
 };
+export type ItemProperties = {
+  quantity: number;
+  size: string;
+  price: number;
+};
 type ProductImageProps = {
   image: string | null;
   name: string;

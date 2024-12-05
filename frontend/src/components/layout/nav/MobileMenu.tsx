@@ -20,7 +20,8 @@ const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
     { to: "/products", label: t('nav.shop') },
     { to: "/packages", label: t('nav.packages') },
     { to: "/recipes", label: t('nav.recipes') },
-    { to: "/contact", label: t('nav.contact') },
+    { to: "/events", label: t('nav.events') },
+    { to: "/TOBIA", label: t('nav.TOBIA') },
     { to: "/about", label: t('nav.about') },
   ];
   const { isAdmin } = useAuth();

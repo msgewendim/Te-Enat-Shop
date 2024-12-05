@@ -3,7 +3,7 @@ import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import { Recipe } from '../../../client';
 import useRecipes from "../../../hooks/recipe/useRecipes";
 import useGenericData from "../../../hooks/app/useGenericData";
-import { TableData } from "../../../providers/interface/general.props";
+import { RecipeTableData } from "../../../providers/interface/admin.props";
 
 function useRecipesDashboard() {
   const { setRecipeToEdit } = useAppContext();
@@ -19,7 +19,7 @@ function useRecipesDashboard() {
     difficulty: "דרגת קושי"
   } as const;
 
-  const formatTableData = (recipes: Recipe[]): TableData[] => recipes.map(recipe => ({
+  const formatTableData = (recipes: Recipe[]): RecipeTableData[] => recipes.map(recipe => ({
     _id: recipe._id,
     name: recipe.name,
     categories: recipe.categories.map((cat, i) => (

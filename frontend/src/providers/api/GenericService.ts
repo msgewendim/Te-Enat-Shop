@@ -92,11 +92,15 @@ export const getRandomItems = async (
 
 export const getRelatedItems = async (
   endpoint: string,
-  q: query
+  q: query,
+  exclude: string
 ): Promise<SuccessResponse> => {
-  const data = (await axiosInstance.get(endpoint, { params: q })).data;
+  const data = (
+    await axiosInstance.get(endpoint, { params: { ...q, exclude } })
+  ).data;
   if (data.success) {
     return data.data;
+  } else {
+    throw new Error(data.message);
   }
-  throw new Error(data.message);
 };

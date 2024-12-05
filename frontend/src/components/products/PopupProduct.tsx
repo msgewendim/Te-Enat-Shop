@@ -1,13 +1,16 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { FC, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Select from '../ui/Select'
 import useAddToCartModal from '../../hooks/app/useAddToCartModal'
 import { ProductModalProps } from '../../providers/interface/products.props'
 
 
 const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
-  const { handleAddProductToCart, handleQuantityChange, handleSizeChange, prices, sizes, sizeIdx, itemProperties } = useAddToCartModal({
+  const { t } = useTranslation();
+
+  const { handleAddProductToCart, itemProperties, handleQuantityChange, handleSizeChange, prices, sizes, sizeIdx } = useAddToCartModal({
     product,
     open,
     setOpen
@@ -78,9 +81,9 @@ const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
                           <button
                             type="button"
                             className="inline-flex justify-center rounded-md bg-[#42855b] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#3a7751] transition-colors sm:w-auto"
-                            onClick={handleAddProductToCart}
+                            onClick={() => handleAddProductToCart(product)}
                           >
-                            הוסף לעגלה
+                            {t('buttons.buy')}
                           </button>
                           <Link
                             to={`/products/${_id}/info`}

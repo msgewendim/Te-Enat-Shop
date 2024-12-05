@@ -31,7 +31,7 @@ const SingleProduct = () => {
     return null;
   }
 
-  const { name, image, categories, features } = data;
+  const { name, image, categories, features, _id } = data;
   const { leftFeatures, rightFeatures } = divideFeatures(features.value);
 
   const handleClosePopup = () => setOpenProductId("");
@@ -54,7 +54,12 @@ const SingleProduct = () => {
           handleOpenPopup={handleOpenPopup}
         />
         <ProductVideo />
-        <RelatedItems endpoint='/products' itemCategory={categories[0].nameInEnglish} titleKey='relatedProducts.title' linkPrefix='/products' />
+        <RelatedItems
+          endpoint='/products'
+          itemCategory={categories[0].nameInEnglish}
+          titleKey='relatedProducts.title'
+          exclude={_id}
+        />
       </div>
     </main>
   );

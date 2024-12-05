@@ -3,7 +3,7 @@ import useOrdersDashboard from "../hooks/useOrdersDashboard";
 import { OrdersDashboardReturn, OrderTableData } from "../../../providers/interface/admin.props";
 
 const OrdersList = () => {
-  const { tableData, headers, handleEdit, handleDelete } = useOrdersDashboard() as OrdersDashboardReturn;
+  const { tableData, headers, handleEdit, handleDelete } = useOrdersDashboard() as unknown as OrdersDashboardReturn;
   return (
     <Table<OrderTableData>
       headers={headers}

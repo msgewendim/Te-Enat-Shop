@@ -1,8 +1,16 @@
 import { useTranslation } from 'react-i18next';
+import DesignProductPopup from "../components/layout/modals/DesignProduct";
+import { useState, useEffect } from 'react';
 
 const ThankYou = () => {
   const { t } = useTranslation();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const handleOpenPopup = () => setIsPopupOpen(true);
+  const handleClosePopup = () => setIsPopupOpen(false);
 
+  useEffect(() => {
+    handleOpenPopup();
+  }, []);
   return (
     <section
       className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16"
@@ -49,6 +57,7 @@ const ThankYou = () => {
           </a>
         </div>
       </div>
+      <DesignProductPopup isPopupOpen={isPopupOpen} handleClosePopup={handleClosePopup} />
     </section>
   );
 };

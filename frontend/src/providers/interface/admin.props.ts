@@ -4,15 +4,7 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
-import {
-  Category,
-  Order,
-  Package,
-  Product,
-  Recipe,
-  SubCategory,
-} from "../../client/types.gen";
-import { QueryObserverResult } from "@tanstack/react-query";
+import { Category, Product, SubCategory } from "../../client/types.gen";
 
 interface ArrayInputFieldProps {
   control: Control<Product>;
@@ -44,7 +36,6 @@ interface RecipeDashboardReturn {
   headers: string[];
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
-  refetch: () => Promise<QueryObserverResult<Recipe[], Error>>;
 }
 type ProductTableData = {
   _id: string;
@@ -58,7 +49,6 @@ interface ProductDashboardReturn {
   headers: string[];
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
-  refetch: () => Promise<QueryObserverResult<Product[], Error>>;
 }
 type OrderTableData = {
   _id: string;
@@ -71,7 +61,6 @@ interface OrdersDashboardReturn {
   headers: string[];
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
-  refetch: () => Promise<QueryObserverResult<Order[], Error>>;
 }
 type PackageTableData = {
   _id: string;
@@ -86,7 +75,6 @@ interface PackageDashboardReturn {
   headers: string[];
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
-  refetch?: () => Promise<QueryObserverResult<Package[], Error>>;
 }
 export {
   ArrayInputFieldProps,

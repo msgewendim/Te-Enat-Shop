@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { CartItem, Feature, SubCategory } from "../client";
+import {
+  CartItem,
+  Feature,
+  Ingredient,
+  OrderItem,
+  SubCategory,
+} from "../client";
 import { recipeCategories, recipeSubCategoriesMapping } from "./constants";
 import { productCategories } from "./constants";
 import { productSubCategoriesMapping } from "./constants";
@@ -104,6 +110,26 @@ const addItemToCartList = (
       )
     : [...cartList, newItem];
 };
+
+export const addItemToOrderList = (
+  orderList: OrderItem[],
+  newItem: OrderItem
+): OrderItem[] => {
+  const existingItem = orderList.find(
+    (orderItem) =>
+      orderItem.description === newItem.description &&
+      orderItem.size === newItem.size
+  );
+
+  return existingItem
+    ? orderList.map((orderItem) =>
+        orderItem === existingItem
+          ? { ...orderItem, quantity: orderItem.quantity + newItem.quantity }
+          : orderItem
+      )
+    : [...orderList, newItem];
+};
+
 const subCategoriesByParentCategoryKey = (
   parentCategoryNameKey: string,
   type: "recipe" | "product"
@@ -122,8 +148,14 @@ function categoriesBasedOnType(type: "recipe" | "product") {
         subCategoriesMapping: productSubCategoriesMapping,
       };
 }
-
+const existingProductsFromRecipe = (ingredients: Ingredient[]) => {
+  const existingProducts = ingredients
+    .filter((ingredient) => ingredient.existsInProducts)
+    .map((ingredient) => ingredient.name);
+  return existingProducts;
+};
 export {
+  existingProductsFromRecipe,
   categoriesBasedOnType,
   addItemToCartList,
   createBanner,

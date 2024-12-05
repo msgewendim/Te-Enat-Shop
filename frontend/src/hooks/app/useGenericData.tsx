@@ -66,10 +66,12 @@ function useGenericData<T>(endpoint: string) {
     });
   };
 
-  const useGetRelatedItems = (q: query) => {
-    return useQuery<SuccessResponse>({
+  const useGetRelatedItems = (exclude: string, q: query) => {
+    return useQuery<SuccessResponse, Error>({
       queryKey: [endpoint, "related", q],
-      queryFn: async () => await getRelatedItems(endpoint, q),
+      queryFn: async () => await getRelatedItems(endpoint, q, exclude),
+      placeholderData: (previousData) => previousData,
+      staleTime: 5000,
     });
   };
 

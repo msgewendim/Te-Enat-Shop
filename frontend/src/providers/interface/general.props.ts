@@ -5,7 +5,7 @@ import {
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
-import { Category, ProductSize, RandomItem } from "../../client/types.gen";
+import { Category, ProductSize } from "../../client/types.gen";
 import { CategoryMapping } from "../../utils/constants";
 import { QueryObserverResult } from "@tanstack/react-query";
 import { RefetchOptions } from "@tanstack/react-query";
@@ -14,12 +14,12 @@ interface RelatedItemsProps {
   endpoint: string;
   itemCategory: string;
   titleKey: string;
-  linkPrefix: string;
+  exclude: string;
 }
 
-interface RelatedItemCardProps {
-  item: RandomItem;
-  linkPrefix: string; // '/products' or '/recipes'
+interface RelatedItemCardProps<T> {
+  item: T;
+  endpoint: string; // '/products' or '/recipes'
 }
 interface GuaranteeCardProps {
   icon: React.FC<React.SVGProps<SVGSVGElement>> | string;

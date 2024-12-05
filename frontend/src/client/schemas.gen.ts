@@ -617,24 +617,6 @@ export const $SubCategory = {
     required: ['nameInHebrew', 'nameInEnglish', 'nameOfParentCategory']
 } as const;
 
-export const $PartialRecipe = {
-    type: 'object',
-    properties: {
-        _id: {
-            type: 'string',
-            description: 'Unique identifier for the recipe'
-        },
-        title: {
-            type: 'string'
-        },
-        image: {
-            type: 'string',
-            description: 'URL to an image of the recipe'
-        }
-    },
-    required: ['_id', 'title', 'image']
-} as const;
-
 export const $Ingredient = {
     type: 'object',
     properties: {
@@ -672,20 +654,26 @@ export const $Instruction = {
 export const $RandomItemsResponse = {
     type: 'object',
     properties: {
+        success: {
+            type: 'boolean'
+        },
+        message: {
+            type: 'string'
+        },
+        data: {
+            type: 'RandomItemData'
+        }
+    },
+    required: ['success', 'message', 'data']
+} as const;
+
+export const $RandomItemData = {
+    type: 'object',
+    properties: {
         items: {
             type: 'array',
             items: {
-                oneOf: [
-                    {
-                        '$ref': '#/components/schemas/Product'
-                    },
-                    {
-                        '$ref': '#/components/schemas/Recipe'
-                    },
-                    {
-                        '$ref': '#/components/schemas/Package'
-                    }
-                ]
+                type: 'RandomItem'
             }
         },
         currentPage: {

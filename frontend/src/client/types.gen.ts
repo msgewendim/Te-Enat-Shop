@@ -329,18 +329,6 @@ export type SubCategory = {
   nameOfParentCategory: string;
 };
 
-export type PartialRecipe = {
-  /**
-   * Unique identifier for the recipe
-   */
-  _id: string;
-  title: string;
-  /**
-   * URL to an image of the recipe
-   */
-  image: string;
-};
-
 export type Ingredient = {
   /**
    * Unique identifier for the ingredient In DB
@@ -351,6 +339,7 @@ export type Ingredient = {
    * Amount of the ingredient required (e.g., "1 cup", "2 tbsp")
    */
   quantity: string;
+  existsInProducts: boolean;
 };
 
 export type Instruction = {
@@ -362,11 +351,13 @@ export type Instruction = {
 export type RandomItemsResponse = {
   success: boolean;
   message: string;
-  data: {
-    items: Array<RandomItem>;
-    currentPage: number;
-    totalPages: number;
-  };
+  data: RandomItemData;
+};
+
+export type RandomItemData = {
+  items: Array<RandomItem>;
+  currentPage: number;
+  totalPages: number;
 };
 
 export type RandomItem = Product | Recipe | Package;

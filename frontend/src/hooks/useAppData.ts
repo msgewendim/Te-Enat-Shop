@@ -1,16 +1,20 @@
 import { useQuery, useMutation, keepPreviousData } from "@tanstack/react-query";
 import { query } from "../providers/interface/context";
-import { PaymentFormPayload, RandomItemsResponse } from "../client/types.gen";
+import {
+  PaymentFormPayload,
+  RandomItemsResponse,
+  SuccessResponse,
+} from "../client/types.gen";
 import {
   getRandomItems,
   getRelatedItems,
 } from "../providers/api/GenericService";
-import { getPaymentForm } from "../providers/api";
+import { getItemsByNames, getPaymentForm } from "../providers/api";
 
-function useGetRelatedItems(endpoint: string, query?: query) {
+function useGetRelatedItems(endpoint: string, exclude: string, query?: query) {
   return useQuery({
     queryKey: [endpoint, "related", query],
-    queryFn: () => getRelatedItems(endpoint, query || {}),
+    queryFn: () => getRelatedItems(endpoint, query || {}, exclude),
     placeholderData: (previousData) => previousData,
     staleTime: 5000,
   });
@@ -38,4 +42,17 @@ function useGetPaymentFormMutation() {
   });
 }
 
-export { useGetRelatedItems, useGetPaymentFormMutation, useGetRandomItems };
+function useGetItemsByNames(names: string[]) {
+  return useQuery<SuccessResponse, Error>({
+    queryKey: ["items from recipe", names],
+    queryFn: () => getItemsByNames(names),
+    placeholderData: keepPreviousData,
+    staleTime: 5000,
+  });
+}
+export {
+  useGetRelatedItems,
+  useGetPaymentFormMutation,
+  useGetRandomItems,
+  useGetItemsByNames,
+};

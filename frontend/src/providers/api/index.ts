@@ -4,6 +4,7 @@ import {
   GetOrdersPaymentStatusResponse,
   PaymentFormPayload,
   PaymentFormSuccessResponse,
+  SuccessResponse,
 } from "../../client/types.gen";
 import { BASE_API_URL } from "../../utils/env.config";
 
@@ -43,6 +44,20 @@ const removeFromCart = async (cartItem: CartItem, userId: string) => {
   });
 };
 
-export { removeFromCart, addToCart, getPaymentForm, checkPaymentStatus };
+const getItemsByNames = async (names: string[]) => {
+  return (
+    await axiosInstance.post<SuccessResponse>(`/products/names`, {
+      names,
+    })
+  ).data;
+};
+
+export {
+  removeFromCart,
+  addToCart,
+  getPaymentForm,
+  checkPaymentStatus,
+  getItemsByNames,
+};
 
 export const axiosInstance = axios.create({ baseURL: BASE_API_URL });

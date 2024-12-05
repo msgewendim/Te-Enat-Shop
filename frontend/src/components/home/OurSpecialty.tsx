@@ -2,6 +2,8 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Recipe } from "../../client";
 import useRandomCards from "../../hooks/app/useRandomCards";
+import RecipeCardModal from "../ui/RecipeCardModal";
+import { useState } from "react";
 
 const OurSpecialty = () => {
   const { t } = useTranslation();
@@ -29,9 +31,11 @@ const OurSpecialty = () => {
 
 const RecipeCard = ({ data }: { data: Recipe }) => {
   const { t } = useTranslation();
-
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const handleOpenPopup = () => setIsPopupOpen(true);
+  const handleClosePopup = () => setIsPopupOpen(false);
   return (
-    <Link to={`/recipes/${data._id}`} className="group hover:bg-gray-100 focus:outline-none focus:bg-gray-100 rounded-xl p-5 transition dark:hover:bg-white/10 dark:focus:bg-white/10">
+    <div className="group hover:bg-gray-100 focus:outline-none focus:bg-gray-100 rounded-xl p-5 transition dark:hover:bg-white/10 dark:focus:bg-white/10" onClick={handleOpenPopup}>
       <div className="aspect-w-16 aspect-h-10">
         <img src={data.image} loading="lazy" alt={data.name} className="w-full object-cover rounded-xl" />
       </div>
@@ -43,7 +47,8 @@ const RecipeCard = ({ data }: { data: Recipe }) => {
           {t('homePage.ourSpecialty.readMore')}
         </p>
       </div>
-    </Link>
+      <RecipeCardModal recipe={data} open={isPopupOpen} setOpen={handleClosePopup} />
+    </div>
   );
 };
 

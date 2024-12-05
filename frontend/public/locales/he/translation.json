@@ -10,7 +10,22 @@
     "logout": "התנתקות",
     "closeMenu": "סגור תפריט",
     "packages": "מארזים",
-    "openMenu": "פתח תפריט"
+    "openMenu": "פתח תפריט",
+    "events": "אירועים",
+    "TOBIA": "TOBIA"
+  },
+  "events": {
+    "details": "פרטים",
+    "name": "שם המזמין",
+    "title": "אירועים",
+    "eventDescription": "תיאור אירוע",
+    "eventDate": "תאריך אירוע",
+    "cancel": "ביטול",
+    "company": "חברה",
+    "fullName": "שם מלא",
+    "email": "מייל",
+    "phone": "פלאפון",
+    "submit": "שלח"
   },
   "banner": {
     "ariaLabel": "Banner for {{text}}"
@@ -70,7 +85,7 @@
     },
     "ourSpecialty": {
       "title": "המומחיות שלנו, אלו היצירות שלכם",
-      "readMore": "בא לי",
+      "readMore": "אני רוצה",
       "features": {
         "spices": {
           "title": "תבלינים אקזוטיים",
@@ -121,17 +136,25 @@
       "city": "עיר",
       "name": "שם מלא"
     },
-    "rights": "כל הזכויות שמורות",
-    "year": "2024 ©"
+    "infoAndPrivacy": {
+      "info": "מידע ותנאי שירות",
+      "privacy": "מדיניות פרטיות",
+      "terms": "תנאי שימוש",
+      "rights": "כל הזכויות שמורות",
+      "year": "2024 ©"
+    },
+    "events": "אירועים"
   },
   "recipe": {
     "imageAlt": "Image of {{title}}",
     "prepTime": "זמן הכנה",
     "difficulty": "קושי",
     "servings": "כמות סועדים",
-    "ingredients": "מצרכים",
+    "ingredients": "מרכיבים",
     "instructions": "הוראות הכנה",
-    "readMore": "צפה"
+    "readMore": "צפה",
+    "productsFromRecipe": "מוצרים המוצגים במתכון",
+    "chooseAllOrSome": "בחר פריט מהמתכון או הוסף את כולם לעגלה"
   },
   "shop": {
     "title": "חנות",
@@ -146,6 +169,8 @@
     "searchLabel": "חיפוש מוצרים",
     "searchPlaceholderProducts": "הקלד שם מוצר",
     "searchPlaceholderRecipes": "הקלד שם מתכון",
+    "searchPlaceholderPackages": "הקלד שם מארז",
+    "searchPlaceholderRecipe": "הקלד שם מתכון",
     "clearButton": "נקה סינון"
   },
   "product": {
@@ -165,7 +190,36 @@
     "remove": "הסר",
     "removeItem": "הסר את {{name}} מהעגלה",
     "emptyCart": "עגלה ריקה",
-    "itemsList": "רשימת מוצרים בעגלה"
+    "itemsList": "רשימת מוצרים בעגלה",
+    "allProductsAdded": "כל המוצרים נוספו לעגלה"
+  },
+  "designProduct": {
+    "title": "שלום ותודה שרכשתם מאיתנו",
+    "message": "רוצים לעזור לנו להשתפר?\n הצטרפו לנבחרת הטועמים שלנו!\n מדי פעם נשלח לכם מוצר חדש להתנסות, אתם תספרו לנו איך יצא.\n מוכנים? השאירו פרטים!",
+    "details": "פרטים",
+    "email": "מייל",
+    "fullName": "שם מלא",
+    "street": "כתובת",
+    "city": "עיר",
+    "zipCode": "מיקוד",
+    "birthDate": "תאריך לידה",
+    "phone": "פלאפון",
+    "cancel": "ביטול",
+    "submit": "שלח"
+  },
+  "earlyAdopters": {
+    "title": "הצעה מיוחדת עבורכם",
+    "message": "תודה שאתם חלק מהדרך שלנו!\nאנחנו מעריכים את התמיכה שלכם במיזם שלנו ורוצים לפנק אתכם:\nבכל רכישה שתבצעו בתקופה הקרובה, תקבלו מתנה מיוחדת מאיתנו – מוצר חדש שיחשוף אתכם לטעמים ולחוויות הייחודיות שלנו. \nתודה שאתם איתנו כבר מההתחלה!",
+    "details": "פרטים",
+    "email": "מייל",
+    "fullName": "שם מלא",
+    "street": "כתובת",
+    "city": "עיר",
+    "zipCode": "מיקוד",
+    "birthDate": "תאריך לידה",
+    "phone": "פלאפון",
+    "cancel": "ביטול",
+    "submit": "שלח"
   },
   "recipes": {
     "bannerText": "גלה את המתכונים שלנו",
@@ -179,14 +233,16 @@
     "paymentFailed": "העסקה לא הצליחה. אנא בדוק את פרטי התשלום שלך.",
     "sessionExpired": "הסשן שלך פג. אנא התחבר מחדש.",
     "unauthorized": "אין לך הרשאה לגשת לדף זה.",
-    "loginRequired": "נא להתחבר כדי לגשת לדף זה."
+    "loginRequired": "נא להתחבר כדי לגשת לדף זה.",
+    "orderNotFound": "ההזמנה לא נמצאה.",
+    "orderError": "אירעה שגיאה בעת טעינת ההזמנה."
   },
   "buttons": {
     "addToCart": "הוסף לעגלת הקניות",
     "viewDetails": "הצג פרטים",
     "checkout": "לתשלום",
     "continueShopping": "המשך לקניות",
-    "buy": "קנה",
+    "buy": "הוסף לעגלה",
     "readMore": "קרא עוד",
     "remove": "הסר",
     "add": "הוסף",

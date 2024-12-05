@@ -79,7 +79,7 @@ const AddIngredientsInput = ({ register, control, name }: {
 
   useEffect(() => {
     if (ingredientsFields.length === 0) {
-      appendIngredients({ _id: crypto.randomUUID(), name: '', quantity: "" });
+      appendIngredients({ _id: crypto.randomUUID(), name: '', quantity: "", existsInProducts: false });
     }
   }, [ingredientsFields.length, appendIngredients]);
 
@@ -89,6 +89,11 @@ const AddIngredientsInput = ({ register, control, name }: {
       <div className="grid sm:grid-cols-2 gap-3">
         {ingredientsFields.map((field, index) => (
           <div key={field.id} className="grid sm:flex items-center gap-2">
+            <input
+              type="checkbox"
+              className='w-4 h-4'
+              {...register(`ingredients.${index}.existsInProducts` as Path<Recipe>)}
+            />
             <FormInput<Recipe>
               register={register}
               name={`ingredients.${index}.name` as Path<Recipe>}
@@ -118,7 +123,7 @@ const AddIngredientsInput = ({ register, control, name }: {
       </div>
       <FormButton
         type="button"
-        onClick={() => appendIngredients({ _id: crypto.randomUUID(), name: '', quantity: "" })}
+        onClick={() => appendIngredients({ _id: crypto.randomUUID(), name: '', quantity: "", existsInProducts: false })}
         className="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-fit"
         text={t('buttons.add')} />
     </fieldset>

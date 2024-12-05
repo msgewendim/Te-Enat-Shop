@@ -53,23 +53,26 @@ const productSubCategoriesMapping: CategoryMapping = {
 
 // Recipe categories
 const recipeCategories: Category[] = [
-  { nameInHebrew: "איתיופי", nameInEnglish: "Ethiopian" },
-  { nameInHebrew: "טבעוני", nameInEnglish: "Vegetarian" },
-  { nameInHebrew: "בשרי", nameInEnglish: "Meat" },
-  { nameInHebrew: "ארוחת בוקר", nameInEnglish: "Breakfast" },
-  { nameInHebrew: "ארוחת ערב", nameInEnglish: "Dinner" },
+  { nameInHebrew: "תבשילים", nameInEnglish: "stew" },
+  { nameInHebrew: "אינג'רה", nameInEnglish: "injera" },
+  { nameInHebrew: "טיבס", nameInEnglish: "tibs" },
+  { nameInHebrew: "סלטים", nameInEnglish: "salad" },
+  { nameInHebrew: "לחמים", nameInEnglish: "bread" },
+  { nameInHebrew: "קינוחים", nameInEnglish: "dessert" },
+  { nameInHebrew: "ללא גלוטן", nameInEnglish: "glutenFree" },
 ];
 
 const recipeCategoriesMapping: CategoryMapping = {
-  Ethiopian: "איתיופי",
-  Vegetarian: "טבעוני",
-  Meat: "בשרי",
-  Breakfast: "ארוחת בוקר",
-  Dinner: "ארוחת ערב",
+  stews: "תבשילים",
+  injera: "אינג'רה",
+  tibs: "טיבס",
+  salads: "סלטים",
+  desserts: "קינוחים",
+  glutenFree: "ללא גלוטן",
 };
 
 const recipeSubCategoriesMapping: CategoryMapping = {
-  Ethiopian: ["איתיופי", "איתיופי מוכנים"],
+  s: ["איתיופי", "איתיופי מוכנים"],
   Vegetarian: ["טבעוני", "טבעוני מוכנים"],
   Meat: ["בשרי", "בשרי מוכנים"],
   Breakfast: ["ארוחת בוקר", "ארוחת בוקר מוכנות"],

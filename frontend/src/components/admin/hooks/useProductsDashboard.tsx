@@ -9,7 +9,7 @@ function useProductsDashboard() {
   const { setProductToEdit } = useAppContext();
   const { useDeleteItemMutation } = useGenericData<Product>("/products");
   const deleteMutation = useDeleteItemMutation();
-  const { products, isLoading, isError, error, refetchProducts } = useShop({ limit: 20 });
+  const { products, isLoading, isError, error } = useShop({ limit: 20 });
 
   const displayFields = {
     name: "שם מוצר",
@@ -52,7 +52,6 @@ function useProductsDashboard() {
     formatTableData,
     displayFields,
     setItemToEdit: (product) => setProductToEdit(product),
-    refetch: refetchProducts
   });
 }
 

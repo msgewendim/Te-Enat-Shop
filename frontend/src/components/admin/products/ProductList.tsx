@@ -4,28 +4,19 @@ import Table from "../../ui/Table";
 import useProductsDashboard from '../hooks/useProductsDashboard';
 import { ProductDashboardReturn, ProductTableData } from '../../../providers/interface/admin.props';
 import Filters from '../../ui/Filters';
-import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 
 const ProductList = () => {
   const { t } = useTranslation();
-  const { setAdminActiveSection, adminActiveSection } = useAppContext();
+  const { setAdminActiveSection } = useAppContext();
   const {
     tableData = [],
     headers = [],
     handleDelete: handleDeleteProduct,
     handleEdit: handleEditProduct,
-    refetch: refetchProducts
-  } = (useProductsDashboard() as ProductDashboardReturn) || {};
+  } = (useProductsDashboard() as unknown as ProductDashboardReturn) || {};
 
-  // refetch products after adding a product
-  useEffect(() => {
-    if (adminActiveSection === "products") {
-      refetchProducts();
-      toast.success(t("admin.products.addSuccess"));
-    }
-  }, [adminActiveSection, refetchProducts, t]);
+
   return (
     <section className="mb-32 px-4 md:px-0" aria-labelledby="product-list-title">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">

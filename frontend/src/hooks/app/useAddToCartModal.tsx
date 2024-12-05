@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppContext } from './useAppContext'
-import { CartItem, ProductSize } from '../../client/types.gen'
+import { CartItem, Product, ProductSize } from '../../client/types.gen'
 import { addItemToCartList } from '../../utils/helperFunctions'
 import { toast } from 'react-toastify'
-import { ProductModalProps } from '../../providers/interface/products.props'
+import { ItemProperties, ProductModalProps } from '../../providers/interface/products.props'
 
 
 function useAddToCartModal({ product, setOpen }: ProductModalProps) {
   const { cartItems, setCartItems, setOrderItems, orderItems, sizeIdx, setSizeIdx } = useAppContext()
   const { pricing } = product
 
-  const sizes = useMemo(() => pricing.map(p => p.size), [pricing]);
-  const prices = useMemo(() => pricing.map(p => p.price), [pricing]);
+  const sizes = useMemo(() => pricing ? pricing.map(p => p.size) : [], [pricing]);
+  const prices = useMemo(() => pricing ? pricing.map(p => p.price) : [], [pricing]);
 
-  const [itemProperties, setItemProperties] = useState({
+  const [itemProperties, setItemProperties] = useState<ItemProperties>({
     quantity: 1,
-    size: sizes[sizeIdx]["sizeName"],
+    size: sizes[sizeIdx]?.sizeName,
     price: prices[sizeIdx]
   })
   const handleQuantityChange = useCallback((change: number) => {
@@ -28,7 +28,7 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
   useEffect(() => {
     setItemProperties(prev => ({
       ...prev,
-      size: sizes[sizeIdx]["sizeName"],
+      size: sizes[sizeIdx]?.sizeName,
       price: prices[sizeIdx]
     }))
   }, [prices, sizeIdx, sizes])
@@ -39,14 +39,14 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
       setSizeIdx(newSizeIdx);
       setItemProperties(prev => ({
         ...prev,
-        size: sizes[newSizeIdx]["sizeName"],
+        size: sizes[newSizeIdx]?.sizeName,
         price: prices[newSizeIdx],
       }));
     }
   }, [sizes, prices, setSizeIdx]);
 
 
-  const handleAddProductToCart = useCallback(() => {
+  const handleAddProductToCart = useCallback((product: Product) => {
     const newItem: CartItem = { item: product, ...itemProperties }
     const updatedCartItems = addItemToCartList(cartItems, newItem)
     sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
@@ -61,7 +61,7 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
     }])
     toast.success("מוצר נוסף לעגלה")
     setOpen(false)
-  }, [cartItems, orderItems, itemProperties, setCartItems, product, setOrderItems, setOpen])
+  }, [cartItems, orderItems, setCartItems, itemProperties, setOrderItems, setOpen])
 
   return {
     sizes,

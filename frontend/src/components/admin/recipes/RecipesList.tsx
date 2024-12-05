@@ -15,7 +15,7 @@ const RecipeList = () => {
     headers = [],
     handleDelete: handleDeleteRecipe,
     handleEdit: handleEditRecipe
-  } = (useRecipesDashboard() as RecipeDashboardReturn) || {};
+  } = (useRecipesDashboard() as unknown as RecipeDashboardReturn) || {};
 
   return (
     <section className="mb-32 px-4 md:px-0" aria-labelledby="recipe-list-title">

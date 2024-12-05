@@ -2,6 +2,7 @@ import CheckoutForm from "../components/checkout/CheckoutForm";
 import CheckoutSummary from "../components/checkout/CheckoutSummary";
 import { useTranslation } from 'react-i18next';
 
+
 const Checkout = () => {
   const { t } = useTranslation();
 
@@ -40,5 +41,6 @@ const Checkout = () => {
     </main>
   );
 };
+
 
 export default Checkout;
