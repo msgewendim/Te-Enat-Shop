@@ -1,6 +1,6 @@
 import RecipeDal from "../Dal/RecipeDal";
 import { Recipe } from "../../types/recipe.types";
-import { BadRequestError, NotFoundError } from "../utils/customErrors";
+import { RandomItemsResponse } from "../../types";
 
 export class RecipeService {
   private recipeDataAccess: RecipeDal;
@@ -11,11 +11,7 @@ export class RecipeService {
 
   async getRecipe(recipeId: string): Promise<Recipe> {
     try {
-      const result = await this.recipeDataAccess.getRecipe(recipeId);
-      if (!result) {
-        throw new NotFoundError(`Recipe with id: ${recipeId} not found`);
-      }
-      return result;
+      return (await this.recipeDataAccess.getRecipe(recipeId)) as Recipe;
     } catch (error) {
       throw error;
     }
@@ -25,7 +21,7 @@ export class RecipeService {
     try {
       await this.recipeDataAccess.addRecipe(recipe);
     } catch (error) {
-      throw new BadRequestError("Can not add Recipe!");
+      throw error;
     }
   }
 
@@ -33,8 +29,9 @@ export class RecipeService {
     page: number,
     limit?: number,
     searchTerm?: string,
-    category?: string
-  ): Promise<Recipe[] | unknown> {
+    category?: string,
+    excludeById?: string
+  ): Promise<Recipe[]> {
     try {
       if (!page) page = 1;
       if (!limit) limit = 9;
@@ -42,10 +39,11 @@ export class RecipeService {
         page,
         limit,
         searchTerm,
-        category
+        category,
+        excludeById
       )) as Recipe[];
     } catch (error) {
-      throw new NotFoundError("No Recipes Found!");
+      throw error;
     }
   }
 
@@ -53,9 +51,7 @@ export class RecipeService {
     try {
       await this.recipeDataAccess.updateRecipe(recipeId, recipeData);
     } catch (error) {
-      throw new BadRequestError(
-        `Can not update Recipe! ${(error as Error).message}`
-      );
+      throw error;
     }
   }
 
@@ -63,23 +59,18 @@ export class RecipeService {
     try {
       await this.recipeDataAccess.deleteRecipe(recipeId);
     } catch (error) {
-      throw new BadRequestError(
-        `Can't delete Recipe ${(error as Error).message}`
-      );
+      throw error;
     }
   }
 
   async getRandomRecipes(
     page: number,
     limit: number
-  ): Promise<Recipe[] | unknown> {
+  ): Promise<RandomItemsResponse> {
     try {
-      const result = await this.recipeDataAccess.getRandomRecipes(page, limit);
-      return result;
+      return await this.recipeDataAccess.getRandomRecipes(page, limit);
     } catch (error) {
-      throw new NotFoundError(
-        `Error getting random Recipes: ${(error as Error).message}`
-      );
+      throw error;
     }
   }
 }

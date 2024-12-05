@@ -19,6 +19,13 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) =>
     await productController.getRandomProducts(req, res, next)
 );
+
+router.post(
+  "/names",
+  async (req: Request, res: Response, next: NextFunction) =>
+    await productController.getProductsByName(req, res, next)
+);
+
 router.get(
   "/:_id",
   async (req: Request, res: Response, next: NextFunction) =>

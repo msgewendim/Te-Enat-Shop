@@ -21,6 +21,7 @@ router.get(
     await packageController.getRandomPackages(req, res, next);
   }
 );
+
 router.get(
   "/:_id",
   async (req: Request, res: Response, next: NextFunction) =>

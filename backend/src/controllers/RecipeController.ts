@@ -19,6 +19,13 @@ export class RecipeController {
     }
     try {
       const recipeData = await this.recipeService.getRecipe(recipeId);
+      if (!recipeData) {
+        return res.status(400).json({
+          success: true,
+          message: "Recipe not found",
+          data: null,
+        });
+      }
       res.status(200).json({
         success: true,
         message: "Recipe fetched successfully",
@@ -31,15 +38,31 @@ export class RecipeController {
 
   async getAllRecipes(req: Request, res: Response, next: NextFunction) {
     try {
-      const { page, filter, category, limit } = req.query;
+      const { page, filter, category, limit, exclude } = req.query;
       const parsedPage = parseInt(page as string, 10);
       const parsedLimit = parseInt(limit as string, 10);
+
+      if (exclude && !validateObjectId(exclude as string)) {
+        return next(new BadRequestError("Invalid recipe ID format"));
+      }
+      const excludeById = mongoose.Types.ObjectId.isValid(exclude as string)
+        ? (exclude as string)
+        : undefined;
+
       const recipes = await this.recipeService.getAllRecipes(
         parsedPage,
         parsedLimit,
         filter as string,
-        category as string
+        category as string,
+        excludeById
       );
+      if (recipes.length === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "No recipes found",
+          data: [],
+        });
+      }
       res.status(200).json({
         success: true,
         message: "Recipes fetched successfully",
@@ -112,6 +135,13 @@ export class RecipeController {
         parsedPage,
         parsedLimit
       );
+      if (randomRecipes.items.length === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "No random recipes found",
+          data: [],
+        });
+      }
       res.status(200).json({
         success: true,
         message: "Random recipes fetched successfully",

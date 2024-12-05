@@ -1,11 +1,6 @@
-import mongoose from "mongoose";
 import { Response, Request, NextFunction } from "express";
 import { PackageService } from "../Service/PackageService";
-import {
-  BadRequestError,
-  NotFoundError,
-  ValidationError,
-} from "../utils/customErrors";
+import { BadRequestError, ValidationError } from "../utils/customErrors";
 import {
   validateAddPackage,
   validateUpdatePackage,
@@ -22,13 +17,16 @@ export class PackageController {
   async getPackage(req: Request, res: Response, next: NextFunction) {
     const packageId = req.params._id;
     if (!validateObjectId(packageId)) {
-      console.log("invalid id");
       return next(new BadRequestError("Invalid package ID format"));
     }
     try {
       const packageData = await this.packageService.getPackage(packageId);
       if (!packageData) {
-        throw new NotFoundError(`Package with id: ${packageId} not found`);
+        return res.status(400).json({
+          success: true,
+          message: "Package not found",
+          data: null,
+        });
       }
       res.status(200).json({
         success: true,
@@ -47,10 +45,18 @@ export class PackageController {
         Number(page),
         Number(limit)
       );
-      if (!packages) {
-        throw new NotFoundError("No packages found");
+      if (packages.length === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "No packages found",
+          data: [],
+        });
       }
-      res.status(200).json({ success: true, data: packages });
+      res.status(200).json({
+        success: true,
+        message: "Packages fetched successfully",
+        data: packages,
+      });
     } catch (error) {
       next(error);
     }
@@ -122,6 +128,13 @@ export class PackageController {
         Number(page),
         Number(limit)
       );
+      if (randomPackages.items.length === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "No random packages found",
+          data: [],
+        });
+      }
       res.status(200).json({
         success: true,
         message: "Random packages fetched successfully",

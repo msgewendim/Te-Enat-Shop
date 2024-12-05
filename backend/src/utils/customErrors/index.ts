@@ -9,7 +9,7 @@ export class CustomError extends Error {
 
 export class NotFoundError extends CustomError {
   constructor(message: string = "Resource not found") {
-    super(message, 404);
+    super(message, 400);
   }
 }
 

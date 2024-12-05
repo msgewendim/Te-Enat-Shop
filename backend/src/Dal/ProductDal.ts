@@ -7,11 +7,8 @@ import { BadRequestError, NotFoundError } from "../utils/customErrors";
 export class ProductDal implements IProduct<Product> {
   async getProduct(id: string): Promise<Product | null> {
     try {
-      const product = (await productModel.findById(id)) as Product;
-      if (!product) {
-        throw new NotFoundError(`Product with id: ${id} not found`);
-      }
-      return product;
+      const product = await productModel.findById(id);
+      return product as Product;
     } catch (error) {
       throw error;
     }
@@ -21,7 +18,8 @@ export class ProductDal implements IProduct<Product> {
     limit: number,
     searchTerm?: string,
     category?: string,
-    subCategory?: string
+    subCategory?: string,
+    excludeById?: string
   ): Promise<Product[] | unknown[]> {
     try {
       const query: QueryOptions = {};
@@ -45,6 +43,11 @@ export class ProductDal implements IProduct<Product> {
               },
             },
           });
+          if (excludeById) {
+            filters.push({
+              _id: { $ne: excludeById },
+            });
+          }
         }
 
         if (subCategory) {
@@ -65,16 +68,12 @@ export class ProductDal implements IProduct<Product> {
           Object.assign(query, filters[0]);
         }
       }
-
       const products = await productModel
         .find(query)
         .skip((page - 1) * limit)
         .limit(limit)
         .exec();
-      if (!products) {
-        throw new NotFoundError("No products found");
-      }
-      return products;
+      return products as Product[];
     } catch (error) {
       throw error;
     }
@@ -88,11 +87,8 @@ export class ProductDal implements IProduct<Product> {
       // Calculate skip value for pagination
       const skip = (page - 1) * limit;
       const products = await productModel.find().skip(skip).limit(limit);
-      if (!products) {
-        throw new NotFoundError("No random products found");
-      }
       return {
-        items: products,
+        items: products as Product[],
         currentPage: page,
         totalPages: totalPages,
       };
@@ -117,25 +113,50 @@ export class ProductDal implements IProduct<Product> {
     postData: Partial<Product>
   ): Promise<Product> {
     try {
-      const updatedProduct = (await productModel.findByIdAndUpdate(
-        id,
-        postData
-      )) as Product;
+      const updatedProduct = await productModel.findByIdAndUpdate(id, postData);
       if (!updatedProduct) {
         throw new NotFoundError(`Product with id: ${id} not found`);
       }
-      return updatedProduct;
+      return updatedProduct as Product;
     } catch (error) {
       throw error;
     }
   }
   async addProduct(product: Product): Promise<Product> {
     try {
-      const newProduct = (await productModel.insertMany(product)) as Product[];
+      const newProduct = await productModel.insertMany(product);
       if (!newProduct) {
         throw new BadRequestError("Failed to add product");
       }
-      return newProduct[0];
+      return newProduct[0] as Product;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getProductsByName(names: string[]): Promise<Product[]> {
+    try {
+      const nameRegexPatterns = names.map((name) => new RegExp(name, "i"));
+      const products = await productModel.aggregate([
+        {
+          $match: {
+            name: { $in: nameRegexPatterns },
+          },
+        },
+        {
+          $group: {
+            _id: "$_id",
+            doc: { $first: "$$ROOT" },
+          },
+        },
+        {
+          $replaceRoot: { newRoot: "$doc" },
+        },
+        {
+          $sort: { name: 1 },
+        },
+      ]);
+
+      return products as Product[];
     } catch (error) {
       throw error;
     }

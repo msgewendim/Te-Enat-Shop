@@ -1,16 +1,12 @@
 import { NextFunction, Response, Request } from "express";
-import mongoose from "mongoose";
 import { ProductService } from "../Service/ProductService";
-import {
-  BadRequestError,
-  ValidationError,
-  NotFoundError,
-} from "../utils/customErrors";
+import { BadRequestError, ValidationError } from "../utils/customErrors";
 import {
   validateUpdateProduct,
   validateAddProduct,
 } from "../validators/products";
 import { validateObjectId } from "../validators";
+import mongoose from "mongoose";
 
 export class ProductController {
   private productService: ProductService;
@@ -27,7 +23,11 @@ export class ProductController {
     try {
       const productData = await this.productService.getProduct(productId);
       if (!productData) {
-        return next(new NotFoundError("Product not found"));
+        return res.status(200).json({
+          success: true,
+          message: "Product not found",
+          data: null,
+        });
       }
       res.status(200).json({
         success: true,
@@ -41,7 +41,20 @@ export class ProductController {
 
   async getAllProducts(req: Request, res: Response, next: NextFunction) {
     try {
-      const { page = 1, filter, category, limit = 9, subCategory } = req.query;
+      const {
+        page = 1,
+        limit = 9,
+        filter,
+        category,
+        subCategory,
+        exclude,
+      } = req.query;
+      if (exclude && !validateObjectId(exclude as string)) {
+        return next(new BadRequestError("Invalid product ID format"));
+      }
+      const excludeById = mongoose.Types.ObjectId.isValid(exclude as string)
+        ? (exclude as string)
+        : undefined;
       const parsedPage = Math.max(1, parseInt(page as string, 10));
       const parsedLimit = Math.max(1, parseInt(limit as string, 10));
       const products = await this.productService.getAllProducts(
@@ -49,8 +62,16 @@ export class ProductController {
         parsedLimit,
         filter as string,
         category as string,
-        subCategory as string
+        subCategory as string,
+        excludeById
       );
+      if (products.length === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "No products found",
+          data: [],
+        });
+      }
       res.status(200).json({
         success: true,
         message: "Products fetched successfully",
@@ -123,10 +144,40 @@ export class ProductController {
         parsedPage,
         parsedLimit
       );
+      if (randomProducts.items.length === 0) {
+        return res.status(400).json({
+          success: true,
+          message: "No random products found",
+          data: [],
+        });
+      }
       res.status(200).json({
         success: true,
         message: "Random products fetched successfully",
         data: randomProducts,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getProductsByName(req: Request, res: Response, next: NextFunction) {
+    const { names } = req.body;
+    try {
+      const products = await this.productService.getProductsByName(
+        Array.isArray(names) ? names : [names]
+      );
+      if (products.length === 0) {
+        return res.status(400).json({
+          success: true,
+          message: "products by name not found",
+          data: [],
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: "Products fetched successfully",
+        data: products,
       });
     } catch (error) {
       next(error);

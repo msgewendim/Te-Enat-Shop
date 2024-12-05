@@ -4,21 +4,18 @@ import packageModel from "../models/PackageSchema";
 import { BadRequestError, NotFoundError } from "../utils/customErrors";
 
 export class PackageDal implements IPackage<Package> {
-  async getPackage(id: string): Promise<Package | null> {
+  async getPackage(id: string): Promise<Package> {
     try {
       const result = (await packageModel.findById(id)) as Package;
       if (!result) {
         throw new NotFoundError(`Package with id: ${id} not found`);
       }
-      return result;
+      return result as Package;
     } catch (error) {
-      throw new NotFoundError(`Package with id: ${id} not found`);
+      throw error;
     }
   }
-  async getAllPackages(
-    page: number,
-    limit: number
-  ): Promise<Package[] | unknown[]> {
+  async getAllPackages(page: number, limit: number): Promise<Package[]> {
     try {
       const packages = await packageModel
         .find()
@@ -27,7 +24,7 @@ export class PackageDal implements IPackage<Package> {
       if (!packages) {
         throw new NotFoundError("No packages found");
       }
-      return packages;
+      return packages as Package[];
     } catch (error) {
       throw error;
     }
@@ -49,26 +46,25 @@ export class PackageDal implements IPackage<Package> {
     packageData: Partial<Package>
   ): Promise<Package> {
     try {
-      const updatedPackage = (await packageModel.findByIdAndUpdate(
+      const updatedPackage = await packageModel.findByIdAndUpdate(
         id,
         packageData
-      )) as Package;
+      );
       if (!updatedPackage) {
         throw new NotFoundError(`Package with id: ${id} not found`);
       }
-      return updatedPackage;
+      return updatedPackage as Package;
     } catch (error) {
       throw error;
     }
   }
   async addPackage(data: Package): Promise<Package> {
     try {
-      const newPackage = (await packageModel.insertMany(data)) as Package[];
+      const newPackage = await packageModel.insertMany(data);
       if (!newPackage) {
         throw new BadRequestError("Failed to add package");
       }
-      console.log("Package created successfully", newPackage);
-      return newPackage[0];
+      return newPackage[0] as Package;
     } catch (error) {
       throw error;
     }
@@ -86,7 +82,7 @@ export class PackageDal implements IPackage<Package> {
         throw new NotFoundError("No packages found");
       }
       return {
-        items: packages,
+        items: packages as Package[],
         currentPage: page,
         totalPages: totalPages,
       };

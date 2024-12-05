@@ -17,6 +17,11 @@ const IngredientSchema = new Schema<Ingredient>({
     type: String,
     required: true,
   },
+  existsInProducts: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 const InstructionSchema = new Schema<Instruction>({
   step: {

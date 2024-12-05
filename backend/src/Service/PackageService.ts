@@ -1,7 +1,6 @@
 import PackageDal from "../Dal/PackageDal";
 import { Package } from "../../types/product.types";
 import { RandomItemsResponse } from "../../types";
-import { BadRequestError, NotFoundError } from "../utils/customErrors";
 
 export class PackageService {
   private PackageDataAccess: PackageDal;
@@ -12,11 +11,7 @@ export class PackageService {
 
   async getPackage(packageId: string): Promise<Package> {
     try {
-      const result = await this.PackageDataAccess.getPackage(packageId);
-      if (!result) {
-        throw new NotFoundError(`Package with id: ${packageId} not found`);
-      }
-      return result;
+      return (await this.PackageDataAccess.getPackage(packageId)) as Package;
     } catch (error) {
       throw error;
     }
@@ -26,9 +21,7 @@ export class PackageService {
     try {
       await this.PackageDataAccess.addPackage(packageData);
     } catch (error) {
-      throw new BadRequestError(
-        "Cannot add Package! " + (error as Error).message
-      );
+      throw error;
     }
   }
 
@@ -39,9 +32,7 @@ export class PackageService {
         limit
       )) as Package[];
     } catch (error) {
-      throw new BadRequestError(
-        "No Packages Found! " + (error as Error).message
-      );
+      throw error;
     }
   }
 
@@ -49,9 +40,7 @@ export class PackageService {
     try {
       await this.PackageDataAccess.updatePackage(packageId, packageData);
     } catch (error) {
-      throw new BadRequestError(
-        `Cannot update Package! ${(error as Error).message}`
-      );
+      throw error;
     }
   }
 
@@ -59,11 +48,7 @@ export class PackageService {
     try {
       await this.PackageDataAccess.deletePackage(packageId);
     } catch (error) {
-      throw new NotFoundError(
-        `Can't delete Package with id: ${packageId}. ${
-          (error as Error).message
-        }`
-      );
+      throw error;
     }
   }
 
@@ -78,9 +63,7 @@ export class PackageService {
       );
       return result;
     } catch (error) {
-      throw new BadRequestError(
-        `Can't get Random Packages: ${(error as Error).message}`
-      );
+      throw error;
     }
   }
 }

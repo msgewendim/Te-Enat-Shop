@@ -5,7 +5,7 @@ import { QueryOptions } from "mongoose";
 import { BadRequestError, NotFoundError } from "../utils/customErrors";
 
 export class RecipeDal implements IRecipe<Recipe> {
-  async getRecipe(id: string): Promise<Recipe | null> {
+  async getRecipe(id: string): Promise<Recipe> {
     try {
       const recipe = (await recipeModel.findById(id)) as Recipe;
       if (!recipe) {
@@ -20,8 +20,9 @@ export class RecipeDal implements IRecipe<Recipe> {
     page: number,
     limit: number,
     searchTerm?: string,
-    category?: string
-  ): Promise<Recipe[] | unknown[]> {
+    category?: string,
+    excludeById?: string
+  ): Promise<Recipe[]> {
     try {
       const query: QueryOptions = {};
       // Search both `name` and `shortDescription` with the same input
@@ -33,17 +34,23 @@ export class RecipeDal implements IRecipe<Recipe> {
       }
       // Add category filter if provided
       if (category) {
-        query.categories = { $regex: category };
+        query.categories = {
+          $elemMatch: {
+            nameInEnglish: { $regex: category },
+          },
+        };
+        if (excludeById) {
+          query._id = { $ne: excludeById };
+        }
       }
+      console.log(query, "query");
       const recipes = await recipeModel
         .find(query)
         .skip((page - 1) * limit) // Skip items based on the page number
         .limit(limit) // Limit the number of items returned
         .exec();
-      if (!recipes) {
-        throw new NotFoundError("No recipes found");
-      }
-      return recipes;
+
+      return recipes as Recipe[];
     } catch (error) {
       throw error;
     }
@@ -98,11 +105,11 @@ export class RecipeDal implements IRecipe<Recipe> {
   }
   async addRecipe(recipe: Recipe): Promise<Recipe> {
     try {
-      const newRecipe = (await recipeModel.insertMany(recipe)) as Recipe[];
+      const newRecipe = await recipeModel.insertMany(recipe);
       if (!newRecipe) {
         throw new BadRequestError("Failed to add recipe");
       }
-      return newRecipe[0];
+      return newRecipe[0] as Recipe;
     } catch (error) {
       throw error;
     }
