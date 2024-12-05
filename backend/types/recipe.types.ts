@@ -1,6 +1,5 @@
 import { ObjectId } from "mongoose";
 import { ClientDetails } from "./order.types";
-import { Product } from "./product.types";
 
 interface Recipe {
   _id: ObjectId | null;
@@ -21,6 +20,7 @@ interface Ingredient {
   _id: string;
   name: string;
   quantity: string;
+  existsInProducts: boolean;
 }
 interface Instruction {
   step: number;
