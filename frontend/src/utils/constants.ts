@@ -1,5 +1,9 @@
 import { Category, SubCategory } from "../client/types.gen";
-import { dessert, hotShiro, kurkum, shiro, cookies } from "./imageFiles";
+import shiro from "../assets/shiro.jpg";
+import hotShiro from "../assets/hot-shiro.jpg";
+import cookies from "../assets/cookies.jpg";
+import kurkum from "../assets/kurkum.jpg";
+import dessert from "../assets/dessert.jpg";
 
 // Define types for category mappings
 type CategoryMapping = {

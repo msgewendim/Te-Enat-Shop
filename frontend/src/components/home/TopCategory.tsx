@@ -30,7 +30,7 @@ const CategoryCard: FC<CategoryCardProps> = ({ category, setCategory }) => {
   const [imageSrc, setImageSrc] = useState<string>('');
 
   useEffect(() => {
-    image().then(img => setImageSrc(img.default));
+    setImageSrc(image)
   }, [image]);
   return (
     <Link

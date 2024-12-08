@@ -42,7 +42,7 @@ interface CategoryCardProps {
   category: {
     nameInHebrew: string;
     nameInEnglish: string;
-    image: () => Promise<{ default: string }>;
+    image: string;
   };
   setCategory: (category: string) => void;
 }

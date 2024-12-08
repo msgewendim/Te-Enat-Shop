@@ -22,7 +22,7 @@ const Home = () => {
     if (oneTimePopup === 0) {
       setTimeout(() => {
         setIsEarlyAdaptersPopupOpen(true);
-      }, 1000);
+      }, 10000);
       setOneTimePopup(oneTimePopup + 1);
     }
   }, [oneTimePopup]);
