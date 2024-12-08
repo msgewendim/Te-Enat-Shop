@@ -26,6 +26,17 @@ router.post(
     await productController.getProductsByName(req, res, next)
 );
 
+// router.get(
+//   "/tobia",
+//   async (req: Request, res: Response, next: NextFunction) =>
+//     await productController.getTobiaProducts(req, res, next)
+// );
+// router.post(
+//   "/tobia",
+//   async (req: Request, res: Response, next: NextFunction) =>
+//     await productController.addTobiaProducts(req, res, next)
+// );
+
 router.get(
   "/:_id",
   async (req: Request, res: Response, next: NextFunction) =>

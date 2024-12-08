@@ -98,6 +98,7 @@ export class RecipeDal implements IRecipe<Recipe> {
       if (!updatedRecipe) {
         throw new NotFoundError(`Recipe with id: ${id} not found`);
       }
+      console.log("recipe updated successfully dal", updatedRecipe);
       return updatedRecipe;
     } catch (error) {
       throw error;

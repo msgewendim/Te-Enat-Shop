@@ -128,6 +128,7 @@ export class ProductDal implements IProduct<Product> {
       if (!newProduct) {
         throw new BadRequestError("Failed to add product");
       }
+      console.log("product added successfully", newProduct);
       return newProduct[0] as Product;
     } catch (error) {
       throw error;

@@ -36,7 +36,6 @@ server.use("/api/packages", PackageRoute);
 server.use("/api/orders", OrderRoute);
 server.use("/api/recipes", RecipeRoute);
 server.use("/api/users", UserRoute);
-
 // handle SSE (Server-Sent Events) requests for real-time updates - payment notifications
 server.use("/api/events", EventsMiddleware);
 

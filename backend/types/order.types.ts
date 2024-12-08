@@ -22,7 +22,7 @@ type OrderTransaction = {
 type PaymentFormResponse = {
   errorCode: number;
   errorMessage: string;
-  success?: true;
+  success?: boolean;
   url?: string;
   orderId: string;
 };

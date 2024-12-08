@@ -6,6 +6,7 @@ import {
   SubCategory,
   FeatureObject,
   Feature,
+  ProductSize,
 } from "../../types/product.types";
 
 const validateAddProduct = (productData: Product) => {
@@ -17,7 +18,10 @@ const validateAddProduct = (productData: Product) => {
       .items(
         Joi.object<Pricing>({
           price: Joi.number().required(),
-          size: Joi.string().required(),
+          size: Joi.object<ProductSize>({
+            sizeName: Joi.string().required(),
+            sizeQuantity: Joi.number().required(),
+          }).required(),
         })
       )
       .required(),

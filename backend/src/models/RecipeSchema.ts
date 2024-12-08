@@ -103,11 +103,6 @@ const recipeSchema = new Schema<Recipe>({
     min: 1,
     max: 100,
   },
-  cookTime: {
-    type: String,
-    required: true,
-    min: 0,
-  },
   createdAt: {
     type: Date,
     default: Date.now,

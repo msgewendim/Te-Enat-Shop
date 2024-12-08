@@ -49,7 +49,7 @@ const errorHandler = (
 
   // handle validation errors
   if (err instanceof ValidationError) {
-    const statusCode = 400;
+    const statusCode = 500;
     return res.status(statusCode).json({
       success: false,
       message: err.message || "Validation error.",

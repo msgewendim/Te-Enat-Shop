@@ -1,3 +1,8 @@
+import {
+  DesignProductFormData,
+  EarlyAdoptersFormData,
+  NewsLetterData,
+} from "../../types";
 import { Order } from "../../types/order.types";
 import mongoose from "mongoose";
 
@@ -42,5 +47,41 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+const newsletterSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+  email: { type: String, required: true },
+  city: { type: String, required: true },
+});
+const earlyAdapterSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+  email: { type: String, required: true },
+  city: { type: String, required: true },
+  street: { type: String, required: true },
+  phone: { type: Number, required: true },
+  zipCode: { type: Number },
+  birthDate: { type: Date },
+});
+const designProductSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+  email: { type: String, required: true },
+  city: { type: String, required: true },
+  street: { type: String, required: true },
+  phone: { type: Number, required: true },
+  zipCode: { type: Number },
+  birthDate: { type: Date },
+});
 const userModel = mongoose.model<User>("users", userSchema);
+const newsletterModel = mongoose.model<NewsLetterData>(
+  "newsletter",
+  newsletterSchema
+);
+const designProductModel = mongoose.model<DesignProductFormData>(
+  "designProduct",
+  designProductSchema
+);
+const earlyAdapterModel = mongoose.model<EarlyAdoptersFormData>(
+  "earlyAdapterSchema",
+  earlyAdapterSchema
+);
+export { designProductModel, earlyAdapterModel, newsletterModel };
 export default userModel;

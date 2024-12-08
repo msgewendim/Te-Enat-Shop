@@ -10,7 +10,6 @@ interface Recipe {
   instructions: Instruction[];
   prepTime: string;
   servings: number;
-  cookTime: string;
   difficulty: "easy" | "medium" | "hard";
   categories: Category[];
   createdAt?: Date;
@@ -30,6 +29,7 @@ interface Instruction {
 interface Category {
   nameInHebrew: string;
   nameInEnglish: string;
+  _id?: string;
 }
 interface Review {
   _id: string;

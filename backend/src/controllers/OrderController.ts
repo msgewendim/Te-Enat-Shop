@@ -22,9 +22,13 @@ export class OrderController {
         Math.max(1, Number(limit)),
         Math.max(1, Number(page))
       );
-      response.json(orders).status(200);
+      response.json({
+        data: orders, 
+        success: true,
+        message: "Orders fetched successfully",
+      }).status(200);
     } catch (error: any) {
-      next(new ServiceError("Error fetching orders"));
+      next(error);
     }
   }
   async getPaymentForm(
@@ -45,16 +49,21 @@ export class OrderController {
         totalPrice
       );
       if (data.success) {
-        response.json(data).status(200);
+        response.json({
+          data: data,
+          success: true,
+          message: "Payment form fetched successfully",
+        }).status(200);
       } else {
         const errorResponse = {
+          success: false,
           message: "Payment gateway error",
           error: data.errorMessage + " with error code: " + data.errorCode,
         };
         response.json(errorResponse).status(400);
       }
     } catch (error: any) {
-      next(new ServiceError("Error getting payment form"));
+      next(error);
     }
   }
   async checkPaymentStatus(
@@ -79,7 +88,7 @@ export class OrderController {
           .status(200);
       }
     } catch (error: any) {
-      next(new ServiceError("Error checking payment status"));
+      next(error);
     }
   }
 
@@ -95,7 +104,7 @@ export class OrderController {
       sendPaymentNotification(transactionInfo.external_data);
       response.sendStatus(200); // send to Morning server
     } catch (error: any) {
-      next(new ServiceError("Error successful payment"));
+      next(error);
     }
   }
 }

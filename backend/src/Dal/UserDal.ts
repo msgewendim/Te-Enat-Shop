@@ -1,4 +1,10 @@
-import userModel, { User } from "../models/UserSchema";
+import { NewsLetterData } from "../../types";
+import userModel, {
+  designProductModel,
+  earlyAdapterModel,
+  newsletterModel,
+  User,
+} from "../models/UserSchema";
 
 const addUserWithAuth = async (userInfo: Partial<User>) => {
   try {
@@ -61,9 +67,44 @@ const clearCart = async (userId: string) => {
     throw new Error("Failed to clear cart");
   }
 };
+
+const addToNewsletter = async (data: NewsLetterData) => {
+  try {
+    const user = await newsletterModel.insertMany(data);
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to add to newsletter");
+  }
+};
+const addToEarlyAdapter = async (data: NewsLetterData) => {
+  try {
+    const user = await earlyAdapterModel.insertMany(data);
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to add to newsletter");
+  }
+};
+const addToDesignProduct = async (data: NewsLetterData) => {
+  try {
+    const user = await designProductModel.insertMany(data);
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to add to newsletter");
+  }
+};
 type CartItem = {
   productId: string;
   quantity: number;
   size: string;
 };
-export { addUserWithAuth, addToCart, clearCart };
+export {
+  addUserWithAuth,
+  addToCart,
+  clearCart,
+  addToDesignProduct,
+  addToEarlyAdapter,
+  addToNewsletter,
+};
