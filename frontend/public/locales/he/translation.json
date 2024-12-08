@@ -134,7 +134,12 @@
       "description": "מוצרים ומתכונים חדשים בהמשך",
       "email": "מייל",
       "city": "עיר",
-      "name": "שם מלא"
+      "name": "שם מלא",
+      "errors": {
+        "email": "מייל לא חוקי",
+        "city": "עיר לא חוקית",
+        "name": "שם לא חוקי"
+      }
     },
     "infoAndPrivacy": {
       "info": "מידע ותנאי שירות",
@@ -167,10 +172,9 @@
   },
   "filters": {
     "searchLabel": "חיפוש מוצרים",
-    "searchPlaceholderProducts": "הקלד שם מוצר",
-    "searchPlaceholderRecipes": "הקלד שם מתכון",
-    "searchPlaceholderPackages": "הקלד שם מארז",
+    "searchPlaceholderProduct": "הקלד שם מוצר",
     "searchPlaceholderRecipe": "הקלד שם מתכון",
+    "searchPlaceholderPackage": "הקלד שם מארז",
     "clearButton": "נקה סינון"
   },
   "product": {

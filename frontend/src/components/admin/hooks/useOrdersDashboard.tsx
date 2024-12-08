@@ -15,7 +15,6 @@ function useOrdersDashboard() {
     totalPrice: "סה״כ",
     createdAt: "תאריך הזמנה",
   } as const;
-  console.log(orders, "orders")
   const formatTableData = (orders: Order[]): TableData[] => orders.map((order, index) => ({
     _id: order._id ?? `order-${index}`,
     userId: order.userDetails.name,

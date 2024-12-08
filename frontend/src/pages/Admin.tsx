@@ -12,7 +12,12 @@ import OrdersList from '../components/admin/orders';
 
 const AdminDashboard = () => {
   const { t } = useTranslation();
-  const { adminActiveSection, handleSubmit, productToEdit, recipeToEdit, packageToEdit } = useAdminDashboard();
+  const { adminActiveSection, handleSubmit, productToEdit, recipeToEdit, packageToEdit,
+    isProductAddError, isProductUpdateError, isProductAddSuccess, isProductUpdateSuccess, isProductAddPending, isProductUpdatePending,
+    isRecipeAddError, isRecipeUpdateError, isRecipeAddSuccess, isRecipeUpdateSuccess, isRecipeAddPending, isRecipeUpdatePending,
+    isPackageAddError, isPackageUpdateError, isPackageAddSuccess, isPackageUpdateSuccess, isPackageAddPending, isPackageUpdatePending,
+    productAddError, productUpdateError, recipeAddError, recipeUpdateError, packageAddError, packageUpdateError
+   } = useAdminDashboard();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -52,6 +57,12 @@ const AdminDashboard = () => {
           <ProductForm
             item={productToEdit}
             onSubmit={handleSubmit}
+            mutateFormState={{ 
+              isError : isProductAddError || isProductUpdateError, 
+              isSuccess: isProductAddSuccess || isProductUpdateSuccess, 
+              isLoading: isProductAddPending || isProductUpdatePending,
+              error: productAddError || productUpdateError
+            }}
             message={adminActiveSection === 'edit-product' ? t('admin.productUpdated') : t('admin.productAdded')}
           />
         )}
@@ -61,6 +72,12 @@ const AdminDashboard = () => {
             item={recipeToEdit}
             onSubmit={handleSubmit}
             message={adminActiveSection === 'edit-recipe' ? t('admin.recipeUpdated') : t('admin.recipeAdded')}
+            mutateFormState={{ 
+              isError : isRecipeAddError || isRecipeUpdateError, 
+              isSuccess: isRecipeAddSuccess || isRecipeUpdateSuccess, 
+              isLoading: isRecipeAddPending || isRecipeUpdatePending,
+              error: recipeAddError || recipeUpdateError
+            }}
           />
         )}
         {adminActiveSection === 'packages' && <PackageList />}
@@ -68,6 +85,12 @@ const AdminDashboard = () => {
           <PackageForm
             item={packageToEdit}
             onSubmit={handleSubmit}
+            mutateFormState={{ 
+              isError : isPackageAddError || isPackageUpdateError, 
+              isSuccess: isPackageAddSuccess || isPackageUpdateSuccess, 
+              isLoading: isPackageAddPending || isPackageUpdatePending,
+              error: packageAddError || packageUpdateError
+            }}
             message={adminActiveSection === 'edit-package' ? t('admin.packageUpdated') : t('admin.packageAdded')}
           />
         )}

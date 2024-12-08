@@ -9,27 +9,36 @@ import { useAppContext } from '../../../hooks/app/useAppContext';
 import { productCategories } from '../../../utils/constants';
 import { useTranslation } from 'react-i18next';
 import { FormProps } from '../../../providers/interface/admin.props';
+import Loader from '../../ui/Loader';
 
-const ProductForm = ({ item: product, onSubmit: onSubmitProp, message }: FormProps<Product>) => {
+const ProductForm = ({ item: product, onSubmit: onSubmitProp, message, mutateFormState }: FormProps<Product>) => {
   const { t } = useTranslation();
-  const { register, control, errors, handleSubmit, setValue, reset, existingMainCategories, existingSubCategories } = useProductForm(product);
-  const { setAdminActiveSection } = useAppContext();
-
+  const { register, control, errors, handleSubmit, setValue,reset, existingMainCategories, existingSubCategories } = useProductForm(product);
+  const { setAdminActiveSection, adminActiveSection } = useAppContext();
+  const isEditMode = adminActiveSection.includes('edit') && !!product;
+  const { isSuccess, isError, isLoading, error } = mutateFormState || { isError: false, isLoading: false, isSuccess: false, error: null };
+  
   const onSubmit: SubmitHandler<Product> = (data) => {
-    console.log(data);
     onSubmitProp(data);
-    reset();
-    setAdminActiveSection("products");
-    toast.success(message);
+    if (isError && error) {
+      toast.error(error.message);
+      return;
+    }
+    if (isLoading) {
+      return <Loader />;
+    }
+    if (isSuccess) {
+      reset();
+      setAdminActiveSection("products");
+      toast.success(message);
+    }
   };
-
-  const isEditing = !!product;
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-md h-full relative flex flex-col items-start">
         <h2 className="font-bold text-2xl capitalize p-2 w-full text-center mb-4">
-          {isEditing ? t('form.productForm.editTitle') : t('form.productForm.addTitle')}
+          {isEditMode ? t('form.productForm.editTitle') : t('form.productForm.addTitle')}
         </h2>
 
         <div className="mb-4 sm:grid grid-cols-2 gap-6 w-full">
@@ -91,7 +100,7 @@ const ProductForm = ({ item: product, onSubmit: onSubmitProp, message }: FormPro
             type="submit"
             className="bg-green-500 text-white px-8 py-4 rounded-lg w-full sm:w-52"
           >
-            {isEditing ? t('form.productForm.updateButton') : t('form.productForm.saveButton')}
+            {isEditMode ? t('form.productForm.updateButton') : t('form.productForm.saveButton')}
           </button>
         </div>
         {errors.root && <span className="text-red-500">{errors.root.message}</span>}

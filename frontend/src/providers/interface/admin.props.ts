@@ -20,6 +20,12 @@ interface AddCategoryInputProps<T extends FieldValues> {
   type: "product" | "recipe";
 }
 type FormProps<T> = {
+  mutateFormState?: {
+    isSuccess: boolean;
+    isError: boolean;
+    isLoading: boolean;
+    error: Error | null;
+  };
   item?: T;
   onSubmit: (data: T) => void;
   message: string;

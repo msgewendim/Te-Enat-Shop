@@ -13,6 +13,7 @@ const productCategories: Category[] = [
   { nameInHebrew: "משקאות", nameInEnglish: "beverages" },
   { nameInHebrew: "תבלינים", nameInEnglish: "spices" },
   { nameInHebrew: "שונות", nameInEnglish: "others" },
+  { nameInHebrew: "Tobia", nameInEnglish: "Tobia" },
 ];
 
 const productCategoriesMapping: CategoryMapping = {
@@ -24,30 +25,31 @@ const productCategoriesMapping: CategoryMapping = {
 };
 const productSubCategoriesMapping: CategoryMapping = {
   spices: [
-    { nameInHebrew: "בסיס", nameInEnglish: "base" },
-    { nameInHebrew: "תערובות תבלינים", nameInEnglish: "spice-blends" },
-    { nameInHebrew: "תבלינים מיוחדים", nameInEnglish: "special-spices" },
-    { nameInHebrew: "תבליני אורז", nameInEnglish: "rice-spices" },
+    { nameInHebrew: "בסיס", nameInEnglish: "base", nameOfParentCategory: "spices" },
+    { nameInHebrew: "תערובות תבלינים", nameInEnglish: "spice-blends", nameOfParentCategory: "spices" },
+    { nameInHebrew: "תבלינים מיוחדים", nameInEnglish: "special-spices", nameOfParentCategory: "spices" },
+    { nameInHebrew: "תבליני אורז", nameInEnglish: "rice-spices", nameOfParentCategory: "spices" },
     {
       nameInHebrew: "תבלינים משפרי בריאות",
       nameInEnglish: "health-enhancing-spices",
+      nameOfParentCategory: "spices",
     },
   ],
   beverages: [
-    { nameInHebrew: "קפה", nameInEnglish: "coffee" },
-    { nameInHebrew: "תה", nameInEnglish: "tea" },
-    { nameInHebrew: "אלכוהול", nameInEnglish: "alcohol" },
+    { nameInHebrew: "קפה", nameInEnglish: "coffee", nameOfParentCategory: "beverages" },
+    { nameInHebrew: "תה", nameInEnglish: "tea", nameOfParentCategory: "beverages" },
+    { nameInHebrew: "אלכוהול", nameInEnglish: "alcohol", nameOfParentCategory: "beverages" },
   ],
   flours: [
-    { nameInHebrew: "טף", nameInEnglish: "teff" },
-    { nameInHebrew: "זנים מיוחדים", nameInEnglish: "special-varieties" },
-    { nameInHebrew: "שירו", nameInEnglish: "shiro" },
+    { nameInHebrew: "טף", nameInEnglish: "teff", nameOfParentCategory: "flours" },
+    { nameInHebrew: "זנים מיוחדים", nameInEnglish: "special-varieties", nameOfParentCategory: "flours" },
+    { nameInHebrew: "שירו", nameInEnglish: "shiro", nameOfParentCategory: "flours" },
   ],
   packages: [
-    { nameInHebrew: "אינג'רה", nameInEnglish: "enjera" },
-    { nameInHebrew: "אפייה", nameInEnglish: "baking" },
-    { nameInHebrew: "קינוחים", nameInEnglish: "desserts" },
-    { nameInHebrew: "תבשילים", nameInEnglish: "stews" },
+    { nameInHebrew: "אינג'רה", nameInEnglish: "enjera", nameOfParentCategory: "packages" },
+    { nameInHebrew: "אפייה", nameInEnglish: "baking", nameOfParentCategory: "packages" },
+    { nameInHebrew: "קינוחים", nameInEnglish: "desserts", nameOfParentCategory: "packages" },
+    { nameInHebrew: "תבשילים", nameInEnglish: "stews", nameOfParentCategory: "packages" },
   ],
 };
 

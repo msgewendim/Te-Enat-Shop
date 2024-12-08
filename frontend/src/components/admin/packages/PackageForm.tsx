@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { FormProps } from '../../../providers/interface/admin.props';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PackageSchema } from '../../../validation/AddPackage.validation';
+import Loader from '../../ui/Loader';
 
 
-const PackageForm = ({ item: pkg, onSubmit: onSubmitProp, message }: FormProps<Package>) => {
+const PackageForm = ({ item: pkg, onSubmit: onSubmitProp, message, mutateFormState }: FormProps<Package>) => {
   const { t } = useTranslation();
   const { register, control, formState: { errors }, reset, handleSubmit } = useForm<Package>({
     defaultValues: pkg || {
@@ -24,11 +25,22 @@ const PackageForm = ({ item: pkg, onSubmit: onSubmitProp, message }: FormProps<P
     resolver: zodResolver(PackageSchema)
   })
   const { setAdminActiveSection } = useAppContext();
+  const { isSuccess, isError, isLoading, error } = mutateFormState || { isError: false, isLoading: false, isSuccess: false, error: null };
+  
   const onSubmit: SubmitHandler<Package> = (data) => {
     onSubmitProp(data);
-    reset();
-    setAdminActiveSection("packages");
-    toast.success(message);
+    if (isError && error) {
+      toast.error(error.message);
+      return;
+    }
+    if (isLoading) {
+      return <Loader />;
+    }
+    if (isSuccess) {
+      reset();
+      setAdminActiveSection("packages");
+      toast.success(message);
+    }
   };
 
   const isEditing = !!pkg;

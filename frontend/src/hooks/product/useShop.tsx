@@ -5,8 +5,8 @@ import { useAppContext } from "../app/useAppContext"
 import useGenericData from "../app/useGenericData";
 import { Product } from "../../client";
 
-function useShop({ limit = 12 }: { limit?: number }) {
-  const { page, setPage, cartItems, category, filter, openCart, setOpenCart, subCategory } = useAppContext()
+function useShop({ limit = 12 }: { limit?: number}) {
+  const { page, setPage, cartItems, filter, openCart, setOpenCart, subCategory, category } = useAppContext()
   const query: query = useMemo<query>(() => {
     return {
       page,

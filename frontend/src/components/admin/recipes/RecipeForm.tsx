@@ -11,20 +11,31 @@ import { AddInstructionsInput, AddIngredientsInput } from './AddArrayInputs';
 import { NODE_MODE } from '../../../utils/env.config';
 import { FormProps } from '../../../providers/interface/admin.props';
 import useRecipesForm from '../../../hooks/recipe/useRecipesForm';
+import Loader from '../../ui/Loader';
 
 
-const RecipeForm = ({ item: recipe, onSubmit: onSubmitProp, message }: FormProps<Recipe>) => {
+const RecipeForm = ({ item: recipe, onSubmit: onSubmitProp, message, mutateFormState }: FormProps<Recipe>) => {
   const { t } = useTranslation();
   const { existingMainCategories, register, control, handleSubmit, errors, setValue, reset, recipeDifficulty } = useRecipesForm(recipe);
-  const { setAdminActiveSection } = useAppContext();
-
+  const { setAdminActiveSection, adminActiveSection } = useAppContext();
+  const { isSuccess, isError, isLoading, error } = mutateFormState || { isError: false, isLoading: false, isSuccess: false, error: null };
+  const isEditing = !!recipe && adminActiveSection.includes('edit');
+  
   const onSubmit: SubmitHandler<Recipe> = (data) => {
     onSubmitProp(data);
-    reset();
-    setAdminActiveSection("recipes");
-    toast.success(message);
+    if (isError && error) {
+      toast.error(error.message);
+      return;
+    }
+    if (isLoading) {
+      return <Loader />;
+    }
+    if (isSuccess) {
+      reset();
+      setAdminActiveSection("recipes");
+      toast.success(message);
+    }
   };
-  const isEditing = !!recipe;
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-md h-full relative flex flex-col items-start">

@@ -5,7 +5,13 @@ import { FaFacebook } from "react-icons/fa";
 import { SlSocialInstagram } from "react-icons/sl";
 import { SocialLinkProps } from "../../providers/interface/general.props";
 import { FormInput } from "../ui/FormInput";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { NewsLetterData } from "../../providers/api";
+import { useNewsletter } from "../../hooks/form/useFormUserData";
+import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import Loader from "../ui/Loader";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -96,18 +102,35 @@ const SocialLink: FC<SocialLinkProps> = ({ href, icon: Icon, label }) => (
 );
 
 const FooterForm = () => {
-  const { t } = useTranslation();
-  const { register, handleSubmit, formState: { errors }, } = useForm({
+  const { t } = useTranslation()
+  const NewsLetterSchema = z.object({
+    fullName: z.string().min(3, { message: t('footer.subscribe.errors.name') }),
+    email: z.string().email({ message: t('footer.subscribe.errors.email') }),
+    city: z.string().min(3, { message: t('footer.subscribe.errors.city') }),
+  });
+  const {mutate: addNewsletter, isError , isPending} = useNewsletter()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<NewsLetterData>({
     defaultValues: {
-      name: "",
-      email: "",
-      city: "",
-    }
+      fullName: '',
+      email: '',
+      city: '',
+    },
+    resolver: zodResolver(NewsLetterSchema),
   });
 
-  const onSubmit = async (data: FieldValues) => {
-    console.log(data);
+  const onSubmit = async (data: NewsLetterData) => {
+    addNewsletter(data)
+    reset();
+    toast.success(t('footer.subscribe.success'));
   };
+
+  if (isError) {
+    toast.error(t('footer.subscribe.error'));
+  }
+
+  if (isPending) {  
+    return <Loader/>
+  }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="flex flex-col gap-2 w-full">
@@ -116,13 +139,13 @@ const FooterForm = () => {
             <label htmlFor="name-input" className="sr-only">{t('footer.subscribe.name')}</label>
             <FormInput
               type="text"
-              name="name"
+              name="fullName"
               register={register}
               placeholder={t('footer.subscribe.name')}
               className="w-full py-3 px-4 block border-transparent rounded-lg text-sm focus:border-btnColor focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100"
               required
             />
-            {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+            {errors.fullName && <p className="text-red-500">{errors.fullName.message}</p>}
           </div>
           <div className="w-full sm:w-1/2">
             <label htmlFor="city-input" className="sr-only">{t('footer.subscribe.city')}</label>

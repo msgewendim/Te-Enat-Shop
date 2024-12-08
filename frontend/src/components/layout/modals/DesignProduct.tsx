@@ -3,6 +3,9 @@ import { z } from "zod";
 import { useTranslation } from "react-i18next";
 import { FormInput } from "../../ui/FormInput";
 import GenericModal from "../../ui/Modal";
+import { useDesignProducts } from '../../../hooks/form/useFormUserData';
+import { toast } from 'react-toastify';
+import Loader from '../../ui/Loader';
 
 const DesignProductPopup = ({ isPopupOpen, handleClosePopup }: { isPopupOpen: boolean, handleClosePopup: () => void }) => {
   const { t } = useTranslation();
@@ -11,17 +14,27 @@ const DesignProductPopup = ({ isPopupOpen, handleClosePopup }: { isPopupOpen: bo
 
 const DesignProductPopupContent = ({ handleClosePopup }: { handleClosePopup: () => void }) => {
   const { t } = useTranslation();
-  const { register, handleSubmit } = useForm<DesignProductFormData>();
+  const { register, handleSubmit, reset } = useForm<DesignProductFormData>();
+  const { mutate: addDesignProduct, isError, isPending } = useDesignProducts();
 
-  // TODO: add backend call
   const onSubmit = (data: DesignProductFormData) => {
     const validationResult = validateDesignProductForm(data);
     if (validationResult.success) {
-      console.log(data);
+      addDesignProduct(data);
+      reset();
+      toast.success(t('designProduct.success'));
     } else {
       console.log(validationResult.error.errors);
     }
   };
+
+  if (isError) {
+    toast.error(t('designProduct.error'));
+  }
+
+  if (isPending) {
+    return <Loader />;
+  }
 
   return (
     <article>
@@ -111,7 +124,7 @@ const DesignProductPopupContent = ({ handleClosePopup }: { handleClosePopup: () 
   );
 }
 
-type DesignProductFormData = {
+export type DesignProductFormData = {
   email: string;
   fullName: string;
   phone: string;

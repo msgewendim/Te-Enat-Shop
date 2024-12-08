@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   CartItem,
+  Category,
   Feature,
   Ingredient,
   OrderItem,
@@ -137,6 +138,15 @@ const subCategoriesByParentCategoryKey = (
   const { subCategoriesMapping } = categoriesBasedOnType(type);
   return (subCategoriesMapping[parentCategoryNameKey] || []) as SubCategory[];
 };
+export const isCategorySelected = (category: Category | SubCategory, type: "mainCategory" | "subCategory", selectedMainCategories: Category[], selectedSubCategories: SubCategory[]) => {
+  if (type === "mainCategory") {
+    const isSelected = selectedMainCategories.find(cat => cat.nameInEnglish === category.nameInEnglish);
+    return isSelected ? true : false;
+  } else {
+    const isSelected = selectedSubCategories.find(subCat => subCat.nameInEnglish === category.nameInEnglish);
+    return isSelected ? true : false;
+  }
+}
 function categoriesBasedOnType(type: "recipe" | "product") {
   return type === "recipe"
     ? {

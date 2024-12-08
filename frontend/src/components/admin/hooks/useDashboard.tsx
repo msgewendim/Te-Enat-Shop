@@ -13,12 +13,12 @@ function useAdminDashboard() {
   const { useAddItemMutation: addPackageMutation, useUpdateItemMutation: updatePackageMutation } = useGenericData<Package>(`/packages`);
 
   // Mutations
-  const { mutate: addProduct } = addProductMutation();
-  const { mutate: updateProduct } = updateProductMutation();
-  const { mutate: addRecipe } = addRecipeMutation();
-  const { mutate: updateRecipe } = updateRecipeMutation();
-  const { mutate: addPackage } = addPackageMutation();
-  const { mutate: updatePackage } = updatePackageMutation();
+  const { mutate: addProduct, isError: isProductAddError, isSuccess: isProductAddSuccess, isPending: isProductAddPending, error : productAddError } = addProductMutation();
+  const { mutate: updateProduct, isError: isProductUpdateError, isSuccess: isProductUpdateSuccess, isPending: isProductUpdatePending, error : productUpdateError } = updateProductMutation();
+  const { mutate: addRecipe, isError: isRecipeAddError, isSuccess: isRecipeAddSuccess, isPending: isRecipeAddPending, error : recipeAddError } = addRecipeMutation();
+  const { mutate: updateRecipe, isError: isRecipeUpdateError, isSuccess: isRecipeUpdateSuccess, isPending: isRecipeUpdatePending, error : recipeUpdateError } = updateRecipeMutation();
+  const { mutate: addPackage, isError: isPackageAddError, isSuccess: isPackageAddSuccess, isPending: isPackageAddPending, error : packageAddError } = addPackageMutation();
+  const { mutate: updatePackage, isError: isPackageUpdateError, isSuccess: isPackageUpdateSuccess, isPending: isPackageUpdatePending, error : packageUpdateError } = updatePackageMutation();
 
   const handleSubmit = (data: Partial<Product> | Partial<Recipe> | Partial<Package>) => {
     const isProduct = adminActiveSection.includes('product');
@@ -56,7 +56,18 @@ function useAdminDashboard() {
     }
   };
 
-  return { handleSubmit, productToEdit, adminActiveSection, setAdminActiveSection, recipeToEdit, packageToEdit };
+  return { 
+    handleSubmit, 
+    productToEdit, 
+    setProductToEdit, 
+    setAdminActiveSection, 
+    adminActiveSection, 
+    recipeToEdit, packageToEdit, 
+    productUpdateError, isProductUpdateSuccess, isProductUpdatePending, productAddError, isProductAddSuccess, isProductAddPending, 
+    recipeUpdateError, isRecipeUpdateSuccess, isRecipeUpdatePending, recipeAddError, isRecipeAddSuccess, isRecipeAddPending, 
+    packageUpdateError, isPackageUpdateSuccess, isPackageUpdatePending, packageAddError, isPackageAddSuccess, isPackageAddPending,
+    isPackageAddError, isPackageUpdateError, isProductAddError, isProductUpdateError, isRecipeAddError, isRecipeUpdateError
+  };
 }
 
 export default useAdminDashboard;

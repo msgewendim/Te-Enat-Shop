@@ -3,6 +3,9 @@ import { z } from "zod";
 import { useTranslation } from "react-i18next";
 import { FormInput } from "../../ui/FormInput";
 import GenericModal from "../../ui/Modal";
+import { useEarlyAdapters } from "../../../hooks/form/useFormUserData";
+import { toast } from "react-toastify";
+import Loader from "../../ui/Loader";
 
 const EarlyAdoptersPopup = ({ isPopupOpen, handleClosePopup }: { isPopupOpen: boolean, handleClosePopup: () => void }) => {
   const { t } = useTranslation();
@@ -18,17 +21,25 @@ const EarlyAdoptersPopup = ({ isPopupOpen, handleClosePopup }: { isPopupOpen: bo
 
 const EarlyAdoptersPopupContent = ({ handleClosePopup }: { handleClosePopup: () => void }) => {
   const { t } = useTranslation();
-  const { register, handleSubmit } = useForm<EarlyAdoptersFormData>();
+  const { register, handleSubmit, reset } = useForm<EarlyAdoptersFormData>();
+  const {mutate: addEarlyAdapter, isError, isPending} = useEarlyAdapters()
 
-  // TODO: add backend call
   const onSubmit = (data: EarlyAdoptersFormData) => {
-    const validationResult = validateEarlyAdoptersForm(data);
-    if (validationResult.success) {
-      console.log(data);
-    } else {
-      console.log(validationResult.error.errors);
+    const {success} = validateEarlyAdoptersForm(data);
+    if (success) {
+      addEarlyAdapter(data)
+      reset();
+      toast.success(t('earlyAdopters.success'));
     }
   };
+
+  if (isError) {
+    toast.error(t('earlyAdopters.error'));
+  }
+
+  if (isPending) {
+    return <Loader/>
+  }
 
   return (
     <article>
@@ -114,7 +125,7 @@ const EarlyAdoptersPopupContent = ({ handleClosePopup }: { handleClosePopup: () 
   );
 }
 
-type EarlyAdoptersFormData = {
+export type EarlyAdoptersFormData = {
   email: string;
   fullName: string;
   street: string;

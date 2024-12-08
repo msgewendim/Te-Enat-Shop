@@ -1,12 +1,13 @@
 import axios from "axios";
 import {
-  CartItem,
   GetOrdersPaymentStatusResponse,
   PaymentFormPayload,
   PaymentFormSuccessResponse,
   SuccessResponse,
 } from "../../client/types.gen";
 import { BASE_API_URL } from "../../utils/env.config";
+import { EarlyAdoptersFormData } from "../../components/layout/modals/EarlyAdapters";
+import { DesignProductFormData } from "../../components/layout/modals/DesignProduct";
 
 // Send the form data to your payment gateway API
 const getPaymentForm = async (
@@ -32,18 +33,35 @@ const checkPaymentStatus = async (
   ).data;
 };
 
-// Add the product to the user's cart in your API endpoint
-const addToCart = async (cartItem: CartItem, userId: string) => {
-  return await axiosInstance.post(`/orders/${userId}/cart`, cartItem, {});
+const addToNewsletter = async (data: NewsLetterData) => {
+  return (
+    await axiosInstance.post(`/users/form/newsletter`, {
+      data,
+    })
+  ).data;
 };
 
-// Remove the product from the user's cart in your API endpoint
-const removeFromCart = async (cartItem: CartItem, userId: string) => {
-  return await axiosInstance.delete(`/orders/${userId}/cart/`, {
-    data: cartItem,
-  });
+export type NewsLetterData = {
+  email: string;
+  fullName: string;
+  city: string;
 };
 
+const addEarlyAdapter = async (data: EarlyAdoptersFormData) => {
+  return (
+    await axiosInstance.post(`/users/form/early-adapter`, {
+      data,
+    })
+  ).data;
+};
+
+const addDesignProduct = async (data: DesignProductFormData) => {
+  return (
+    await axiosInstance.post(`/users/form/design-product`, {
+      data,
+    })
+  ).data;
+};
 const getItemsByNames = async (names: string[]) => {
   return (
     await axiosInstance.post<SuccessResponse>(`/products/names`, {
@@ -53,8 +71,9 @@ const getItemsByNames = async (names: string[]) => {
 };
 
 export {
-  removeFromCart,
-  addToCart,
+  addEarlyAdapter,
+  addDesignProduct,
+  addToNewsletter,
   getPaymentForm,
   checkPaymentStatus,
   getItemsByNames,

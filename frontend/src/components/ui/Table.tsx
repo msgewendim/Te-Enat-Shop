@@ -8,13 +8,23 @@ const Table = <T extends Record<string, unknown>>({
   onEdit,
   onDelete
 }: TableProps<T>) => {
+
+  if (!data) return (
+    <div className={`relative overflow-x-auto shadow-md sm:rounded-lg ${className}`}>
+      <div className="p-4">
+        <h3 className="text-lg font-bold text-primary mb-2 dark:text-gray-50">לא נמצאו נתונים</h3>
+      </div>
+    </div>
+  )
   return (
     <div className={`relative overflow-x-auto shadow-md sm:rounded-lg ${className}`}>
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="px-6 py-3">מספר</th>
-            {headers?.map((header, index) => (
+      {
+        data &&
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">מספר</th>
+              {headers?.map((header, index) => (
               <th key={index} scope="col" className="px-6 py-3">
                 {header}
               </th>
@@ -38,6 +48,8 @@ const Table = <T extends Record<string, unknown>>({
           ))}
         </tbody>
       </table>
+    }
+
     </div>
   );
 };

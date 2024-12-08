@@ -21,6 +21,7 @@ const PricingSchema = z.object({
 const SubCategorySchema = z.object({
   nameInEnglish: z.string().min(1, "Subcategory name is required"),
   nameInHebrew: z.string().min(1, "Subcategory name is required"),
+  nameOfParentCategory: z.string().min(1, "Parent category is required"),
 });
 const CategorySchema = z.object({
   nameInEnglish: z.string().min(1, "Category name is required"),
