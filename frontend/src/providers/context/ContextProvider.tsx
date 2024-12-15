@@ -6,7 +6,6 @@ import { BASE_API_URL } from "../../utils/env.config";
 import { toast } from "react-toastify";
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
-
   // checkout
   const [paymentFormUrl, setPaymentFormUrl] = useState<string>("")
   // pagination
@@ -30,7 +29,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     isOpen: false,
     onConfirm: () => { },
   });
-
+  const [currentEndpoint, setCurrentEndpoint] = useState<string>(window.location.pathname)
   useEffect(() => {
     // when the cart items change, recalculate the total price
     setTotalPrice(parseFloat(getTotalPrice(cartItems).toFixed(2)))
@@ -72,6 +71,18 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const hideModal = () => {
     setModalState({ isOpen: false, onConfirm: () => { } });
   };
+
+  useEffect(() => {
+    // when route of app changes, change the category to ""
+    const currentPath = window.location.pathname
+    if (currentPath !== currentEndpoint) {
+      setCurrentEndpoint(currentPath)
+      setCategory("")
+    }
+    return () => {
+      setCurrentEndpoint(window.location.pathname)
+    }
+  }, [currentEndpoint, setCurrentEndpoint, setCategory])
   const values = {
     setFilter,
     setPage,

@@ -62,6 +62,19 @@ const addDesignProduct = async (data: DesignProductFormData) => {
     })
   ).data;
 };
+
+export const addTobiaWaitingList = async (data: WaitingListData) => {
+  return (
+    await axiosInstance.post(`/users/form/tobia-waiting-list`, {
+      data,
+    })
+  ).data;
+};
+
+export type WaitingListData = {
+  email: string;
+};
+
 const getItemsByNames = async (names: string[]) => {
   return (
     await axiosInstance.post<SuccessResponse>(`/products/names`, {

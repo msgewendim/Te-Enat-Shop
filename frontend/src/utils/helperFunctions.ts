@@ -147,6 +147,10 @@ export const isCategorySelected = (category: Category | SubCategory, type: "main
     return isSelected ? true : false;
   }
 }
+export const makeBreakLine = (text: string): string[] => {
+  return text.split('\n')
+}
+
 function categoriesBasedOnType(type: "recipe" | "product") {
   return type === "recipe"
     ? {

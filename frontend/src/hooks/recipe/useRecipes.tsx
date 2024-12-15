@@ -4,9 +4,10 @@ import { toast } from "react-toastify";
 import { useAppContext } from "../app/useAppContext";
 import useGenericData from "../app/useGenericData";
 import { Recipe } from "../../client";
+import { useEffect } from "react";
 
 function useRecipes({ limit = 12 }: { limit?: number }) {
-  const { page, setPage, category, filter } = useAppContext();
+  const { page, setPage, category, filter, setCategory } = useAppContext();
   const query: query = useMemo<query>(() => {
     return {
       page,
@@ -39,6 +40,9 @@ function useRecipes({ limit = 12 }: { limit?: number }) {
     }
   };
 
+  useEffect(() => {
+    setCategory("");
+  }, [setCategory]);
   return {
     recipes,
     error,

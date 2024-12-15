@@ -16,7 +16,7 @@ const OurCategory = () => {
           {t('homePage.ourCategory.title')}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10">
-          {ourTopCategories.map((category, index) => (
+          {ourTopCategories.filter((category) => category.nameInEnglish !== "Tobia").map((category, index) => (
             <CategoryCard key={index} category={category} setCategory={setCategory} />
           ))}
         </div>

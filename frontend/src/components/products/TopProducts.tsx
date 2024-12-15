@@ -7,6 +7,7 @@ import { CarouselButtonProps } from "../../providers/interface/general.props";
 import { Link } from "react-router-dom";
 import { Product } from "../../client";
 import useRandomCards from "../../hooks/app/useRandomCards";
+import { makeBreakLine } from "../../utils/helperFunctions";
 
 const TopProducts = () => {
   const { t } = useTranslation();
@@ -18,13 +19,15 @@ const TopProducts = () => {
     <section className="bg-[#F9F8F8] dark:bg-gray-900 py-12" lang="he">
       <div className="container mx-auto px-4">
         <header className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-primary mb-4 dark:text-gray-100">
+          <h2 className="text-4xl font-bold text-primary mb-3 dark:text-gray-100">
             <Link to="/products" className="cursor-pointer">
               {t('homePage.topProducts.title')}
             </Link>
           </h2>
           <p className="text-primary max-w-3xl mx-auto dark:text-gray-100">
-            {t('homePage.topProducts.description')}
+            {makeBreakLine(t('homePage.topProducts.description')).map((paragraph, index) => (
+              <p key={index} >{paragraph}</p>
+            ))}
           </p>
         </header>
 

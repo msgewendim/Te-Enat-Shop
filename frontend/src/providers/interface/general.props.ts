@@ -66,6 +66,7 @@ type DateBadgeProps = {
 
 type BannerProps = {
   image: string;
+  className?: string;
   text: string;
 };
 interface CarouselButtonProps {
