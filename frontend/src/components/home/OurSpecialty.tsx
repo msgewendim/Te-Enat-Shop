@@ -28,7 +28,7 @@ const OurSpecialty = () => {
           <p className="text-primary max-w-3xl mx-auto dark:text-gray-100">
             
             {makeBreakLine(t('homePage.ourSpecialty.description')).map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+              <span key={index}>{paragraph}</span>
             ))}
           </p>
         </header>

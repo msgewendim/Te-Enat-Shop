@@ -22,6 +22,11 @@ router.post(
     await userController.addToEarlyAdapter(req, res, next)
 );
 router.post(
+  "/form/tobia-waiting-list",
+  async (req: Request, res: Response, next: NextFunction) =>
+    await userController.addToTobiaWaitList(req, res, next)
+);
+router.post(
   "/form/design-product",
   async (req: Request, res: Response, next: NextFunction) =>
     await userController.addToDesignProduct(req, res, next)

@@ -3,6 +3,7 @@ import userModel, {
   designProductModel,
   earlyAdapterModel,
   newsletterModel,
+  tobiaWaitListModel,
   User,
 } from "../models/UserSchema";
 
@@ -75,6 +76,15 @@ const addToNewsletter = async (data: NewsLetterData) => {
   } catch (error) {
     console.error(error);
     throw new Error("Failed to add to newsletter");
+  }
+};
+export const addToTobiaWaitList = async (data: NewsLetterData) => {
+  try {
+    const user = await tobiaWaitListModel.insertMany(data);
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to add to Tobia waitlist");
   }
 };
 const addToEarlyAdapter = async (data: NewsLetterData) => {

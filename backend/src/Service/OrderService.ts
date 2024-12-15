@@ -1,8 +1,7 @@
 import axios from "axios";
 import {
-  checkToken,
   getCheckoutFormPayload,
-} from "../utils/middleware/paymentMethod";
+} from "../utils/middleware/createPayPage";
 import {
   ClientDetails,
   OrderItem,
@@ -10,23 +9,19 @@ import {
   PaymentFormResponse,
 } from "../../types/order.types";
 import {
-  MORNING_PAYMENT_FORM_URL,
-  MORNING_PLUGIN_ID,
-} from "../utils/config/env.config";
-import {
   addOrder,
   checkPaymentStatus,
   getOrders,
   updatePaymentStatus,
 } from "../Dal/OrderDal";
-import { BadRequestError, ExternalServiceError } from "../utils/customErrors";
+import {  ExternalServiceError } from "../utils/customErrors";
 
-const pluginId = MORNING_PLUGIN_ID;
+const pluginId = "";
 let MORNING_TOKEN = {
   token: "",
   expiresAt: Date.now(),
 };
-const url = MORNING_PAYMENT_FORM_URL;
+const url = "MORNING_PAYMENT_FORM_URL";
 export class OrderService {
   async getPaymentForm(
     userInfo: ClientDetails,
@@ -34,10 +29,10 @@ export class OrderService {
     totalPrice: number
   ): Promise<PaymentFormResponse> {
     // check if token is expired && get new token if expired
-    MORNING_TOKEN = await checkToken(
-      MORNING_TOKEN.token,
-      MORNING_TOKEN.expiresAt
-    );
+    // MORNING_TOKEN = await checkToken(
+    //   MORNING_TOKEN.token,
+    //   MORNING_TOKEN.expiresAt
+    // );
     // save order information to Database
     const newOrderId = await addOrder(userInfo, products, totalPrice);
     const formPayload = getCheckoutFormPayload(

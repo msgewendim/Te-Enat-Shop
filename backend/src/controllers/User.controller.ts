@@ -24,7 +24,7 @@ export class UseController {
 
   async addToNewsletter(req: Request, res: Response, next: NextFunction) {
     try {
-      const { data } = req.body;
+      const {data} = req.body;
       await this.userService.addToNewsletter(data);
       res.status(201).json({
         success: true,
@@ -34,10 +34,23 @@ export class UseController {
       next(error);
     }
   }
+  async addToTobiaWaitList(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {data} = req.body;
+      console.log(data)
+      await this.userService.addToTobiaWaitList(data);
+      res.status(201).json({
+        success: true,
+        message: "Added to Tobia waitlist",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async addToEarlyAdapter(req: Request, res: Response, next: NextFunction) {
     try {
-      const { data } = req.body;
+      const {data} = req.body;
       await this.userService.addToEarlyAdapter(data);
       res.status(201).json({
         success: true,
@@ -50,7 +63,7 @@ export class UseController {
 
   async addToDesignProduct(req: Request, res: Response, next: NextFunction) {
     try {
-      const { data } = req.body;
+      const {data} = req.body;
       await this.userService.addToDesignProduct(data);
       res.status(201).json({
         success: true,

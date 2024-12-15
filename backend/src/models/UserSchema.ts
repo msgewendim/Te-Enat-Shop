@@ -2,6 +2,7 @@ import {
   DesignProductFormData,
   EarlyAdoptersFormData,
   NewsLetterData,
+  TobiaWishList,
 } from "../../types";
 import { Order } from "../../types/order.types";
 import mongoose from "mongoose";
@@ -70,6 +71,15 @@ const designProductSchema = new mongoose.Schema({
   zipCode: { type: Number },
   birthDate: { type: Date },
 });
+
+const tobiaWaitListSchema = new mongoose.Schema<TobiaWishList>({
+  email: { type: String, required: true },
+});
+const tobiaWaitListModel = mongoose.model<TobiaWishList>(
+  "tobiaWaitList",
+  tobiaWaitListSchema
+);
+
 const userModel = mongoose.model<User>("users", userSchema);
 const newsletterModel = mongoose.model<NewsLetterData>(
   "newsletter",
@@ -83,5 +93,7 @@ const earlyAdapterModel = mongoose.model<EarlyAdoptersFormData>(
   "earlyAdapterSchema",
   earlyAdapterSchema
 );
-export { designProductModel, earlyAdapterModel, newsletterModel };
+
+
+export { designProductModel, earlyAdapterModel, newsletterModel, tobiaWaitListModel };
 export default userModel;

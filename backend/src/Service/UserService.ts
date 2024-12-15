@@ -7,6 +7,7 @@ import {
   addToDesignProduct,
   addToEarlyAdapter,
   addToNewsletter,
+  addToTobiaWaitList,
 } from "../Dal/UserDal";
 import { User } from "../models/UserSchema";
 
@@ -17,8 +18,14 @@ export class UserService {
 
   async addToNewsletter(data: NewsLetterData) {
     try {
-      console.log(data, " newsletter data");
       await addToNewsletter(data);
+    } catch (error) {
+      throw error;
+    }
+  }
+  async addToTobiaWaitList(data: NewsLetterData) {
+    try {
+      await addToTobiaWaitList(data);
     } catch (error) {
       throw error;
     }

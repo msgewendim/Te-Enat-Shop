@@ -2,11 +2,11 @@ import { OrderTransaction, PaymentFormRequest } from "../../types/order.types";
 import { OrderService } from "../Service/OrderService";
 import { NextFunction, Request, Response } from "express";
 import { sendPaymentNotification } from "../utils/middleware/sse.events";
-import { validatePaymentFormRequest } from "../validators/cart";
+// import { validatePaymentFormRequest } from "../validators/cart";
 import {
   BadRequestError,
-  ServiceError,
-  ValidationError,
+//   ServiceError,
+//   ValidationError,
 } from "../utils/customErrors";
 import { validateObjectId } from "../validators";
 
@@ -36,32 +36,37 @@ export class OrderController {
     response: Response,
     next: NextFunction
   ) {
-    const { error } = validatePaymentFormRequest(request.body.formData);
-    if (error) {
-      return next(new ValidationError(error.message));
-    }
-    const { clientInfo, totalPrice, orderItems } = request.body
-      .formData as PaymentFormRequest;
+    // const { error } = validatePaymentFormRequest(request.body.formData);
+    // if (error) {
+    //   return next(new ValidationError(error.message));
+    // }
+    // const { clientInfo, totalPrice, orderItems } = request.body
+    //   .formData as PaymentFormRequest;
     try {
-      const data = await this.orderService.getPaymentForm(
-        { ...clientInfo },
-        orderItems,
-        totalPrice
-      );
-      if (data.success) {
-        response.json({
-          data: data,
-          success: true,
-          message: "Payment form fetched successfully",
-        }).status(200);
-      } else {
-        const errorResponse = {
-          success: false,
-          message: "Payment gateway error",
-          error: data.errorMessage + " with error code: " + data.errorCode,
-        };
-        response.json(errorResponse).status(400);
-      }
+      // const data = await this.orderService.getPaymentForm(
+      //   { ...clientInfo },
+      //   orderItems,
+      //   totalPrice
+      // );
+      // if (data.success) {
+      //   response.json({
+      //     data: data,
+      //     success: true,
+      //     message: "Payment form fetched successfully",
+      //   }).status(200);
+      // } else {
+      //   const errorResponse = {
+      //     success: false,
+      //     message: "Payment gateway error",
+      //     error: data.errorMessage + " with error code: " + data.errorCode,
+      //   };
+        // response.json(errorResponse).status(400);
+      // }
+      response.json({
+        success: true,
+        message: "This functionality is not yet implemented",
+        data : {}
+      }).status(200);
     } catch (error: any) {
       next(error);
     }

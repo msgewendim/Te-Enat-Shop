@@ -13,7 +13,9 @@ type SuccessResponse = {
   message: string;
   data?: RandomItem | RandomItem[];
 };
-
+export type TobiaWishList = {
+  email: string;
+};
 type ErrorResponse = {
   success: boolean;
   message: string;

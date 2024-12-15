@@ -193,7 +193,7 @@ export const EarlyAdaptersPopupButton = ({ isOpen, setIsOpen } : { isOpen: boole
         </h2>
         <p className="text-white max-w-3xl mx-auto dark:text-gray-100">            
         {makeBreakLine(t('earlyAdopters.message')).map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
+          <span key={index}>{paragraph}</span>
         ))}
         </p>
         </header>
