@@ -9,13 +9,17 @@ import PackageRoute from "./src/Routes/PackageRoute";
 import { connectToMongoDB } from "./src/utils/DB/MongoDB";
 import EventsMiddleware from "./src/utils/middleware/sse.events";
 import swagger from "./swagger";
-import { FRONTEND_URL, MONGO_ATLAS_URI } from "./src/utils/config/env.config";
+import { FRONTEND_URL_DEVELOPMENT, FRONTEND_URL_ON_RENDER, FRONTEND_URL_PRODUCTION, MONGO_ATLAS_URI } from "./src/utils/config/env.config";
 import errorHandler from "./src/utils/middleware/errorHandler";
 import activityLogger from "./src/utils/middleware/activityLogger";
 
 export const server = express();
 const port = process.env.PORT || 3005;
-
+const corsAllowedOrigins = [
+  FRONTEND_URL_DEVELOPMENT,
+  FRONTEND_URL_PRODUCTION,
+  FRONTEND_URL_ON_RENDER,
+]
 // parse incoming request bodies as json and urlencoded
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
@@ -25,7 +29,7 @@ server.use(activityLogger);
 server.use(
   cors({
     credentials: true,
-    origin: FRONTEND_URL,
+    origin: corsAllowedOrigins,
     allowedHeaders: ["Content-Type", "Authorization"],
     exposedHeaders: ["Authorization"],
   })

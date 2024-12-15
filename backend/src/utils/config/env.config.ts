@@ -5,6 +5,9 @@ const NODE_ENV = process.env.NODE_ENV as string;
 
 // # FRONTEND APP
 const APP_REACT_URL = process.env.APP_REACT_URL as string;
+const FRONTEND_URL_ON_RENDER = process.env.FRONTEND_URL_ON_RENDER as string;
+const FRONTEND_URL_DEVELOPMENT = process.env.FRONTEND_URL_DEVELOPMENT as string;
+const FRONTEND_URL_PRODUCTION = process.env.FRONTEND_URL_PRODUCTION as string;
 
 // BACK-END APP URL
 const BACKEND_APP_URL = process.env.APP_URL as string;
@@ -52,4 +55,7 @@ export {
   BASE_URL_NGROK,
   BACKEND_APP_URL,
   FRONTEND_URL,
+  FRONTEND_URL_ON_RENDER,
+  FRONTEND_URL_DEVELOPMENT,
+  FRONTEND_URL_PRODUCTION,
 };
