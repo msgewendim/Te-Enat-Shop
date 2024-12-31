@@ -31,46 +31,67 @@ export class OrderController {
       next(error);
     }
   }
-  async getPaymentForm(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
-    // const { error } = validatePaymentFormRequest(request.body.formData);
-    // if (error) {
-    //   return next(new ValidationError(error.message));
-    // }
-    // const { clientInfo, totalPrice, orderItems } = request.body
-    //   .formData as PaymentFormRequest;
+  // async getPaymentForm(
+  //   request: Request,
+  //   response: Response,
+  //   next: NextFunction
+  // ) {
+  //   // const { error } = validatePaymentFormRequest(request.body.formData);
+  //   // if (error) {
+  //   //   return next(new ValidationError(error.message));
+  //   // }
+  //   const { clientInfo, totalPrice, orderItems } = request.body
+  //     .formData as PaymentFormRequest;
+  //   try {
+  //     // const data = await this.orderService.getPaymentForm(
+  //     //   { ...clientInfo },
+  //     //   orderItems,
+  //     //   totalPrice
+  //     // );
+  //     // if (data.success) {
+  //     //   response.json({
+  //     //     data: data,
+  //     //     success: true,
+  //     //     message: "Payment form fetched successfully",
+  //     //   }).status(200);
+  //     // } else {
+  //     //   const errorResponse = {
+  //     //     success: false,
+  //     //     message: "Payment gateway error",
+  //     //     error: data.errorMessage + " with error code: " + data.errorCode,
+  //     //   };
+  //       // response.json(errorResponse).status(400);
+  //     // }
+  //     response.json({
+  //       success: true,
+  //       message: "This functionality is not yet implemented",
+  //       data : {}
+  //     }).status(200);
+  //   } catch (error: any) {
+  //     next(error);
+  //   }
+  // }
+
+  async generateSale (request: Request, response: Response, next: NextFunction) {
     try {
-      // const data = await this.orderService.getPaymentForm(
-      //   { ...clientInfo },
-      //   orderItems,
-      //   totalPrice
-      // );
-      // if (data.success) {
-      //   response.json({
-      //     data: data,
-      //     success: true,
-      //     message: "Payment form fetched successfully",
-      //   }).status(200);
-      // } else {
-      //   const errorResponse = {
-      //     success: false,
-      //     message: "Payment gateway error",
-      //     error: data.errorMessage + " with error code: " + data.errorCode,
-      //   };
-        // response.json(errorResponse).status(400);
-      // }
+      const { orderItems } = request.body
+      console.log(orderItems, "orderItems");
+      console.log(request.body, "request body");
+      console.log(orderItems, "orderController generateSale");
+      const saleUrl = await this.orderService.generateSale(orderItems);
       response.json({
         success: true,
-        message: "This functionality is not yet implemented",
-        data : {}
+        message: "Sale generated successfully",
+        data: {
+          url : saleUrl
+        } 
       }).status(200);
     } catch (error: any) {
       next(error);
     }
   }
+
+
   async checkPaymentStatus(
     request: Request,
     response: Response,
@@ -104,10 +125,16 @@ export class OrderController {
   ) {
     // Successful payment
     try {
-      const transactionInfo = request.body as OrderTransaction;
-      await this.orderService.updatePaymentStatus(transactionInfo);
-      sendPaymentNotification(transactionInfo.external_data);
-      response.sendStatus(200); // send to Morning server
+      console.log("request body in successfulPayment", request.body);
+      // const transactionInfo = request.body as OrderTransaction;
+      // await this.orderService.updatePaymentStatus(transactionInfo);
+      // sendPaymentNotification(transactionInfo.external_data);
+      // response.sendStatus(200); // send to Morning server
+      response.json({
+        status: true,
+        message: "Payment successful",
+        data: request.body
+      });
     } catch (error: any) {
       next(error);
     }

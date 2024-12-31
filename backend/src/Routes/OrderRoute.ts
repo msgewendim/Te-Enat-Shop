@@ -6,9 +6,9 @@ const router = express.Router();
 const orderController = new OrderController(new OrderService());
 
 router.post(
-  "/v1/payments/form",
+  "/v1/generate-sale",
   async (req: Request, res: Response, next: NextFunction) =>
-    await orderController.getPaymentForm(req, res, next)
+    await orderController.generateSale(req, res, next)
 );
 router.post(
   "/notify",

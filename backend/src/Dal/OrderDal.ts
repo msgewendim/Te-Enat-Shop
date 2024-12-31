@@ -16,7 +16,7 @@ const addOrder = async (
   const newOrder = {
     userDetails: {
       ...userInfo,
-      email: userInfo.emails[0],
+      email: userInfo.email,
     },
     products,
     totalPrice,

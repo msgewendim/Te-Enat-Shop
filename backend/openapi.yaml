@@ -691,26 +691,40 @@ components:
     ClientDetails:
       type: object
       properties:
-        name:
+        firstName:
           type: string
+        lastName: 
+          type: string
+        phone: 
+          type: string
+          description: "Customer phone number"
+          format: phone
         email:
           type: string
           description: "Customer email address"
           format: email
-          example: "john.doe@example.com"
-        mobile:
+        street: 
           type: string
-        address:
+          description: "Customer street"
+        streetNum: 
           type: string
-        city:
+          description: "Customer street number"
+        city: 
           type: string
-        zip:
+          description: "Customer city"
+        zip: 
+          type: number
+          description: "Customer zip code"
+        notes: 
           type: string
+          description: "Customer notes"
       required:
-        - name
+        - firstName
+        - lastName
+        - phone
         - email
-        - mobile
-        - address
+        - street
+        - streetNum
         - city
 
     OrderItem:
@@ -720,24 +734,13 @@ components:
           type: string
         quantity:
           type: integer
-        size:
-          type: string
-        price:
+        unitPrice:
           type: number
           format: float
-        currency:
-          type: string
-          default: "ILS"
-        vatType:
-          type: number
-          default: 1
       required:
         - description
         - quantity
-        - size
-        - price
-        - currency
-        - vatType
+        - unitPrice
 
     ProductCardProps:
       type: object

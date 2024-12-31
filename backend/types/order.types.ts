@@ -27,22 +27,22 @@ type PaymentFormResponse = {
   orderId: string;
 };
 interface ClientDetails {
-  name: string;
-  mobile: string;
-  address: string;
-  emails: string[];
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  street: string;
+  streetNum: string;
   city: string;
   zip: string;
-  taxId: string; // Unique identifier of my client in Morning
-  add: boolean;
-  country: string;
 }
+
 interface OrderItem {
   description: string;
   quantity: number;
-  price: number;
-  currency: string;
-  vatType: 1 | 2 | 0; // Vat type for that document
+  size: string;
+  unitPrice: number;
+  originalPrice: number;
 }
 
 export type PaymentFormRequest = {

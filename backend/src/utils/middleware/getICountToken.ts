@@ -1,6 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 import {
+  I_COUNT_API_ACCESS_TOKEN,
+  I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT,
+  I_COUNT_API_REFRESH_TOKEN,
   I_COUNT_API_URL,
   I_COUNT_CID,
   I_COUNT_PASS,
@@ -33,41 +36,66 @@ export const apiRequest = async <T>(url: string, body: object,headers?: object):
   }
 };
 
-export const refreshToken = async (refresh_token: string, access_token: string): Promise<TokenData> => {
-  const url = `${I_COUNT_API_URL}/token/refresh`;
-  const body = { access_token, refresh_token };
+export const getNewToken = async (): Promise<TokenData> => {
+  const url = `${I_COUNT_API_URL}/token/create`;
+  const sid = await startICountSession();
+  const body = {
+    sid,
+    user: I_COUNT_USER,
+    cid: I_COUNT_CID,
+    pass: I_COUNT_PASS,
+    user_id: 1,
+    expires_in : 3600,
+  };
 
   const data = await apiRequest<TokenRefreshResponse>(url, body);
-  
+  console.log("------------------------------------")
+  console.log("Token data:", data.token_info.token);
+  console.log("------------------------------------")
   if (data.status) {
     return data.token_info.token;
   }
-  throw new ExternalServiceError('Token refresh failed');
+  throw new ExternalServiceError('Failed to create ICount token');
 };
 
-export const checkToken = async (refresh_token: string, access_token: string, expiresAt: Date): Promise<ICountSessionResponse> => {
+
+export const checkToken = async (): Promise<ICountSessionResponse> => {
+  const access_token = I_COUNT_API_ACCESS_TOKEN;
+  const refresh_token = I_COUNT_API_REFRESH_TOKEN;
+  const expiresAt = new Date(I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT);
+  console.log("----------------------------")
+  console.log("expiresAt", expiresAt);
+  console.log("----------------------------")
   if (!access_token || Date.now() >= expiresAt.getTime()) {
-    const token = await refreshToken(refresh_token, access_token);
-    console.log("Refreshed token:", token);
-    process.env.I_COUNT_ACCESS_TOKEN = token.access_token;
-    process.env.I_COUNT_REFRESH_TOKEN = token.refresh_token;
-    process.env.I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT = token.expires.toString();
-    return { ...token, expiresAt: new Date(token.expires) };
+    const sid = await startICountSession();
+    const {access_token, refresh_token, expires} = await getNewToken();
+    console.log("------------------------------------")
+    console.log("new token is fetched:", access_token);
+    console.log("------------------------------------")
+    process.env.I_COUNT_ACCESS_TOKEN =  access_token;
+    process.env.I_COUNT_REFRESH_TOKEN = refresh_token;
+    process.env.I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT = expires;
+    console.log("------------------------------------")
+    console.log("I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT:", process.env.I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT);
+    console.log("------------------------------------")
+    return { access_token, refresh_token, expiresAt: new Date(expires) };
+  }else{
+    console.log("Token is valid");
+    
+    return { access_token, refresh_token, expiresAt };
   }
-  console.log("Token is valid");
-  return { access_token, refresh_token, expiresAt };
 };
 
-export const startICountSession = async (): Promise<ICountSessionResponse> => {
+export const startICountSession = async () => {
   const url = `${I_COUNT_API_URL}/auth/login`;
   const body = { user: I_COUNT_USER, cid: I_COUNT_CID, pass: I_COUNT_PASS };
 
   const data = await apiRequest<ICountSessionData>(url, body);
-  console.log("Session data:", data);
+  console.log("------------------------------------")
+  console.log("started iCount Session data:", data);
+  console.log("------------------------------------")
 
-  const token = await getICountToken(data.sid);
-  console.log("ICount token:", token);
-  return token;
+  return data.sid
 };
 const getICountToken = async (sid: string): Promise<ICountSessionResponse> => {
   const url = `${I_COUNT_API_URL}/token/get_list`;
@@ -82,7 +110,9 @@ const getICountToken = async (sid: string): Promise<ICountSessionResponse> => {
 
   const data = await apiRequest<AccessTokenResponse>(url, body);
   const { access_token, refresh_token, expires } = data.tokens[0];
-  
+  console.log("------------------------------------")
+  console.log("getICountToken data:", data.tokens[0]);
+  console.log("------------------------------------")
   return {
     access_token,
     refresh_token,
