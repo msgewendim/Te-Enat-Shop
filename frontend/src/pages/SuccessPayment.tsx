@@ -1,16 +1,26 @@
 import { useTranslation } from 'react-i18next';
 import DesignProductPopup from "../components/layout/modals/DesignProduct";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useAppContext } from "../hooks/app/useAppContext"; 
+
 
 const ThankYou = () => {
   const { t } = useTranslation();
+  const { setCartItems, setOrderItems } = useAppContext();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const handleOpenPopup = () => setIsPopupOpen(true);
+  const handleOpenPopup = () => setIsPopupOpen(true); 
   const handleClosePopup = () => setIsPopupOpen(false);
-
+  const clearCart = useCallback(() => {
+    setCartItems([]);
+    setOrderItems([]);
+    sessionStorage.removeItem('cartItems');
+  }, [setCartItems, setOrderItems]);
+  
   useEffect(() => {
+    clearCart();
     handleOpenPopup();
-  }, []);
+  }, [clearCart]);
+
   return (
     <section
       className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16"

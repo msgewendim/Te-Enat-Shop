@@ -54,10 +54,8 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
     setOrderItems([...orderItems, {
       description: product.name,
       quantity: itemProperties.quantity,
-      price: itemProperties.price * itemProperties.quantity,
+      unitPrice: itemProperties.price * itemProperties.quantity,
       size: itemProperties.size,
-      currency: "ILS",
-      vatType: 1,
     }])
     toast.success("מוצר נוסף לעגלה")
     setOpen(false)

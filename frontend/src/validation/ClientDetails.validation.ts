@@ -1,18 +1,27 @@
 import { z } from "zod";
 
 export const clientDetailsSchema = z.object({
-  name: z
+  firstName: z
     .string({
-      required_error: "Name is required",
+      required_error: "First name is required",
+    })
+    .min(1),
+  lastName: z
+    .string({
+      required_error: "Last name is required",
     })
     .min(1),
   email: z.string().email("Please enter a valid email"),
-  mobile: z.string().min(10, "Mobile number must be at least 10 characters"),
-  address: z.string({
-    required_error: "Address is required",
+  phone: z.string().min(10, "Mobile number must be at least 10 characters"),
+  street: z.string({
+    required_error: "street is required",
+  }),
+  streetNum: z.string({
+    required_error: "street number is required",
   }),
   city: z.string({
-    required_error: "City is required",
+    required_error: "city is required",
   }),
   zip: z.string().optional(),
+  notes: z.string().optional(),
 });

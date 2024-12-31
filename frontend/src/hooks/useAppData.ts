@@ -1,6 +1,7 @@
 import { useQuery, useMutation, keepPreviousData } from "@tanstack/react-query";
 import { query } from "../providers/interface/context";
 import {
+  OrderItem,
   PaymentFormPayload,
   RandomItemsResponse,
   SuccessResponse,
@@ -9,7 +10,7 @@ import {
   getRandomItems,
   getRelatedItems,
 } from "../providers/api/GenericService";
-import { getItemsByNames, getPaymentForm } from "../providers/api";
+import { getItemsByNames, getPaymentForm, getPaymentLinkFormICount } from "../providers/api";
 
 function useGetRelatedItems(endpoint: string, exclude: string, query?: query) {
   return useQuery({
@@ -32,6 +33,23 @@ function useGetPaymentFormMutation() {
     mutationFn: (formData: PaymentFormPayload) => getPaymentForm(formData),
     onSuccess: (data) => {
       console.log("Payment form fetched successfully", data);
+      return data.data
+    },
+    onError: (error) => {
+      console.error("Failed to fetch payment form", error);
+    },
+    onSettled: () => {
+      console.log("Mutation finished");
+    },
+  });
+}
+
+function useGetPaymentLinkMutation(){
+  return useMutation({
+    mutationFn: (orderItems: OrderItem[]) => getPaymentLinkFormICount(orderItems),
+    onSuccess: (data) => {
+      console.log("Payment form fetched successfully", data);
+      return data.data
     },
     onError: (error) => {
       console.error("Failed to fetch payment form", error);
@@ -55,4 +73,5 @@ export {
   useGetPaymentFormMutation,
   useGetRandomItems,
   useGetItemsByNames,
+  useGetPaymentLinkMutation
 };

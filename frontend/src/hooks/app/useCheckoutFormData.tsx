@@ -37,7 +37,8 @@ function useCheckoutFormData() {
   // Side effect when mutation succeeds
   useEffect(() => {
     if (getPaymentFormMutation.isSuccess && getPaymentFormMutation.data) {
-      setPaymentFormUrl(getPaymentFormMutation.data.url);
+      console.log("Payment form URL:", getPaymentFormMutation.data.data.url);
+      setPaymentFormUrl(getPaymentFormMutation.data.data.url);
     }
   }, [getPaymentFormMutation.isSuccess, getPaymentFormMutation.data, setPaymentFormUrl]);
 

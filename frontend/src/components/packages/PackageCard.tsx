@@ -25,17 +25,14 @@ const PackageCard = ({ data }: { data: Package }) => {
             <h3 className="font-medium text-lg dark:text-gray-50">{name}</h3>
             <span className="text-sm text-gray-500 dark:text-gray-400">{t('homePage.productPackages.price')}: ₪{price}</span>
           </div>
-          <button
-            type="button"
-            onClick={() => setIsModalOpen(true)}
-            className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary-dark transition duration-300">
-            {t('homePage.productPackages.buy')}
-          </button>
           <div className="mt-6 flex items-center justify-between text-xs">
             <PackageInfo icon={TfiTimer} label={cookingTime} title={t('homePage.productPackages.cookingTime')} />
             <PackageInfo icon={BsPeople} label={peoplesQuantity} title={t('homePage.productPackages.peopleQuantity')} />
             <PackageInfo icon={PiCookingPot} label={ingredientsQuantity} title={t('homePage.productPackages.ingredientsQuantity')} />
           </div>
+          <PackageCardButtons
+            setIsModalOpen={setIsModalOpen}
+          />
         </div>
       </section>
 
@@ -48,4 +45,26 @@ const PackageCard = ({ data }: { data: Package }) => {
   );
 };
 
+const PackageCardButtons = ({setIsModalOpen}: {setIsModalOpen: (value: boolean) => void}) => {
+  return (
+    <div className="flex gap-2">
+      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"buy"} />
+      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"read more"} />
+      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"to recipe"} />
+    </div>
+  )
+}; 
+
+const PackageCardButton = ({setIsModalOpen, name}: {setIsModalOpen: (value: boolean) => void, name: string}) => {
+  // const { t } = useTranslation();
+  return (
+    <button
+      type="button"
+      onClick={() => setIsModalOpen(true)}
+      className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary-dark transition duration-300">
+      {/* {t('homePage.productPackages.button', {name})} */}
+      {name}
+    </button>
+  )
+};
 export default PackageCard;

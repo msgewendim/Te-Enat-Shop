@@ -15,10 +15,17 @@ const CheckoutFormData = () => {
         </h3>
         <div className="grid sm:grid-cols-2 gap-4">
           <FormInput<ClientDetails>
-            placeholder={t('checkout.fullName')}
-            label={t('checkout.fullName')}
+            placeholder={t('checkout.firstName')}
+            label={t('checkout.firstName')}
             register={register}
-            name="name"
+            name="firstName"
+            required
+          />
+          <FormInput<ClientDetails>
+            placeholder={t('checkout.lastName')}
+            label={t('checkout.lastName')}
+            register={register}
+            name="lastName"
             required
           />
           <FormInput<ClientDetails>
@@ -31,10 +38,10 @@ const CheckoutFormData = () => {
           />
           <FormInput<ClientDetails>
             type="tel"
-            placeholder={t('checkout.mobile')}
-            label={t('checkout.mobile')}
+            placeholder={t('checkout.phone')}
+            label={t('checkout.phone')}
             register={register}
-            name="mobile"
+            name="phone"
             required
             className="sm:col-span-2"
           />
@@ -47,10 +54,18 @@ const CheckoutFormData = () => {
         </h3>
         <div className="grid sm:grid-cols-2 gap-4">
           <FormInput<ClientDetails>
-            placeholder={t('checkout.address')}
-            label={t('checkout.address')}
+            placeholder={t('checkout.street')}
+            label={t('checkout.street')}
             register={register}
-            name="address"
+            name="street"
+            required
+            className="sm:col-span-2"
+          />
+          <FormInput<ClientDetails>
+            placeholder={t('checkout.streetNum')}
+            label={t('checkout.streetNum')}
+            register={register}
+            name="streetNum"
             required
             className="sm:col-span-2"
           />
@@ -66,11 +81,23 @@ const CheckoutFormData = () => {
             label={t('checkout.zip')}
             register={register}
             name="zip"
-            required
           />
         </div>
       </section>
 
+      {/* notes for delivery */}
+      <div className="relative">
+      <label
+        htmlFor="notes"
+        className={`block text-sm font-medium text-gray-700 mb-1`}
+      >{t('checkout.notes')}</label>
+      <textarea
+        {...register('notes')}
+        placeholder={t('checkout.notes')}
+        className="w-full px-4 py-3 bg-gray-100 text-gray-800 text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-btnColor2 focus:border-transparent placeholder:text-right"
+        id="notes"
+        />
+        </div>
       <div className="flex flex-col sm:flex-row gap-4 mt-8">
         <button
           type="button"

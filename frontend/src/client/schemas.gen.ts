@@ -165,29 +165,44 @@ export const $PaymentFormPayload = {
 export const $ClientDetails = {
     type: 'object',
     properties: {
-        name: {
+        firstName: {
             type: 'string'
+        },
+        lastName: {
+            type: 'string'
+        },
+        phone: {
+            type: 'string',
+            description: 'Customer phone number',
+            format: 'phone'
         },
         email: {
             type: 'string',
             description: 'Customer email address',
-            format: 'email',
-            example: 'john.doe@example.com'
+            format: 'email'
         },
-        mobile: {
-            type: 'string'
+        street: {
+            type: 'string',
+            description: 'Customer street'
         },
-        address: {
-            type: 'string'
+        streetNum: {
+            type: 'string',
+            description: 'Customer street number'
         },
         city: {
-            type: 'string'
+            type: 'string',
+            description: 'Customer city'
         },
         zip: {
-            type: 'string'
+            type: 'number',
+            description: 'Customer zip code'
+        },
+        notes: {
+            type: 'string',
+            description: 'Customer notes'
         }
     },
-    required: ['name', 'email', 'mobile', 'address', 'city']
+    required: ['firstName', 'lastName', 'phone', 'email', 'street', 'streetNum', 'city']
 } as const;
 
 export const $OrderItem = {
@@ -199,23 +214,12 @@ export const $OrderItem = {
         quantity: {
             type: 'integer'
         },
-        size: {
-            type: 'string'
-        },
-        price: {
+        unitPrice: {
             type: 'number',
             format: 'float'
-        },
-        currency: {
-            type: 'string',
-            default: 'ILS'
-        },
-        vatType: {
-            type: 'number',
-            default: 1
         }
     },
-    required: ['description', 'quantity', 'size', 'price', 'currency', 'vatType']
+    required: ['description', 'quantity', 'unitPrice']
 } as const;
 
 export const $ProductCardProps = {
@@ -630,9 +634,14 @@ export const $Ingredient = {
         quantity: {
             type: 'string',
             description: 'Amount of the ingredient required (e.g., "1 cup", "2 tbsp")'
+        },
+        existsInProducts: {
+            type: 'boolean',
+            default: false,
+            description: 'Indicates if the ingredient exists in the products collection'
         }
     },
-    required: ['name', 'quantity']
+    required: ['name', 'quantity', 'existsInProducts']
 } as const;
 
 export const $Instruction = {
