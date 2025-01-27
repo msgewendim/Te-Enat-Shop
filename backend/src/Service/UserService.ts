@@ -12,9 +12,6 @@ import {
 import { User } from "../models/UserSchema";
 
 export class UserService {
-  async updateUserWithAuth(user: Partial<User>) {}
-
-  async createUserWithoutAuth(user: Partial<User>) {}
 
   async addToNewsletter(data: NewsLetterData) {
     try {
@@ -23,13 +20,7 @@ export class UserService {
       throw error;
     }
   }
-  async addToTobiaWaitList(data: NewsLetterData) {
-    try {
-      await addToTobiaWaitList(data);
-    } catch (error) {
-      throw error;
-    }
-  }
+
 
   async addToDesignProduct(data: DesignProductFormData) {
     try {
@@ -47,13 +38,4 @@ export class UserService {
     }
   }
 
-  async getUser(userId: string) {
-    // Implement logic to fetch user from database
-    // Return user object or null if not found
-  }
-
-  async placeOrder(userId: string, orderId: string): Promise<void> {
-    // Implement logic to place order for user and order
-    // Update user's order list with new order ID
-  }
 }

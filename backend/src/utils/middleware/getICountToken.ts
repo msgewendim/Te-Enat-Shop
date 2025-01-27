@@ -49,9 +49,6 @@ export const getNewToken = async (): Promise<TokenData> => {
   };
 
   const data = await apiRequest<TokenRefreshResponse>(url, body);
-  console.log("------------------------------------")
-  console.log("Token data:", data.token_info.token);
-  console.log("------------------------------------")
   if (data.status) {
     return data.token_info.token;
   }
@@ -63,21 +60,15 @@ export const checkToken = async (): Promise<ICountSessionResponse> => {
   const access_token = I_COUNT_API_ACCESS_TOKEN;
   const refresh_token = I_COUNT_API_REFRESH_TOKEN;
   const expiresAt = new Date(I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT);
-  console.log("----------------------------")
-  console.log("expiresAt", expiresAt);
-  console.log("----------------------------")
+
   if (!access_token || Date.now() >= expiresAt.getTime()) {
     const sid = await startICountSession();
     const {access_token, refresh_token, expires} = await getNewToken();
-    console.log("------------------------------------")
-    console.log("new token is fetched:", access_token);
-    console.log("------------------------------------")
+    
     process.env.I_COUNT_ACCESS_TOKEN =  access_token;
     process.env.I_COUNT_REFRESH_TOKEN = refresh_token;
     process.env.I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT = expires;
-    console.log("------------------------------------")
-    console.log("I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT:", process.env.I_COUNT_API_ACCESS_TOKEN_EXPIRES_AT);
-    console.log("------------------------------------")
+    
     return { access_token, refresh_token, expiresAt: new Date(expires) };
   }else{
     console.log("Token is valid");
@@ -91,13 +82,10 @@ export const startICountSession = async () => {
   const body = { user: I_COUNT_USER, cid: I_COUNT_CID, pass: I_COUNT_PASS };
 
   const data = await apiRequest<ICountSessionData>(url, body);
-  console.log("------------------------------------")
-  console.log("started iCount Session data:", data);
-  console.log("------------------------------------")
 
   return data.sid
 };
-const getICountToken = async (sid: string): Promise<ICountSessionResponse> => {
+export const getICountToken = async (sid: string): Promise<ICountSessionResponse> => {
   const url = `${I_COUNT_API_URL}/token/get_list`;
   const body = {
     sid,
@@ -110,9 +98,7 @@ const getICountToken = async (sid: string): Promise<ICountSessionResponse> => {
 
   const data = await apiRequest<AccessTokenResponse>(url, body);
   const { access_token, refresh_token, expires } = data.tokens[0];
-  console.log("------------------------------------")
-  console.log("getICountToken data:", data.tokens[0]);
-  console.log("------------------------------------")
+
   return {
     access_token,
     refresh_token,
