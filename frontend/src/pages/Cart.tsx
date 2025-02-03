@@ -30,19 +30,24 @@ const Cart = () => {
   // }, [setCartItems, setOrderItems]);
 
   useEffect(() => {
-    if (getPaymentLinkMutation.isSuccess && getPaymentLinkMutation.data) {
-      // clearCart();
+    if (getPaymentLinkMutation.isSuccess && getPaymentLinkMutation.data.data.url) {
       window.location.href = getPaymentLinkMutation.data.data.url;
     } else if (!getPaymentLinkMutation.isPending) {
       setIsLoading(false);
+    }else{
+      toast.error(t('checkout.errorFetchingPaymentForm'));
+      console.error(getPaymentLinkMutation.error);
+      return
     }
-  }, [getPaymentLinkMutation.isSuccess, getPaymentLinkMutation.data, getPaymentLinkMutation.isPending]);
+  }, [getPaymentLinkMutation.isSuccess, getPaymentLinkMutation.data, getPaymentLinkMutation.isPending,getPaymentLinkMutation.error, t]);
 
   useEffect(() => {
     if (getPaymentLinkMutation.isError) {
-      toast.error(t('errors.somethingWentWrong'));
+      toast.error(t('checkout.errorFetchingPaymentForm'));
+      console.error(getPaymentLinkMutation.error);
+      return
     }
-  }, [getPaymentLinkMutation.isError, t]);
+  }, [getPaymentLinkMutation.isError, t,getPaymentLinkMutation.error]);
 
   return (
     <>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Package } from '../../client/types.gen'
 import { SelectQuantity } from '../products/PopupProduct'
 import useAddToCartPackage from '../../hooks/app/useAddToCartPackage'
+import { useTranslation } from 'react-i18next'
 
 interface PackageModalProps {
   package: Package
@@ -17,8 +18,8 @@ const PackageModal: FC<PackageModalProps> = ({ package: pkg, open, setOpen }) =>
     open,
     setOpen
   })
-
-  const { _id, image, name, price, cookingTime, peoplesQuantity, ingredientsQuantity } = pkg
+  // Modify the package object to include the recipeId
+  const { image, name, price, cookingTime, peoplesQuantity, ingredientsQuantity, recipeId } = pkg
 
   return (
     <Transition show={open} as={Fragment}>
@@ -64,21 +65,7 @@ const PackageModal: FC<PackageModalProps> = ({ package: pkg, open, setOpen }) =>
                           <SelectQuantity handleChange={handleQuantityChange} quantity={quantity} />
                         </div>
 
-                        <div className="flex gap-4 justify-end">
-                          <button
-                            type="button"
-                            className="inline-flex justify-center rounded-md bg-[#42855b] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#3a7751] transition-colors sm:w-auto"
-                            onClick={handleAddPackageToCart}
-                          >
-                            הוסף לעגלה
-                          </button>
-                          <Link
-                            to={`/packages/${_id}/info`}
-                            className="inline-flex justify-center rounded-md bg-white px-5 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-colors sm:w-auto"
-                          >
-                            קרא עוד
-                          </Link>
-                        </div>
+                        <PackageCardButtons handleAddPackageToCart={handleAddPackageToCart} recipeId={recipeId} setOpen={setOpen} />
                       </div>
                     </div>
                   </div>
@@ -92,4 +79,30 @@ const PackageModal: FC<PackageModalProps> = ({ package: pkg, open, setOpen }) =>
   )
 }
 
-export default PackageModal 
+export const PackageCardButtons = ({handleAddPackageToCart, recipeId, setOpen}: {handleAddPackageToCart: () => void, recipeId: string, setOpen: (open: boolean) => void}) => {
+  const { t } = useTranslation();
+
+  const buttonBaseStyle = "rounded-md px-5 py-2 text-sm text-center font-semibold shadow-sm transition-colors w-[120px]";
+
+  return (
+    <div className="flex gap-2 justify-end items-end">
+      <button
+        type="button"
+        className={`${buttonBaseStyle} bg-primary text-white hover:bg-primary/90`}
+        onClick={handleAddPackageToCart}
+      >
+        {t("buttons.buy")}
+      </button>
+      <Link
+        to={`/recipes/${recipeId}`}
+        type="button"
+        className={`${buttonBaseStyle} bg-white text-primary border-[1px] border-primary hover:bg-primary/10`}
+        onClick={() => setOpen(false)}
+      >
+        {t("buttons.toRecipe")}
+      </Link>
+    </div>
+  )
+};
+
+export default PackageModal

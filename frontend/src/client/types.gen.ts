@@ -71,6 +71,7 @@ export type Package = {
     price: number;
     cookingTime: number;
     ingredientsQuantity: number;
+    recipeId: string;
     peoplesQuantity: number;
 };
 

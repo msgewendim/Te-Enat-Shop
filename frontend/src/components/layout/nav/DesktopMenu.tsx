@@ -14,7 +14,7 @@ const DesktopMenu = () => {
     { to: "/packages", label: t('nav.packages') },
     { to: "/recipes", label: t('nav.recipes') },
     { to: "/events", label: t('nav.events') },
-    { to: "/TOBIA", label: t('nav.TOBIA') },
+    // { to: "/TOBIA", label: t('nav.TOBIA') },
     { to: "/about", label: t('nav.about') },
   ];
 

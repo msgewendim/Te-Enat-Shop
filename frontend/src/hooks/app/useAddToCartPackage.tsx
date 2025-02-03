@@ -35,10 +35,8 @@ function useAddToCartPackage({ package: pkg, setOpen }: UseAddToCartPackageProps
     setOrderItems([...orderItems, {
       description: pkg.name,
       quantity: quantity,
-      price: pkg.price * quantity,
+      unitPrice: pkg.price * quantity,
       size: 'default',
-      currency: "ILS",
-      vatType: 1,
     }])
 
     toast.success("חבילה נוספה לעגלה")

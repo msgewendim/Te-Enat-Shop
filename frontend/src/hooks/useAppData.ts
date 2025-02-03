@@ -4,13 +4,13 @@ import {
   OrderItem,
   PaymentFormPayload,
   RandomItemsResponse,
-  SuccessResponse,
 } from "../client/types.gen";
 import {
   getRandomItems,
+  getItemsByNames,
   getRelatedItems,
 } from "../providers/api/GenericService";
-import { getItemsByNames, getPaymentForm, getPaymentLinkFormICount } from "../providers/api";
+import { getPaymentForm, getPaymentLinkFormICount } from "../providers/api";
 
 function useGetRelatedItems(endpoint: string, exclude: string, query?: query) {
   return useQuery({
@@ -60,10 +60,10 @@ function useGetPaymentLinkMutation(){
   });
 }
 
-function useGetItemsByNames(names: string[]) {
-  return useQuery<SuccessResponse, Error>({
-    queryKey: ["items from recipe", names],
-    queryFn: () => getItemsByNames(names),
+function useGetItemsByNames(names: string[] | string, endpoint: string) {
+  return useQuery({
+    queryKey: ["items by names " + endpoint, names],
+    queryFn: () => getItemsByNames(endpoint, names),
     placeholderData: keepPreviousData,
     staleTime: 5000,
   });

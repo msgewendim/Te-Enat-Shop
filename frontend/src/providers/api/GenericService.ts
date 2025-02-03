@@ -104,3 +104,16 @@ export const getRelatedItems = async (
     throw new Error(data.message);
   }
 };
+
+export const getItemsByNames = async (endpoint: string, names: string[] | string) => {
+  const data = (
+    await axiosInstance.post<SuccessResponse>(endpoint, 
+      names,
+    )
+  ).data;
+  if (data.success) {
+    return data.data;
+  } else {
+    throw new Error(data.message);
+  }
+};

@@ -14,7 +14,7 @@ const ProductCard = ({ product, className = "" }: { product: Product, className?
   const handleClosePopup = () => setIsPopupOpen(false);
 
   return (
-    <article className={`group flex flex-col w-full max-w-[390px] bg-white shadow-xl dark:bg-emerald-900 dark:border-emerald-700 dark:shadow-lg dark:shadow-neutral-700/70 ${className}`}>
+    <article className={`group flex flex-col  w-full max-w-[390px] rounded-b-md shadow-xl dark:bg-emerald-900 dark:border-emerald-700 dark:shadow-lg dark:shadow-neutral-700/70 ${className} `}>
       <ProductImage image={image} name={name} onClick={handleOpenPopup} />
 
       <div className="px-4 py-1 flex flex-col flex-grow" dir="ltr">
@@ -81,17 +81,17 @@ const ProductActions = ({ productId, onAddToCart, name }: { productId: string, n
   const { t } = useTranslation();
 
   return (
-    <div className="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">
+    <div className="mt-auto flex border-gray-200 divide-x divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700">
       <Link
         to={`/products/${productId}/info`}
-        className="w-full py-3 px-4 inline-flex justify-center items-center text-sm font-medium bg-white text-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-emerald-900 dark:text-white dark:hover:bg-emerald-800"
+        className="w-full py-3 px-4 inline-flex justify-center items-center rounded-br-lg text-sm font-medium bg-gray-50 text-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-emerald-900 dark:text-white dark:hover:bg-emerald-800"
         aria-label={`Read more about ${name}`}
       >
         {t('product.readMore')}
       </Link>
       <button
         onClick={onAddToCart}
-        className="w-full py-3 px-4 inline-flex justify-center items-center text-sm font-medium text-white bg-[#90b77d] hover:bg-[#42855b] focus:outline-none focus:ring-2 focus:ring-[#90b77d] dark:bg-emerald-900 dark:text-white dark:hover:bg-emerald-800"
+        className="w-full py-3 px-4 inline-flex rounded-bl-lg justify-center items-center text-sm font-medium text-white bg-[#90b77d] hover:bg-[#42855b] focus:outline-none focus:ring-2 focus:ring-[#90b77d] dark:bg-emerald-900 dark:text-white dark:hover:bg-emerald-800"
         aria-label={`Add ${name} to cart`}
       >
         {t('product.addToCart')}
