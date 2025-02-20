@@ -28,15 +28,16 @@ export class OrderController {
     }
   }
 
-  async generateSale (request: Request, response: Response, next: NextFunction) {
+  async getPaymentLink (request: Request, response: Response, next: NextFunction) {
     try {
-      const { orderItems } = request.body
-      const saleUrl = await this.orderService.generateSale(orderItems);
+      const { products, clientDetails, totalPrice } = request.body
+      console.log("request.body", request.body);
+      const paymentLink = await this.orderService.getPaymentLink(products, clientDetails, totalPrice);
       response.json({
         success: true,
         message: "Sale generated successfully",
         data: {
-          url : saleUrl
+          url : paymentLink
         } 
       }).status(200);
     } catch (error: any) {

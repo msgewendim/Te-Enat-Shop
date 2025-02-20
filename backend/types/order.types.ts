@@ -27,22 +27,21 @@ type PaymentFormResponse = {
   orderId: string;
 };
 interface ClientDetails {
-  firstName: string;
-  lastName: string;
-  phone: string;
+  customer_name: string;
   email: string;
-  street: string;
-  streetNum: string;
+  phone: string;
   city: string;
-  zip: string;
+  address: string;
+  postal_code: string;
+  customer_external_number?: string; // This field will be used to pass your external customer id from ERP or other system
 }
 
 interface OrderItem {
-  description: string;
+  name: string;
   quantity: number;
   size: string;
-  unitPrice: number;
-  originalPrice: number;
+  price: number;
+  product_uid?: string;  // product uid from your system
 }
 
 export type PaymentFormRequest = {

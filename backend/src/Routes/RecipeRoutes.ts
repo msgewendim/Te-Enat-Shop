@@ -15,6 +15,11 @@ router.get(
     await recipeController.getAllRecipes(req, res, next)
 );
 router.get(
+  "/names",
+  async (req: Request, res: Response, next: NextFunction) =>
+    await recipeController.getRecipesByName(req, res, next)
+);
+router.get(
   "/random",
   async (req: Request, res: Response, next: NextFunction) =>
     await recipeController.getRandomRecipes(req, res, next)

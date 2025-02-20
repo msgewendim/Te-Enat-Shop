@@ -8,7 +8,7 @@ const orderController = new OrderController(new OrderService());
 router.post(
   "/v1/generate-sale",
   async (req: Request, res: Response, next: NextFunction) =>
-    await orderController.generateSale(req, res, next)
+    await orderController.getPaymentLink(req, res, next)
 );
 router.post(
   "/notify",

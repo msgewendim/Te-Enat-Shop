@@ -1,28 +1,15 @@
-import axios from "axios";
-import {
-  generateSaleUrl,
-  getCheckoutFormPayload,
-  getGenerateSalePayload,
-} from "../utils/middleware/createPayPage";
 import {
   ClientDetails,
   OrderItem,
   OrderTransaction,
-  PaymentFormResponse,
 } from "../../types/order.types";
 import {
-  addOrder,
   checkPaymentStatus,
   getOrders,
   updatePaymentStatus,
 } from "../Dal/OrderDal";
-import {  ExternalServiceError } from "../utils/customErrors";
+import { getPaymentLink, getPayplusGenLinkPayload } from "../utils/PaymentProvider/payplus.config";
 
-const pluginId = "";
-let MORNING_TOKEN = {
-  token: "",
-  expiresAt: Date.now(),
-};
 const url = "MORNING_PAYMENT_FORM_URL";
 export class OrderService {
   async checkPaymentStatus(orderId: string) {
@@ -47,15 +34,15 @@ export class OrderService {
     return orders;
   }
 
-  async generateSale(orderItems: OrderItem[]) {
+  async getPaymentLink(orderItems: OrderItem[], clientDetails: ClientDetails, totalPrice: number) {
     try {
       // const newOrderId = await addOrder(userInfo, products, 0);
       // add orderId to transaction info
-      const generateSalePayload = getGenerateSalePayload(orderItems, "hhhja");
-      console.log("generateSalePayload", generateSalePayload);
-      const saleUrl = await generateSaleUrl(generateSalePayload);
-      console.log("saleUrl", saleUrl);
-      return saleUrl;
+      const generatePaymentLinkPayload = getPayplusGenLinkPayload(orderItems, clientDetails, totalPrice, "THIS IS A TEST PAYMENT");
+      console.log("generatePaymentLinkPayload", generatePaymentLinkPayload);
+      const paymentLink = await getPaymentLink(generatePaymentLinkPayload);
+      console.log("paymentLink", paymentLink);
+      return paymentLink;
     } catch (error) {
       throw error;
     }
