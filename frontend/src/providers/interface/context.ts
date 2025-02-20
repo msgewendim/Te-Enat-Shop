@@ -37,6 +37,7 @@ export interface IContext {
   setAdminActiveSection: (section: string) => void;
   showModal: (onConfirm: () => void) => void;
   hideModal: () => void;
+  clearCart: () => void;
   modalState: ModalState;
   setModalState: (state: ModalState) => void;
   setProductToEdit: (product: Product | undefined) => void;
@@ -72,6 +73,7 @@ export const AppContext = createContext<IContext>({
   setAdminActiveSection: () => {},
   hideModal: () => {},
   showModal: () => {},
+  clearCart: () => {},
   modalState: { isOpen: false, onConfirm: () => {} },
   setModalState: () => {},
   productToEdit: undefined,

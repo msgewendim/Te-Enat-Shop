@@ -14,6 +14,7 @@ function useCheckoutFormData() {
   const { t } = useTranslation();
   const getPaymentFormMutation = useGetPaymentFormMutation();
   const [clientData, setClientData] = useState<ClientDetails>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleGetPaymentForm: SubmitHandler<ClientDetails> = (data) => {
@@ -25,6 +26,7 @@ function useCheckoutFormData() {
       return;
     }
 
+    setIsSubmitting(true);
     clientData &&
       // get url from server
       getPaymentFormMutation.mutate({
@@ -37,10 +39,15 @@ function useCheckoutFormData() {
   // Side effect when mutation succeeds
   useEffect(() => {
     if (getPaymentFormMutation.isSuccess && getPaymentFormMutation.data) {
-      console.log("Payment form URL:", getPaymentFormMutation.data.data.url);
-      setPaymentFormUrl(getPaymentFormMutation.data.data.url);
+      const paymentUrl = getPaymentFormMutation.data.data.url;
+      console.log("Payment form URL:", paymentUrl);
+      setPaymentFormUrl(paymentUrl);
+      // Redirect to the payment URL
+      window.location.href = paymentUrl;
+    } else if (getPaymentFormMutation.isError) {
+      setIsSubmitting(false);
     }
-  }, [getPaymentFormMutation.isSuccess, getPaymentFormMutation.data, setPaymentFormUrl]);
+  }, [getPaymentFormMutation.isSuccess, getPaymentFormMutation.data, getPaymentFormMutation.isError, setPaymentFormUrl]);
 
   // Handle errors
   useEffect(() => {
@@ -78,6 +85,7 @@ function useCheckoutFormData() {
     clientData,
     handleGetPaymentForm,
     handleReturnToShop,
+    isSubmitting,
   }
 }
 

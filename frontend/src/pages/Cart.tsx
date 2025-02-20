@@ -1,27 +1,25 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import CartItemsList from '../components/cart/CartItemsList';
 import { useAppContext } from '../hooks/app/useAppContext';
-import { useGetPaymentLinkMutation } from '../hooks/useAppData';
-import Loader from '../components/ui/Loader';
-import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const { t } = useTranslation();
   const { totalPrice, openCart, setOpenCart, orderItems } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
-  const getPaymentLinkMutation = useGetPaymentLinkMutation();
+  const navigate = useNavigate();
 
   const handleClose = useCallback(() => setOpenCart(false), [setOpenCart]);
 
   const handleCheckout = useCallback(() => {
     if (orderItems.length > 0) {
       setIsLoading(true);
-      getPaymentLinkMutation.mutate(orderItems);
+      setOpenCart(false);
+      navigate('/checkout');
     }
-  }, [orderItems, getPaymentLinkMutation]);
+  }, [orderItems, navigate, setOpenCart]);
 
   // const clearCart = useCallback(() => {
   //   setCartItems([]);
@@ -29,31 +27,11 @@ const Cart = () => {
   //   sessionStorage.removeItem('cartItems');
   // }, [setCartItems, setOrderItems]);
 
-  useEffect(() => {
-    if (getPaymentLinkMutation.isSuccess && getPaymentLinkMutation.data) {
-      // clearCart();
-      window.location.href = getPaymentLinkMutation.data.data.url;
-    } else if (!getPaymentLinkMutation.isPending) {
-      setIsLoading(false);
-    }
-  }, [getPaymentLinkMutation.isSuccess, getPaymentLinkMutation.data, getPaymentLinkMutation.isPending]);
-
-  useEffect(() => {
-    if (getPaymentLinkMutation.isError) {
-      toast.error(t('errors.somethingWentWrong'));
-    }
-  }, [getPaymentLinkMutation.isError, t]);
-
   return (
     <>
-      {isLoading && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <Loader />
-        </div>
-      )}
       <Transition show={openCart} as={React.Fragment}>
         <Dialog onClose={handleClose} className="relative z-40">
-          <Transition.Child
+          <TransitionChild
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
@@ -62,12 +40,12 @@ const Cart = () => {
             leaveTo="opacity-0"
           >
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
+          </TransitionChild>
 
           <div className="fixed inset-0 overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
               <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-                <Transition.Child
+                <TransitionChild
                   enter="transform transition ease-in-out duration-500 sm:duration-700"
                   enterFrom="translate-x-full"
                   enterTo="translate-x-0"
@@ -75,15 +53,15 @@ const Cart = () => {
                   leaveFrom="translate-x-0"
                   leaveTo="translate-x-full"
                 >
-                  <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
+                  <DialogPanel className="pointer-events-auto relative w-screen max-w-md">
                     <CartContent
                       totalPrice={totalPrice}
                       handleClose={handleClose}
                       handleCheckout={handleCheckout}
                       isLoading={isLoading}
                     />
-                  </Dialog.Panel>
-                </Transition.Child>
+                  </DialogPanel>
+                </TransitionChild>
               </div>
             </div>
           </div>
@@ -105,9 +83,9 @@ const CartContent = ({ totalPrice, handleClose, handleCheckout, isLoading } : {
     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
       <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
         <div className="flex items-start justify-between">
-          <Dialog.Title className="text-lg font-medium text-gray-900">
+          <DialogTitle className="text-lg font-medium text-gray-900">
             {t('cart.title')}
-          </Dialog.Title>
+          </DialogTitle>
           <div className="ml-3 flex h-7 items-center">
             <button
               type="button"

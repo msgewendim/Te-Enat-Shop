@@ -1,9 +1,10 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { FC, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { Package } from '../../client/types.gen'
 import { SelectQuantity } from '../products/PopupProduct'
 import useAddToCartPackage from '../../hooks/app/useAddToCartPackage'
+import { PackageCardButton } from './PackageCard'
 
 interface PackageModalProps {
   package: Package
@@ -12,13 +13,13 @@ interface PackageModalProps {
 }
 
 const PackageModal: FC<PackageModalProps> = ({ package: pkg, open, setOpen }) => {
-  const { handleAddPackageToCart, handleQuantityChange, quantity } = useAddToCartPackage({
+  const { handleQuantityChange, quantity } = useAddToCartPackage({
     package: pkg,
     open,
     setOpen
   })
 
-  const { _id, image, name, price, cookingTime, peoplesQuantity, ingredientsQuantity } = pkg
+  const {_id, image, name, price, cookingTime, peoplesQuantity, ingredientsQuantity } = pkg
 
   return (
     <Transition show={open} as={Fragment}>
@@ -64,21 +65,11 @@ const PackageModal: FC<PackageModalProps> = ({ package: pkg, open, setOpen }) =>
                           <SelectQuantity handleChange={handleQuantityChange} quantity={quantity} />
                         </div>
 
-                        <div className="flex gap-4 justify-end">
-                          <button
-                            type="button"
-                            className="inline-flex justify-center rounded-md bg-[#42855b] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#3a7751] transition-colors sm:w-auto"
-                            onClick={handleAddPackageToCart}
-                          >
-                            הוסף לעגלה
-                          </button>
-                          <Link
-                            to={`/packages/${_id}/info`}
-                            className="inline-flex justify-center rounded-md bg-white px-5 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-colors sm:w-auto"
-                          >
-                            קרא עוד
-                          </Link>
-                        </div>
+                        <div className="flex gap-3 items-center justify-between w-full">
+                          <PackageCardButton setIsModalOpen={setOpen} name={"buy"} variant="primary" />
+                          <PackageCardButton setIsModalOpen={setOpen} name={"toRecipe"} variant="tertiary" link={`/recipes/${name}`} />
+                          <PackageCardButton setIsModalOpen={setOpen} name={"readMore"} variant="secondary" link={`/packages/${_id}/info`} />
+                        </div> 
                       </div>
                     </div>
                   </div>

@@ -16,7 +16,7 @@ const getPaymentForm = async (
 ): Promise<PaymentFormSuccessResponse> => {
   // Send the form data to your payment gateway API
   return (
-    await axiosInstance.post(`/orders/v1/payments/form`, {
+    await axiosInstance.post(`/orders/v1/generate-sale`, {
       formData,
     })
   ).data;

@@ -6,7 +6,7 @@ import { Package } from "../../client/types.gen";
 import { useTranslation } from "react-i18next";
 import { useState } from 'react';
 import PackageModal from './PackageModal';
-
+import { Link } from "react-router-dom";
 const PackageCard = ({ data }: { data: Package }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();
@@ -14,7 +14,7 @@ const PackageCard = ({ data }: { data: Package }) => {
 
   return (
     <>
-      <section className="block rounded-lg p-4 shadow-sm shadow-indigo-100 hover:bg-slate-200 transition duration-300 dark:hover:bg-gray-800">
+      <section onClick={() => setIsModalOpen(true)} className="block rounded-lg p-4 shadow-sm shadow-indigo-100 hover:bg-slate-200 transition duration-300 dark:hover:bg-gray-800">
         <img
           alt={name}
           src={image}
@@ -25,14 +25,13 @@ const PackageCard = ({ data }: { data: Package }) => {
             <h3 className="font-medium text-lg dark:text-gray-50">{name}</h3>
             <span className="text-sm text-gray-500 dark:text-gray-400">{t('homePage.productPackages.price')}: ₪{price}</span>
           </div>
-          <div className="mt-6 flex items-center justify-between text-xs">
+          <div className="mt-6 mb-4 flex items-center justify-between text-xs">
             <PackageInfo icon={TfiTimer} label={cookingTime} title={t('homePage.productPackages.cookingTime')} />
             <PackageInfo icon={BsPeople} label={peoplesQuantity} title={t('homePage.productPackages.peopleQuantity')} />
             <PackageInfo icon={PiCookingPot} label={ingredientsQuantity} title={t('homePage.productPackages.ingredientsQuantity')} />
           </div>
-          <PackageCardButtons
-            setIsModalOpen={setIsModalOpen}
-          />
+
+          <PackageCardButton variant="primary" setIsModalOpen={setIsModalOpen} name={"buy"} />
         </div>
       </section>
 
@@ -45,25 +44,44 @@ const PackageCard = ({ data }: { data: Package }) => {
   );
 };
 
-const PackageCardButtons = ({setIsModalOpen}: {setIsModalOpen: (value: boolean) => void}) => {
+export const PackageCardButtons = ({setIsModalOpen, _id}: {setIsModalOpen: (value: boolean) => void, _id: string}) => {
   return (
-    <div className="flex gap-2">
-      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"buy"} />
-      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"read more"} />
-      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"to recipe"} />
+    <div className="flex w-full justify-between gap-2">
+      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"buy"} variant="primary" />
+      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"toRecipe"} variant="secondary" link={`/recipes/${name}`} />
+      <PackageCardButton setIsModalOpen={setIsModalOpen} name={"readMore"} variant="tertiary" link={`/packages/${_id}/info`} />
     </div>
   )
 }; 
 
-const PackageCardButton = ({setIsModalOpen, name}: {setIsModalOpen: (value: boolean) => void, name: string}) => {
-  // const { t } = useTranslation();
+export const PackageCardButton = ({setIsModalOpen, name, variant, link}: {setIsModalOpen: (value: boolean) => void, name: string, variant: "primary" | "secondary" | "tertiary", link?: string}) => {
+  const { t } = useTranslation();
+  const buttonClasses = `flex-1 min-w-[120px] w-full ${
+    variant === "primary" 
+      ? "bg-primary/90 text-white" 
+      : variant === "secondary" 
+        ? "bg-secondary/90 text-white" 
+        : "border border-primary text-gray-900"
+  } py-2 rounded-md transition duration-300`;
+
+  if (link) {
+    return (
+      <Link to={link} className="flex-1">
+        <button
+          type="button"
+          onClick={() => setIsModalOpen(true)}
+          className={buttonClasses}>
+          {t(`homePage.productPackages.${name}`)}
+        </button>
+      </Link>
+    )
+  }
   return (
     <button
       type="button"
       onClick={() => setIsModalOpen(true)}
-      className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary-dark transition duration-300">
-      {/* {t('homePage.productPackages.button', {name})} */}
-      {name}
+      className={buttonClasses}>
+      {t(`homePage.productPackages.${name}`)}
     </button>
   )
 };

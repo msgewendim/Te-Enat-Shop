@@ -119,7 +119,9 @@
       "buy": "הוסף לעגלה",
       "cookingTime": "זמן הכנה",
       "peopleQuantity": "כמות סועדים",
-      "ingredientsQuantity": "כמות מצרכים"
+      "ingredientsQuantity": "כמות מצרכים",
+      "readMore": "קרא עוד",
+      "toRecipe": "למתכון"
     },
     "q&a": {
       "title": "שאלות ותשובות"

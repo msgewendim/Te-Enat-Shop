@@ -41,11 +41,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data)
       if (data.event === 'payment_success') {
-        sessionStorage.removeItem("orderId")
-        sessionStorage.removeItem("cartItems")
-        setCartItems([])
-        setOrderItems([])
-        setPaymentFormUrl("")
         window.location.href = "/thank-you"
         toast.success("Payment received successfully")
       }
@@ -83,6 +78,20 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       setCurrentEndpoint(window.location.pathname)
     }
   }, [currentEndpoint, setCurrentEndpoint, setCategory])
+
+  useEffect(() => {
+    if (paymentFormUrl) {
+      window.location.href = paymentFormUrl
+    }
+  }, [paymentFormUrl])
+
+  const clearCart = () => {
+    sessionStorage.removeItem("orderId")
+    sessionStorage.removeItem("cartItems")
+    setCartItems([])
+    setOrderItems([])
+    setPaymentFormUrl("")
+  }
   const values = {
     setFilter,
     setPage,
@@ -116,6 +125,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setOpenCart,
     subCategory,
     setSubCategory,
+    clearCart,
   }
   return (
     <AppContext.Provider value={values}>
