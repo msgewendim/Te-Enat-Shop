@@ -17,9 +17,9 @@ function useOrdersDashboard() {
   } as const;
   const formatTableData = (orders: Order[]): TableData[] => orders.map((order, index) => ({
     _id: order._id ?? `order-${index}`,
-    userId: order.userDetails.name,
-    products: order.products?.map((orderItem, index) => <span key={`order-item-${index}`} className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
-      {orderItem.description}
+    userId: order.customer.firstName,
+    products: order.orderItems?.map((orderItem, index) => <span key={`order-item-${index}`} className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+      {orderItem.item.name}
     </span>),
     orderStatus: order.orderStatus,
     totalPrice: order.totalPrice,

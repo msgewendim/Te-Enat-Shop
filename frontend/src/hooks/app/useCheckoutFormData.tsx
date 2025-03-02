@@ -3,81 +3,89 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { ClientDetails } from "../../client/types.gen";
+import { Customer } from "../../client/types.gen";
 import { useAppContext } from "./useAppContext";
 import { clientDetailsSchema } from "../../validation/ClientDetails.validation";
 import { useGetPaymentFormMutation } from "../useAppData";
 
 function useCheckoutFormData() {
-  const { totalPrice, orderItems, setPaymentFormUrl } = useAppContext();
-  const { handleSubmit, register, reset, control } = useForm<ClientDetails>();
+  const { totalPrice, cartItems, setPaymentFormUrl } = useAppContext();
+  const { handleSubmit, register, reset, control } = useForm<Customer>();
   const { t } = useTranslation();
   const getPaymentFormMutation = useGetPaymentFormMutation();
-  const [clientData, setClientData] = useState<ClientDetails>();
+  const [clientData, setClientData] = useState<Customer>();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const handleGetPaymentForm: SubmitHandler<ClientDetails> = (data) => {
-    setClientData(data);
-    const result = clientDetailsSchema.safeParse(data);
-    if (!result.success) {
-      const firstError = result.error.errors[0];
-      toast.info(firstError.message); // Show first validation error
-      return;
-    }
+  const handleGetPaymentForm: SubmitHandler<Customer> = async (data) => {
+    try {
+      setIsSubmitting(true);
+      setClientData(data);
+      const result = clientDetailsSchema.safeParse(data);
+      if (!result.success) {
+        const firstError = result.error.errors[0];
+        toast.info(firstError.message);
+        setIsSubmitting(false);
+        return;
+      }
 
-    setIsSubmitting(true);
-    clientData &&
-      // get url from server
+      // Send request to backend
       getPaymentFormMutation.mutate({
-        clientInfo: clientData,
+        customer: data,
         totalPrice,
-        products: orderItems,
+        orderItems: cartItems,
       });
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error(t('checkout.errorSubmittingForm'));
+      setIsSubmitting(false);
+    }
   };
 
   // Side effect when mutation succeeds
   useEffect(() => {
     if (getPaymentFormMutation.isSuccess && getPaymentFormMutation.data) {
-      const paymentUrl = getPaymentFormMutation.data.data.url;
-      console.log("Payment form URL:", paymentUrl);
-      setPaymentFormUrl(paymentUrl);
+      const paymentUrl = getPaymentFormMutation.data;
+      setIsSubmitting(false);
+      console.log("payment form data", paymentUrl);
+      // check if the payment url is a valid url
+      if (!isValidUrl(paymentUrl.url)) {
+        toast.error(t('checkout.invalidPaymentUrl'));
+        setIsSubmitting(false);
+        return;
+      }
+      console.log("Payment form URL:", paymentUrl, getPaymentFormMutation.data);
+      setPaymentFormUrl(paymentUrl.url);
       // Redirect to the payment URL
-      window.location.href = paymentUrl;
+      window.location.href = paymentUrl.url;
     } else if (getPaymentFormMutation.isError) {
       setIsSubmitting(false);
+      toast.error(t('checkout.errorFetchingPaymentForm'));
     }
-  }, [getPaymentFormMutation.isSuccess, getPaymentFormMutation.data, getPaymentFormMutation.isError, setPaymentFormUrl]);
-
-  // Handle errors
-  useEffect(() => {
-    if (getPaymentFormMutation.isError) {
-      toast.error(t("checkout.errorFetchingPaymentForm"));
-    }
-  }, [getPaymentFormMutation.isError, t]);
+  }, [getPaymentFormMutation.isSuccess, getPaymentFormMutation.data, getPaymentFormMutation.isError, setPaymentFormUrl, t]);
 
   const handleReturnToShop = () => {
-    reset(); // Reset the form
-    setPaymentFormUrl(""); // Reset the payment form URL
+    reset();
+    setPaymentFormUrl("");
     navigate("/products");
   };
 
   useEffect(() => {
     const handleReloadRefresh = () => {
-      reset(); // Reset the form
+      reset();
       setPaymentFormUrl("");
     };
 
-    // user reloads or navigates back
     window.addEventListener('beforeunload', handleReloadRefresh);
     window.addEventListener('popstate', handleReloadRefresh);
 
     return () => {
-      // Cleanup event listeners
       window.removeEventListener('beforeunload', handleReloadRefresh);
       window.removeEventListener('popstate', handleReloadRefresh);
     };
   }, [reset, setPaymentFormUrl]);
+
   return {
     register,
     control,
@@ -86,7 +94,17 @@ function useCheckoutFormData() {
     handleGetPaymentForm,
     handleReturnToShop,
     isSubmitting,
-  }
+  };
 }
+
+const isValidUrl = (url: string) => {
+  try {
+    // check if the url is a valid url
+    const urlObj = new URL(url);
+    return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
 
 export default useCheckoutFormData

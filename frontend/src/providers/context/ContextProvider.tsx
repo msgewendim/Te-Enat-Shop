@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { CartItem, OrderItem, Product, Recipe, Package } from "../../client/types.gen";
+import { CartItem, Product, Recipe, Package } from "../../client/types.gen";
 import { AppContext, ModalState } from "../interface/context";
 import { getTotalPrice } from "../../utils/helperFunctions";
 import { BASE_API_URL } from "../../utils/env.config";
@@ -17,7 +17,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [openCart, setOpenCart] = useState(false)
   const [sizeIdx, setSizeIdx] = useState<number>(0)
   const [cartItems, setCartItems] = useState<CartItem[]>(JSON.parse(sessionStorage.getItem("cartItems") as string) || [])
-  const [orderItems, setOrderItems] = useState<OrderItem[]>([])
+  // const [orderItems, setOrderItems] = useState<OrderItem[]>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
   // admin
   const [adminActiveSection, setAdminActiveSection] = useState<string>("products")
@@ -89,15 +89,12 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     sessionStorage.removeItem("orderId")
     sessionStorage.removeItem("cartItems")
     setCartItems([])
-    setOrderItems([])
     setPaymentFormUrl("")
   }
   const values = {
     setFilter,
     setPage,
     setCategory,
-    orderItems,
-    setOrderItems,
     page,
     filter,
     sizeIdx,

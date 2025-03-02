@@ -7,7 +7,7 @@ import { ItemProperties, ProductModalProps } from '../../providers/interface/pro
 
 
 function useAddToCartModal({ product, setOpen }: ProductModalProps) {
-  const { cartItems, setCartItems, setOrderItems, orderItems, sizeIdx, setSizeIdx } = useAppContext()
+  const { cartItems, setCartItems, sizeIdx, setSizeIdx } = useAppContext()
   const { pricing } = product
 
   const sizes = useMemo(() => pricing ? pricing.map(p => p.size) : [], [pricing]);
@@ -51,27 +51,25 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
     const updatedCartItems = addItemToCartList(cartItems, newItem)
     sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
     setCartItems(updatedCartItems)
-    setOrderItems([...orderItems, {
-      description: product.name,
-      quantity: itemProperties.quantity,
-      unitPrice: itemProperties.price * itemProperties.quantity,
-      size: itemProperties.size,
-    }])
+    // setOrderItems([...orderItems, {
+    //   product: product,
+    //   quantity: itemProperties.quantity,
+    //   size: itemProperties.size,
+    //   price: itemProperties.price * itemProperties.quantity,
+    // }])
     toast.success("מוצר נוסף לעגלה")
     setOpen(false)
-  }, [cartItems, orderItems, setCartItems, itemProperties, setOrderItems, setOpen])
+  }, [cartItems, setCartItems, itemProperties, setOpen])
 
   return {
     sizes,
     prices,
     sizeIdx,
     cartItems,
-    orderItems,
     itemProperties,
     setOpen,
     setSizeIdx,
     setCartItems,
-    setOrderItems,
     handleSizeChange,
     setItemProperties,
     handleQuantityChange,

@@ -1,7 +1,6 @@
 import { createContext } from "react";
 import {
   CartItem,
-  OrderItem,
   Product,
   Recipe,
   Package,
@@ -20,7 +19,6 @@ export interface IContext {
   category: string;
   page: number;
   filter: string;
-  orderItems: OrderItem[];
   paymentFormUrl: string;
   cartItems: CartItem[];
   totalPrice: number;
@@ -32,7 +30,6 @@ export interface IContext {
   setPage: (newPage: number) => void;
   setCategory: (newCategory: string) => void;
   setCartItems: (product: CartItem[]) => void;
-  setOrderItems: (item: OrderItem[]) => void;
   setPaymentFormUrl: (url: string) => void;
   setAdminActiveSection: (section: string) => void;
   showModal: (onConfirm: () => void) => void;
@@ -59,12 +56,10 @@ export const AppContext = createContext<IContext>({
   sizeIdx: 0,
   setSizeIdx: () => {},
   cartItems: [],
-  orderItems: [],
   totalPrice: 0,
   paymentFormUrl: "",
   adminActiveSection: "",
   setPaymentFormUrl: () => {},
-  setOrderItems: () => {},
   setCartItems: () => {},
   setFilter: () => {},
   setPage: () => {},

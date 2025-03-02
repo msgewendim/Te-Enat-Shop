@@ -346,7 +346,8 @@
     "notes": "הערות למשלוח",
     "cancel": "ביטול",
     "submit": "לתשלום",
-    "errorFetchingPaymentForm": "אירעה שגיאה בעת fetching טופס התשלום"
+    "errorFetchingPaymentForm": "אירעה שגיאה בעת fetching טופס התשלום",
+    "errorSubmittingForm": "אירעה שגיאה בעת שליחת טופס התשלום"
   },
   "admin": {
     "dashboardTitle": "דף ניהול",

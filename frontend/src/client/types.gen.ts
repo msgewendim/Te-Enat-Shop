@@ -76,11 +76,11 @@ export type Package = {
 
 export type PaymentFormPayload = {
     totalPrice: number;
-    clientInfo: ClientDetails;
-    products: Array<OrderItem>;
+    customer: Customer;
+    orderItems: Array<CartItem>;
 };
 
-export type ClientDetails = {
+export type Customer = {
     firstName: string;
     lastName: string;
     /**
@@ -91,77 +91,28 @@ export type ClientDetails = {
      * Customer email address
      */
     email: string;
-    /**
-     * Customer street
-     */
-    street: string;
-    /**
-     * Customer street number
-     */
-    streetNum: string;
-    /**
-     * Customer city
-     */
-    city: string;
-    /**
-     * Customer zip code
-     */
-    zip?: number;
+    address: Address;
     /**
      * Customer notes
      */
-    notes?: string;
+    notes: string;
 };
 
-export type OrderItem = {
-    description: string;
-    quantity: number;
-    size: string;
-    unitPrice: number;
-};
-
-export type ProductCardProps = {
-    /**
-     * Unique identifier for the product
-     */
-    _id: string;
-    /**
-     * Name of the product
-     */
-    name: string;
-    /**
-     * Price of the product
-     */
-    price: number;
-    /**
-     * URL of the product image
-     */
-    image: string;
-    /**
-     * List of categories the product belongs to
-     */
-    categories: Array<(string)>;
-    /**
-     * Rating of the product (e.g., 1 to 5)
-     */
-    rate: number;
-    /**
-     * A brief description of the product
-     */
-    shortDescription: string;
-    /**
-     * Optional size of the image (e.g., width or height)
-     */
-    imageSize?: number;
+export type Address = {
+    street: string;
+    streetNum: string;
+    city: string;
+    postal_code?: string;
 };
 
 export type PaymentFormSuccessResponse = {
-
     success: boolean;
-    message: string;
-    data: {
-        url: string;
-    };
+    url: string;
+    /**
+     * Error code if the payment failed
+     */
+    errorCode: number;
+    errorMessage: string;
     /**
      * ID of the order created for the payment
      */
@@ -183,25 +134,6 @@ export type PaymentFormErrorResponse = {
     orderId: string;
 };
 
-export type Review = {
-    /**
-     * ID of the user who wrote the review
-     */
-    reviewerName?: string;
-    /**
-     * Rating given to the recipe (e.g., 1 to 5)
-     */
-    rating: number;
-    /**
-     * Comment provided by the user for the recipe
-     */
-    comment: string;
-    /**
-     * The date and time when the review was created
-     */
-    createdAt?: Date;
-};
-
 export type User = {
     /**
      * Unique identifier for the user
@@ -219,8 +151,6 @@ export type User = {
     wishlist?: Array<Product>;
     cart?: Array<CartItem>;
     addresses?: Array<Address>;
-    recipeReviews?: Array<(string)>;
-    productReviews?: Array<unknown>;
     createdAt?: string;
     /**
      * Indicates if the user has administrative privileges
@@ -233,8 +163,8 @@ export type Order = {
      * Unique identifier for the order
      */
     _id: string;
-    userDetails: ClientDetails;
-    products: Array<(OrderItem)>;
+    customer: Customer;
+    orderItems: Array<(CartItem)>;
     totalPrice: number;
     paymentStatus: 'pending' | 'succeeded' | 'failed';
     orderStatus: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
@@ -255,16 +185,6 @@ export enum orderStatus {
     DELIVERED = 'delivered',
     CANCELLED = 'cancelled'
 }
-
-export type Address = {
-    /**
-     * Unique identifier for the address
-     */
-    id: string;
-    street: string;
-    city: string;
-    zip: string;
-};
 
 export type CartItem = {
     /**
@@ -317,7 +237,6 @@ export type Recipe = {
      */
     difficulty: 'Easy' | 'Medium' | 'Hard';
     categories: Array<Category>;
-    reviews?: Array<Review> | null;
     createdAt: string;
 };
 
@@ -595,7 +514,7 @@ export type PostUsersResponse = (unknown);
 export type PostUsersError = (unknown);
 
 export type PostUsersAddToCartData = {
-    body: ProductCardProps;
+    body: CartItem;
 };
 
 export type PostUsersAddToCartResponse = (unknown);

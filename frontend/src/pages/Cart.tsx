@@ -7,19 +7,19 @@ import { useAppContext } from '../hooks/app/useAppContext';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const { totalPrice, openCart, setOpenCart, orderItems } = useAppContext();
+  const { totalPrice, openCart, setOpenCart, cartItems } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleClose = useCallback(() => setOpenCart(false), [setOpenCart]);
 
   const handleCheckout = useCallback(() => {
-    if (orderItems.length > 0) {
+    if (cartItems.length > 0) {
       setIsLoading(true);
       setOpenCart(false);
       navigate('/checkout');
     }
-  }, [orderItems, navigate, setOpenCart]);
+  }, [cartItems, navigate, setOpenCart]);
 
   // const clearCart = useCallback(() => {
   //   setCartItems([]);

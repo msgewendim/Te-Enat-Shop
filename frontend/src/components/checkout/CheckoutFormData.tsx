@@ -1,8 +1,9 @@
-import { ClientDetails } from "../../client/types.gen";
+import { Customer } from "../../client/types.gen";
 import { FormInput } from "../ui/FormInput";
 import useCheckoutFormData from "../../hooks/app/useCheckoutFormData";
 import { useTranslation } from "react-i18next";
 import { UseFormRegister } from "react-hook-form";
+import Loader from "../ui/Loader";
 
 
 const CheckoutFormData = () => {
@@ -14,6 +15,10 @@ const CheckoutFormData = () => {
 		isSubmitting,
 	} = useCheckoutFormData();
 	const { t } = useTranslation();
+	
+	if (isSubmitting) {
+		return <Loader />
+	}
 
 	return (
 		<form	className="mt-8 space-y-8" onSubmit={handleSubmit(handleGetPaymentForm)}
@@ -70,7 +75,7 @@ const Actions = ({ handleReturnToShop, isSubmitting }: { handleReturnToShop: () 
 	);
 };
 
-const ShippingAddress = ({ register }: { register: UseFormRegister<ClientDetails> }) => {
+const ShippingAddress = ({ register }: { register: UseFormRegister<Customer> }) => {
 	const { t } = useTranslation();
 	return (
 		<section aria-labelledby="shipping-address-heading">
@@ -81,41 +86,41 @@ const ShippingAddress = ({ register }: { register: UseFormRegister<ClientDetails
 				{t("checkout.shippingAddress")}
 			</h3>
 			<div className="grid sm:grid-cols-2 gap-4">
-				<FormInput<ClientDetails>
+				<FormInput<Customer>
 					placeholder={t("checkout.street")}
 					label={t("checkout.street")}
 					register={register}
-					name="street"
+					name="address.street"
 					required
 					className="sm:col-span-2"
 				/>
-				<FormInput<ClientDetails>
+				<FormInput<Customer>
 					placeholder={t("checkout.streetNum")}
 					label={t("checkout.streetNum")}
 					register={register}
-					name="streetNum"
+					name="address.streetNum"
 					required
 					className="sm:col-span-2"
 				/>
-				<FormInput<ClientDetails>
+				<FormInput<Customer>
 					placeholder={t("checkout.city")}
 					label={t("checkout.city")}
 					register={register}
-					name="city"
+					name="address.city"
 					required
 				/>
-				<FormInput<ClientDetails>
-					placeholder={t("checkout.zip")}
-					label={t("checkout.zip")}
+				<FormInput<Customer>
+					placeholder={t("checkout.postal_code")}
+					label={t("checkout.postal_code")}
 					register={register}
-					name="zip"
+					name="address.postal_code"
 				/>
 			</div>
 		</section>
 	);
 };
 
-const PersonalDetails = ({ register }: { register: UseFormRegister<ClientDetails> }) => {
+const PersonalDetails = ({ register }: { register: UseFormRegister<Customer> }) => {
 	const { t } = useTranslation();
 	return (
 		<section aria-labelledby="personal-details-heading">
@@ -126,21 +131,21 @@ const PersonalDetails = ({ register }: { register: UseFormRegister<ClientDetails
 				{t("checkout.personalDetails")}
 			</h3>
 			<div className="grid sm:grid-cols-2 gap-4">
-				<FormInput<ClientDetails>
+				<FormInput<Customer>
 					placeholder={t("checkout.firstName")}
 					label={t("checkout.firstName")}
 					register={register}
 					name="firstName"
 					required
 				/>
-				<FormInput<ClientDetails>
+				<FormInput<Customer>
 					placeholder={t("checkout.lastName")}
 					label={t("checkout.lastName")}
 					register={register}
 					name="lastName"
 					required
 				/>
-				<FormInput<ClientDetails>
+				<FormInput<Customer>
 					type="email"
 					placeholder={t("checkout.email")}
 					label={t("checkout.email")}
@@ -148,7 +153,7 @@ const PersonalDetails = ({ register }: { register: UseFormRegister<ClientDetails
 					name="email"
 					required
 				/>
-				<FormInput<ClientDetails>
+				<FormInput<Customer>
 					type="tel"
 					placeholder={t("checkout.phone")}
 					label={t("checkout.phone")}
