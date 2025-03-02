@@ -1,33 +1,30 @@
 import mongoose from "mongoose";
 import {
-  ClientDetails,
+  Customer,
   Order,
-  OrderItem,
-  OrderTransaction,
+  CartItem,
 } from "../../types/order.types";
-import orderModel from "../models/OrderSchema";
+import {OrderModel} from "../models/OrderSchema";
 import { BadRequestError, NotFoundError } from "../utils/customErrors";
+import { SimplifiedTransaction } from "../utils/PaymentProvider/types";
 
 const addOrder = async (
-  userInfo: ClientDetails,
-  products: OrderItem[],
+  customer: Customer,
+  orderItems: CartItem[],
   totalPrice: number
-) => {
+): Promise<string> => {
   const newOrder = {
-    userDetails: {
-      ...userInfo,
-      email: userInfo.email,
-    },
-    products,
+    customer,
+    orderItems,
     totalPrice,
     paymentStatus: "pending",
   };
   try {
-    const order = await orderModel.insertMany(newOrder);
+    const order = await OrderModel.insertMany(newOrder);
     if (!order) {
       throw new BadRequestError("Failed to add order");
     }
-    return order[0]._id;
+    return order[0]._id as string;
   } catch (error) {
     throw error;
   }
@@ -35,7 +32,7 @@ const addOrder = async (
 
 const updatePaymentStatus = async (
   id: string,
-  orderTransaction: Partial<OrderTransaction>
+  orderTransaction: Partial<SimplifiedTransaction>
 ) => {
   try {
     // const { paymentStatus, ...orderData } = await this.getOrderById(id);
@@ -46,7 +43,7 @@ const updatePaymentStatus = async (
       paymentStatus: "succeeded",
       ...orderTransaction,
     };
-    const updated = await orderModel.findByIdAndUpdate(
+    const updated = await OrderModel.findByIdAndUpdate(
       id,
       { $set: updatedOrder },
       { new: true }
@@ -74,7 +71,7 @@ const checkPaymentStatus = async (orderId: string) => {
 
 const getOrderById = async (id: string): Promise<Order> => {
   try {
-    const order = (await orderModel.findById(id)) as Order;
+    const order = (await OrderModel.findById(id)) as Order;
     if (!order) {
       throw new NotFoundError(`Order with id : ${id} Not found`);
     }
@@ -86,7 +83,7 @@ const getOrderById = async (id: string): Promise<Order> => {
 
 const getOrders = async (limit: number, page: number) => {
   try {
-    const orders = await orderModel
+    const orders = await OrderModel
       .find()
       .limit(limit)
       .skip(page * limit);

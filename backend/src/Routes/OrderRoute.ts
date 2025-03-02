@@ -6,7 +6,7 @@ const router = express.Router();
 const orderController = new OrderController(new OrderService());
 
 router.post(
-  "/v1/generate-sale",
+  "/generate-sale",
   async (req: Request, res: Response, next: NextFunction) =>
     await orderController.getPaymentLink(req, res, next)
 );

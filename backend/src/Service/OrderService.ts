@@ -1,14 +1,15 @@
 import {
-  ClientDetails,
-  OrderItem,
-  OrderTransaction,
+  Customer,
+  CartItem,
 } from "../../types/order.types";
 import {
+  addOrder,
   checkPaymentStatus,
   getOrders,
   updatePaymentStatus,
 } from "../Dal/OrderDal";
 import { getPaymentLink, getPayplusGenLinkPayload } from "../utils/PaymentProvider/payplus.config";
+import { SimplifiedTransaction } from "../utils/PaymentProvider/types";
 
 const url = "MORNING_PAYMENT_FORM_URL";
 export class OrderService {
@@ -20,8 +21,8 @@ export class OrderService {
       throw new Error(`Error checking payment status for Order ${orderId}`);
     }
   }
-  async updatePaymentStatus(transactionInfo: OrderTransaction) {
-    const { external_data: orderId, ...transactionData } = transactionInfo;
+  async updatePaymentStatus(transactionInfo: SimplifiedTransaction) {
+    const { added_info: orderId, ...transactionData } = transactionInfo;
     // update payment status in database
     try {
       await updatePaymentStatus(orderId as string, transactionData);
@@ -34,15 +35,25 @@ export class OrderService {
     return orders;
   }
 
-  async getPaymentLink(orderItems: OrderItem[], clientDetails: ClientDetails, totalPrice: number) {
+  async getPaymentLink(orderItems: CartItem[], customer: Customer, totalPrice: number) {
     try {
-      // const newOrderId = await addOrder(userInfo, products, 0);
-      // add orderId to transaction info
-      const generatePaymentLinkPayload = getPayplusGenLinkPayload(orderItems, clientDetails, totalPrice, "THIS IS A TEST PAYMENT");
-      console.log("generatePaymentLinkPayload", generatePaymentLinkPayload);
-      const paymentLink = await getPaymentLink(generatePaymentLinkPayload);
-      console.log("paymentLink", paymentLink);
-      return paymentLink;
+      const orderId = await addOrder(customer, orderItems, totalPrice);
+      const generatePaymentLinkPayload = getPayplusGenLinkPayload(
+        orderItems, 
+        customer, 
+        totalPrice, 
+        orderId
+      );
+      const response = await getPaymentLink(generatePaymentLinkPayload);
+      
+      // Validate response
+      if (!response.data.payment_page_link) {
+        throw new Error('Invalid payment link response from PayPlus');
+      }
+
+      // Return only the payment URL
+      return response.data.payment_page_link;
+      
     } catch (error) {
       throw error;
     }

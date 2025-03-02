@@ -1,9 +1,8 @@
 import axios from "axios";
-import { PAYPLUS_API_KEY, PAYPLUS_API_SECRET_KEY, PAYPLUS_DEV_API_URL,PAYPLUS_PROD_API_URL  } from "../config/env.config";
+import { PAYPLUS_API_KEY, PAYPLUS_API_SECRET_KEY, PAYPLUS_PROD_API_URL  } from "../config/env.config";
 
-const isProduction = process.env.NODE_ENV === "production";
 const axiosInstance = axios.create({
-  baseURL: isProduction ? PAYPLUS_PROD_API_URL : PAYPLUS_DEV_API_URL,
+  baseURL: PAYPLUS_PROD_API_URL,
 });
 
 axiosInstance.interceptors.request.use(async (config) => {
