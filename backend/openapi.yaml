@@ -422,7 +422,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /orders/v1/payments/form:
+  /orders/generate-sale:
     post:
       summary: get payment form information from Morning
       tags:

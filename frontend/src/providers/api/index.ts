@@ -24,7 +24,7 @@ const getPaymentForm = async (
 
 const getPaymentLinkFormICount = async (orderItems: CartItem[]): Promise<PaymentFormSuccessResponse> => {
   return (
-    await axiosInstance.post(`/orders/v1/generate-sale`, {
+    await axiosInstance.post(`/orders/generate-sale`, {
       orderItems,
     })  
   ).data;
