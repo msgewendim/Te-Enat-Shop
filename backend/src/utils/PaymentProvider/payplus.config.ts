@@ -1,4 +1,4 @@
-import { APP_REACT_URL, BACKEND_APP_URL, NODE_ENV, PAYPLUS_PAYMENT_PAGE_UID, PAYPLUS_TERMINAL_UID } from "../config/env.config";
+import {  BACKEND_APP_URL, NODE_ENV, PAYPLUS_PAYMENT_PAGE_UID,FRONTEND_URL_PRODUCTION, PAYPLUS_TERMINAL_UID } from "../config/env.config";
 import { CHARGE_METHOD, PayplusGenLinkPayload } from "./types";
 import axiosInstance from "../middleware/axiosInstance";
 import { Customer, CartItem } from "../../../types/order.types";
@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const NGROK_URL_BACKEND = "https://db7e-77-124-17-69.ngrok-free.app";
 const NGROK_URL_FRONTEND = "https://9564-77-124-17-69.ngrok-free.app";
-const FRONTEND_URL = NODE_ENV === "production" ?  APP_REACT_URL : NGROK_URL_FRONTEND;
+const FRONTEND_URL = NODE_ENV === "production" ?  FRONTEND_URL_PRODUCTION : NGROK_URL_FRONTEND;
 const BACKEND_URL = NODE_ENV === "production" ? BACKEND_APP_URL  : NGROK_URL_BACKEND;
 
 
