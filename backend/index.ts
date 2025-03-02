@@ -8,7 +8,7 @@ import ProductRoute from "./src/Routes/ProductRoute";
 import PackageRoute from "./src/Routes/PackageRoute";
 import { connectToMongoDB } from "./src/utils/DB/MongoDB";
 import EventsMiddleware from "./src/utils/middleware/sse.events";
-import swagger from "./swagger";
+// import swagger from "./swagger";
 import { FRONTEND_URL_DEVELOPMENT, FRONTEND_URL_ON_RENDER, FRONTEND_URL_PRODUCTION, MONGO_ATLAS_URI } from "./src/utils/config/env.config";
 import errorHandler from "./src/utils/middleware/errorHandler";
 import activityLogger from "./src/utils/middleware/activityLogger";
@@ -44,7 +44,7 @@ server.use("/api/users", UserRoute);
 server.use("/api/events", EventsMiddleware);
 
 // handle swagger documentation
-server.use(swagger);
+// server.use(swagger);
 
 // handle static files for the frontend
 const FRONTEND_BUILD_PATH = path.join(__dirname, "..", "frontend", "dist");
