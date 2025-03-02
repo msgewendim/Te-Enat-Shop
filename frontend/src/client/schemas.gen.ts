@@ -149,20 +149,20 @@ export const $PaymentFormPayload = {
             type: 'number',
             format: 'float'
         },
-        clientInfo: {
-            type: 'ClientDetails'
+        customer: {
+            type: 'Customer'
         },
-        products: {
+        orderItems: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/OrderItem'
+                '$ref': '#/components/schemas/CartItem'
             }
         }
     },
-    required: ['totalPrice', 'clientInfo', 'products']
+    required: ['totalPrice', 'customer', 'orderItems']
 } as const;
 
-export const $ClientDetails = {
+export const $Customer = {
     type: 'object',
     properties: {
         firstName: {
@@ -181,100 +181,34 @@ export const $ClientDetails = {
             description: 'Customer email address',
             format: 'email'
         },
-        street: {
-            type: 'string',
-            description: 'Customer street'
-        },
-        streetNum: {
-            type: 'string',
-            description: 'Customer street number'
-        },
-        city: {
-            type: 'string',
-            description: 'Customer city'
-        },
-        zip: {
-            type: 'number',
-            description: 'Customer zip code'
+        address: {
+            type: 'Address'
         },
         notes: {
             type: 'string',
             description: 'Customer notes'
         }
     },
-    required: ['firstName', 'lastName', 'phone', 'email', 'street', 'streetNum', 'city']
+    required: ['firstName', 'lastName', 'phone', 'email', 'address', 'notes']
 } as const;
 
-export const $OrderItem = {
+export const $Address = {
     type: 'object',
     properties: {
-        description: {
+        street: {
             type: 'string'
         },
-        quantity: {
-            type: 'integer'
+        streetNum: {
+            type: 'string'
         },
-        unitPrice: {
-            type: 'number',
-            format: 'float'
+        city: {
+            type: 'string'
+        },
+        postal_code: {
+            type: 'string'
         }
     },
-    required: ['description', 'quantity', 'unitPrice']
-} as const;
-
-export const $ProductCardProps = {
-    type: 'object',
-    properties: {
-        _id: {
-            type: 'string',
-            description: 'Unique identifier for the product'
-        },
-        name: {
-            type: 'string',
-            description: 'Name of the product'
-        },
-        price: {
-            type: 'number',
-            format: 'float',
-            description: 'Price of the product'
-        },
-        image: {
-            type: 'string',
-            description: 'URL of the product image'
-        },
-        categories: {
-            type: 'array',
-            items: {
-                type: 'string'
-            },
-            description: 'List of categories the product belongs to'
-        },
-        rate: {
-            type: 'number',
-            format: 'float',
-            description: 'Rating of the product (e.g., 1 to 5)'
-        },
-        shortDescription: {
-            type: 'string',
-            description: 'A brief description of the product'
-        },
-        imageSize: {
-            type: 'number',
-            format: 'int32',
-            description: 'Optional size of the image (e.g., width or height)'
-        }
-    },
-    required: ['_id', 'name', 'price', 'image', 'categories', 'rate', 'shortDescription'],
-    example: {
-        _id: '647e59e1f9a4e7a1b4c3d7f4',
-        name: 'Injera',
-        price: 15.99,
-        image: 'https://example.com/images/injera.jpg',
-        categories: ['Bread', 'Traditional'],
-        rate: 4.5,
-        shortDescription: 'A traditional Ethiopian flatbread.',
-        imageSize: 300
-    }
+    required: ['street', 'streetNum', 'city']
 } as const;
 
 export const $PaymentFormSuccessResponse = {
@@ -318,40 +252,6 @@ export const $PaymentFormErrorResponse = {
         }
     },
     required: ['errorCode', 'errorMessage', 'orderId']
-} as const;
-
-export const $Review = {
-    type: 'object',
-    properties: {
-        reviewerName: {
-            type: 'string',
-            description: 'ID of the user who wrote the review'
-        },
-        rating: {
-            type: 'integer',
-            format: 'int32',
-            description: 'Rating given to the recipe (e.g., 1 to 5)',
-            minimum: 1,
-            maximum: 5
-        },
-        comment: {
-            type: 'string',
-            description: 'Comment provided by the user for the recipe'
-        },
-        createdAt: {
-            type: 'Date',
-            format: 'date-time',
-            description: 'The date and time when the review was created'
-        }
-    },
-    required: ['userId', 'recipeId', 'rating', 'comment'],
-    example: {
-        userId: '647e59e1f9a4e7a1b4c3d7f4',
-        recipeId: '647e59f1f9a4e7a1b4c3d7f5',
-        rating: 5,
-        comment: 'Amazing recipe! The instructions were easy to follow, and the dish turned out great.',
-        createdAt: '2023-08-20T12:45:00Z'
-    }
 } as const;
 
 export const $User = {
@@ -406,16 +306,6 @@ export const $User = {
                 '$ref': '#/components/schemas/Address'
             }
         },
-        recipeReviews: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        productReviews: {
-            type: 'array',
-            items: '$ref:"#components/schemas/Review"'
-        },
         createdAt: {
             type: 'string',
             format: 'date-time'
@@ -436,13 +326,13 @@ export const $Order = {
             type: 'string',
             description: 'Unique identifier for the order'
         },
-        userDetails: {
-            type: 'ClientDetails'
+        customer: {
+            type: 'Customer'
         },
-        products: {
+        orderItems: {
             type: 'array',
             items: {
-                type: 'OrderItem'
+                type: 'CartItem'
             }
         },
         totalPrice: {
@@ -468,27 +358,7 @@ export const $Order = {
             format: 'date-time'
         }
     },
-    required: ['_id', 'userDetails', 'products', 'totalPrice', 'paymentStatus', 'orderStatus']
-} as const;
-
-export const $Address = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string',
-            description: 'Unique identifier for the address'
-        },
-        street: {
-            type: 'string'
-        },
-        city: {
-            type: 'string'
-        },
-        zip: {
-            type: 'string'
-        }
-    },
-    required: ['id', 'street', 'city', 'zip']
+    required: ['_id', 'customer', 'orderItems', 'totalPrice', 'paymentStatus', 'orderStatus']
 } as const;
 
 export const $CartItem = {
@@ -572,13 +442,6 @@ export const $Recipe = {
                 '$ref': '#/components/schemas/Category',
                 description: 'Names of categories the recipe belongs to'
             }
-        },
-        reviews: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/Review'
-            },
-            nullable: true
         },
         createdAt: {
             type: 'string',

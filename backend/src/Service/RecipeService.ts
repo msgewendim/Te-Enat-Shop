@@ -17,6 +17,13 @@ export class RecipeService {
     }
   }
 
+  async getRecipesByName(name: string): Promise<Recipe[]> {
+    try {
+      return (await this.recipeDataAccess.getRecipesByName(name)) as Recipe[];
+    } catch (error) {
+      throw error;
+    }
+  }
   async addRecipe(recipe: Recipe): Promise<void> {
     try {
       await this.recipeDataAccess.addRecipe(recipe);

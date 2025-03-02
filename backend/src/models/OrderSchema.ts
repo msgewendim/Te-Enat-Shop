@@ -1,39 +1,187 @@
-import mongoose from "mongoose";
-import { Order, OrderItem } from "../../types/order.types";
+import mongoose, { Schema, Document } from 'mongoose';
 
-const orderSchema = new mongoose.Schema(
-  {
-    userDetails: {
-      name: { type: "string", required: true },
-      email: { type: "string", required: true },
-      mobile: { type: "string", required: true },
-      address: { type: "string", required: true },
-      city: { type: "string", required: true },
-      zip: { type: "string", required: true },
-    },
-    products: {
-      type: Array<OrderItem>,
-      required: true,
-    },
-    totalPrice: {
-      type: "number",
-      required: true,
-    },
-    paymentStatus: {
-      type: "string",
-      enum: ["pending", "succeeded", "failed"],
-      default: "pending",
-    },
-    orderStatus: {
-      type: "string",
-      enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
-      default: "pending",
-    },
+// Address sub-schema
+const AddressSchema = new Schema({
+  street: {
+    type: String,
+    required: true,
   },
-  {
-    timestamps: true,
+  streetNum: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  postal_code: {
+    type: String,
+  },
+  country: {
+    type: String,
+    default: 'Israel'
   }
-);
+});
 
-const orderModel = mongoose.model<Order>("orders", orderSchema);
-export default orderModel;
+// Customer sub-schema
+const CustomerSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: AddressSchema,
+    required: true,
+  }
+});
+
+// Order Item sub-schema
+const OrderItemSchema = new Schema({
+  item: {
+    type: Schema.Types.ObjectId,
+    ref: 'Item',
+    required: true
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    min: 1
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  size: {
+    type: String,
+    required: true
+  }
+});
+
+// Payment Details sub-schema
+const PaymentDetailsSchema = new Schema({
+  transaction_uid: String,
+  transaction_status: String,
+  transaction_amount: Number,
+  transaction_currency: {
+    type: String,
+    default: 'ILS'
+  },
+  transaction_date: Date,
+  transaction_type: String,
+  number_of_payments: {
+    type: Number,
+    default: 1
+  },
+  first_payment_amount: Number,
+  rest_payments_amount: Number,
+  card_holder_name: String,
+  customer_uid: String,
+  terminal_uid: String
+});
+
+// Main Order Schema
+const OrderSchema = new Schema({
+  customer: {
+    type: CustomerSchema,
+    required: true
+  },
+  items: [{
+    type: OrderItemSchema,
+    required: true
+  }],
+  totalPrice: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'processing', 'paid', 'failed', 'cancelled'],
+    default: 'pending'
+  },
+  paymentDetails: {
+    type: PaymentDetailsSchema,
+    default: null
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
+}, {
+  timestamps: true
+});
+
+// Middleware to update timestamps
+OrderSchema.pre('save', function(next) {
+  this.updatedAt = new Date();
+  next();
+});
+
+// Define interfaces for TypeScript
+export interface IAddress {
+  street: string;
+  streetNum: string;
+  city: string;
+  postal_code?: string;
+  country?: string;
+}
+
+export interface ICustomer {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: IAddress;
+}
+
+export interface IOrderItem {
+  item: mongoose.Types.ObjectId;
+  quantity: number;
+  price: number;
+  size: string;
+}
+
+export interface IPaymentDetails {
+  transaction_uid?: string;
+  transaction_status?: string;
+  transaction_amount?: number;
+  transaction_currency?: string;
+  transaction_date?: Date;
+  transaction_type?: string;
+  number_of_payments?: number;
+  first_payment_amount?: number;
+  rest_payments_amount?: number;
+  card_holder_name?: string;
+  customer_uid?: string;
+  terminal_uid?: string;
+}
+
+export interface IOrder extends Document {
+  customer: ICustomer;
+  items: IOrderItem[];
+  totalPrice: number;
+  status: 'pending' | 'processing' | 'paid' | 'failed' | 'cancelled';
+  paymentDetails: IPaymentDetails | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Create and export the model
+export const OrderModel = mongoose.model<IOrder>('Order', OrderSchema);

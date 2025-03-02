@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
   GetOrdersPaymentStatusResponse,
-  OrderItem,
+  CartItem,
   PaymentFormPayload,
   PaymentFormSuccessResponse,
   SuccessResponse,
@@ -16,13 +16,13 @@ const getPaymentForm = async (
 ): Promise<PaymentFormSuccessResponse> => {
   // Send the form data to your payment gateway API
   return (
-    await axiosInstance.post(`/orders/v1/payments/form`, {
+    await axiosInstance.post(`/orders/generate-sale`, {
       formData,
     })
   ).data;
 };
 
-const getPaymentLinkFormICount = async (orderItems: OrderItem[]): Promise<PaymentFormSuccessResponse> => {
+const getPaymentLinkFormICount = async (orderItems: CartItem[]): Promise<PaymentFormSuccessResponse> => {
   return (
     await axiosInstance.post(`/orders/v1/generate-sale`, {
       orderItems,

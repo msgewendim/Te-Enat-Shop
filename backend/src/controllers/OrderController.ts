@@ -5,6 +5,7 @@ import { sendPaymentNotification } from "../utils/middleware/sse.events";
 import {
   BadRequestError,} from "../utils/customErrors";
 import { validateObjectId } from "../validators";
+import { isSuccessfulTransaction, PayplusPaymentResponse } from "../utils/PaymentProvider/types";
 
 export class OrderController {
   private orderService: OrderService;
@@ -28,22 +29,33 @@ export class OrderController {
     }
   }
 
-  async generateSale (request: Request, response: Response, next: NextFunction) {
+  async getPaymentLink (request: Request, response: Response, next: NextFunction) {
     try {
-      const { orderItems } = request.body
-      const saleUrl = await this.orderService.generateSale(orderItems);
-      response.json({
+      const { orderItems, customer, totalPrice } = request.body.formData;
+      // Validate request body
+      if (!orderItems?.length || !customer || !totalPrice) {
+        return response.status(400).json({
+          success: false,
+          message: 'Missing required fields'
+        });
+      }
+
+      const paymentUrl = await this.orderService.getPaymentLink(
+        orderItems,
+        customer,
+        totalPrice
+      );
+
+      return response.status(200).json({
         success: true,
-        message: "Sale generated successfully",
-        data: {
-          url : saleUrl
-        } 
-      }).status(200);
-    } catch (error: any) {
+        url: paymentUrl 
+      });
+
+    } catch (error) {
+      console.error('Payment link generation error:', error);
       next(error);
     }
   }
-
 
   async checkPaymentStatus(
     request: Request,
@@ -79,15 +91,29 @@ export class OrderController {
     // Successful payment
     try {
       console.log("request body in successfulPayment", request.body);
-      // const transactionInfo = request.body as OrderTransaction;
-      // await this.orderService.updatePaymentStatus(transactionInfo);
-      // sendPaymentNotification(transactionInfo.external_data);
-      // response.sendStatus(200); // send to Morning server
-      response.json({
-        status: true,
-        message: "Payment successful",
-        data: request.body
-      });
+      const transactionInfo = request.body as PayplusPaymentResponse;
+      const transactionData = {
+        transaction_type: transactionInfo.transaction.type,
+        transaction : {
+          transaction_uid: transactionInfo.transaction.uid,
+          transaction_status: transactionInfo.transaction.status_code,
+          transaction_amount: transactionInfo.transaction.amount,
+          transaction_currency: transactionInfo.transaction.currency,
+          transaction_date: transactionInfo.transaction.date,
+        },
+        payments : transactionInfo.transaction.payments,
+        added_info: transactionInfo.transaction.more_info,
+        customer_info : {
+          customer_uid: transactionInfo.data.customer_uid,
+          terminal_uid: transactionInfo.data.terminal_uid,
+          card_holder_name: transactionInfo.data.card_information.card_holder_name,
+        }
+      }
+      if (isSuccessfulTransaction(transactionInfo.transaction.status_code)) {
+        await this.orderService.updatePaymentStatus(transactionData);
+        sendPaymentNotification(transactionData.added_info as string);
+      }    
+      response.sendStatus(200); // send to Morning server
     } catch (error: any) {
       next(error);
     }

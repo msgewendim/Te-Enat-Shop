@@ -1,7 +1,7 @@
 import { useQuery, useMutation, keepPreviousData } from "@tanstack/react-query";
 import { query } from "../providers/interface/context";
 import {
-  OrderItem,
+  CartItem,
   PaymentFormPayload,
   RandomItemsResponse,
   SuccessResponse,
@@ -33,7 +33,6 @@ function useGetPaymentFormMutation() {
     mutationFn: (formData: PaymentFormPayload) => getPaymentForm(formData),
     onSuccess: (data) => {
       console.log("Payment form fetched successfully", data);
-      return data.data
     },
     onError: (error) => {
       console.error("Failed to fetch payment form", error);
@@ -46,10 +45,10 @@ function useGetPaymentFormMutation() {
 
 function useGetPaymentLinkMutation(){
   return useMutation({
-    mutationFn: (orderItems: OrderItem[]) => getPaymentLinkFormICount(orderItems),
+    mutationFn: (orderItems: CartItem[]) => getPaymentLinkFormICount(orderItems),
     onSuccess: (data) => {
       console.log("Payment form fetched successfully", data);
-      return data.data
+      return data.url
     },
     onError: (error) => {
       console.error("Failed to fetch payment form", error);

@@ -11,7 +11,7 @@ interface UseAddToCartPackageProps {
 }
 
 function useAddToCartPackage({ package: pkg, setOpen }: UseAddToCartPackageProps) {
-  const { cartItems, setCartItems, setOrderItems, orderItems } = useAppContext()
+  const { cartItems, setCartItems } = useAppContext()
   const [quantity, setQuantity] = useState(1)
 
   const handleQuantityChange = useCallback((change: number) => {
@@ -32,18 +32,18 @@ function useAddToCartPackage({ package: pkg, setOpen }: UseAddToCartPackageProps
     sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
     setCartItems(updatedCartItems)
 
-    setOrderItems([...orderItems, {
-      description: pkg.name,
-      quantity: quantity,
-      price: pkg.price * quantity,
-      size: 'default',
-      currency: "ILS",
-      vatType: 1,
-    }])
+    // setOrderItems([...orderItems, {
+    //   description: pkg.name,
+    //   quantity: quantity,
+    //   price: pkg.price * quantity,
+    //   size: 'default',
+    //   currency: "ILS",
+    //   vatType: 1,
+    //}])
 
     toast.success("חבילה נוספה לעגלה")
     setOpen(false)
-  }, [cartItems, orderItems, pkg, quantity, setCartItems, setOrderItems, setOpen])
+  }, [cartItems, pkg, quantity, setCartItems, setOpen])
 
   return {
     quantity,

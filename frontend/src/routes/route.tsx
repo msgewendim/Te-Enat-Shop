@@ -17,7 +17,6 @@ import AdminDashboard from "../pages/Admin.tsx";
 import Packages from "../pages/Packages.tsx";
 import AdminRoute from "../components/admin/AdminRoute.tsx";
 import Events from "../pages/Events.tsx";
-import Tobia from "../pages/Tobia.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -56,10 +55,6 @@ export const routes = createBrowserRouter([
       {
         path: "/events",
         element: <Events />
-      },
-      {
-        path: "/TOBIA",
-        element: <Tobia />
       },
       {
         path: "/packages",

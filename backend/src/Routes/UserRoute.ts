@@ -7,10 +7,10 @@ import { UserService } from "../Service/UserService";
 const userController = new UseController(new UserService());
 
 const router = express.Router();
-router.post("/", jwtCheck, async (req: Request, res: Response) => {
-  const user = await userController.updateUserWithAuth(req, res);
-  res.json({ message: "user updated in db", user }).status(201);
-});
+// router.post("/", jwtCheck, async (req: Request, res: Response) => {
+//   const user = await userController.updateUserWithAuth(req, res);
+//   res.json({ message: "user updated in db", user }).status(201);
+// });
 router.post(
   "/form/newsletter",
   async (req: Request, res: Response, next: NextFunction) =>
@@ -21,11 +21,11 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) =>
     await userController.addToEarlyAdapter(req, res, next)
 );
-router.post(
-  "/form/tobia-waiting-list",
-  async (req: Request, res: Response, next: NextFunction) =>
-    await userController.addToTobiaWaitList(req, res, next)
-);
+// router.post(
+//   "/form/tobia-waiting-list",
+//   async (req: Request, res: Response, next: NextFunction) =>
+//     await userController.addToTobiaWaitList(req, res, next)
+// );
 router.post(
   "/form/design-product",
   async (req: Request, res: Response, next: NextFunction) =>

@@ -5,7 +5,6 @@ import {
   Category,
   Feature,
   Ingredient,
-  OrderItem,
   SubCategory,
 } from "../client";
 import { recipeCategories, recipeSubCategoriesMapping } from "./constants";
@@ -113,12 +112,12 @@ const addItemToCartList = (
 };
 
 export const addItemToOrderList = (
-  orderList: OrderItem[],
-  newItem: OrderItem
-): OrderItem[] => {
+  orderList: CartItem[],
+  newItem: CartItem
+): CartItem[] => {
   const existingItem = orderList.find(
     (orderItem) =>
-      orderItem.description === newItem.description &&
+      orderItem.item.name === newItem.item.name &&
       orderItem.size === newItem.size
   );
 

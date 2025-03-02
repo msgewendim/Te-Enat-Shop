@@ -1,20 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import DesignProductPopup from "../components/layout/modals/DesignProduct";
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppContext } from "../hooks/app/useAppContext"; 
 
 
 const ThankYou = () => {
   const { t } = useTranslation();
-  const { setCartItems, setOrderItems } = useAppContext();
+  const { clearCart } = useAppContext();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const handleOpenPopup = () => setIsPopupOpen(true); 
   const handleClosePopup = () => setIsPopupOpen(false);
-  const clearCart = useCallback(() => {
-    setCartItems([]);
-    setOrderItems([]);
-    sessionStorage.removeItem('cartItems');
-  }, [setCartItems, setOrderItems]);
   
   useEffect(() => {
     clearCart();
@@ -37,18 +32,6 @@ const ThankYou = () => {
         <p className="text-gray-500 dark:text-gray-400 mb-6 md:mb-8">
           {t('thankYou.orderInfo', { orderNumber: '#7564804' })}
         </p>
-
-        <div
-          className="space-y-4 sm:space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800 mb-6 md:mb-8"
-          role="contentinfo"
-        >
-          {Object.entries(t('thankYou.details', { returnObjects: true })).map(([key, label]) => (
-            <dl key={key} className="sm:flex items-center justify-between gap-4">
-              <dt className="font-normal mb-1 sm:mb-0 text-gray-500 dark:text-gray-400">{label}</dt>
-              <dd className="font-medium text-gray-900 dark:text-white sm:text-end">{t(`thankYou.values.${key}`)}</dd>
-            </dl>
-          ))}
-        </div>
 
         <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
           <a

@@ -1,14 +1,6 @@
-import axios from "axios";
 import {
-  generateSaleUrl,
-  getCheckoutFormPayload,
-  getGenerateSalePayload,
-} from "../utils/middleware/createPayPage";
-import {
-  ClientDetails,
-  OrderItem,
-  OrderTransaction,
-  PaymentFormResponse,
+  Customer,
+  CartItem,
 } from "../../types/order.types";
 import {
   addOrder,
@@ -16,13 +8,9 @@ import {
   getOrders,
   updatePaymentStatus,
 } from "../Dal/OrderDal";
-import {  ExternalServiceError } from "../utils/customErrors";
+import { getPaymentLink, getPayplusGenLinkPayload } from "../utils/PaymentProvider/payplus.config";
+import { SimplifiedTransaction } from "../utils/PaymentProvider/types";
 
-const pluginId = "";
-let MORNING_TOKEN = {
-  token: "",
-  expiresAt: Date.now(),
-};
 const url = "MORNING_PAYMENT_FORM_URL";
 export class OrderService {
   async checkPaymentStatus(orderId: string) {
@@ -33,8 +21,8 @@ export class OrderService {
       throw new Error(`Error checking payment status for Order ${orderId}`);
     }
   }
-  async updatePaymentStatus(transactionInfo: OrderTransaction) {
-    const { external_data: orderId, ...transactionData } = transactionInfo;
+  async updatePaymentStatus(transactionInfo: SimplifiedTransaction) {
+    const { added_info: orderId, ...transactionData } = transactionInfo;
     // update payment status in database
     try {
       await updatePaymentStatus(orderId as string, transactionData);
@@ -47,15 +35,25 @@ export class OrderService {
     return orders;
   }
 
-  async generateSale(orderItems: OrderItem[]) {
+  async getPaymentLink(orderItems: CartItem[], customer: Customer, totalPrice: number) {
     try {
-      // const newOrderId = await addOrder(userInfo, products, 0);
-      // add orderId to transaction info
-      const generateSalePayload = getGenerateSalePayload(orderItems, "hhhja");
-      console.log("generateSalePayload", generateSalePayload);
-      const saleUrl = await generateSaleUrl(generateSalePayload);
-      console.log("saleUrl", saleUrl);
-      return saleUrl;
+      const orderId = await addOrder(customer, orderItems, totalPrice);
+      const generatePaymentLinkPayload = getPayplusGenLinkPayload(
+        orderItems, 
+        customer, 
+        totalPrice, 
+        orderId
+      );
+      const response = await getPaymentLink(generatePaymentLinkPayload);
+      
+      // Validate response
+      if (!response.data.payment_page_link) {
+        throw new Error('Invalid payment link response from PayPlus');
+      }
+
+      // Return only the payment URL
+      return response.data.payment_page_link;
+      
     } catch (error) {
       throw error;
     }

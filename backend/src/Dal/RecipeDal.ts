@@ -16,6 +16,15 @@ export class RecipeDal implements IRecipe<Recipe> {
       throw error;
     }
   }
+  async getRecipesByName(name: string): Promise<Recipe[]> {
+    try {
+      const recipes = await recipeModel.find({ name: { $regex: name, $options: "i" } });
+      return recipes;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getAllRecipes(
     page: number,
     limit: number,

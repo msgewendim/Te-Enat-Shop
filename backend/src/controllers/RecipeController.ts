@@ -151,4 +151,25 @@ export class RecipeController {
       next(error);
     }
   }
+
+  async getRecipesByName(req: Request, res: Response, next: NextFunction) {
+    const { name } = req.query;
+    try {
+      const recipes = await this.recipeService.getRecipesByName(name as string);
+      if (recipes.length === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "No recipes found",
+          data: [],
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: "Recipes fetched successfully",
+        data: recipes,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

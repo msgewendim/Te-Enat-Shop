@@ -1,5 +1,4 @@
 import { ObjectId } from "mongoose";
-import { ClientDetails } from "./order.types";
 
 interface Recipe {
   _id: ObjectId | null;
@@ -31,13 +30,5 @@ interface Category {
   nameInEnglish: string;
   _id?: string;
 }
-interface Review {
-  _id: string;
-  userId: ClientDetails["name"];
-  recipeId: Recipe["_id"];
-  rating: number;
-  comment: string;
-  createdAt: Date;
-}
 
-export type { Recipe, Category, Review, Ingredient, Instruction };
+export type { Recipe, Category, Ingredient, Instruction };
