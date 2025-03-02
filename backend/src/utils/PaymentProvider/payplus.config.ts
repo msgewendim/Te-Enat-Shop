@@ -1,44 +1,14 @@
-import { PAYPLUS_PAYMENT_PAGE_UID, PAYPLUS_TERMINAL_UID } from "../config/env.config";
+import { APP_REACT_URL, BACKEND_APP_URL, NODE_ENV, PAYPLUS_PAYMENT_PAGE_UID, PAYPLUS_TERMINAL_UID } from "../config/env.config";
 import { CHARGE_METHOD, PayplusGenLinkPayload } from "./types";
 import axiosInstance from "../middleware/axiosInstance";
 import { Customer, CartItem } from "../../../types/order.types";
-import { PayPlusLinkPayload, PayplusGenLinkResponse200, PayplusGenLinkResponse422} from './types';
+import { PayplusGenLinkResponse200,} from './types';
 import axios from 'axios';
-
-// export const payplusGenLinkPayload: PayplusGenLinkPayload = {
-//   items: [
-//     {
-//       name: "test",
-//       quantity: 1,
-//       price: 10,
-//       size: "100",
-//     },
-//   ],
-//   amount: 10,
-//   charge_method : CHARGE_METHOD.CHECK,
-//   success_url: "https://f9e2-109-67-140-97.ngrok-free.app/thank-you", // frontend url
-//   cancel_url: "https://f9e2-109-67-140-97.ngrok-free.app", // frontend url
-//   max_payments : 1,
-//   payment_page_uid: "122222",
-//   currency_code: "ILS",
-//   send_failure_callback : true,
-//   sendEmailApproval: true,
-//   sendEmailFailure: true,
-//   customer: {
-//     customer_name: "msganaw",
-//     email: "msganaw@gmail.com",
-//     phone: "0521234567",
-//     city: "Tel Aviv",
-//     address: "street 1",
-//     postal_code: "12345",
-//   },
-//   refURL_success: "https://f9e2-109-67-140-97.ngrok-free.app/thank-you", // backend url
-//   refURL_failure: "https://f9e2-109-67-140-97.ngrok-free.app", // backend url
-//   refURL_cancel: "https://f9e2-109-67-140-97.ngrok-free.app", // backend url
-// };
 
 const NGROK_URL_BACKEND = "https://db7e-77-124-17-69.ngrok-free.app";
 const NGROK_URL_FRONTEND = "https://9564-77-124-17-69.ngrok-free.app";
+const FRONTEND_URL = NODE_ENV === "production" ?  APP_REACT_URL : NGROK_URL_FRONTEND;
+const BACKEND_URL = NODE_ENV === "production" ? BACKEND_APP_URL  : NGROK_URL_BACKEND;
 
 
 export function getPayplusGenLinkPayload(
@@ -70,10 +40,10 @@ export function getPayplusGenLinkPayload(
       product_invoice_extra_details: orderItem.size
     })),
     // Redirect URLs - where customer is redirected in browser
-    refURL_success: `${NGROK_URL_FRONTEND}/thank-you`,  // Customer redirect on success
-    refURL_failure: `${NGROK_URL_FRONTEND}/error`,             // Customer redirect on cancel
-    refURL_cancel: `${NGROK_URL_FRONTEND}/chekout`,      // Customer redirect on failure
-    refURL_callback: `${NGROK_URL_BACKEND}/api/orders/notify`, // Backend IPN for success
+    refURL_success: `${FRONTEND_URL}/thank-you`,  // Customer redirect on success
+    refURL_failure: `${FRONTEND_URL}/error`,             // Customer redirect on cancel
+    refURL_cancel: `${FRONTEND_URL}/checkout`,      // Customer redirect on failure
+    refURL_callback: `${BACKEND_URL}/api/orders/notify`, // Backend IPN for success
 
     more_info: description,
     language_code: "he",
