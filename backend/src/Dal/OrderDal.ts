@@ -20,7 +20,6 @@ const addOrder = async (
     paymentStatus: "pending",
   };
   try {
-    console.log("[newOrder]", newOrder);
     const order = await OrderModel.insertMany(newOrder);
     if (!order) {
       throw new BadRequestError("Failed to add order");
@@ -45,7 +44,6 @@ const updatePaymentStatus = async (
     if (!existingOrder) {
       throw new NotFoundError(`Order with ID ${id} not found`);
     }
-    console.log("[Update Payment Status] existingOrder", existingOrder);
     // Map the transaction data to the paymentDetails structure
     const paymentDetails = {
       transaction_uid: orderTransaction.transaction?.transaction_uid,
@@ -66,7 +64,6 @@ const updatePaymentStatus = async (
     // You may need to adjust this logic based on your specific requirements
     const paymentStatus = orderTransaction.transaction?.transaction_status === "000" ? "paid" : "failed";
 
-    console.log("[Update Payment Status]", { paymentStatus, transactionId: paymentDetails.transaction_uid });
     
     // Update only the necessary fields
     const updated = await OrderModel.findByIdAndUpdate(
