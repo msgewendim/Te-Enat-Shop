@@ -9,4 +9,4 @@ type RecipeInfoProps = {
   value: string;
 };
 
-export { IngredientItemProps, RecipeInfoProps };
+export type { IngredientItemProps, RecipeInfoProps };

@@ -83,7 +83,7 @@ interface PackageDashboardReturn {
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
 }
-export {
+export type {
   ArrayInputFieldProps,
   AddCategoryInputProps,
   FormProps,

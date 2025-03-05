@@ -166,29 +166,29 @@ type TableData = {
   [key: string]: string | number | React.ReactNode;
 };
 
-export {
+export type {
   RelatedItemsProps,
   RelatedItemCardProps,
   GuaranteeCardProps,
   HeroCardProps,
-  UpdateHookProps,
   FeatureCardType,
   CategoryCardProps,
   SocialLinkProps,
   MobileMenuProps,
   MobileMenuButtonProps,
+  FilterCategoriesProps,
+  ClearFiltersButtonProps,
+  UpdateHookProps,
   DateBadgeProps,
   BannerProps,
   CarouselButtonProps,
   CategoryButtonProps,
   FiltersProps,
-  ClearFiltersButtonProps,
   FormInputProps,
   SelectProps,
   PaginationButtonProps,
   PaginationProps,
   FloatingCartButtonProps,
-  FilterCategoriesProps,
   DashboardConfig,
   TableData,
 };

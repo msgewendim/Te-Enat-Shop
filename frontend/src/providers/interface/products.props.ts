@@ -24,4 +24,4 @@ interface ProductActionsProps {
   handleClosePopup: () => void;
   handleOpenPopup: () => void;
 }
-export { ProductModalProps, ProductImageProps, ProductActionsProps };
+export type { ProductModalProps, ProductImageProps, ProductActionsProps };

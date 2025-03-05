@@ -21,17 +21,23 @@ const ProductForm = ({ item: product, onSubmit: onSubmitProp, message, mutateFor
   
   const onSubmit: SubmitHandler<Product> = (data) => {
     onSubmitProp(data);
-    if (isError && error) {
-      toast.error(error.message);
-    }
+    
     if (isLoading) {
       return <Loader />;
     }
+    
+    if (isError && error) {
+      toast.error(error.message);
+      return;
+    }
+    
     if (isSuccess) {
       reset();
       setAdminActiveSection("products");
       toast.success(message);
     }
+    
+    return;
   };
 
   return (

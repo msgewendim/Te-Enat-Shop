@@ -30,18 +30,23 @@ const PackageForm = ({ item: pkg, onSubmit: onSubmitProp, message, mutateFormSta
   
   const onSubmit: SubmitHandler<Package> = (data) => {
     onSubmitProp(data);
+    
+    if (isLoading) {
+      return <Loader />;
+    }
+    
     if (isError && error) {
       toast.error(error.message);
       return;
     }
-    if (isLoading) {
-      return <Loader />;
-    }
+    
     if (isSuccess) {
       reset();
       setAdminActiveSection("packages");
       toast.success(message);
     }
+    
+    return;
   };
 
   const isEditing = !!pkg;

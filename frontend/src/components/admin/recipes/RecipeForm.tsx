@@ -24,18 +24,23 @@ const RecipeForm = ({ item: recipe, onSubmit: onSubmitProp, message, mutateFormS
   
   const onSubmit: SubmitHandler<Recipe> = (data) => {
     onSubmitProp(data);
+    
+    if (isLoading) {
+      return <Loader />;
+    }
+    
     if (isError && error) {
       toast.error(error.message);
       return;
     }
-    if (isLoading) {
-      return <Loader />;
-    }
+    
     if (isSuccess) {
       reset();
       setAdminActiveSection("recipes");
       toast.success(message);
     }
+    
+    return;
   };
   return (
     <>

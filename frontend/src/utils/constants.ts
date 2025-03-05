@@ -131,10 +131,13 @@ export {
   recipeCategoriesMapping,
   translateRecipeCategories,
   ourTopCategories,
+  productSubCategoriesMapping,
+  recipeSubCategoriesMapping,
+};
+
+export type {
   TopCategory,
   ProductCategoryKey,
   RecipeCategoryKey,
   CategoryMapping,
-  productSubCategoriesMapping,
-  recipeSubCategoriesMapping,
 };
