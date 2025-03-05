@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
+
 import { useAppContext } from "../../../hooks/app/useAppContext";
-import Table from "../../ui/Table";
-import useProductsDashboard from '../hooks/useProductsDashboard';
 import { ProductDashboardReturn, ProductTableData } from '../../../providers/interface/admin.props';
 import Filters from '../../ui/Filters';
+import Table from "../../ui/Table";
+import useProductsDashboard from '../hooks/useProductsDashboard';
 
 
 const ProductList = () => {

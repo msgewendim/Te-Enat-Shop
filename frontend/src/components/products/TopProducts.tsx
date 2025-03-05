@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import Loader from "../ui/Loader";
-import ProductCard from "./ProductCard";
-import { CarouselButtonProps } from "../../providers/interface/general.props";
 import { Link } from "react-router-dom";
+
+import ProductCard from "./ProductCard";
 import { Product } from "../../client";
 import useRandomCards from "../../hooks/app/useRandomCards";
+import { CarouselButtonProps } from "../../providers/interface/general.props";
 import { makeBreakLine } from "../../utils/helperFunctions";
+import Loader from "../ui/Loader";
 
 const TopProducts = () => {
   const { t } = useTranslation();

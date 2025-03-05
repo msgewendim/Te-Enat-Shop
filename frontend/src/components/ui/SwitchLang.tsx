@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { Switch } from '@headlessui/react'
 import i18next from 'i18next'
+import { useState } from 'react'
 
 
 const SwitchLanguage = () => {

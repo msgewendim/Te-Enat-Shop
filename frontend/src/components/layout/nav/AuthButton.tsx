@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { TbLogout, TbLogin } from "react-icons/tb";
+
 import useAuth from "../../../hooks/auth/useAuth";
 
 const AuthButton = () => {

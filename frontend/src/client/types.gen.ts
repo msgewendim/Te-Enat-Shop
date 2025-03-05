@@ -203,7 +203,27 @@ export type CartItem = {
      * Price of the product in the cart
      */
     price: number;
+    /**
+     * Type of the item (Product or Package)
+     */
+    itemType: 'Product' | 'Package';
+    /**
+     * Name of the product
+     */
+    name: string;
+    /**
+     * URL to the product image
+     */
+    image?: string;
 };
+
+/**
+ * Type of the item (Product or Package)
+ */
+export enum itemType {
+    PRODUCT = 'Product',
+    PACKAGE = 'Package'
+}
 
 export type Recipe = {
     /**
@@ -481,11 +501,11 @@ export type GetTopPackagesResponse = (RandomItemsResponse);
 
 export type GetTopPackagesError = (ErrorResponse);
 
-export type PostOrdersV1PaymentsFormData = unknown;
+export type PostOrdersGenerateSaleData = unknown;
 
-export type PostOrdersV1PaymentsFormResponse = (PaymentFormSuccessResponse);
+export type PostOrdersGenerateSaleResponse = (PaymentFormSuccessResponse);
 
-export type PostOrdersV1PaymentsFormError = (PaymentFormErrorResponse);
+export type PostOrdersGenerateSaleError = (PaymentFormErrorResponse);
 
 export type GetOrdersPaymentStatusResponse = ({
     status?: boolean;

@@ -1,9 +1,11 @@
-import useAuth from "../../hooks/auth/useAuth";
 import { ReactNode, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Loader from "../ui/Loader";
-import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import useAuth from "../../hooks/auth/useAuth";
+import Loader from "../ui/Loader";
+
 
 const AdminRoute = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, isLoading, isAdmin } = useAuth();

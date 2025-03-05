@@ -1,10 +1,11 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { FC, Fragment } from 'react'
+
 // import { Link } from 'react-router-dom'
-import { Package } from '../../client/types.gen'
-import { SelectQuantity } from '../products/PopupProduct'
-import useAddToCartPackage from '../../hooks/app/useAddToCartPackage'
 import { PackageCardButton } from './PackageCard'
+import { Package } from '../../client/types.gen'
+import useAddToCartPackage from '../../hooks/app/useAddToCartPackage'
+import { SelectQuantity } from '../products/PopupProduct'
 
 interface PackageModalProps {
   package: Package

@@ -1,8 +1,9 @@
-import { awaze, beyaynetu, cookies, rollInjera, shiro, tavlinim } from "../../utils/imageFiles"
 import { FC, useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom"
+
 import { HeroCardProps } from "../../providers/interface/general.props";
+import { awaze, beyaynetu, cookies, rollInjera, shiro, tavlinim } from "../../utils/imageFiles"
 
 const homePageImages = [beyaynetu, shiro, awaze, cookies];
 
@@ -10,14 +11,14 @@ const Hero = () => {
   const [currentImage, setCurrentImage] = useState<string>('');
   const [imageId, setImageId] = useState(() => {
     const randomIndex = Math.floor(Math.random() * homePageImages.length);
-    return homePageImages[randomIndex];
+    return homePageImages[randomIndex] as () => Promise<typeof import("*.jpg")>;
   });
 
   const changeImage = useCallback(() => {
     setImageId((prevImage) => {
       const currentIndex = homePageImages.indexOf(prevImage);
       const nextIndex = (currentIndex + 1) % homePageImages.length;
-      return homePageImages[nextIndex];
+      return homePageImages[nextIndex] as () => Promise<typeof import("*.jpg")>;
     });
   }, []);
 

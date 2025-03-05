@@ -1,6 +1,7 @@
-import { axiosInstance } from ".";
 import { RandomItemsResponse, SuccessResponse } from "../../client/types.gen";
 import { query } from "../interface/context";
+
+import { axiosInstance } from ".";
 
 // Fetch data from your API endpoint with the provided query
 export const getItems = async <T>(endpoint: string, q: query): Promise<T[]> => {

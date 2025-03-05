@@ -1,9 +1,10 @@
+import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { CgBowl } from "react-icons/cg";
 import { GiFlour, GiGrainBundle } from "react-icons/gi";
 import { PiGrains } from "react-icons/pi";
+
 import { FeatureCardType } from "../../providers/interface/general.props";
-import { FC } from "react";
-import { useTranslation } from "react-i18next";
 
 const FeatureCard: FC<FeatureCardType> = ({ icon, title, description }) => (
   <div className="text-center p-4 flex flex-col items-center dark:text-white  ">

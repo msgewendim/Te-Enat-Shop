@@ -1,8 +1,9 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { FC, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { Recipe } from '../../client/types.gen';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
+import { Recipe } from '../../client/types.gen';
 
 interface RecipeModalProps {
   recipe: Recipe;

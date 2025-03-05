@@ -1,5 +1,5 @@
-import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import { Order } from '../../../client';
+import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import useGenericData from "../../../hooks/app/useGenericData";
 import { TableData } from "../../../providers/interface/general.props";
 

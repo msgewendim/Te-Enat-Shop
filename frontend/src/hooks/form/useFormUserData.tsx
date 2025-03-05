@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { EarlyAdoptersFormData } from '../../components/layout/modals/EarlyAdapters';
-import { DesignProductFormData } from '../../components/layout/modals/DesignProduct';
-import { addEarlyAdapter, addDesignProduct } from '../../providers/api';
 import { useMutation } from "@tanstack/react-query";
-import { addToNewsletter, NewsLetterData } from "../../providers/api";
+import { useState } from 'react';
+
+import { DesignProductFormData } from '../../components/layout/modals/DesignProduct';
+import { EarlyAdoptersFormData } from '../../components/layout/modals/EarlyAdapters';
+import { addEarlyAdapter, addDesignProduct , addToNewsletter, NewsLetterData } from '../../providers/api';
 
 export const useFormUserData = () => {
   const [formData, setFormData] = useState<EarlyAdoptersFormData | DesignProductFormData | null>(null);

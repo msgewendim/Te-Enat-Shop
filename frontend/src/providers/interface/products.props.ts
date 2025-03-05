@@ -9,6 +9,8 @@ export type ItemProperties = {
   quantity: number;
   size: string;
   price: number;
+  itemType: string;
+  name: string;
 };
 type ProductImageProps = {
   image: string | null;

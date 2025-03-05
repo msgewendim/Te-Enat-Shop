@@ -1,9 +1,9 @@
-import { useAppContext } from "../../../hooks/app/useAppContext";
-import useShop from '../../../hooks/product/useShop';
-import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import { Product } from '../../../client';
-import { TableData } from "../../../providers/interface/general.props";
+import { useAppContext } from "../../../hooks/app/useAppContext";
+import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import useGenericData from "../../../hooks/app/useGenericData";
+import useShop from '../../../hooks/product/useShop';
+import { TableData } from "../../../providers/interface/general.props";
 
 function useProductsDashboard() {
   const { setProductToEdit } = useAppContext();

@@ -1,9 +1,10 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+
 import PackageCard from "./PackageCard";
 import { Package } from "../../client";
 import useRandomCards from "../../hooks/app/useRandomCards";
 import { makeBreakLine } from "../../utils/helperFunctions";
-import { Link } from "react-router-dom";
 
 const OurPackages = () => {
   const { t } = useTranslation();

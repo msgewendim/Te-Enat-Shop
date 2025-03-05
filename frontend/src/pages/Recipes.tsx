@@ -1,11 +1,14 @@
 import { useTranslation } from 'react-i18next';
+
 import RecipeCard from "../components/recipes/RecipeCard";
 import Banner from "../components/ui/Banner";
+
 import RecipesBanner from "/RecipesBanner.svg";
+
 import Filters from '../components/ui/Filters';
-import useRecipes from '../hooks/recipe/useRecipes';
-import Pagination from '../components/ui/Pagination';
 import Loader from '../components/ui/Loader';
+import Pagination from '../components/ui/Pagination';
+import useRecipes from '../hooks/recipe/useRecipes';
 
 const Recipes = () => {
   const { t } = useTranslation();

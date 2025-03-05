@@ -1,11 +1,12 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useTranslation } from 'react-i18next';
-import Loader from "../ui/Loader";
-import CarouselButton from "../ui/CarouselButton";
-import { RelatedItemCardProps, RelatedItemsProps } from "../../providers/interface/general.props";
-import useRelatedItems from "../../hooks/app/useRelatedItems";
+
 import { RandomItem } from "../../client/types.gen";
+import useRelatedItems from "../../hooks/app/useRelatedItems";
+import { RelatedItemCardProps, RelatedItemsProps } from "../../providers/interface/general.props";
+import CarouselButton from "../ui/CarouselButton";
+import Loader from "../ui/Loader";
 
 
 const RelatedItems = ({

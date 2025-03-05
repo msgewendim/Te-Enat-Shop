@@ -1,16 +1,17 @@
 import { useQuery, useMutation, keepPreviousData } from "@tanstack/react-query";
-import { query } from "../providers/interface/context";
+
 import {
   CartItem,
   PaymentFormPayload,
   RandomItemsResponse,
   SuccessResponse,
 } from "../client/types.gen";
+import { getItemsByNames, getPaymentForm, getPaymentLinkFormICount } from "../providers/api";
 import {
   getRandomItems,
   getRelatedItems,
 } from "../providers/api/GenericService";
-import { getItemsByNames, getPaymentForm, getPaymentLinkFormICount } from "../providers/api";
+import { query } from "../providers/interface/context";
 
 function useGetRelatedItems(endpoint: string, exclude: string, query?: query) {
   return useQuery({

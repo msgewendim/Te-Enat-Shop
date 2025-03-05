@@ -1,5 +1,6 @@
-import { useAppContext } from "../../hooks/app/useAppContext";
 import { useTranslation } from 'react-i18next';
+
+import { useAppContext } from "../../hooks/app/useAppContext";
 
 const CheckoutSummary = () => {
   const { cartItems, totalPrice } = useAppContext();

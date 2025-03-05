@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { BsGlobe } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 import { BiSupport } from "react-icons/bi";
+import { BsGlobe } from "react-icons/bs";
 import { FaRegCreditCard } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
-import { useTranslation } from "react-i18next";
+
 import { GuaranteeCardProps } from "../../providers/interface/general.props";
 
 // Grantees Cards

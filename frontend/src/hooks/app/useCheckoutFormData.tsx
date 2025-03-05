@@ -1,10 +1,11 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Customer } from "../../client/types.gen";
+
 import { useAppContext } from "./useAppContext";
+import { Customer } from "../../client/types.gen";
 import { clientDetailsSchema } from "../../validation/ClientDetails.validation";
 import { useGetPaymentFormMutation } from "../useAppData";
 
@@ -24,7 +25,7 @@ function useCheckoutFormData() {
       const result = clientDetailsSchema.safeParse(data);
       if (!result.success) {
         const firstError = result.error.errors[0];
-        toast.info(firstError.message);
+        toast.info(firstError?.message || t('checkout.errorSubmittingForm'));
         setIsSubmitting(false);
         return;
       }
@@ -57,8 +58,8 @@ function useCheckoutFormData() {
       }
       console.log("Payment form URL:", paymentUrl, getPaymentFormMutation.data);
       setPaymentFormUrl(paymentUrl.url);
-      // Redirect to the payment URL
-      window.location.href = paymentUrl.url;
+      // open the payment url in a new tab
+      window.open(paymentUrl.url, '_blank');
     } else if (getPaymentFormMutation.isError) {
       setIsSubmitting(false);
       toast.error(t('checkout.errorFetchingPaymentForm'));

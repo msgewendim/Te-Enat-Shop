@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import Loader from '../ui/Loader'
 import Logo from '../ui/Logo';
 import DesktopMenu, { DesktopActions } from './nav/DesktopMenu';
-import MobileMenu from './nav/MobileMenu';
-import { MobileMenuButton } from './nav/MobileMenu';
-import Cart from '../../pages/Cart';
+import MobileMenu, { MobileMenuButton } from './nav/MobileMenu';
 import useAuth from '../../hooks/auth/useAuth';
+import Cart from '../../pages/Cart';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,10 +21,8 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlNavbar);
-      return () => window.removeEventListener('scroll', controlNavbar);
-    }
+    window.addEventListener('scroll', controlNavbar);
+    return () => window.removeEventListener('scroll', controlNavbar);
   }, [controlNavbar]);
 
   if (isLoading) return <Loader />;

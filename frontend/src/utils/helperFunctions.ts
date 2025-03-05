@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+
 import {
   CartItem,
   Category,
@@ -7,9 +8,7 @@ import {
   Ingredient,
   SubCategory,
 } from "../client";
-import { recipeCategories, recipeSubCategoriesMapping } from "./constants";
-import { productCategories } from "./constants";
-import { productSubCategoriesMapping } from "./constants";
+import { recipeCategories, recipeSubCategoriesMapping , productCategories , productSubCategoriesMapping } from "./constants";
 
 const createBanner = (image: string): React.CSSProperties => ({
   backgroundImage: `url(${image})`,

@@ -4,6 +4,7 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
+
 import { Category, Product, SubCategory } from "../../client/types.gen";
 
 interface ArrayInputFieldProps {

@@ -342,7 +342,7 @@
     "street": "רחוב / כתובת",
     "streetNum" : "מספר רחוב",
     "city": "עיר",
-    "zip": "מיקוד",
+    "postal_code": "מיקוד",
     "notes": "הערות למשלוח",
     "cancel": "ביטול",
     "submit": "לתשלום",
@@ -502,5 +502,27 @@
     "previousPage": "לעמוד הקודם",
     "nextPage": "לעמוד הבא",
     "title": "ניווט בין עמודים"
+  },
+  "thankYou": {
+    "title": "תודה על הזמנתך!",
+    "successMessage": "התשלום בוצע בהצלחה. פרטי ההזמנה נשלחו לכתובת האימייל שלך.",
+    "paymentDetails": "פרטי תשלום",
+    "transactionInfo": "פרטי עסקה",
+    "transactionId": "מזהה עסקה",
+    "date": "תאריך",
+    "amount": "סכום",
+    "status": "סטטוס",
+    "paymentMethod": "אמצעי תשלום",
+    "cardType": "סוג כרטיס",
+    "cardNumber": "מספר כרטיס",
+    "cardHolder": "שם בעל הכרטיס",
+    "approvalNumber": "מספר אישור",
+    "backToHome": "חזרה לדף הבית",
+    "tax": "מע\"מ",
+    "estimatedDelivery": "זמן אספקה משוער",
+    "whatsNext": "מה הלאה?",
+    "preparingOrder": "אנו מכינים את ההזמנה שלך. פרטי מעקב יישלחו בקרוב!",
+    "needHelp": "צריך עזרה?",
+    "contactUs": "צור קשר בכתובת"
   }
 }

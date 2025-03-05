@@ -1,12 +1,13 @@
-import { CartItem, Recipe } from '../../client/types.gen';
-import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
-import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import { useGetProductsFromRecipe } from './useGetProductsFromRecipe';
+import { CartItem, Recipe } from '../../client/types.gen';
+import { addItemToCartList } from '../../utils/helperFunctions';
 import { useAppContext } from '../app/useAppContext';
 import useGenericData from '../app/useGenericData';
-import { addItemToCartList } from '../../utils/helperFunctions';
 
 
 export default function useRecipePage() {
@@ -25,11 +26,14 @@ export default function useRecipePage() {
     const newCartItems: CartItem[] = [];
 
     productsFromRecipe.forEach((product) => {
-      const newItem = {
+      const newItem: CartItem = {
         item: product,
         quantity: 1,
-        size: product.pricing[0].size.sizeName,
-        price: product.pricing[0].price
+        size: product?.pricing[0]?.size?.sizeName || '',
+        price: product?.pricing[0]?.price || 0,
+        itemType: "Product",
+        name: product?.name || '',
+        image: product?.image || '',
       };
       newCartItems.push(newItem);
     });

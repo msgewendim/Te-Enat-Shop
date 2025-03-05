@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from "react"
-import { query } from "../../providers/interface/context"
 import { toast } from "react-toastify";
+
+import { Product } from "../../client";
+import { query } from "../../providers/interface/context"
 import { useAppContext } from "../app/useAppContext"
 import useGenericData from "../app/useGenericData";
-import { Product } from "../../client";
 
 function useShop({ limit = 12 }: { limit?: number}) {
   const { page, setPage, cartItems, filter, openCart, setOpenCart, subCategory, category, setCategory } = useAppContext()

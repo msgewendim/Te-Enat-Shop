@@ -1,18 +1,21 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BsPeople } from "react-icons/bs";
 import { PiCookingPot } from "react-icons/pi";
 import { TfiTimer } from "react-icons/tfi";
-import { BsPeople } from "react-icons/bs";
+
 import recipeBanner from "/RecipeBanner.svg";
-import { createRecipeCardImage } from "../utils/helperFunctions";
-import Banner from "../components/ui/Banner";
-import RelatedItems from '../components/layout/RelatedItems';
-import { RecipeInfoProps } from '../providers/interface/recipes.props';
+
 import { toast } from 'react-toastify';
-import Loader from '../components/ui/Loader';
+
 import { Ingredient, Instruction, Product } from '../client/types.gen';
+import RelatedItems from '../components/layout/RelatedItems';
 import PopupProduct from '../components/products/PopupProduct';
+import Banner from "../components/ui/Banner";
+import Loader from '../components/ui/Loader';
 import useRecipePage from '../hooks/recipe/useRecipeData';
+import { RecipeInfoProps } from '../providers/interface/recipes.props';
+import { createRecipeCardImage } from "../utils/helperFunctions";
 
 const RecipePage = () => {
   const { t } = useTranslation();
@@ -59,7 +62,7 @@ const RecipePage = () => {
         <RelatedItems
           exclude={_id}
           endpoint='/recipes'
-          itemCategory={categories[0].nameInEnglish}
+          itemCategory={categories[0]?.nameInEnglish || ''}
           titleKey='relatedRecipes.title'
         />
       </div>
@@ -99,7 +102,7 @@ const ProductItemFromRecipe = ({ product }: { product: Product }) => {
       <div className="flex items-end gap-2 cursor-pointer" onClick={handleOpenProductModal}>
         <img src={image} alt={name} className="w-16 h-16 rounded-lg" />
         <span>{name}</span>
-        <span className="font-semibold mr-2">{pricing[0].price + "₪"}</span>
+        <span className="font-semibold mr-2">{pricing[0]?.price || 0 + "₪"}</span>
       </div>
       <PopupProduct
         product={product}

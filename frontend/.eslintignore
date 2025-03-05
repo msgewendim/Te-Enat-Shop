@@ -1,0 +1,29 @@
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Config files
+.eslintrc.cjs
+vite.config.ts
+tailwind.config.js
+postcss.config.js
+
+# Generated files
+*.gen.ts
+*.gen.tsx
+
+# Public assets
+public/
+
+# Other
+.DS_Store
+*.log 

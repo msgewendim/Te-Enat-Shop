@@ -1,6 +1,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react';
 import { useTranslation } from 'react-i18next';
 import { FiPlus, FiMinus } from 'react-icons/fi';
+
 import { qaItems } from '../../utils/examples';
 
 const QASection = () => {

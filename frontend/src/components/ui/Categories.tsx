@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import Select from "./Select";
 import { Category } from '../../client/types.gen';
 import { CategoryButtonProps, FilterCategoriesProps } from '../../providers/interface/general.props';

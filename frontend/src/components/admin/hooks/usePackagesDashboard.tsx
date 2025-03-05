@@ -1,9 +1,9 @@
+import { Package } from '../../../client';
 import { useAppContext } from "../../../hooks/app/useAppContext";
 import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
-import { TableData } from "../../../providers/interface/general.props";
-import { Package } from '../../../client';
-import usePackages from "../../../hooks/package/usePackages";
 import useGenericData from "../../../hooks/app/useGenericData";
+import usePackages from "../../../hooks/package/usePackages";
+import { TableData } from "../../../providers/interface/general.props";
 
 function usePackagesDashboard() {
   const { setPackageToEdit } = useAppContext();

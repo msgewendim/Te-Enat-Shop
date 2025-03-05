@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
+
 import PopupProduct from "./PopupProduct";
 import { Product } from "../../client/types.gen";
 import { ProductImageProps } from "../../providers/interface/products.props";
@@ -18,7 +19,7 @@ const ProductCard = ({ product, className = "" }: { product: Product, className?
       <ProductImage image={image} name={name} onClick={handleOpenPopup} />
 
       <div className="px-4 py-1 flex flex-col flex-grow" dir="ltr">
-        <ProductHeader name={name} price={pricing[0].price} />
+        <ProductHeader name={name} price={pricing[0]?.price || 0} />
         <ProductCategories categories={categoriesInHebrew} subCategories={subCategoriesInHebrew} />
       </div>
 

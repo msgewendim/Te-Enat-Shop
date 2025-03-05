@@ -1,14 +1,15 @@
 import { DevTool } from '@hookform/devtools';
-import { Product } from '../../../client/types.gen';
-import { FormInput } from '../../ui/FormInput';
-import useProductForm from '../../../hooks/product/useProductForm';
-import { AddCategoryInput, AddFeatureGroupInput, AddPricingInput } from './AddArrayInputFields';
 import { SubmitHandler } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { useAppContext } from '../../../hooks/app/useAppContext';
-import { productCategories } from '../../../utils/constants';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+
+import { AddCategoryInput, AddFeatureGroupInput, AddPricingInput } from './AddArrayInputFields';
+import { Product } from '../../../client/types.gen';
+import { useAppContext } from '../../../hooks/app/useAppContext';
+import useProductForm from '../../../hooks/product/useProductForm';
 import { FormProps } from '../../../providers/interface/admin.props';
+import { productCategories } from '../../../utils/constants';
+import { FormInput } from '../../ui/FormInput';
 import Loader from '../../ui/Loader';
 
 const ProductForm = ({ item: product, onSubmit: onSubmitProp, message, mutateFormState }: FormProps<Product>) => {
@@ -22,7 +23,6 @@ const ProductForm = ({ item: product, onSubmit: onSubmitProp, message, mutateFor
     onSubmitProp(data);
     if (isError && error) {
       toast.error(error.message);
-      return;
     }
     if (isLoading) {
       return <Loader />;

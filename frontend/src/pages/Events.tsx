@@ -1,7 +1,9 @@
-import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { FormInput } from "../components/ui/FormInput";
+import { useTranslation } from "react-i18next";
 import { z } from "zod";
+
+import { FormInput } from "../components/ui/FormInput";
+
 
 const Events = () => {
   const { t } = useTranslation();

@@ -1,5 +1,6 @@
 import { t } from "i18next";
 import { BiCart } from "react-icons/bi";
+
 import { useAppContext } from "../../hooks/app/useAppContext";
 
 const FloatingCartButton = () => {

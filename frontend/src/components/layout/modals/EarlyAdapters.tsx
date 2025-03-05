@@ -1,13 +1,14 @@
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Path, useForm } from "react-hook-form";
-import { z } from "zod";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { FormInput } from "../../ui/FormInput";
-import GenericModal from "../../ui/Modal";
-import Loader from "../../ui/Loader";
+import { z } from "zod";
+
 import { useEarlyAdapters } from "../../../hooks/form/useFormUserData";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { makeBreakLine } from "../../../utils/helperFunctions";
+import { FormInput } from "../../ui/FormInput";
+import Loader from "../../ui/Loader";
+import GenericModal from "../../ui/Modal";
 
 // Types
 export type EarlyAdoptersFormData = {

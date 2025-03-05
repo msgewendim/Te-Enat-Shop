@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from "react-icons/md";
+
 import { CarouselButtonProps } from "../../providers/interface/general.props";
 
 const CarouselButton: FC<CarouselButtonProps> = ({ onClick, disabled, direction }) => {

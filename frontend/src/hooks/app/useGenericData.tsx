@@ -1,6 +1,6 @@
 import { useQuery, useMutation, QueryKey } from "@tanstack/react-query";
-import useAuth from "../auth/useAuth";
-import { query } from "../../providers/interface/context";
+
+import { RandomItemsResponse, SuccessResponse } from "../../client/types.gen";
 import {
   addItem,
   deleteItem,
@@ -10,7 +10,8 @@ import {
   getRelatedItems,
   updateItem,
 } from "../../providers/api/GenericService";
-import { RandomItemsResponse, SuccessResponse } from "../../client/types.gen";
+import { query } from "../../providers/interface/context";
+import useAuth from "../auth/useAuth";
 
 function useGenericData<T>(endpoint: string) {
   const endpointWithSlash = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;

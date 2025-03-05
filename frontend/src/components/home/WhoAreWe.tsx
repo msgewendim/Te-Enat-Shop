@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from "react";
-import { menu } from "../../utils/imageFiles";
 import { useTranslation } from "react-i18next";
+
 import { Feature } from "../../client";
+import { menu } from "../../utils/imageFiles";
 
 const WhoAreWe = () => {
   const { t } = useTranslation();

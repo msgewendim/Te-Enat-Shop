@@ -1,14 +1,15 @@
-import { StrictMode } from 'react'
-import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { StrictMode } from 'react'
+import ReactDOM from 'react-dom/client'
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import { RouterProvider } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
 import './i18n'
 import { Auth0Provider } from "@auth0/auth0-react"
-import { routes } from './routes/route'
+
 import AppProvider from './providers/context/ContextProvider'
+import { routes } from './routes/route'
 import { AUTH0_AUDIENCE, AUTH0_CLIENT_ID, AUTH0_DOMAIN } from './utils/env.config'
 import './index.css'
 

@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
-import DarkMode from "../../ui/DarkMode";
-import AuthButton from "./AuthButton";
-import { BiUserCircle } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
-import FloatingCartButton from "../../cart/FloatingCart";
+import { BiUserCircle } from "react-icons/bi";
+import { Link } from "react-router-dom";
+
+import AuthButton from "./AuthButton";
 import useAuth from "../../../hooks/auth/useAuth";
+import FloatingCartButton from "../../cart/FloatingCart";
+import DarkMode from "../../ui/DarkMode";
 
 const DesktopMenu = () => {
   const { t } = useTranslation();

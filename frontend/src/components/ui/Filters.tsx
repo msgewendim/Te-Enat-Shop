@@ -1,9 +1,10 @@
 import { ChangeEvent, FC } from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
+
+import FilterCategories from "./Categories";
 import { useAppContext } from "../../hooks/app/useAppContext";
 import { ClearFiltersButtonProps, FiltersProps } from "../../providers/interface/general.props";
-import FilterCategories from "./Categories";
 import { categoriesBasedOnType } from "../../utils/helperFunctions";
 
 

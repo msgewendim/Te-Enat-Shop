@@ -1,7 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { BsTelephone } from "react-icons/bs";
 import { IoLocationOutline, IoMailOpenOutline } from "react-icons/io5";
+
 import ContactForm from "../components/layout/ContactForm";
-import { useTranslation } from 'react-i18next';
 
 const Contact = () => {
   const { t } = useTranslation();

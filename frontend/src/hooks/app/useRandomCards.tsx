@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { randomizeArray } from "../../utils/helperFunctions";
 import { toast } from "react-toastify";
-import { useGetRandomItems } from "../useAppData";
+
 import { RandomItem } from "../../client/types.gen";
+import { randomizeArray } from "../../utils/helperFunctions";
+import { useGetRandomItems } from "../useAppData";
 
 function useRandomCards<T extends RandomItem>({ endpoint }: { endpoint: string }) {
 

@@ -1,6 +1,7 @@
-import { FC } from 'react';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { FC } from 'react';
+
 import { SelectProps } from '../../providers/interface/general.props';
 
 

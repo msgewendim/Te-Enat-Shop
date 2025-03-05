@@ -1,14 +1,15 @@
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+
 import { Recipe } from "../../client";
 import useRandomCards from "../../hooks/app/useRandomCards";
 // import RecipeCardModal from "../ui/RecipeCardModal"; 
-import { useState } from "react";
-import GenericModal from "../ui/Modal";
+import { makeBreakLine } from "../../utils/helperFunctions";
 import CustomLink from "../ui/Link";
 import Loader from "../ui/Loader";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { makeBreakLine } from "../../utils/helperFunctions";
+import GenericModal from "../ui/Modal";
 
 const OurSpecialty = () => {
   const { t } = useTranslation();

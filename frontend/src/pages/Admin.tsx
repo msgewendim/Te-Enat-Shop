@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import ProductList from '../components/admin/products/ProductList';
-import ProductForm from '../components/admin/products/ProductForm';
-import useAdminDashboard from '../components/admin/hooks/useDashboard';
-import { useTranslation } from 'react-i18next';
 import { ArrowLeftCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import RecipesList from '../components/admin/recipes/RecipesList';
-import RecipeForm from '../components/admin/recipes/RecipeForm';
-import PackageList from '../components/admin/packages/PackageList';
-import PackageForm from '../components/admin/packages/PackageForm';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import useAdminDashboard from '../components/admin/hooks/useDashboard';
 import OrdersList from '../components/admin/orders';
+import PackageForm from '../components/admin/packages/PackageForm';
+import PackageList from '../components/admin/packages/PackageList';
+import ProductForm from '../components/admin/products/ProductForm';
+import ProductList from '../components/admin/products/ProductList';
+import RecipeForm from '../components/admin/recipes/RecipeForm';
+import RecipesList from '../components/admin/recipes/RecipesList';
 
 const AdminDashboard = () => {
   const { t } = useTranslation();

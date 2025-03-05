@@ -1,16 +1,17 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { FC } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { SlSocialInstagram } from "react-icons/sl";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { z } from "zod";
+
+import { useNewsletter } from "../../hooks/form/useFormUserData";
+import { NewsLetterData } from "../../providers/api";
 import { SocialLinkProps } from "../../providers/interface/general.props";
 import { FormInput } from "../ui/FormInput";
-import { useForm } from "react-hook-form";
-import { NewsLetterData } from "../../providers/api";
-import { useNewsletter } from "../../hooks/form/useFormUserData";
-import { toast } from "react-toastify";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import Loader from "../ui/Loader";
 
 const Footer = () => {

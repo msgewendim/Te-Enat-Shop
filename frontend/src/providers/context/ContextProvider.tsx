@@ -1,9 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
-import { CartItem, Product, Recipe, Package } from "../../client/types.gen";
-import { AppContext, ModalState } from "../interface/context";
-import { getTotalPrice } from "../../utils/helperFunctions";
-import { BASE_API_URL } from "../../utils/env.config";
 import { toast } from "react-toastify";
+
+import { CartItem, Product, Recipe, Package } from "../../client/types.gen";
+import { BASE_API_URL } from "../../utils/env.config";
+import { getTotalPrice } from "../../utils/helperFunctions";
+import { AppContext, ModalState } from "../interface/context";
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
   // checkout
@@ -79,11 +80,11 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [currentEndpoint, setCurrentEndpoint, setCategory])
 
-  useEffect(() => {
-    if (paymentFormUrl) {
-      window.location.href = paymentFormUrl
-    }
-  }, [paymentFormUrl])
+  // useEffect(() => {
+  //   if (paymentFormUrl) {
+  //     window.location.href = paymentFormUrl
+  //   }
+  // }, [paymentFormUrl])
 
   const clearCart = () => {
     sessionStorage.removeItem("orderId")

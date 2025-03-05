@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
+
 import { useAppContext } from './useAppContext'
 import { CartItem, Package } from '../../client/types.gen'
 import { addItemToCartList } from '../../utils/helperFunctions'
-import { toast } from 'react-toastify'
 
 interface UseAddToCartPackageProps {
   package: Package
@@ -25,21 +26,15 @@ function useAddToCartPackage({ package: pkg, setOpen }: UseAddToCartPackageProps
       },
       quantity,
       size: 'default',
-      price: pkg.price
+      price: pkg.price,
+      itemType: 'Package',
+      name: pkg.name,
+      image: pkg.image
     }
 
     const updatedCartItems = addItemToCartList(cartItems, item)
     sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
     setCartItems(updatedCartItems)
-
-    // setOrderItems([...orderItems, {
-    //   description: pkg.name,
-    //   quantity: quantity,
-    //   price: pkg.price * quantity,
-    //   size: 'default',
-    //   currency: "ILS",
-    //   vatType: 1,
-    //}])
 
     toast.success("חבילה נוספה לעגלה")
     setOpen(false)

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { createBanner } from "../../utils/helperFunctions";
+
 import { BannerProps } from '../../providers/interface/general.props';
+import { createBanner } from "../../utils/helperFunctions";
 
 const Banner = ({ image, text, className = '' }: BannerProps) => {
   const { t } = useTranslation();

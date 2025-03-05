@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
-import { PaginationButtonProps, PaginationProps } from "../../providers/interface/general.props";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+
+import { PaginationButtonProps, PaginationProps } from "../../providers/interface/general.props";
 
 const Pagination = ({ page, handlePrevious, handleNext, path }: PaginationProps) => {
   const { t } = useTranslation();

@@ -1,36 +1,51 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { useTranslation } from "react-i18next";
-import { FormInput } from "../../ui/FormInput";
-import GenericModal from "../../ui/Modal";
-import { useDesignProducts } from '../../../hooks/form/useFormUserData';
 import { toast } from 'react-toastify';
+import { z } from "zod";
+
+import { useDesignProducts } from '../../../hooks/form/useFormUserData';
+import { FormInput } from "../../ui/FormInput";
 import Loader from '../../ui/Loader';
+import GenericModal from "../../ui/Modal";
 
 const DesignProductPopup = ({ isPopupOpen, handleClosePopup }: { isPopupOpen: boolean, handleClosePopup: () => void }) => {
   const { t } = useTranslation();
-  return <GenericModal title={t('designProduct.title')} content={<DesignProductPopupContent handleClosePopup={handleClosePopup} />} open={isPopupOpen} setOpen={handleClosePopup} />
+  
+  // This ensures the modal closes when clicking outside
+  return (
+    <GenericModal 
+      title={t('designProduct.title')} 
+      content={<DesignProductPopupContent handleClosePopup={handleClosePopup} />} 
+      open={isPopupOpen} 
+      setOpen={handleClosePopup} 
+    />
+  );
 }
 
 const DesignProductPopupContent = ({ handleClosePopup }: { handleClosePopup: () => void }) => {
   const { t } = useTranslation();
   const { register, handleSubmit, reset } = useForm<DesignProductFormData>();
-  const { mutate: addDesignProduct, isError, isPending } = useDesignProducts();
+  const { mutate: addDesignProduct, isPending } = useDesignProducts();
 
   const onSubmit = (data: DesignProductFormData) => {
     const validationResult = validateDesignProductForm(data);
     if (validationResult.success) {
-      addDesignProduct(data);
-      reset();
-      toast.success(t('designProduct.success'));
+      addDesignProduct(data, {
+        onSuccess: () => {
+          reset();
+          toast.success(t('designProduct.success'));
+          // Close the modal on successful submission
+          handleClosePopup();
+        },
+        onError: () => {
+          toast.error(t('designProduct.error'));
+        }
+      });
     } else {
-      console.log(validationResult.error.errors);
+      const firstError = validationResult.error.errors[0];
+      toast.error(firstError?.message || t('designProduct.validationError'));
     }
   };
-
-  if (isError) {
-    toast.error(t('designProduct.error'));
-  }
 
   if (isPending) {
     return <Loader />;

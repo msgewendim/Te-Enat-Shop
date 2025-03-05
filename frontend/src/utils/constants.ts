@@ -1,9 +1,9 @@
-import { Category, SubCategory } from "../client/types.gen";
-import shiro from "../assets/shiro.jpg";
-import hotShiro from "../assets/hot-shiro.jpg";
 import cookies from "../assets/cookies.jpg";
-import kurkum from "../assets/kurkum.jpg";
 import dessert from "../assets/dessert.jpg";
+import hotShiro from "../assets/hot-shiro.jpg";
+import kurkum from "../assets/kurkum.jpg";
+import shiro from "../assets/shiro.jpg";
+import { Category, SubCategory } from "../client/types.gen";
 
 // Define types for category mappings
 type CategoryMapping = {
@@ -119,7 +119,7 @@ const ourTopCategories = productCategories
       _id: idx + "12002",
       nameInHebrew: category.nameInHebrew,
       nameInEnglish: category.nameInEnglish,
-      image: categoryPhoto[idx],
+      image: categoryPhoto[idx] as string,
     };
   });
 

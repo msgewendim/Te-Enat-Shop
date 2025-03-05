@@ -1,5 +1,6 @@
-import CheckoutFormData from "./CheckoutFormData";
 import { useTranslation } from 'react-i18next';
+
+import CheckoutFormData from "./CheckoutFormData";
 
 const CheckoutForm = () => {
   const { t } = useTranslation();

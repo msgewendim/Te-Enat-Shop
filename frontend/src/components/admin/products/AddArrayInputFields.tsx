@@ -1,11 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import { FieldValues, Path, PathValue, useFieldArray } from 'react-hook-form'
-import { Category, Product, SubCategory } from '../../../client/types.gen';
-import { FormInput } from '../../ui/FormInput';
 import { useState } from 'react';
+import { FieldValues, Path, PathValue, useFieldArray } from 'react-hook-form'
+import { useTranslation } from 'react-i18next';
+
+import { Category, Product, SubCategory } from '../../../client/types.gen';
 import { AddCategoryInputProps, ArrayInputFieldProps } from '../../../providers/interface/admin.props';
-import FormButton from '../../ui/FormButton';
 import { isCategorySelected, subCategoriesByParentCategoryKey } from '../../../utils/helperFunctions';
+import FormButton from '../../ui/FormButton';
+import { FormInput } from '../../ui/FormInput';
 
 export const AddFeatureGroupInput = ({ control, register }: ArrayInputFieldProps) => {
   const { t } = useTranslation();

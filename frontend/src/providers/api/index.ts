@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {
   GetOrdersPaymentStatusResponse,
   CartItem,
@@ -6,9 +7,9 @@ import {
   PaymentFormSuccessResponse,
   SuccessResponse,
 } from "../../client/types.gen";
-import { BASE_API_URL } from "../../utils/env.config";
-import { EarlyAdoptersFormData } from "../../components/layout/modals/EarlyAdapters";
 import { DesignProductFormData } from "../../components/layout/modals/DesignProduct";
+import { EarlyAdoptersFormData } from "../../components/layout/modals/EarlyAdapters";
+import { BASE_API_URL } from "../../utils/env.config";
 
 // Send the form data to your payment gateway API
 const getPaymentForm = async (

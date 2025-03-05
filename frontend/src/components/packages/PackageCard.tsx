@@ -1,12 +1,14 @@
-import PackageInfo from "./PackageInfo";
+import { useState } from 'react';
+import { useTranslation } from "react-i18next";
+import { BsPeople } from "react-icons/bs";
 import { PiCookingPot } from "react-icons/pi";
 import { TfiTimer } from "react-icons/tfi";
-import { BsPeople } from "react-icons/bs";
-import { Package } from "../../client/types.gen";
-import { useTranslation } from "react-i18next";
-import { useState } from 'react';
-import PackageModal from './PackageModal';
 import { Link } from "react-router-dom";
+
+import PackageInfo from "./PackageInfo";
+import PackageModal from './PackageModal';
+import { Package } from "../../client/types.gen";
+
 const PackageCard = ({ data }: { data: Package }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();

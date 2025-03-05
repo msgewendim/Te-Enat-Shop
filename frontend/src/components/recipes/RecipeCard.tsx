@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
-import { createRecipeCardImage } from "../../utils/helperFunctions";
+
 import { Recipe } from '../../client/types.gen';
 import { DateBadgeProps } from '../../providers/interface/general.props';
+import { createRecipeCardImage } from "../../utils/helperFunctions";
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   const { image } = recipe;

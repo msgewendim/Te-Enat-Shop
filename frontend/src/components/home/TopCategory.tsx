@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+
 import { useAppContext } from "../../hooks/app/useAppContext";
-import { ourTopCategories } from "../../utils/constants";
 import { CategoryCardProps } from "../../providers/interface/general.props";
+import { ourTopCategories } from "../../utils/constants";
 
 const OurCategory = () => {
   const { t } = useTranslation();

@@ -1,8 +1,9 @@
-import { Customer } from "../../client/types.gen";
-import { FormInput } from "../ui/FormInput";
-import useCheckoutFormData from "../../hooks/app/useCheckoutFormData";
-import { useTranslation } from "react-i18next";
 import { UseFormRegister } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+
+import { Customer } from "../../client/types.gen";
+import useCheckoutFormData from "../../hooks/app/useCheckoutFormData";
+import { FormInput } from "../ui/FormInput";
 import Loader from "../ui/Loader";
 
 

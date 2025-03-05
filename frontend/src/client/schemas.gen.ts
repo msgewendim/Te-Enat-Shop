@@ -387,9 +387,23 @@ export const $CartItem = {
             type: 'number',
             format: 'float',
             description: 'Price of the product in the cart'
+        },
+        itemType: {
+            type: 'string',
+            enum: ['Product', 'Package'],
+            description: 'Type of the item (Product or Package)',
+            example: 'Product'
+        },
+        name: {
+            type: 'string',
+            description: 'Name of the product'
+        },
+        image: {
+            type: 'string',
+            description: 'URL to the product image'
         }
     },
-    required: ['item', 'quantity', 'size', 'price']
+    required: ['item', 'quantity', 'size', 'price', 'itemType', 'name']
 } as const;
 
 export const $Recipe = {

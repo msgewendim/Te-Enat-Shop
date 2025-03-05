@@ -1,22 +1,22 @@
 import {
   createBrowserRouter,
 } from "react-router-dom";
+
 import App from '../App.tsx'
-import Home from "../pages/Home.tsx";
+import AdminRoute from "../components/admin/AdminRoute.tsx";
 import About from "../pages/About.tsx";
+import AdminDashboard from "../pages/Admin.tsx";
+import Checkout from "../pages/Checkout.tsx";
+import Contact from "../pages/Contact.tsx";
+import Events from "../pages/Events.tsx";
+import Home from "../pages/Home.tsx";
+import Packages from "../pages/Packages.tsx";
+import RecipePage from "../pages/RecipePage.tsx";
 import Recipes from "../pages/Recipes.tsx";
 import Shop from "../pages/Shop.tsx";
 import SingleProductPage from "../pages/SingleProductPage.tsx";
-import RecipePage from "../pages/RecipePage.tsx";
+import ThankYou from '../pages/ThankYou';
 import { ScrollToTop } from "../utils/helperFunctions.ts";
-import Checkout from "../pages/Checkout.tsx";
-import Contact from "../pages/Contact.tsx";
-import SuccessPayment from "../pages/SuccessPayment.tsx";
-import Login from "../components/Login.tsx";
-import AdminDashboard from "../pages/Admin.tsx";
-import Packages from "../pages/Packages.tsx";
-import AdminRoute from "../components/admin/AdminRoute.tsx";
-import Events from "../pages/Events.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -69,10 +69,6 @@ export const routes = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
         path: "/admin",
         element: (
           <AdminRoute>
@@ -82,7 +78,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/thank-you",
-        element: <SuccessPayment />,
+        element: <ThankYou />,
       },
     ]
   }

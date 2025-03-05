@@ -1,10 +1,10 @@
-import { useMemo } from "react";
-import { query } from "../../providers/interface/context";
+import { useMemo , useEffect } from "react";
 import { toast } from "react-toastify";
+
+import { Recipe } from "../../client";
+import { query } from "../../providers/interface/context";
 import { useAppContext } from "../app/useAppContext";
 import useGenericData from "../app/useGenericData";
-import { Recipe } from "../../client";
-import { useEffect } from "react";
 
 function useRecipes({ limit = 12 }: { limit?: number }) {
   const { page, setPage, category, filter, setCategory } = useAppContext();

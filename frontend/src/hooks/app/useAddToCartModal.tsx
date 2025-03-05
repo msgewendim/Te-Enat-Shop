@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { toast } from 'react-toastify'
+
 import { useAppContext } from './useAppContext'
 import { CartItem, Product, ProductSize } from '../../client/types.gen'
-import { addItemToCartList } from '../../utils/helperFunctions'
-import { toast } from 'react-toastify'
 import { ItemProperties, ProductModalProps } from '../../providers/interface/products.props'
+import { addItemToCartList } from '../../utils/helperFunctions'
 
 
 function useAddToCartModal({ product, setOpen }: ProductModalProps) {
@@ -15,8 +16,10 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
 
   const [itemProperties, setItemProperties] = useState<ItemProperties>({
     quantity: 1,
-    size: sizes[sizeIdx]?.sizeName,
-    price: prices[sizeIdx]
+    size: sizes[sizeIdx]?.sizeName || '',
+    price: prices[sizeIdx] || 0,
+    itemType: 'Product',
+    name: product.name,
   })
   const handleQuantityChange = useCallback((change: number) => {
     setItemProperties(prev => ({
@@ -28,8 +31,8 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
   useEffect(() => {
     setItemProperties(prev => ({
       ...prev,
-      size: sizes[sizeIdx]?.sizeName,
-      price: prices[sizeIdx]
+      size: sizes[sizeIdx]?.sizeName || '',
+      price: prices[sizeIdx] || 0
     }))
   }, [prices, sizeIdx, sizes])
 
@@ -39,24 +42,18 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
       setSizeIdx(newSizeIdx);
       setItemProperties(prev => ({
         ...prev,
-        size: sizes[newSizeIdx]?.sizeName,
-        price: prices[newSizeIdx],
+        size: sizes[newSizeIdx]?.sizeName || '',
+        price: prices[newSizeIdx] || 0
       }));
     }
   }, [sizes, prices, setSizeIdx]);
 
 
   const handleAddProductToCart = useCallback((product: Product) => {
-    const newItem: CartItem = { item: product, ...itemProperties }
+    const newItem: CartItem = { item: product, ...itemProperties, itemType: 'Product', name: product.name, image: product.image }
     const updatedCartItems = addItemToCartList(cartItems, newItem)
     sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
     setCartItems(updatedCartItems)
-    // setOrderItems([...orderItems, {
-    //   product: product,
-    //   quantity: itemProperties.quantity,
-    //   size: itemProperties.size,
-    //   price: itemProperties.price * itemProperties.quantity,
-    // }])
     toast.success("מוצר נוסף לעגלה")
     setOpen(false)
   }, [cartItems, setCartItems, itemProperties, setOpen])

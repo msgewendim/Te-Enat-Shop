@@ -1,11 +1,14 @@
 import { useTranslation } from 'react-i18next';
+
 import ProductCard from "../components/products/ProductCard";
+
 import ShopBanner from "/ShopBanner.svg";
-import Loader from "../components/ui/Loader";
-import Filters from "../components/ui/Filters";
+
 import Banner from "../components/ui/Banner";
-import useShop from "../hooks/product/useShop";
+import Filters from "../components/ui/Filters";
+import Loader from "../components/ui/Loader";
 import Pagination from '../components/ui/Pagination';
+import useShop from "../hooks/product/useShop";
 
 const Shop = () => {
   const { t } = useTranslation();

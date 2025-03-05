@@ -1,3 +1,4 @@
+import { QueryObserverResult , RefetchOptions } from "@tanstack/react-query";
 import { FC } from "react";
 import {
   FieldValues,
@@ -5,10 +6,9 @@ import {
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
+
 import { Category, ProductSize } from "../../client/types.gen";
 import { CategoryMapping } from "../../utils/constants";
-import { QueryObserverResult } from "@tanstack/react-query";
-import { RefetchOptions } from "@tanstack/react-query";
 
 interface RelatedItemsProps {
   endpoint: string;

@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next';
+
+import PackageCard from '../components/packages/PackageCard';
 import Banner from "../components/ui/Banner";
+
 import ShopBanner from "/ShopBanner.svg";
+
 import Pagination from '../components/ui/Pagination';
 import usePackages from '../hooks/package/usePackages';
-import PackageCard from '../components/packages/PackageCard';
 
 const Packages = () => {
   const { t } = useTranslation();

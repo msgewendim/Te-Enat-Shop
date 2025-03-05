@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 import CheckoutForm from "../components/checkout/CheckoutForm";
 import CheckoutSummary from "../components/checkout/CheckoutSummary";
-import { useTranslation } from 'react-i18next';
 
 
 const Checkout = () => {

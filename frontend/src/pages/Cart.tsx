@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
 import CartItemsList from '../components/cart/CartItemsList';
 import { useAppContext } from '../hooks/app/useAppContext';
-import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const { totalPrice, openCart, setOpenCart, cartItems } = useAppContext();

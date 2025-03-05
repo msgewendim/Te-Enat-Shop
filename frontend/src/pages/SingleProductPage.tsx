@@ -1,18 +1,21 @@
 import { FC, useState } from 'react';
-import { Link, useParams } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { divideFeatures } from "../utils/helperFunctions";
+
+import { Product } from '../client/types.gen';
+import RelatedItems from '../components/layout/RelatedItems';
+import FeatureList from '../components/products/FeatureElement';
+import PopupProduct from "../components/products/PopupProduct";
 import Banner from "../components/ui/Banner";
 import Loader from "../components/ui/Loader";
-import PopupProduct from "../components/products/PopupProduct";
+
 import videoProduct from "/videoProduct.png";
 import ProductPageBanner from "/ProductPageBanner.svg";
-import FeatureList from '../components/products/FeatureElement';
-import RelatedItems from '../components/layout/RelatedItems';
-import { ProductActionsProps } from '../providers/interface/products.props';
-import { Product } from '../client/types.gen';
+
 import useGenericData from '../hooks/app/useGenericData';
+import { ProductActionsProps } from '../providers/interface/products.props';
+import { divideFeatures } from "../utils/helperFunctions";
 
 const SingleProduct = () => {
   const { t } = useTranslation();
@@ -56,7 +59,7 @@ const SingleProduct = () => {
         <ProductVideo />
         <RelatedItems
           endpoint='/products'
-          itemCategory={categories[0].nameInEnglish}
+          itemCategory={categories[0]?.nameInEnglish || ''}
           titleKey='relatedProducts.title'
           exclude={_id}
         />

@@ -1,16 +1,16 @@
-import { DialogPanel } from "@headlessui/react";
-import DarkMode from "../../ui/DarkMode";
-import { Dialog } from "@headlessui/react";
-import { Link } from "react-router-dom";
-import { BiUserCircle } from "react-icons/bi";
+import { DialogPanel , Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useTranslation } from "react-i18next";
-import { MobileMenuButtonProps, MobileMenuProps } from "../../../providers/interface/general.props";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
+import { BiUserCircle } from "react-icons/bi";
+import { Link } from "react-router-dom";
+
 import AuthButton from "./AuthButton";
-import Logo from "../../ui/Logo";
-import FloatingCartButton from "../../cart/FloatingCart";
 import useAuth from "../../../hooks/auth/useAuth";
+import { MobileMenuButtonProps, MobileMenuProps } from "../../../providers/interface/general.props";
+import FloatingCartButton from "../../cart/FloatingCart";
+import DarkMode from "../../ui/DarkMode";
+import Logo from "../../ui/Logo";
 
 const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();

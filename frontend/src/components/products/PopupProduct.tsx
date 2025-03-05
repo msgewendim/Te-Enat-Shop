@@ -1,10 +1,11 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { FC, Fragment } from 'react'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import Select from '../ui/Select'
+import { Link } from 'react-router-dom'
+
 import useAddToCartModal from '../../hooks/app/useAddToCartModal'
 import { ProductModalProps } from '../../providers/interface/products.props'
+import Select from '../ui/Select'
 
 
 const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
@@ -72,7 +73,7 @@ const ProductModal: FC<ProductModalProps> = ({ product, open, setOpen }) => {
                         />
                         <div className="flex items-center justify-between mb-6">
                           <span className="text-2xl font-bold text-[#42855b] order-1">
-                            ₪{(prices[sizeIdx] * itemProperties.quantity).toFixed(2)}
+                          ₪{(prices[sizeIdx] || 0 * itemProperties.quantity).toFixed(2)}
                           </span>
                           <SelectQuantity handleChange={handleQuantityChange} quantity={itemProperties.quantity} />
                         </div>
