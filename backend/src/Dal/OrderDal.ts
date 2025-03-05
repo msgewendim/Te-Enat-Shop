@@ -15,11 +15,12 @@ const addOrder = async (
 ): Promise<string> => {
   const newOrder = {
     customer,
-    orderItems,
+    items: orderItems,
     totalPrice,
     paymentStatus: "pending",
   };
   try {
+    console.log("[newOrder]", newOrder);
     const order = await OrderModel.insertMany(newOrder);
     if (!order) {
       throw new BadRequestError("Failed to add order");
@@ -35,22 +36,55 @@ const updatePaymentStatus = async (
   orderTransaction: Partial<SimplifiedTransaction>
 ) => {
   try {
-    // const { paymentStatus, ...orderData } = await this.getOrderById(id);
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new BadRequestError(`Invalid order ID: ${id}`);
     }
-    const updatedOrder = {
-      paymentStatus: "succeeded",
-      ...orderTransaction,
+
+    // Get the existing order first
+    const existingOrder = await OrderModel.findById(id);
+    if (!existingOrder) {
+      throw new NotFoundError(`Order with ID ${id} not found`);
+    }
+    console.log("[Update Payment Status] existingOrder", existingOrder);
+    // Map the transaction data to the paymentDetails structure
+    const paymentDetails = {
+      transaction_uid: orderTransaction.transaction?.transaction_uid,
+      transaction_status: orderTransaction.transaction?.transaction_status,
+      transaction_amount: orderTransaction.transaction?.transaction_amount,
+      transaction_currency: orderTransaction.transaction?.transaction_currency,
+      transaction_date: orderTransaction.transaction?.transaction_date ? new Date(orderTransaction.transaction.transaction_date) : undefined,
+      transaction_type: orderTransaction.transaction_type,
+      number_of_payments: orderTransaction.payments?.number_of_payments,
+      first_payment_amount: orderTransaction.payments?.first_payment_amount,
+      rest_payments_amount: orderTransaction.payments?.rest_payments_amount,
+      card_holder_name: orderTransaction.customer_info?.card_holder_name,
+      customer_uid: orderTransaction.customer_info?.customer_uid,
+      terminal_uid: orderTransaction.customer_info?.terminal_uid
     };
+
+    // Determine payment status based on transaction status
+    // You may need to adjust this logic based on your specific requirements
+    const paymentStatus = orderTransaction.transaction?.transaction_status === "000" ? "paid" : "failed";
+
+    console.log("[Update Payment Status]", { paymentStatus, transactionId: paymentDetails.transaction_uid });
+    
+    // Update only the necessary fields
     const updated = await OrderModel.findByIdAndUpdate(
       id,
-      { $set: updatedOrder },
+      { 
+        $set: { 
+          status: paymentStatus,
+          paymentDetails: paymentDetails,
+          updatedAt: new Date()
+        } 
+      },
       { new: true }
     );
+
     if (!updated) {
       throw new NotFoundError(`Order with ID ${id} not found`);
     }
+    
     return updated;
   } catch (error) {
     throw error;
@@ -95,10 +129,24 @@ const getOrders = async (limit: number, page: number) => {
     throw error;
   }
 };
+
+// Get order by orderId and transactionUid
+const getOrder = async (orderId: string, transactionUid: string) => {
+  try {
+    const order = await OrderModel.findOne({ _id: orderId, transaction: { transaction_uid: transactionUid } });
+    if (!order) {
+      throw new NotFoundError(`Order with id: ${orderId} not found`);
+    }
+    return order;
+  } catch (error) {
+    throw error;
+  }
+};
 export {
   addOrder,
   updatePaymentStatus,
   checkPaymentStatus,
   getOrderById,
   getOrders,
+  getOrder,
 };

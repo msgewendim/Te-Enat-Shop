@@ -3,6 +3,13 @@ env.config();
 
 const NODE_ENV = process.env.NODE_ENV as string;
 
+// Log missing critical environment variables
+const logMissingEnvVar = (name: string, value: string | undefined) => {
+  if (!value) {
+    console.warn(`[WARNING] Missing environment variable: ${name}`);
+  }
+};
+
 // # FRONTEND APP
 const FRONTEND_URL_ON_RENDER = process.env.FRONTEND_URL_ON_RENDER as string;
 const FRONTEND_URL_DEVELOPMENT = process.env.FRONTEND_URL_DEVELOPMENT as string;
@@ -31,6 +38,13 @@ const PAYPLUS_TERMINAL_UID = process.env.PAYPLUS_TERMINAL_UID as string;
 const PAYPLUS_API_KEY = process.env.PAYPLUS_API_KEY as string;
 const PAYPLUS_API_SECRET_KEY = process.env.PAYPLUS_API_SECRET_KEY as string;
 const PAYPLUS_PAYMENT_PAGE_UID = process.env.PAYPLUS_PAYMENT_PAGE_UID as string;
+
+// Log missing critical PayPlus variables
+logMissingEnvVar('PAYPLUS_PROD_API_URL', PAYPLUS_PROD_API_URL);
+logMissingEnvVar('PAYPLUS_API_KEY', PAYPLUS_API_KEY);
+logMissingEnvVar('PAYPLUS_API_SECRET_KEY', PAYPLUS_API_SECRET_KEY);
+logMissingEnvVar('PAYPLUS_TERMINAL_UID', PAYPLUS_TERMINAL_UID);
+logMissingEnvVar('PAYPLUS_PAYMENT_PAGE_UID', PAYPLUS_PAYMENT_PAGE_UID);
 
 // # AUTH0 ENV
 const AUTH_SECRET = process.env.AUTH_SECRET as string;

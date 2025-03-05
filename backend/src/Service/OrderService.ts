@@ -5,6 +5,7 @@ import {
 import {
   addOrder,
   checkPaymentStatus,
+  getOrder,
   getOrders,
   updatePaymentStatus,
 } from "../Dal/OrderDal";
@@ -25,6 +26,7 @@ export class OrderService {
     const { added_info: orderId, ...transactionData } = transactionInfo;
     // update payment status in database
     try {
+      console.log("[Update Payment Status] orderId", orderId);
       await updatePaymentStatus(orderId as string, transactionData);
     } catch (error) {
       throw error;
@@ -35,9 +37,18 @@ export class OrderService {
     return orders;
   }
 
+  async getOrder(orderId: string, transactionUid: string) {
+    try {
+      const order = await getOrder(orderId, transactionUid);
+      return order;
+    } catch (error) {
+      throw error;
+    }
+  }
   async getPaymentLink(orderItems: CartItem[], customer: Customer, totalPrice: number) {
     try {
       const orderId = await addOrder(customer, orderItems, totalPrice);
+      console.log("[orderId]", orderId);
       const generatePaymentLinkPayload = getPayplusGenLinkPayload(
         orderItems, 
         customer, 

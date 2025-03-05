@@ -1,4 +1,3 @@
-import { OrderTransaction, PaymentFormRequest } from "../../types/order.types";
 import { OrderService } from "../Service/OrderService";
 import { NextFunction, Request, Response } from "express";
 import { sendPaymentNotification } from "../utils/middleware/sse.events";
@@ -6,11 +5,28 @@ import {
   BadRequestError,} from "../utils/customErrors";
 import { validateObjectId } from "../validators";
 import { isSuccessfulTransaction, PayplusPaymentResponse } from "../utils/PaymentProvider/types";
+// import { mailer } from "../utils/mailer";
+
 
 export class OrderController {
   private orderService: OrderService;
   constructor(orderService: OrderService) {
     this.orderService = orderService;
+  }
+  async getOrder(request: Request, response: Response, next: NextFunction) {
+    try {
+      const { orderId, transactionUid } = request.query;
+      if (!orderId || !transactionUid) {
+        return response.status(400).json({
+          success: false,
+          message: 'Missing required fields'
+        });
+      }
+      const order = await this.orderService.getOrder(orderId as string, transactionUid as string);
+      response.json({ order });
+    } catch (error: any) {
+      next(error);
+    }
   }
   async getOrders(request: Request, response: Response, next: NextFunction) {
     try {
@@ -38,7 +54,7 @@ export class OrderController {
           success: false,
           message: 'Missing required fields'
         });
-      }
+      }  
 
       const paymentUrl = await this.orderService.getPaymentLink(
         orderItems,
@@ -113,7 +129,21 @@ export class OrderController {
         await this.orderService.updatePaymentStatus(transactionData);
         sendPaymentNotification(transactionData.added_info as string);
       }    
-      response.sendStatus(200); // send to Morning server
+      
+      // send mail to customer
+      // const mailOptions = {
+      //   from: 'noreply@morning.com',
+      //   to: transactionInfo.data.customer_email,
+      //   subject: 'Payment successful',
+      //   text: 'Payment successful',
+      //   html: `<p>Payment successful</p>
+      //   <p>Order ID: ${transactionData.transaction.transaction_uid}</p>
+      //   <p>Amount: ${transactionData.transaction.transaction_amount}</p>
+      //   <p>Currency: ${transactionData.transaction.transaction_currency}</p>
+      //   <p>Date: ${transactionData.transaction.transaction_date}</p>
+      //   `
+      // }
+      // await mailer.sendMail(mailOptions);
     } catch (error: any) {
       next(error);
     }

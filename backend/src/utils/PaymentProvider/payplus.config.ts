@@ -5,8 +5,8 @@ import { Customer, CartItem } from "../../../types/order.types";
 import { PayplusGenLinkResponse200,} from './types';
 import axios from 'axios';
 
-const NGROK_URL_BACKEND = "https://db7e-77-124-17-69.ngrok-free.app";
-const NGROK_URL_FRONTEND = "https://9564-77-124-17-69.ngrok-free.app";
+const NGROK_URL_BACKEND = "https://83b4-77-127-206-117.ngrok-free.app";
+const NGROK_URL_FRONTEND = "https://58b6-77-127-206-117.ngrok-free.app";
 const FRONTEND_URL = NODE_ENV === "production" ?  FRONTEND_URL_PRODUCTION : NGROK_URL_FRONTEND;
 const BACKEND_URL = NODE_ENV === "production" ? BACKEND_APP_URL  : NGROK_URL_BACKEND;
 
@@ -15,7 +15,7 @@ export function getPayplusGenLinkPayload(
   orderItems: CartItem[], 
   customer: Customer, 
   totalPrice: number, 
-  description: string
+  internalOrderId: string
 ): PayplusGenLinkPayload {
   return {
     payment_page_uid: PAYPLUS_PAYMENT_PAGE_UID,
@@ -34,7 +34,7 @@ export function getPayplusGenLinkPayload(
       // postal_code: customer.address.postal_code || ""
     },
     items: orderItems.map(orderItem => ({
-      name: orderItem.item.name,
+      name: orderItem.name,
       quantity: orderItem.quantity,
       price: orderItem.price,
       product_invoice_extra_details: orderItem.size
@@ -45,14 +45,14 @@ export function getPayplusGenLinkPayload(
     refURL_cancel: `${FRONTEND_URL}/checkout`,      // Customer redirect on failure
     refURL_callback: `${BACKEND_URL}/api/orders/notify`, // Backend IPN for success
 
-    more_info: description,
+    more_info: internalOrderId,
     language_code: "he",
     payments: 1,
   };
 }
 
 export async function getPaymentLink(payload: PayplusGenLinkPayload) {
-  try {
+  try {    
     const response = await axiosInstance.post<PayplusGenLinkResponse200>(
       `/PaymentPages/generateLink/`,
       payload
@@ -64,6 +64,7 @@ export async function getPaymentLink(payload: PayplusGenLinkPayload) {
 
     return response.data;
   } catch (error) {
+    console.error('[PayPlus] Error details:', error);
     if (axios.isAxiosError(error)) {
       throw new Error(`PayPlus API error: ${error.response?.data?.message || error.message}`);
     }

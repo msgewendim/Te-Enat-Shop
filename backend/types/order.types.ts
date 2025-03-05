@@ -68,6 +68,10 @@ export type CartItem = {
    */
   item: (Product | Package);
   /**
+   * Type of the item (Product or Package)
+   */
+  itemType: 'Product' | 'Package';
+  /**
    * Quantity of the product in the cart
    */
   quantity: number;
@@ -79,6 +83,14 @@ export type CartItem = {
    * Price of the product in the cart
    */
   price: number;
+  /**
+   * Name of the product
+   */
+  name: string;
+  /**
+   * Image URL of the product
+   */
+  image?: string;
 };
 
 export type PaymentFormRequest = {

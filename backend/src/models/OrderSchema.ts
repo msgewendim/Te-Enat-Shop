@@ -1,4 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { Package } from '../../types/product.types';
+import { Product } from '../../types/product.types';
 
 // Address sub-schema
 const AddressSchema = new Schema({
@@ -51,8 +53,13 @@ const CustomerSchema = new Schema({
 const OrderItemSchema = new Schema({
   item: {
     type: Schema.Types.ObjectId,
-    ref: 'Item',
+    refPath: 'items.itemType',
     required: true
+  },
+  itemType: {
+    type: String,
+    required: true,
+    enum: ['Product', 'Package']
   },
   quantity: {
     type: Number,
@@ -67,6 +74,14 @@ const OrderItemSchema = new Schema({
   size: {
     type: String,
     required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: false
   }
 });
 
@@ -151,11 +166,14 @@ export interface ICustomer {
   address: IAddress;
 }
 
-export interface IOrderItem {
+export interface ICartItem {
   item: mongoose.Types.ObjectId;
+  itemType: 'Product' | 'Package';
   quantity: number;
   price: number;
   size: string;
+  name: string;
+  image?: string;
 }
 
 export interface IPaymentDetails {
@@ -175,9 +193,9 @@ export interface IPaymentDetails {
 
 export interface IOrder extends Document {
   customer: ICustomer;
-  items: IOrderItem[];
+  items: ICartItem[];
   totalPrice: number;
-  status: 'pending' | 'processing' | 'paid' | 'failed' | 'cancelled';
+  status: 'pending' | 'paid' | 'failed' | 'cancelled';
   paymentDetails: IPaymentDetails | null;
   createdAt: Date;
   updatedAt: Date;
