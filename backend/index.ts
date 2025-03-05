@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import fs from "fs";
 import OrderRoute from "./src/Routes/OrderRoute";
 import UserRoute from "./src/Routes/UserRoute";
 import RecipeRoute from "./src/Routes/RecipeRoutes";
@@ -49,16 +50,41 @@ server.use("/api/events", EventsMiddleware);
 // handle static files for the frontend
 const FRONTEND_BUILD_PATH = path.join(__dirname, "..", "frontend", "dist");
 
-// Add error handling for static files and catch-all route
-server.use(express.static(FRONTEND_BUILD_PATH, { fallthrough: true }));
-server.get("*", (req, res) => {
-  res.sendFile(path.join(FRONTEND_BUILD_PATH, "index.html"), (err) => {
-    if (err) {
-      console.error("Error loading client application:", err);
-      res.status(500).send("Error loading client application");
+// Check if frontend build directory exists before serving static files
+if (fs.existsSync(FRONTEND_BUILD_PATH)) {
+  console.log(`Serving frontend from: ${FRONTEND_BUILD_PATH}`);
+  server.use(express.static(FRONTEND_BUILD_PATH));
+  
+  // Serve index.html for all non-API routes (SPA support)
+  server.get("*", (req, res) => {
+    // Skip API routes
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({ error: "API endpoint not found" });
     }
+    
+    res.sendFile(path.join(FRONTEND_BUILD_PATH, "index.html"), (err) => {
+      if (err) {
+        console.error("Error loading client application:", err);
+        res.status(500).send("Error loading client application");
+      }
+    });
   });
-});
+} else {
+  console.log(`Frontend build directory not found at: ${FRONTEND_BUILD_PATH}`);
+  
+  // Handle non-API routes when frontend is not available
+  server.get("/", (req, res) => {
+    res.status(200).send("Te-Enat API Server is running. Frontend is not available.");
+  });
+  
+  server.get("*", (req, res, next) => {
+    // Skip API routes
+    if (req.path.startsWith('/api/')) {
+      return next();
+    }
+    res.status(404).send("Frontend not available. Please use the API endpoints.");
+  });
+}
 
 // handle errors
 server.use(errorHandler);
