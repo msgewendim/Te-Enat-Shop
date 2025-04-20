@@ -1,0 +1,528 @@
+{
+  "tenat" : "טנאת",
+  "nav": {
+    "home": "עמוד הבית",
+    "shop": "חנות",
+    "recipes": "מתכונים",
+    "about": "עלינו",
+    "contact": "צרו קשר",
+    "adminPanel": "פאנל ניהול",
+    "login": "התחברות",
+    "logout": "התנתקות",
+    "closeMenu": "סגור תפריט",
+    "packages": "מארזים",
+    "openMenu": "פתח תפריט",
+    "events": "אירועים",
+    "TOBIA": "TOBIA"
+  },
+  "events": {
+    "details": "פרטים",
+    "name": "שם המזמין",
+    "title": "אירועים",
+    "eventDescription": "תיאור אירוע",
+    "eventDate": "תאריך אירוע",
+    "cancel": "ביטול",
+    "company": "חברה",
+    "fullName": "שם מלא",
+    "email": "מייל",
+    "phone": "פלאפון",
+    "submit": "שלח"
+  },
+  "banner": {
+    "ariaLabel": "Banner for {{text}}"
+  },
+  "homePage": {
+    "hero": {
+      "mainHeading": "חווית הבישול שלכם",
+      "subHeading": "עומדת להשתדרג",
+      "description": "הזמינו חומרי גלם איכותיים, למדו ובשלו אוכל מושלם עבור האהובים שלכם",
+      "cards": {
+        "heading": "כניסה מהירה",
+        "scrollBelow": "לקוחות חדשים גללו למטה",
+        "recipes": {
+          "title": "מתכונים"
+        },
+        "store": {
+          "title": "חנות"
+        }
+      }
+    },
+    "grantees": {
+      "title": "ההבטחות שלנו",
+      "freshness": {
+        "title": "טריות 100%",
+        "text": "אנו מתחייבים לספק את המוצרים הטריים והאיכותיים"
+      },
+      "support": {
+        "title": "תמיכה",
+        "text": "זמינים במגוון דרכי התקשרות לכל שאלה"
+      },
+      "returnPolicy": {
+        "title": "מדיניות החזרה",
+        "text": "ביטול רכישה בכל עת טרם יציאת המשלוח זמין מיידית"
+      },
+      "securePayment": {
+        "title": "תשלום מאובטח",
+        "text": "תשלום על ידי חברת 'חשבונית ירוקה'"
+      }
+    },
+    "whoAreWe": {
+      "title": "מי אנחנו?",
+      "mainHeading": "אנו ספקים של סחורה איכותית ומוצרי בישול מובילים",
+      "description": "השילוב בין מסורת לחדשנות מאפשר לכם לגלות טעמים חדשים וליהנות ממוצרים איכותיים במטבח שלכם. כל מוצר נבחר בקפידה כדי להעשיר את חווית הבישול והאכילה שלכם. הניחוחות והמטבח האותנטי בקצות אצבעותיכם.",
+      "imageAlt": "תמונה המציגה את המוצרים שלנו",
+      "naturalProducts": {
+        "title": "100% מוצרים טבעיים",
+        "description": "המוצרים שלנו עשויים מרכיבים טבעיים בלבד, ללא תוספים מלאכותיים. אנחנו מתחייבים לאיכות טהורה שמביאה את הטבע היישר למטבח שלכם."
+      },
+      "healthyProducts": {
+        "title": "100% יצירתיות קולינרית",
+        "description": "המוצרים שלנו תורמים לבריאות בעזרת רכיבים טבעיים ועשירים בוויטמינים ומינרלים. כל מוצר נועד לתמוך באורח חיים בריא ומאוזן."
+      }
+    },
+    "topProducts": {
+      "title": "החנות שבנינו עבורכם",
+      "description": "גלו את המוצרים המובילים שלנו שמשלבים בין איכות לטעם ייחודי.\n כל מוצר נבחר בקפידה כדי להעניק לכם חוויית בישול טהורה, עשירה ומגוונת.",
+      "previous": "הקודם",
+      "next": "הבא"
+    },
+    "ourSpecialty": {
+      "title": "המומחיות שלנו, אלו היצירות שלכם",
+      "readMore": "אני רוצה",
+      "description":"קבלו הוראות מדויקות ליצירת כל מנה ברמת המסעדה.\n מבחינתנו כל מנה היא מופלאה וזה כל הדרוש כדי להכניס  חוויה קולינרית אותנטית איכותית לבית.",
+      "features": {
+        "spices": {
+          "title": "תבלינים אקזוטיים",
+          "description": "גלו את הטעמים של העולם עם אוסף התבלינים האקזוטיים שלנו."
+        },
+        "legumes": {
+          "title": "קטניות אורגניות",
+          "description": "תהנו מהטוב של הטבע הגדל בשדות מופחתי ריסוסי הדברה מזיקים."
+        },
+        "blends": {
+          "title": "תערובות גורמה",
+          "description": "הרימו את היצירות הקולינריות שלכם עם תערובות התבלינים האיכותיות והבלעדיות שלנו."
+        },
+        "health": {
+          "title": "יתרונות בריאותיים",
+          "description": "שפרו את אורח החיים שלכם עם מבחר התבלינים והתערובות שנבחרו בקפידה עבורכם"
+        }
+      }
+    },
+    "ourCategory": {
+      "title": "הקטגוריות שלנו"
+    },
+    "productPackages": {
+      "description" : "המארזים שלנו כוללים בדיוק מה שצריך למנה מושלמת, חוסכים כסף, בזבוז מזון מיתר ואריזות גדולות.\n אכן פתרון טעים השומר על הסביבה!",
+      "title": "המארזים שלנו",
+      "price": "מחיר",
+      "buy": "הוסף לעגלה",
+      "cookingTime": "זמן הכנה",
+      "peopleQuantity": "כמות סועדים",
+      "ingredientsQuantity": "כמות מצרכים",
+      "readMore": "קרא עוד",
+      "toRecipe": "למתכון"
+    },
+    "q&a": {
+      "title": "שאלות ותשובות"
+    }
+  },
+  "footer": {
+    "brand": "טנאת",
+    "home": "עמוד הבית",
+    "about": "עלינו",
+    "store": "חנות",
+    "recipes": "מתכונים",
+    "contact": "צור קשר",
+    "subscribe": {
+      "title": "הירשם לעדכונים",
+      "placeholder": "הזן כתובת מייל",
+      "button": "הרשמה",
+      "description": "מוצרים ומתכונים חדשים בהמשך",
+      "email": "מייל",
+      "city": "עיר",
+      "name": "שם מלא",
+      "errors": {
+        "email": "מייל לא חוקי",
+        "city": "עיר לא חוקית",
+        "name": "שם לא חוקי"
+      }
+    },
+    "infoAndPrivacy": {
+      "info": "מידע ותנאי שירות",
+      "privacy": "מדיניות פרטיות",
+      "terms": "תנאי שימוש",
+      "rights": "כל הזכויות שמורות",
+      "year": "2024 ©"
+    },
+    "events": "אירועים"
+  },
+  "recipe": {
+    "imageAlt": "Image of {{title}}",
+    "prepTime": "זמן הכנה",
+    "difficulty": "קושי",
+    "servings": "כמות סועדים",
+    "ingredients": "מרכיבים",
+    "instructions": "הוראות הכנה",
+    "readMore": "צפה",
+    "productsFromRecipe": "מוצרים המוצגים במתכון",
+    "chooseAllOrSome": "בחר פריט מהמתכון או הוסף את כולם לעגלה"
+  },
+  "shop": {
+    "title": "חנות",
+    "productList": "רשימת מוצרים",
+    "openCart": "פתח עגלת קניות"
+  },
+  "packages": {
+    "title": "המארזים שלנו",
+    "packagesList": "רשימת מארזים"
+  },
+  "filters": {
+    "searchLabel": "חיפוש מוצרים",
+    "searchPlaceholderProduct": "הקלד שם מוצר",
+    "searchPlaceholderRecipe": "הקלד שם מתכון",
+    "searchPlaceholderPackage": "הקלד שם מארז",
+    "clearButton": "נקה סינון"
+  },
+  "product": {
+    "readMore": "קרא עוד",
+    "addToCart": "הוסף לעגלה"
+  },
+  "cart": {
+    "title": "עגלת קניות",
+    "close": "סגור עגלה",
+    "total": "סה\"כ",
+    "shippingNote": "לא כולל דמי משלוח",
+    "checkout": "לתשלום",
+    "or": "או",
+    "continueShopping": "המשך בקנייה",
+    "size": "גודל",
+    "quantity": "כמות",
+    "remove": "הסר",
+    "removeItem": "הסר את {{name}} מהעגלה",
+    "emptyCart": "עגלה ריקה",
+    "itemsList": "רשימת מוצרים בעגלה",
+    "allProductsAdded": "כל המוצרים נוספו לעגלה"
+  },
+  "TOBIA": {
+    "title": "TOBIA",
+    "comingSoon" : "אנו נרגשים לספר לכם שאנו מביאים אליכם את אחד ממותגי הטף מהגדולים בעולם!",
+    "comingSoonDescription" : "זה חטיף רציני שכמעט מחליף ארוחה! עשיר בבריאות ויש גם טף פלקס לקערת בריאות מושלמת,\n כן כן הבקרים יהיו הרבה יותר מרעננים.",
+    "comingSoonDescription2" : "הוא יעשה את דרכו ארצה בימים הקרובים, ואתם צריכים לדעת על כך",
+    "subscribe" : "השאירו פרטים ואנו נדאג לעדכן אתכם לפני כולם",
+    "subscribeSuccess" : "הרשמתכם בוצעה בהצלחה",
+    "subscribeError" : "אירעה שגיאה בעת הרשמה, אנא נסו שוב מאוחר יותר",
+  "emailPlaceholder" : "הזן כתובת מייל"
+
+  },
+  "designProduct": {
+    "title": "שלום ותודה שרכשתם מאיתנו",
+    "message": "רוצים לעזור לנו להשתפר?\n הצטרפו לנבחרת הטועמים שלנו!\n מדי פעם נשלח לכם מוצר חדש להתנסות, אתם תספרו לנו איך יצא.\n מוכנים? השאירו פרטים!",
+    "details": "פרטים",
+    "email": "מייל",
+    "fullName": "שם מלא",
+    "street": "כתובת",
+    "city": "עיר",
+    "zipCode": "מיקוד",
+    "birthDate": "תאריך לידה",
+    "phone": "פלאפון",
+    "cancel": "ביטול",
+    "submit": "שלח"
+  },
+  "earlyAdopters": {
+    "button": "לחצו כאן",
+    "title": "הצעה מיוחדת עבורכם",
+    "message" : "אנחנו מעריכים את התמיכה שלכם במיזם שלנו ורוצים לפנק אתכם:\nבכל רכישה שתבצעו בתקופה הקרובה, תקבלו מתנה מיוחדת מאיתנו – מוצר חדש שיחשוף אתכם לטעמים ולחוויות הייחודיות שלנו",
+    "modal": {
+      "title": "שלום ותודה שרכשתם מאיתנו",
+      "message": "תודה שאתם חלק מהמיזם שלנו.",
+      "details": "פרטים",
+      "email": "מייל",
+      "fullName": "שם מלא",
+      "street": "כתובת",
+      "city": "עיר",
+      "zipCode": "מיקוד",
+      "birthDate": "תאריך לידה",
+      "phone": "פלאפון",
+      "cancel": "ביטול",
+      "submit": "שלח"
+  }
+  },
+  "recipes": {
+    "bannerText": "גלה את המתכונים שלנו",
+    "sectionLabel": "רשימת מתכונים"
+  },
+  "errors": {
+    "genericError": "אירעה שגיאה כללית. אנא נסה שוב מאוחר יותר.",
+    "productNotAvailable": "המוצר אינו זמין כרגע.",
+    "outOfStock": "המוצר אזל מהמלאי.",
+    "invalidInput": "הקלט שסיפקת אינו תקין.",
+    "paymentFailed": "העסקה לא הצליחה. אנא בדוק את פרטי התשלום שלך.",
+    "sessionExpired": "הסשן שלך פג. אנא התחבר מחדש.",
+    "unauthorized": "אין לך הרשאה לגשת לדף זה.",
+    "loginRequired": "נא להתחבר כדי לגשת לדף זה.",
+    "orderNotFound": "ההזמנה לא נמצאה.",
+    "orderError": "אירעה שגיאה בעת טעינת ההזמנה."
+  },
+  "buttons": {
+    "addToCart": "הוסף לעגלת הקניות",
+    "viewDetails": "הצג פרטים",
+    "checkout": "לתשלום",
+    "continueShopping": "המשך לקניות",
+    "buy": "הוסף לעגלה",
+    "readMore": "קרא עוד",
+    "remove": "הסר",
+    "add": "הוסף",
+    "clear": "נקה",
+    "update": "עדכן",
+    "subscribe": "הרשם",
+    "recipes": "מתכונים",
+    "close": "סגור",
+    "previous": "לעמוד הקודם",
+    "next": "לעמוד הבא",
+    "save": "שמור",
+    "actions": {
+      "title": "פעולות",
+      "edit": "ערוך",
+      "delete": "מחק"
+    }
+  },
+  "relatedProducts": {
+    "title": "מוצרים קשורים"
+  },
+  "relatedRecipes": {
+    "title": "מתכונים קשורים"
+  },
+  "relatedItems": {
+    "previous": "הקודם",
+    "next": "הבא"
+  },
+  "contact": {
+    "title": "צור קשר",
+    "subtitle": "נשמח לשמוע את דעתך",
+    "phone": {
+      "label": "פלאפון",
+      "number": "054-3287837"
+    },
+    "email": {
+      "label": "מייל",
+      "address": "hello@example.so"
+    },
+    "address": {
+      "label": "הכתובת שלנו",
+      "line1": "ארלוזורוב 123",
+      "city": "תל-אביב-יפו",
+      "zip": "ת.פ. 00000000"
+    },
+    "namePlaceholder": "שם",
+    "fullName": "שם מלא",
+    "emailPlaceholder": "מייל",
+    "phonePlaceholder": "פלאפון",
+    "messagePlaceholder": "איך נוכל לעזור",
+    "howCanWeHelp": "איך נוכל לעזור",
+    "requiredFields": "כל השדות הן חובה",
+    "submit": "שלח"
+  },
+  "checkout": {
+    "summaryTitle": "סיכום הזמנה",
+    "formTitle": "פרטי לקוח",
+    "size": "גודל",
+    "quantity": "כמות",
+    "total": "סה\"כ",
+    "grandTotal": "סה\"כ",
+    "completeOrder": "השלם את ההזמנה",
+    "paymentIFrameTitle": "טופס תשלום",
+    "paymentIFrameLabel": "טופס תשלום עבור ההזמנה",
+    "personalDetails": "פרטים אישיים",
+    "shippingAddress": "כתובת למשלוח",
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "email": "מייל",
+    "phone": "טלפון",
+    "street": "רחוב / כתובת",
+    "streetNum" : "מספר רחוב",
+    "city": "עיר",
+    "postal_code": "מיקוד",
+    "notes": "הערות למשלוח",
+    "cancel": "ביטול",
+    "submit": "לתשלום",
+    "errorFetchingPaymentForm": "אירעה שגיאה בעת fetching טופס התשלום",
+    "errorSubmittingForm": "אירעה שגיאה בעת שליחת טופס התשלום"
+  },
+  "admin": {
+    "dashboardTitle": "דף ניהול",
+    "addProduct": "הוסף מוצר",
+    "packageAdded": "מארז נוסף בהצלחה",
+    "packageUpdated": "מארז עודכן בהצלחה",
+    "productUpdated": "מוצר עודכן בהצלחה",
+    "productAdded": "מוצר נוסף בהצלחה",
+    "openMenu": "פתח תפריט",
+    "closeMenu": "סגור תפריט",
+    "addPackage": "הוסף מארז",
+    "addRecipe": "הוסף מתכון",
+    "orders": {
+      "title": "הזמנות",
+      "noOrders": "אין הזמנות להצגה כרגע."
+    },
+    "products": {
+      "title": "מוצרים",
+      "noProducts": "אין מוצרים להצגה כרגע.",
+      "deleteConfirmation": "האם אתה בטוח שברצונך למחוק מוצר זה?",
+      "edit": "ערוך ",
+      "delete": "מחק ",
+      "add": "הוסף מוצר",
+      "tableCaption": "רשימת המוצרים עם פרטים ואפשרויות עריכה",
+      "deleteSuccess": "מוצר נמחק בהצלחה",
+      "deleteError": "בעיה במחיקת מוצר",
+      "table": {
+        "number": "מס",
+        "productName": "שם מוצר",
+        "size": "גודל",
+        "price": "מחיר",
+        "category": "קטגוריה",
+        "actions": "פעולות"
+      }
+    },
+    "recipes": {
+      "title": "מתכונים",
+      "noProducts": "אין מתכונים להצגה כרגע.",
+      "deleteConfirmation": "האם אתה בטוח שברצונך למחוק מתכון זה?",
+      "edit": "ערוך ",
+      "delete": "מחק ",
+      "add": "הוסף מתכון",
+      "tableCaption": "רשימת המתכונים עם פרטים ואפשרויות עריכה",
+      "deleteSuccess": "מתכון נמחק בהצלחה",
+      "deleteError": "בעיה במחיקת מתכון",
+      "table": {
+        "number": "מס",
+        "recipeName": "שם מתכון",
+        "category": "קטגוריה",
+        "difficulty": "דרגת קושי",
+        "actions": "פעולות"
+      }
+    },
+    "packages": {
+      "title": "מארזים",
+      "add": "הוסף מארז",
+      "noPackages": "אין מארזים להצגה כרגע.",
+      "deleteConfirmation": "האם אתה בטוח שברצונך למחוק מארז זה?",
+      "deleteSuccess": "מארז נמחק בהצלחה",
+      "deleteError": "בעיה במחיקת מארז",
+      "table": {
+        "number": "מס",
+        "packageName": "שם מארז",
+        "category": "קטגוריה",
+        "actions": "פעולות"
+      }
+    }
+  },
+  "form": {
+    "required": "Required",
+    "optional": "Optional",
+    "addFeatureGroup": {
+      "title": "יתרונות בריאותיים",
+      "featureTitle": "יתרון {{number}}",
+      "inputTitlePlaceholder": "כותרת יתרון מס' {{number}}",
+      "inputDescriptionPlaceholder": "תיאור יתרון מס' {{number}}",
+      "removeFeature": "הסר",
+      "removeFeatureLabel": "הסר יתרון {{number}}",
+      "addFeature": "הוסף יתרון"
+    },
+    "addPricing": {
+      "title": "מחירים",
+      "sizeLabel": "שם משקל / גודל",
+      "sizeQuantityLabel": "כמות משקל / גודל",
+      "priceLabel": "סכום",
+      "removePrice": "הסר",
+      "removePriceLabel": "הסר מחיר {{number}}",
+      "addPrice": "הוסף מחיר וגודל"
+    },
+    "addCategory": {
+      "title": "קטגוריות",
+      "categoriesAriaLabel": "קטגוריות",
+      "subCategories": "תת-קטגוריות"
+    },
+    "productForm": {
+      "editTitle": "עריכת מוצר",
+      "addTitle": "הוספת מוצר חדש",
+      "namePlaceholder": "שם מוצר",
+      "nameLabel": "שם מוצר",
+      "descriptionPlaceholder": "תיאור מוצר",
+      "descriptionLabel": "תיאור קצר",
+      "imagePlaceholder": "כתובת תמונה",
+      "imageLabel": "תמונת מוצר",
+      "updateButton": "עדכן",
+      "saveButton": "שמור"
+    },
+    "recipeForm": {
+      "addTitle": "הוספת מתכון חדש",
+      "editTitle": "עריכת מתכון",
+      "updateButton": "עדכן",
+      "addIngredient": "הוסף מצרך",
+      "addInstruction": "הוסף הוראה",
+      "namePlaceholder": "שם מתכון",
+      "nameLabel": "שם מתכון",
+      "descriptionLabel": "תיאור מתכון",
+      "descriptionPlaceholder": "תיאור מתכון",
+      "prepTimePlaceholder": "זמן הכנה",
+      "prepTimeLabel": "זמן הכנה",
+      "difficultyPlaceholder": "דרגת קושי",
+      "difficultyLabel": "דרגת קושי",
+      "servingsPlaceholder": "כמות סועדים",
+      "servingsLabel": "כמות סועדים",
+      "imageLabel": "תמונת מתכון",
+      "imagePlaceholder": "כתובת תמונה",
+      "ingredientsLabel": "מצרכים",
+      "ingredientsPlaceholder": "מצרכים",
+      "ingredientQuantity": "כמות מצרך ",
+      "ingredientName": "שם מצרך ",
+      "instructionsLabel": "הוראות הכנה ",
+      "instructionDescription": "תיאור הוראת הכנה "
+    },
+    "packageForm": {
+      "editTitle": "עריכת מארז",
+      "addTitle": "הוספת מארז חדש",
+      "updateButton": "עדכן",
+      "saveButton": "שמור",
+      "peoplesQuantityLabel": "כמות סועדים",
+      "ingredientsQuantityLabel": "כמות מצרכים",
+      "cookingTimeLabel": "זמן הכנה",
+      "priceLabel": "מחיר",
+      "nameLabel": "שם מארז",
+      "namePlaceholder": "שם מארז",
+      "imageLabel": "תמונת מארז",
+      "imagePlaceholder": "כתובת תמונה",
+      "pricePlaceholder": "מחיר",
+      "peoplesQuantityPlaceholder": "כמות סועדים",
+      "ingredientsQuantityPlaceholder": "כמות מצרכים",
+      "cookingTimePlaceholder": "זמן הכנה"
+    }
+  },
+  "pagination": {
+    "previousPage": "לעמוד הקודם",
+    "nextPage": "לעמוד הבא",
+    "title": "ניווט בין עמודים"
+  },
+  "thankYou": {
+    "title": "תודה על הזמנתך!",
+    "successMessage": "התשלום בוצע בהצלחה. פרטי ההזמנה נשלחו לכתובת האימייל שלך.",
+    "paymentDetails": "פרטי תשלום",
+    "transactionInfo": "פרטי עסקה",
+    "transactionId": "מזהה עסקה",
+    "date": "תאריך",
+    "amount": "סכום",
+    "status": "סטטוס",
+    "paymentMethod": "אמצעי תשלום",
+    "cardType": "סוג כרטיס",
+    "cardNumber": "מספר כרטיס",
+    "cardHolder": "שם בעל הכרטיס",
+    "approvalNumber": "מספר אישור",
+    "backToHome": "חזרה לדף הבית",
+    "tax": "מע\"מ",
+    "estimatedDelivery": "זמן אספקה משוער",
+    "whatsNext": "מה הלאה?",
+    "preparingOrder": "אנו מכינים את ההזמנה שלך. פרטי מעקב יישלחו בקרוב!",
+    "needHelp": "צריך עזרה?",
+    "contactUs": "צור קשר בכתובת"
+  }
+}
