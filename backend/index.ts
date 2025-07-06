@@ -7,6 +7,7 @@ import UserRoute from "./src/Routes/UserRoute";
 import RecipeRoute from "./src/Routes/RecipeRoutes";
 import ProductRoute from "./src/Routes/ProductRoute";
 import PackageRoute from "./src/Routes/PackageRoute";
+import UploadRoute from "./src/Routes/UploadRoute";
 import { connectToMongoDB } from "./src/utils/DB/MongoDB";
 import EventsMiddleware from "./src/utils/middleware/sse.events";
 // import swagger from "./swagger";
@@ -41,6 +42,7 @@ server.use("/api/packages", PackageRoute);
 server.use("/api/orders", OrderRoute);
 server.use("/api/recipes", RecipeRoute);
 server.use("/api/users", UserRoute);
+server.use("/api/upload", UploadRoute);
 // handle SSE (Server-Sent Events) requests for real-time updates - payment notifications
 server.use("/api/events", EventsMiddleware);
 

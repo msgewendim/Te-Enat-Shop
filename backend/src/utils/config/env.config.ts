@@ -58,6 +58,12 @@ const BASE_URL_NGROK = process.env.BASE_URL_NGROK as string;
 const FRONTEND_URL =
   NODE_ENV === "production" ? FRONTEND_URL_PRODUCTION : "http://localhost:5173";
 
+// # CLOUDINARY
+const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME as string;
+const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY as string;
+const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET as string;
+
+
 export {
   NODE_ENV,
   
@@ -92,4 +98,8 @@ export {
   PAYPLUS_PROD_API_URL,
   PAYPLUS_TERMINAL_UID,
   PAYPLUS_PAYMENT_PAGE_UID,
+
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
 };
