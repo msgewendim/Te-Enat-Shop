@@ -524,5 +524,48 @@
     "preparingOrder": "אנו מכינים את ההזמנה שלך. פרטי מעקב יישלחו בקרוב!",
     "needHelp": "צריך עזרה?",
     "contactUs": "צור קשר בכתובת"
+  },
+  "upload": {
+    "selectImage": "בחר תמונה",
+    "selectImages": "בחר תמונות",
+    "changeImage": "שנה תמונה",
+    "addMoreImages": "הוסף תמונות נוספות",
+    "manageImages": "נהל תמונות ({{count}})",
+    "uploadImage": "העלה תמונה",
+    "uploadImages": "העלה תמונות",
+    "remove": "הסר",
+    "removeImage": "הסר תמונה",
+    "removeFile": "הסר קובץ {{name}}",
+    "clearAll": "נקה הכל",
+    "uploading": "מעלה...",
+    "dragActive": "שחרר את התמונה כאן...",
+    "dragActiveMultiple": "שחרר את התמונות כאן...",
+    "dragInactive": "גרור ושחרר תמונה כאן, או לחץ לבחירה",
+    "dragInactiveMultiple": "גרור ושחרר תמונות כאן (עד {{maxFiles}} תמונות), או לחץ לבחירה",
+    "dragInactiveMultipleWithFiles": "{{count}} תמונות נבחרו - גרור תמונות נוספות או לחץ להוספה",
+    "dragReject": "רק קבצי {{types}} מותרים",
+    "supportedFormats": "פורמטים נתמכים: JPG, PNG, GIF, WebP",
+    "batchProgress": "{{completed}} מתוך {{total}} הועלו בהצלחה",
+    "failedFiles": "{{count}} קבצים נכשלו",
+    "modalInstructionsSingle": "בחר תמונה (מקסימום {{maxSize}}MB)",
+    "modalInstructionsMultiple": "בחר עד {{maxFiles}} תמונות (מקסימום {{maxSize}}MB כל אחת)",
+    "currentImages": "תמונות נוכחיות ({{count}})",
+    "currentImage": "תמונה נוכחית",
+    "imageNumber": "תמונה {{number}}",
+    "uploaded": "הועלה",
+    "uploadedImage": "תמונה שהועלתה",
+    "uploadSuccessful": "העלאה הושלמה בהצלחה!",
+    "imageUploadedSuccessfully": "התמונה הועלתה בהצלחה.",
+    "imagesUploadedSuccessfully": "התמונות הועלו בהצלחה.",
+    "errors": {
+      "invalidFileType": "סוג קובץ לא חוקי. רק תמונות מותרות",
+      "fileTooLarge": "הקובץ גדול מדי. גודל מקסימלי: {{maxSize}}MB",
+      "uploadFailed": "העלאה נכשלה. נסה שוב"
+    }
+  },
+  "common": {
+    "cancel": "ביטול",
+    "done": "סיום",
+    "close": "סגור"
   }
 }

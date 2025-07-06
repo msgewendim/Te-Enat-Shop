@@ -5,7 +5,7 @@ import { Recipe } from '../../client/types.gen';
 import { RecipeSchema } from '../../validation/AddRecipe.validation';
 
 function useRecipesForm(initialRecipe?: Recipe) {
-  const { register, control, handleSubmit, formState: { errors }, setValue, reset } = useForm<Recipe>({
+  const { register, control, handleSubmit, formState: { errors }, setValue, reset, watch } = useForm<Recipe>({
     defaultValues: initialRecipe || {
       image: "",
       categories: [],
@@ -26,6 +26,7 @@ function useRecipesForm(initialRecipe?: Recipe) {
     errors,
     setValue,
     reset,
+    watch,
     existingMainCategories,
     recipeDifficulty
   }

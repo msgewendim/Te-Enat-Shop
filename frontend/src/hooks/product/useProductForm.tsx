@@ -5,7 +5,7 @@ import { Product } from '../../client/types.gen';
 import { ProductSchema } from '../../validation/AddProduct.validation';
 
 function useProductForm(initialProduct?: Product) {
-  const { register, control, handleSubmit, formState: { errors, touchedFields }, setValue, reset } = useForm<Product>({
+  const { register, control, handleSubmit, formState: { errors, touchedFields }, setValue, reset, watch } = useForm<Product>({
     defaultValues: initialProduct || {
       name: "",
       shortDescription: "",
@@ -29,6 +29,7 @@ function useProductForm(initialProduct?: Product) {
     errors,
     setValue,
     reset,
+    watch,
     existingMainCategories,
     existingSubCategories,
     touchedFields

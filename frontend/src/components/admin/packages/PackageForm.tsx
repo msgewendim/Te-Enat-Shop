@@ -9,12 +9,13 @@ import { useAppContext } from '../../../hooks/app/useAppContext';
 import { FormProps } from '../../../providers/interface/admin.props';
 import { PackageSchema } from '../../../validation/AddPackage.validation';
 import { FormInput } from '../../ui/FormInput';
+import ModalImageUploader from '../../ui/ModalImageUploader';
 import Loader from '../../ui/Loader';
 
 
 const PackageForm = ({ item: pkg, onSubmit: onSubmitProp, message, mutateFormState }: FormProps<Package>) => {
   const { t } = useTranslation();
-  const { register, control, formState: { errors }, reset, handleSubmit } = useForm<Package>({
+  const { register, control, formState: { errors }, reset, handleSubmit, setValue, watch } = useForm<Package>({
     defaultValues: pkg || {
       name: '',
       image: '',
@@ -68,17 +69,17 @@ const PackageForm = ({ item: pkg, onSubmit: onSubmitProp, message, mutateFormSta
             error={errors.name?.message}
           />
 
-          <FormInput<Package>
-            name="image"
-            placeholder={t('form.packageForm.imagePlaceholder')}
-            register={register}
-            type="text"
-            label={t('form.packageForm.imageLabel')}
-            error={errors.image?.message}
-          />
-          {
-            errors.image && <span className="text-red-500">{errors.image.message}</span>
-          }
+          <div>
+            <ModalImageUploader
+              label={t('form.packageForm.imageLabel')}
+              currentImageUrl={watch('image')}
+              onUpload={(url: string | string[]) => setValue('image', typeof url === 'string' ? url : url[0] || '')}
+              onError={(error: string) => toast.error(error)}
+              className="w-full"
+              folder="packages"
+            />
+            {errors.image && <span className="text-red-500 text-sm mt-1">{errors.image.message}</span>}
+          </div>
 
           <FormInput<Package>
             name="price"

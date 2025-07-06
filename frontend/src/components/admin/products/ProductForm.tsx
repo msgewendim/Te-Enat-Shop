@@ -10,11 +10,12 @@ import useProductForm from '../../../hooks/product/useProductForm';
 import { FormProps } from '../../../providers/interface/admin.props';
 import { productCategories } from '../../../utils/constants';
 import { FormInput } from '../../ui/FormInput';
+import ModalImageUploader from '../../ui/ModalImageUploader';
 import Loader from '../../ui/Loader';
 
 const ProductForm = ({ item: product, onSubmit: onSubmitProp, message, mutateFormState }: FormProps<Product>) => {
   const { t } = useTranslation();
-  const { register, control, errors, handleSubmit, setValue,reset, existingMainCategories, existingSubCategories } = useProductForm(product);
+  const { register, control, errors, handleSubmit, setValue, watch, reset, existingMainCategories, existingSubCategories } = useProductForm(product);
   const { setAdminActiveSection, adminActiveSection } = useAppContext();
   const isEditMode = adminActiveSection.includes('edit') && !!product;
   const { isSuccess, isError, isLoading, error } = mutateFormState || { isError: false, isLoading: false, isSuccess: false, error: null };
@@ -66,15 +67,17 @@ const ProductForm = ({ item: product, onSubmit: onSubmitProp, message, mutateFor
             error={errors.shortDescription?.message}
           />
 
-          <FormInput<Product>
-            name="image"
-            placeholder={t('form.productForm.imagePlaceholder')}
-            register={register}
-            className="col-span-2"
-            type="text"
-            label={t('form.productForm.imageLabel')}
-            error={errors.image?.message}
-          />
+          <div className="col-span-2">
+            <ModalImageUploader
+              label={t('form.productForm.imageLabel')}
+              currentImageUrl={watch('image')}
+              onUpload={(url: string | string[]) => setValue('image', typeof url === 'string' ? url : url[0] || '')}
+              onError={(error: string) => toast.error(error)}
+              className="w-full"
+              folder="products"
+            />
+            {errors.image && <span className="text-red-500 text-sm mt-1">{errors.image.message}</span>}
+          </div>
 
         </div>
         <div className=" w-full">

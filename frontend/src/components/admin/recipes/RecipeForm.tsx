@@ -11,13 +11,14 @@ import { FormProps } from '../../../providers/interface/admin.props';
 import { recipeCategories } from '../../../utils/constants';
 import { NODE_MODE } from '../../../utils/env.config';
 import { FormInput } from '../../ui/FormInput';
+import ModalImageUploader from '../../ui/ModalImageUploader';
 import Loader from '../../ui/Loader';
 import { AddCategoryInput } from '../products/AddArrayInputFields';
 
 
 const RecipeForm = ({ item: recipe, onSubmit: onSubmitProp, message, mutateFormState }: FormProps<Recipe>) => {
   const { t } = useTranslation();
-  const { existingMainCategories, register, control, handleSubmit, errors, setValue, reset, recipeDifficulty } = useRecipesForm(recipe);
+  const { existingMainCategories, register, control, handleSubmit, errors, setValue, reset, watch, recipeDifficulty } = useRecipesForm(recipe);
   const { setAdminActiveSection, adminActiveSection } = useAppContext();
   const { isSuccess, isError, isLoading, error } = mutateFormState || { isError: false, isLoading: false, isSuccess: false, error: null };
   const isEditing = !!recipe && adminActiveSection.includes('edit');
@@ -68,15 +69,17 @@ const RecipeForm = ({ item: recipe, onSubmit: onSubmitProp, message, mutateFormS
             error={errors.description?.message}
           />
 
-          <FormInput<Recipe>
-            name="image"
-            placeholder={t('form.recipeForm.imagePlaceholder')}
-            register={register}
-            className="col-span-2"
-            type="text"
-            label={t('form.recipeForm.imageLabel')}
-            error={errors.image?.message}
-          />
+          <div className="col-span-2">
+            <ModalImageUploader
+              label={t('form.recipeForm.imageLabel')}
+              currentImageUrl={watch('image')}
+              onUpload={(url: string | string[]) => setValue('image', typeof url === 'string' ? url : url[0] || '')}
+              onError={(error: string) => toast.error(error)}
+              className="w-full"
+              folder="recipes"
+            />
+            {errors.image && <span className="text-red-500 text-sm mt-1">{errors.image.message}</span>}
+          </div>
           <div className="w-full">
 
             <label htmlFor="difficulty" className="text-sm font-medium text-gray-700">{t('form.recipeForm.difficultyLabel')}</label>

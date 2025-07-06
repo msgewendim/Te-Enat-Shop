@@ -15,15 +15,7 @@ interface GenericModalProps {
 const GenericModal: FC<GenericModalProps> = ({ title, content, open, setOpen, titleClassName, contentClassName, className }) => {
   return (
     <Transition show={open} as={Fragment}>
-      <Dialog onClose={() => setOpen(false)} className={`relative z-50 overflow-y-auto ${className}`}>
-        <div className="flex items-center justify-between text-2xl font-bold text-primary">
-          <span>{title}</span>
-          <div className="text-gray-500 hover:text-red-500 transition-colors">
-            <button onClick={() => setOpen(false)}>
-              <XMarkIcon className="h-8 w-8" />
-            </button>
-          </div>
-        </div>
+      <Dialog onClose={() => setOpen(false)} className={`relative z-50 ${className || ''}`}>
         <TransitionChild
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -45,12 +37,23 @@ const GenericModal: FC<GenericModalProps> = ({ title, content, open, setOpen, ti
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-right shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
-                <div className={`bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 ${contentClassName}`}>
-                  <DialogTitle as="h3" className={`text-2xl font-bold leading-6 text-gray-900 mb-4 ${titleClassName}`}>
+              <DialogPanel className={`relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl ${className || ''}`}>
+                {/* Modal Header */}
+                <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                  <DialogTitle as="h3" className={`text-lg font-semibold text-gray-900 ${titleClassName || ''}`}>
                     {title}
                   </DialogTitle>
-                  <div className={contentClassName}>{content}</div>
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1"
+                  >
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+                </div>
+
+                {/* Modal Content */}
+                <div className={`bg-white ${contentClassName || ''}`}>
+                  {content}
                 </div>
               </DialogPanel>
             </TransitionChild>
