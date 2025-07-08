@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 import { Package } from '../../../client/types.gen';
 import { useAppContext } from '../../../hooks/app/useAppContext';
 import { FormProps } from '../../../providers/interface/admin.props';
-import { PackageSchema } from '../../../validation/AddPackage.validation';
 import { FormInput } from '../../ui/FormInput';
-import ModalImageUploader from '../../ui/ModalImageUploader';
+import { ImageUploadController } from '../../ui/ImageUploadController';
 import Loader from '../../ui/Loader';
+import { PackageSchema } from '../../../validation/add-package.validation';
 
 
 const PackageForm = ({ item: pkg, onSubmit: onSubmitProp, message, mutateFormState }: FormProps<Package>) => {
@@ -70,15 +70,14 @@ const PackageForm = ({ item: pkg, onSubmit: onSubmitProp, message, mutateFormSta
           />
 
           <div>
-            <ModalImageUploader
+            <ImageUploadController<Package>
+              name="image"
+              control={control}
               label={t('form.packageForm.imageLabel')}
-              currentImageUrl={watch('image')}
-              onUpload={(url: string | string[]) => setValue('image', typeof url === 'string' ? url : url[0] || '')}
-              onError={(error: string) => toast.error(error)}
-              className="w-full"
               folder="packages"
+              className="w-full"
+              onError={(error: string) => toast.error(error)}
             />
-            {errors.image && <span className="text-red-500 text-sm mt-1">{errors.image.message}</span>}
           </div>
 
           <FormInput<Package>

@@ -1,4 +1,4 @@
-import { Package } from '../../../client';
+import { Package } from '../../../client/types.gen';
 import { useAppContext } from "../../../hooks/app/useAppContext";
 import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import useGenericData from "../../../hooks/app/useGenericData";

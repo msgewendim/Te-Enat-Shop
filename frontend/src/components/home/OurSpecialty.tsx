@@ -2,10 +2,8 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-
-import { Recipe } from "../../client";
+import { Recipe } from "../../client/types.gen";
 import useRandomCards from "../../hooks/app/useRandomCards";
-// import RecipeCardModal from "../ui/RecipeCardModal"; 
 import { makeBreakLine } from "../../utils/helperFunctions";
 import CustomLink from "../ui/Link";
 import Loader from "../ui/Loader";

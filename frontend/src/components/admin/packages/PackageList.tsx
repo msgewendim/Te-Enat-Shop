@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../../hooks/app/useAppContext";
 import { PackageDashboardReturn, PackageTableData } from "../../../providers/interface/admin.props";
 import Table from "../../ui/Table";
-import usePackagesDashboard from "../hooks/usePackagesDashboard";
+import usePackagesDashboard from "./usePackagesDashboard";
 
 const PackageList = () => {
   const { t } = useTranslation();

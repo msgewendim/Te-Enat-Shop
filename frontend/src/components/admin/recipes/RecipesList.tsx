@@ -4,8 +4,7 @@ import { useAppContext } from '../../../hooks/app/useAppContext';
 import { RecipeTableData , RecipeDashboardReturn } from '../../../providers/interface/admin.props';
 import Filters from '../../ui/Filters';
 import Table from "../../ui/Table";
-import useRecipesDashboard from '../hooks/useRecipesDashboard';
-
+import useRecipesDashboard from './useRecipesDashboard';
 
 const RecipeList = () => {
   const { t } = useTranslation();

@@ -1,4 +1,4 @@
-import { Order } from '../../../client';
+import { Order } from '../../../client/types.gen';
 import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import useGenericData from "../../../hooks/app/useGenericData";
 import { TableData } from "../../../providers/interface/general.props";

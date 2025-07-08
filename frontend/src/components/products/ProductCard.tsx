@@ -9,6 +9,7 @@ import { ProductImageProps } from "../../providers/interface/products.props";
 const ProductCard = ({ product, className = "" }: { product: Product, className?: string }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { image, name, categories, _id, pricing, subCategories } = product;
+  
   const categoriesInHebrew = categories.map(cat => cat.nameInHebrew);
   const subCategoriesInHebrew = subCategories?.map(subCat => subCat.nameInHebrew) || [];
   const handleOpenPopup = () => setIsPopupOpen(true);

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import RecipeCard from "../components/recipes/RecipeCard";
 import Banner from "../components/ui/Banner";
 
-import RecipesBanner from "/RecipesBanner.svg";
+import RecipesBanner from "../../public/RecipesBanner.svg";
 
 import Filters from '../components/ui/Filters';
 import Loader from '../components/ui/Loader';

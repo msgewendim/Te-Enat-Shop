@@ -1,36 +1,34 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import React, { useCallback, useState } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import CartItemsList from '../components/cart/CartItemsList';
 import { useAppContext } from '../hooks/app/useAppContext';
+import { useCartStore } from '../stores/useCartStore';
+import { useCartTotals } from '../hooks/app/useCartData';
 
 const Cart = () => {
-  const { totalPrice, openCart, setOpenCart, cartItems } = useAppContext();
+  const { openCart, setOpenCart } = useAppContext();
+  const { items: minimalCartItems } = useCartStore();
+  const { totalPrice } = useCartTotals(minimalCartItems);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleClose = useCallback(() => setOpenCart(false), [setOpenCart]);
 
   const handleCheckout = useCallback(() => {
-    if (cartItems.length > 0) {
+    if (minimalCartItems.length > 0) {
       setIsLoading(true);
       setOpenCart(false);
       navigate('/checkout');
     }
-  }, [cartItems, navigate, setOpenCart]);
-
-  // const clearCart = useCallback(() => {
-  //   setCartItems([]);
-  //   setOrderItems([]);
-  //   sessionStorage.removeItem('cartItems');
-  // }, [setCartItems, setOrderItems]);
+  }, [minimalCartItems, navigate, setOpenCart]);
 
   return (
     <>
-      <Transition show={openCart} as={React.Fragment}>
+      <Transition show={openCart} as={Fragment}>
         <Dialog onClose={handleClose} className="relative z-40">
           <TransitionChild
             enter="ease-out duration-300"
@@ -60,6 +58,7 @@ const Cart = () => {
                       handleClose={handleClose}
                       handleCheckout={handleCheckout}
                       isLoading={isLoading}
+                      hasItems={minimalCartItems.length > 0}
                     />
                   </DialogPanel>
                 </TransitionChild>
@@ -72,11 +71,12 @@ const Cart = () => {
   );
 };
 
-const CartContent = ({ totalPrice, handleClose, handleCheckout, isLoading } : {
+const CartContent = ({ totalPrice, handleClose, handleCheckout, isLoading, hasItems } : {
   totalPrice: number;
   handleClose: () => void;
   handleCheckout: () => void;
   isLoading: boolean;
+  hasItems: boolean;
 }) => {
   const { t } = useTranslation();
 
@@ -116,7 +116,7 @@ const CartContent = ({ totalPrice, handleClose, handleCheckout, isLoading } : {
           <button
             type="button"
             onClick={handleCheckout}
-            disabled={isLoading}
+            disabled={isLoading || !hasItems}
             className="w-full rounded-md border border-transparent bg-btnColor2 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-hoverBtnColor2 disabled:opacity-50 transition duration-150 ease-in-out"
           >
             {t('cart.checkout')}

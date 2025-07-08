@@ -4,7 +4,7 @@ import { BsPeople } from "react-icons/bs";
 import { PiCookingPot } from "react-icons/pi";
 import { TfiTimer } from "react-icons/tfi";
 
-import recipeBanner from "/RecipeBanner.svg";
+import recipeBanner from "../../public/RecipeBanner.svg";
 
 import { toast } from 'react-toastify';
 
@@ -42,7 +42,7 @@ const RecipePage = () => {
           {/* Ingredients */}
           <IngredientsFromRecipe ingredients={ingredients} />
           {/* Products from Recipe */}
-          <ProductsFromRecipe products={productsFromRecipe} handleAddAllProductsToCart={handleAddAllProductsToCart} />
+          <ProductsFromRecipe products={productsFromRecipe || []} handleAddAllProductsToCart={handleAddAllProductsToCart} />
         </div>
         {/* Left Side: Image and Recipe Info */}
         <div className="flex flex-col lg:col-span-2 gap-2 items-center">

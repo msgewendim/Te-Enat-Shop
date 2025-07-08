@@ -1,5 +1,5 @@
 import { Switch } from '@headlessui/react'
-import i18next from 'i18next'
+import { changeLanguage } from 'i18next'
 import { useState } from 'react'
 
 
@@ -9,7 +9,7 @@ const SwitchLanguage = () => {
     <Switch
       checked={enabled}
       onChange={setEnabled}
-      onClick={() => i18next.changeLanguage(enabled ? "he-IL" : "en")}
+      onClick={() => changeLanguage(enabled ? "he-IL" : "en")}
       className={`${enabled ? 'bg-blue-600' : 'bg-gray-200'
         } relative inline-flex h-6 w-11 items-center rounded-full`}
     >

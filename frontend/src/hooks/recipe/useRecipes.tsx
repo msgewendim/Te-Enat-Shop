@@ -1,7 +1,7 @@
-import { useMemo , useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import { toast } from "react-toastify";
 
-import { Recipe } from "../../client";
+import { Recipe } from "../../client/types.gen";
 import { query } from "../../providers/interface/context";
 import { useAppContext } from "../app/useAppContext";
 import useGenericData from "../app/useGenericData";
@@ -26,9 +26,11 @@ function useRecipes({ limit = 12 }: { limit?: number }) {
     refetch: refetchRecipes,
   } = useGetItems(query);
 
-  if (isError) {
-    toast.error(error.message);
-  }
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.message || 'An error occurred while fetching recipes')
+    }
+  }, [isError, error])
 
   const handlePrevious = () => {
     if (page > 1) setPage(page - 1);

@@ -11,7 +11,7 @@ import { FormProps } from '../../../providers/interface/admin.props';
 import { recipeCategories } from '../../../utils/constants';
 import { NODE_MODE } from '../../../utils/env.config';
 import { FormInput } from '../../ui/FormInput';
-import ModalImageUploader from '../../ui/ModalImageUploader';
+import { ImageUploadController } from '../../ui/ImageUploadController';
 import Loader from '../../ui/Loader';
 import { AddCategoryInput } from '../products/AddArrayInputFields';
 
@@ -70,15 +70,14 @@ const RecipeForm = ({ item: recipe, onSubmit: onSubmitProp, message, mutateFormS
           />
 
           <div className="col-span-2">
-            <ModalImageUploader
+            <ImageUploadController<Recipe>
+              name="image"
+              control={control}
               label={t('form.recipeForm.imageLabel')}
-              currentImageUrl={watch('image')}
-              onUpload={(url: string | string[]) => setValue('image', typeof url === 'string' ? url : url[0] || '')}
-              onError={(error: string) => toast.error(error)}
-              className="w-full"
               folder="recipes"
+              className="w-full"
+              onError={(error: string) => toast.error(error)}
             />
-            {errors.image && <span className="text-red-500 text-sm mt-1">{errors.image.message}</span>}
           </div>
           <div className="w-full">
 

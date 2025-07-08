@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form'
 
 import { Recipe } from '../../client/types.gen';
-import { RecipeSchema } from '../../validation/AddRecipe.validation';
+import { RecipeSchema } from '../../validation/add-recipe.validation';
 
 function useRecipesForm(initialRecipe?: Recipe) {
   const { register, control, handleSubmit, formState: { errors }, setValue, reset, watch } = useForm<Recipe>({

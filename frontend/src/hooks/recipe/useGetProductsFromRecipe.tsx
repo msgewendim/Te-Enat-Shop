@@ -4,9 +4,9 @@ import { useGetItemsByNames } from "../useAppData";
 
 function useGetProductsFromRecipe(ingredients: Ingredient[]) {
   const names = existingProductsFromRecipe(ingredients);
-  const { data: productsFromRecipe, isError, error, isLoading } = useGetItemsByNames(names);
+  const { data: productsFromRecipe, isError, error, isLoading } = useGetItemsByNames<Product>(names);
   return {
-    productsFromRecipe: productsFromRecipe?.data as Product[],
+    productsFromRecipe,
     isError,
     error,
     isLoading

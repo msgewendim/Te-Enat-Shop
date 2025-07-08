@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from 'react-hook-form'
 
 import { Product } from '../../client/types.gen';
-import { ProductSchema } from '../../validation/AddProduct.validation';
+import { ProductSchema } from '../../validation/add-product.validation';
 
 function useProductForm(initialProduct?: Product) {
   const { register, control, handleSubmit, formState: { errors, touchedFields }, setValue, reset, watch } = useForm<Product>({

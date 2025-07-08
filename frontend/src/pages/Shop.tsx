@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import ProductCard from "../components/products/ProductCard";
 
-import ShopBanner from "/ShopBanner.svg";
+import ShopBanner from "../../public/ShopBanner.svg";
 
 import Banner from "../components/ui/Banner";
 import Filters from "../components/ui/Filters";
@@ -19,6 +19,8 @@ const Shop = () => {
     handleNext,
     handlePrevious
   } = useShop({ limit: 9 });
+
+  // Debug logging temporarily removed
 
   if (isLoading) return <Loader />;
 
@@ -38,6 +40,12 @@ const Shop = () => {
               {products?.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
+              {!products || products.length === 0 ? (
+                <div className="col-span-full text-center py-8">
+                  <p className="text-gray-500">No products found</p>
+                  <p className="text-sm text-gray-400">Products: {JSON.stringify(products)}</p>
+                </div>
+              ) : null}
             </div>
           </div>
         </section>

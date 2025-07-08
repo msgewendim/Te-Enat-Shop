@@ -4,10 +4,9 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useGetProductsFromRecipe } from './useGetProductsFromRecipe';
-import { CartItem, Recipe } from '../../client/types.gen';
-import { addItemToCartList } from '../../utils/helperFunctions';
-import { useAppContext } from '../app/useAppContext';
+import { MinimalCartItem, Recipe } from '../../client/types.gen';
 import useGenericData from '../app/useGenericData';
+import { useCartStore } from '../../stores/useCartStore';
 
 
 export default function useRecipePage() {
@@ -16,35 +15,33 @@ export default function useRecipePage() {
   const { useGetItemById } = useGenericData<Recipe>("/recipes");
   const { data: recipe, isError, isLoading, error } = useGetItemById(recipeID || "");
   const { productsFromRecipe, isError: isErrorProductsFromRecipe, error: errorProductsFromRecipe } = useGetProductsFromRecipe(recipe?.ingredients || []);
-  const { setCartItems, cartItems } = useAppContext();
+  const { addToCart } = useCartStore();
 
   const handleAddAllProductsToCart = useCallback(() => {
-    if (!productsFromRecipe) {
+    if (!productsFromRecipe || productsFromRecipe.length === 0) {
       toast.error(t('errors.noProductsAvailable'));
+      return;
     }
 
-    const newCartItems: CartItem[] = [];
+    const newCartItems: MinimalCartItem[] = [];
 
     productsFromRecipe.forEach((product) => {
-      const newItem: CartItem = {
-        item: product,
+      const newItem: MinimalCartItem = {
+        itemId: product._id,
         quantity: 1,
         size: product?.pricing[0]?.size?.sizeName || '',
         price: product?.pricing[0]?.price || 0,
         itemType: "Product",
-        name: product?.name || '',
-        image: product?.image || '',
       };
       newCartItems.push(newItem);
     });
 
-    // Update cart and order lists with the new items using reduce to avoid multiple calls to setCartItems
-    const updatedCartItems = newCartItems.reduce((acc, item) => addItemToCartList(acc, item), cartItems);
+    newCartItems.forEach((item) => {
+      addToCart(item);
+    });
 
-    setCartItems(updatedCartItems);
-    sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     toast.success(t('cart.allProductsAdded'));
-  }, [productsFromRecipe, cartItems, setCartItems, t]);
+  }, [productsFromRecipe, addToCart, t]);
 
 
   if (isError || isErrorProductsFromRecipe) {

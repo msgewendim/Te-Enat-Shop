@@ -1,13 +1,12 @@
 import { useEffect, useMemo } from "react"
 import { toast } from "react-toastify";
-
-import { Product } from "../../client";
+import { Product } from "../../client/types.gen";
 import { query } from "../../providers/interface/context"
 import { useAppContext } from "../app/useAppContext"
 import useGenericData from "../app/useGenericData";
 
 function useShop({ limit = 12 }: { limit?: number}) {
-  const { page, setPage, cartItems, filter, openCart, setOpenCart, subCategory, category, setCategory } = useAppContext()
+  const { page, setPage, filter, openCart, setOpenCart, subCategory, category, setCategory } = useAppContext()
   const query: query = useMemo<query>(() => {
     return {
       page,
@@ -21,9 +20,13 @@ function useShop({ limit = 12 }: { limit?: number}) {
   const { useGetItems } = useGenericData<Product>("/products");
   const { data: products, error, isLoading, isError, isPlaceholderData, refetch: refetchProducts } = useGetItems(query)
 
-  if (isError) {
-    toast.error(error.message)
-  }
+  // Debug logging temporarily removed
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.message || 'An error occurred while fetching products')
+    }
+  }, [isError, error])
 
   const handlePrevious = () => {
     if (page > 1) setPage(page - 1);
@@ -47,7 +50,6 @@ function useShop({ limit = 12 }: { limit?: number}) {
     isPlaceholderData,
     handlePrevious,
     handleNext,
-    cartItems,
     page,
     setPage,
     category,

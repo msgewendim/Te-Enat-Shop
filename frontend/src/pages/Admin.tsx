@@ -2,7 +2,7 @@ import { ArrowLeftCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useAdminDashboard from '../components/admin/hooks/useDashboard';
+import useAdminDashboard from '../components/admin/useDashboard';
 import OrdersList from '../components/admin/orders';
 import PackageForm from '../components/admin/packages/PackageForm';
 import PackageList from '../components/admin/packages/PackageList';

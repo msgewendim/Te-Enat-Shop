@@ -1,4 +1,4 @@
-import { Recipe } from '../../../client';
+import { Recipe } from '../../../client/types.gen';
 import { useAppContext } from "../../../hooks/app/useAppContext";
 import useGenericDashboard from '../../../hooks/app/useGenericDashboard';
 import useGenericData from "../../../hooks/app/useGenericData";
@@ -19,7 +19,7 @@ function useRecipesDashboard() {
     difficulty: "דרגת קושי"
   } as const;
 
-  const formatTableData = (recipes: Recipe[]): RecipeTableData[] => recipes.map(recipe => ({
+  const formatTableData = (recipes: Recipe[]): RecipeTableData[] => recipes?.map(recipe => ({
     _id: recipe._id,
     name: recipe.name,
     categories: recipe.categories.map((cat, i) => (

@@ -4,7 +4,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 import ProductCard from "./ProductCard";
-import { Product } from "../../client";
+import { Product } from "../../client/types.gen";
 import useRandomCards from "../../hooks/app/useRandomCards";
 import { CarouselButtonProps } from "../../providers/interface/general.props";
 import { makeBreakLine } from "../../utils/helperFunctions";

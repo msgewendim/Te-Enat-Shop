@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { useAppContext } from './useAppContext'
-import { CartItem, Package } from '../../client/types.gen'
-import { addItemToCartList } from '../../utils/helperFunctions'
+import { Package, MinimalCartItem } from '../../client/types.gen'
+import { useCartStore } from '../../stores/useCartStore'
 
 interface UseAddToCartPackageProps {
   package: Package
@@ -12,7 +11,7 @@ interface UseAddToCartPackageProps {
 }
 
 function useAddToCartPackage({ package: pkg, setOpen }: UseAddToCartPackageProps) {
-  const { cartItems, setCartItems } = useAppContext()
+  const { addToCart } = useCartStore()
   const [quantity, setQuantity] = useState(1)
 
   const handleQuantityChange = useCallback((change: number) => {
@@ -20,25 +19,20 @@ function useAddToCartPackage({ package: pkg, setOpen }: UseAddToCartPackageProps
   }, [])
 
   const handleAddPackageToCart = useCallback(() => {
-    const item: CartItem = {
-      item: {
-        ...pkg,
-      },
+    const minimalItem: MinimalCartItem = {
+      itemId: pkg._id,
       quantity,
-      size: 'default',
+      size: 'default', // Packages typically have a default size
       price: pkg.price,
       itemType: 'Package',
-      name: pkg.name,
-      image: pkg.image
     }
 
-    const updatedCartItems = addItemToCartList(cartItems, item)
-    sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
-    setCartItems(updatedCartItems)
+    // Use the new cart store
+    addToCart(minimalItem);
 
     toast.success("חבילה נוספה לעגלה")
     setOpen(false)
-  }, [cartItems, pkg, quantity, setCartItems, setOpen])
+  }, [addToCart, pkg._id, pkg.price, quantity, setOpen])
 
   return {
     quantity,
