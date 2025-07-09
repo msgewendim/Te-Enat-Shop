@@ -10,10 +10,10 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "react-router-dom";
 
-import { CartItem } from "../client/types.gen";
+import { MinimalCartItem } from "../client/types.gen";
 import Loader from "../components/ui/Loader";
-import { useAppContext } from "../hooks/app/useAppContext";
-import { axiosInstance } from "../providers/api";
+import { useCartStore } from "../stores/useCartStore";
+import { getUtil } from "../lib/api";
 
 export interface PayplusPaymentResponse {
 	transaction_type:
@@ -84,13 +84,17 @@ export interface PayplusPaymentResponse {
 const ThankYou = () => {
 	const { t } = useTranslation();
 	const location = useLocation();
-	const [orderItems] = useState<CartItem[]>(
-		JSON.parse(sessionStorage.getItem("cartItems") || "[]")
-	);
+	const { clearCart } = useCartStore();
+	
+	// Get cart items from persistent storage (saved before payment)
+	const [orderItems] = useState<MinimalCartItem[]>(() => {
+		const savedItems = sessionStorage.getItem("cartItems");
+		return savedItems ? JSON.parse(savedItems) : [];
+	});
+	
 	const searchParams = new URLSearchParams(location.search);
 	const transactionUid = searchParams.get("transaction_uid");
 	const moreInfo = searchParams.get("more_info");
-	const { clearCart } = useAppContext();
 
 	const getOrderData = async () => {
 		if (!transactionUid && !moreInfo) {
@@ -99,7 +103,7 @@ const ThankYou = () => {
 		const orderId = moreInfo;
 		console.log("orderId", orderId);
 		console.log("transactionUid", transactionUid);
-		const response = await axiosInstance.get(
+		const response = await getUtil(
 			`/orders/${orderId}/${transactionUid}`
 		);
 		return response.data;
@@ -152,11 +156,18 @@ const ThankYou = () => {
 		);
 	}
 
-	// Calculate totals
+	// Calculate totals from minimal cart items
 	const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 	const shipping = 15; // Mock shipping cost
 	const tax = subtotal * 0.17; // 17% VAT
 	const total = 100;
+
+	// Clear cart and clean up storage on successful order display
+	const handleClearCartAndCleanup = () => {
+		clearCart();
+		sessionStorage.removeItem('cartItems');
+		sessionStorage.removeItem('pendingPayment');
+	};
 
 	return (
 		<div className="min-h-screen bg-gray-50 flex flex-col py-16">
@@ -191,8 +202,8 @@ const ThankYou = () => {
 									className="grid grid-cols-1 md:grid-cols-3 gap-4 border-b border-gray-100 pb-4"
 								>
 									<div className="col-span-2">
-										<p className="font-medium">{item.item.name}</p>
-										{/* <p className="text-gray-500 text-sm">{item.item.}</p> */}
+										<p className="font-medium">{t('cart.item')} #{item.itemId}</p>
+										<p className="text-gray-500 text-sm">{t('cart.size')}: {item.size}</p>
 									</div>
 									<div className="flex justify-between md:justify-end items-start gap-4">
 										<p className="text-sm">
@@ -315,6 +326,7 @@ const ThankYou = () => {
 				<div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
 					<Link
 						to="/"
+						onClick={handleClearCartAndCleanup}
 						className="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded transition duration-300 flex items-center justify-center gap-2"
 					>
 						{t("thankYou.backToHome")}
@@ -322,6 +334,7 @@ const ThankYou = () => {
 					</Link>
 					<Link
 						to="/products"
+						onClick={handleClearCartAndCleanup}
 						className="border border-primary text-primary hover:bg-primary/10 font-bold py-3 px-6 rounded transition duration-300"
 					>
 						{t("cart.continueShopping")}

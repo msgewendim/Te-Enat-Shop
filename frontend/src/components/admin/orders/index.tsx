@@ -1,6 +1,6 @@
 import Table from "../../../components/ui/Table";
 import { OrdersDashboardReturn, OrderTableData } from "../../../providers/interface/admin.props";
-import useOrdersDashboard from "../hooks/useOrdersDashboard";
+import useOrdersDashboard from "./useOrdersDashboard";
 
 const OrdersList = () => {
   const { tableData, headers, handleEdit, handleDelete } = useOrdersDashboard() as unknown as OrdersDashboardReturn;

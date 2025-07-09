@@ -2,12 +2,11 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import {
-  CartItem,
   Category,
   Feature,
   Ingredient,
   SubCategory,
-} from "../client";
+} from "../client/types.gen";
 import { recipeCategories, recipeSubCategoriesMapping , productCategories , productSubCategoriesMapping } from "./constants";
 
 const createBanner = (image: string): React.CSSProperties => ({
@@ -40,12 +39,7 @@ const createRecipeCardImage = (
   marginBottom: "10px",
   ...additionalStyles,
 });
-const getTotalPrice = (cartItems: CartItem[]) => {
-  return cartItems.reduce(
-    (acc, { quantity, price }) => acc + price * quantity,
-    0
-  );
-};
+
 
 // divide the nutrition of a product with in the description object
 const divideFeatures = (features: Feature[]) => {
@@ -77,56 +71,6 @@ const ScrollToTop = () => {
 
 const randomizeArray = <T>(array: T[]) => {
   return array.sort(() => Math.random() - 0.5);
-};
-
-const removeItemFromCartList = (
-  cartItems: CartItem[],
-  itemToRemove: CartItem
-): CartItem[] =>
-  cartItems
-    .map((cartItem) =>
-      cartItem.item._id === itemToRemove.item._id &&
-      cartItem.size === itemToRemove.size
-        ? { ...cartItem, quantity: cartItem.quantity - 1 }
-        : cartItem
-    )
-    .filter((cartItem) => cartItem.quantity > 0);
-
-const addItemToCartList = (
-  cartList: CartItem[],
-  newItem: CartItem
-): CartItem[] => {
-  const existingItem = cartList.find(
-    (cartItem) =>
-      cartItem.item._id === newItem.item._id && cartItem.size === newItem.size
-  );
-
-  return existingItem
-    ? cartList.map((cartItem) =>
-        cartItem === existingItem
-          ? { ...cartItem, quantity: cartItem.quantity + newItem.quantity }
-          : cartItem
-      )
-    : [...cartList, newItem];
-};
-
-export const addItemToOrderList = (
-  orderList: CartItem[],
-  newItem: CartItem
-): CartItem[] => {
-  const existingItem = orderList.find(
-    (orderItem) =>
-      orderItem.item.name === newItem.item.name &&
-      orderItem.size === newItem.size
-  );
-
-  return existingItem
-    ? orderList.map((orderItem) =>
-        orderItem === existingItem
-          ? { ...orderItem, quantity: orderItem.quantity + newItem.quantity }
-          : orderItem
-      )
-    : [...orderList, newItem];
 };
 
 const subCategoriesByParentCategoryKey = (
@@ -169,13 +113,10 @@ const existingProductsFromRecipe = (ingredients: Ingredient[]) => {
 export {
   existingProductsFromRecipe,
   categoriesBasedOnType,
-  addItemToCartList,
   createBanner,
   createRecipeCardImage,
   divideFeatures,
   ScrollToTop,
-  removeItemFromCartList,
-  getTotalPrice,
   randomizeArray,
   subCategoriesByParentCategoryKey,
 };

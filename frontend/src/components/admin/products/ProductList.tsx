@@ -1,22 +1,29 @@
 import { useTranslation } from 'react-i18next';
 
 import { useAppContext } from "../../../hooks/app/useAppContext";
-import { ProductDashboardReturn, ProductTableData } from '../../../providers/interface/admin.props';
+import { ProductTableData } from '../../../providers/interface/admin.props';
 import Filters from '../../ui/Filters';
 import Table from "../../ui/Table";
-import useProductsDashboard from '../hooks/useProductsDashboard';
+import { Product } from '../../../client/types.gen';
+import useAdminData from '../../../hooks/app/useAdminData';
 
 
 const ProductList = () => {
   const { t } = useTranslation();
   const { setAdminActiveSection } = useAppContext();
+  const adminData = useAdminData<Product>('products');
+
+  // If adminData is JSX (loading/error state), return it directly
+  if (!adminData || typeof adminData !== 'object' || 'type' in adminData) {
+    return adminData;
+  }
+
   const {
     tableData = [],
     headers = [],
     handleDelete: handleDeleteProduct,
     handleEdit: handleEditProduct,
-  } = (useProductsDashboard() as unknown as ProductDashboardReturn) || {};
-
+  } = adminData;
 
   return (
     <section className="mb-32 px-4 md:px-0" aria-labelledby="product-list-title">
@@ -35,7 +42,7 @@ const ProductList = () => {
       <Filters clearFiltersPath='/admin' type='product' className='mb-4' />
       <Table<ProductTableData>
         headers={headers}
-        data={tableData}
+        data={tableData as ProductTableData[]}
         onEdit={handleEditProduct}
         onDelete={handleDeleteProduct}
         idField="_id"

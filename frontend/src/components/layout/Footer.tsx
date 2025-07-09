@@ -8,8 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { z } from "zod";
 
-import { useNewsletter } from "../../hooks/form/useFormUserData";
-import { NewsLetterData } from "../../providers/api";
+import { useNewsletter } from "../../hooks/form/useFormMutations";
+import { NewsLetterData } from "../../lib";
 import { SocialLinkProps } from "../../providers/interface/general.props";
 import { FormInput } from "../ui/FormInput";
 import Loader from "../ui/Loader";
@@ -22,7 +22,7 @@ const Footer = () => {
     { to: "/products", label: t('footer.store') },
     { to: "/recipes", label: t('footer.recipes') },
     { to: "/contact", label: t('footer.contact') },
-    { to: "/events", label: t('footer.events') },
+    // { to: "/events", label: t('footer.events') },
   ]
   const PrivacyItems = [
     { to: "/privacy", label: t('footer.infoAndPrivacy.privacy') },

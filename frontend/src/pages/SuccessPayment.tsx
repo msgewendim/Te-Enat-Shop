@@ -3,15 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import DesignProductPopup from "../components/layout/modals/DesignProduct";
-import { useAppContext } from "../hooks/app/useAppContext";
+import { useCartStore } from '../stores/useCartStore';
  
 
 const ThankYou = () => {
   const { t } = useTranslation();
-  const { clearCart } = useAppContext();
   const [searchParams] = useSearchParams();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
+  const { clearCart } = useCartStore();
   const handleOpenPopup = () => setIsPopupOpen(true);
   const handleClosePopup = () => setIsPopupOpen(false);
   

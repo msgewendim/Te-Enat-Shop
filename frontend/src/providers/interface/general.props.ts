@@ -6,9 +6,8 @@ import {
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
-
-import { Category, ProductSize } from "../../client/types.gen";
 import { CategoryMapping } from "../../utils/constants";
+import { Category, ProductSize } from "../../client/types.gen";
 
 interface RelatedItemsProps {
   endpoint: string;
@@ -73,7 +72,7 @@ interface CarouselButtonProps {
   onClick: () => void;
   disabled: boolean;
   direction: "previous" | "next";
-  children: React.ReactNode;
+  children?: React.ReactNode;
   ariaLabel: string;
 }
 interface CategoryButtonProps {

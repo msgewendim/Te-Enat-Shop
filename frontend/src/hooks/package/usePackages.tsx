@@ -1,15 +1,13 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { toast } from "react-toastify";
 
-import { Package } from "../../client";
+import { Package } from "../../client/types.gen";
 import { query } from "../../providers/interface/context"
-import { useAppContext } from "../app/useAppContext"
 import useGenericData from "../app/useGenericData";
 
 function usePackages({ limit = 9 }: { limit?: number }) {
   const [openCart, setOpenCart] = useState(false)
   const [page, setPage] = useState(1)
-  const { cartItems } = useAppContext()
   const query: query = useMemo<query>(() => {
     return {
       page,
@@ -19,9 +17,13 @@ function usePackages({ limit = 9 }: { limit?: number }) {
   const { useGetItems } = useGenericData<Package>("/packages");
   const { data, error, isLoading, isError, isPlaceholderData } = useGetItems(query)
 
-  if (isError) {
-    toast.error(error.message)
-  }
+  // Debug logging temporarily removed
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.message || 'An error occurred while fetching packages')
+    }
+  }, [isError, error])
 
   const handlePrevious = () => {
     if (page > 1) setPage(page - 1);
@@ -43,7 +45,6 @@ function usePackages({ limit = 9 }: { limit?: number }) {
     isPlaceholderData,
     handlePrevious,
     handleNext,
-    cartItems,
     page,
     setPage,
     query,

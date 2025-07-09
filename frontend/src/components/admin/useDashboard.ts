@@ -1,6 +1,6 @@
-import { Package, Product, Recipe } from '../../../client';
-import { useAppContext } from '../../../hooks/app/useAppContext';
-import useGenericData from '../../../hooks/app/useGenericData';
+import { Package, Product, Recipe } from '../../client/types.gen';
+import { useAppContext } from '../../hooks/app/useAppContext';
+import useGenericData from '../../hooks/app/useGenericData';
 
 function useAdminDashboard() {
   const { adminActiveSection, setAdminActiveSection, productToEdit, setProductToEdit, recipeToEdit, setRecipeToEdit, packageToEdit, setPackageToEdit } = useAppContext();

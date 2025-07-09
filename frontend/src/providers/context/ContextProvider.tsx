@@ -1,12 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
-import { CartItem, Product, Recipe, Package } from "../../client/types.gen";
-import { BASE_API_URL } from "../../utils/env.config";
-import { getTotalPrice } from "../../utils/helperFunctions";
+import { Product, Recipe, Package } from "../../client/types.gen";
 import { AppContext, ModalState } from "../interface/context";
 
-const AppProvider = ({ children }: { children: ReactNode }) => {
+export const AppProvider = ({ children }: { children: ReactNode }) => {
   // checkout
   const [paymentFormUrl, setPaymentFormUrl] = useState<string>("")
   // pagination
@@ -16,40 +13,35 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [category, setCategory] = useState<string>("")
   // cart
   const [openCart, setOpenCart] = useState(false)
-  const [sizeIdx, setSizeIdx] = useState<number>(0)
-  const [cartItems, setCartItems] = useState<CartItem[]>(JSON.parse(sessionStorage.getItem("cartItems") as string) || [])
-  // const [orderItems, setOrderItems] = useState<OrderItem[]>([])
-  const [totalPrice, setTotalPrice] = useState<number>(0)
+
   // admin
   const [adminActiveSection, setAdminActiveSection] = useState<string>("products")
   const [productToEdit, setProductToEdit] = useState<Product>();
   const [recipeToEdit, setRecipeToEdit] = useState<Recipe>();
   const [packageToEdit, setPackageToEdit] = useState<Package>();
+  
   // delete product modal
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     onConfirm: () => { },
   });
   const [currentEndpoint, setCurrentEndpoint] = useState<string>(window.location.pathname)
-  useEffect(() => {
-    // when the cart items change, recalculate the total price
-    setTotalPrice(parseFloat(getTotalPrice(cartItems).toFixed(2)))
-  }, [cartItems])
+
 
   // listen for payment notifications from the server
-  useEffect(() => {
-    const eventSource = new EventSource(`${BASE_API_URL}/events`)
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data)
-      if (data.event === 'payment_success') {
-        window.location.href = "/thank-you"
-        toast.success("Payment received successfully")
-      }
-    }
-    return () => {
-      eventSource.close()
-    }
-  }, [])
+  // useEffect(() => {
+  //   const eventSource = new EventSource(`${BASE_API_URL}/events`)
+  //   eventSource.onmessage = (event) => {
+  //     const data = JSON.parse(event.data)
+  //     if (data.event === 'payment_success') {
+  //       window.location.href = "/thank-you"
+  //       toast.success("Payment received successfully")
+  //     }
+  //   }
+  //   return () => {
+  //     eventSource.close()
+  //   }
+  // }, [])
 
   const showModal = (onConfirm: () => void) => {
     setModalState(prevState => {
@@ -86,25 +78,19 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   //   }
   // }, [paymentFormUrl])
 
-  const clearCart = () => {
-    sessionStorage.removeItem("orderId")
-    sessionStorage.removeItem("cartItems")
-    setCartItems([])
-    setPaymentFormUrl("")
-  }
+  // const clearCart = () => {
+  //   sessionStorage.removeItem("orderId")
+  //   sessionStorage.removeItem("cartItems")
+  //   setCartItems([])
+  //   setPaymentFormUrl("")
+  // }
   const values = {
     setFilter,
     setPage,
     setCategory,
     page,
     filter,
-    sizeIdx,
-    setSizeIdx,
     category,
-    cartItems,
-    totalPrice,
-    setTotalPrice,
-    setCartItems,
     paymentFormUrl,
     setPaymentFormUrl,
     adminActiveSection,
@@ -123,7 +109,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     setOpenCart,
     subCategory,
     setSubCategory,
-    clearCart,
   }
   return (
     <AppContext.Provider value={values}>
@@ -131,4 +116,3 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     </AppContext.Provider>
   )
 }
-export default AppProvider;

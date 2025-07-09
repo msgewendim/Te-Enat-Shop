@@ -10,8 +10,8 @@ import PopupProduct from "../components/products/PopupProduct";
 import Banner from "../components/ui/Banner";
 import Loader from "../components/ui/Loader";
 
-import videoProduct from "/videoProduct.png";
-import ProductPageBanner from "/ProductPageBanner.svg";
+import videoProduct from "../../public/videoProduct.png";
+import ProductPageBanner from "../../public/ProductPageBanner.svg";
 
 import useGenericData from '../hooks/app/useGenericData';
 import { ProductActionsProps } from '../providers/interface/products.props';

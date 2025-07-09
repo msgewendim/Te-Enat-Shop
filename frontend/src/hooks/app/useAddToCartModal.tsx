@@ -1,18 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { useAppContext } from './useAppContext'
-import { CartItem, Product, ProductSize } from '../../client/types.gen'
+import { Product, ProductSize, MinimalCartItem } from '../../client/types.gen'
 import { ItemProperties, ProductModalProps } from '../../providers/interface/products.props'
-import { addItemToCartList } from '../../utils/helperFunctions'
-
+import { useCartStore } from '../../stores/useCartStore'
 
 function useAddToCartModal({ product, setOpen }: ProductModalProps) {
-  const { cartItems, setCartItems, sizeIdx, setSizeIdx } = useAppContext()
+  const { addToCart } = useCartStore()
   const { pricing } = product
 
   const sizes = useMemo(() => pricing ? pricing.map(p => p.size) : [], [pricing]);
   const prices = useMemo(() => pricing ? pricing.map(p => p.price) : [], [pricing]);
+  const [sizeIdx, setSizeIdx] = useState(0);
 
   const [itemProperties, setItemProperties] = useState<ItemProperties>({
     quantity: 1,
@@ -21,6 +20,7 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
     itemType: 'Product',
     name: product.name,
   })
+
   const handleQuantityChange = useCallback((change: number) => {
     setItemProperties(prev => ({
       ...prev,
@@ -48,25 +48,29 @@ function useAddToCartModal({ product, setOpen }: ProductModalProps) {
     }
   }, [sizes, prices, setSizeIdx]);
 
-
   const handleAddProductToCart = useCallback((product: Product) => {
-    const newItem: CartItem = { item: product, ...itemProperties, itemType: 'Product', name: product.name, image: product.image }
-    const updatedCartItems = addItemToCartList(cartItems, newItem)
-    sessionStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
-    setCartItems(updatedCartItems)
+    const minimalItem: MinimalCartItem = {
+      itemId: product._id,
+      quantity: itemProperties.quantity,
+      size: itemProperties.size,
+      price: itemProperties.price,
+      itemType: 'Product',
+    }
+
+    // Use the new cart store
+    addToCart(minimalItem);
+    
     toast.success("מוצר נוסף לעגלה")
     setOpen(false)
-  }, [cartItems, setCartItems, itemProperties, setOpen])
+  }, [addToCart, itemProperties, setOpen])
 
   return {
     sizes,
     prices,
     sizeIdx,
-    cartItems,
     itemProperties,
     setOpen,
     setSizeIdx,
-    setCartItems,
     handleSizeChange,
     setItemProperties,
     handleQuantityChange,

@@ -225,6 +225,51 @@ export enum itemType {
     PACKAGE = 'Package'
 }
 
+/**
+ * Minimal cart item for efficient storage and display
+ * Contains only IDs and essential data, full item data fetched on demand
+ */
+export type MinimalCartItem = {
+    /**
+     * ID of the item (Product or Package)
+     */
+    itemId: string;
+    /**
+     * Quantity of the item in the cart
+     */
+    quantity: number;
+    /**
+     * Size of the product in grams or kg
+     */
+    size: string;
+    /**
+     * Price of the item in the cart
+     */
+    price: number;
+    /**
+     * Type of the item (Product or Package)
+     */
+    itemType: 'Product' | 'Package';
+};
+
+/**
+ * Checkout payload with minimal data - backend will fetch full item details
+ */
+export type CheckoutPayload = {
+    /**
+     * Total price of all items
+     */
+    totalPrice: number;
+    /**
+     * Customer information
+     */
+    customer: Customer;
+    /**
+     * Minimal cart items with only IDs and essential data
+     */
+    orderItems: MinimalCartItem[];
+};
+
 export type Recipe = {
     /**
      * Unique identifier for the recipe

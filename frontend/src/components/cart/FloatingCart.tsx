@@ -1,10 +1,13 @@
 import { t } from "i18next";
 import { BiCart } from "react-icons/bi";
 
+import { useCartStore } from "../../stores/useCartStore";
 import { useAppContext } from "../../hooks/app/useAppContext";
 
 const FloatingCartButton = () => {
-  const { setOpenCart, cartItems } = useAppContext()
+  const { setOpenCart } = useAppContext();
+  const { getTotalItems } = useCartStore();
+  const totalItems = getTotalItems();
 
   return (
     <button
@@ -13,9 +16,11 @@ const FloatingCartButton = () => {
       aria-label={t('shop.openCart')}
     >
       <BiCart size={24} />
-      <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-        {cartItems.length}
-      </span>
+      {totalItems > 0 && (
+        <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          {totalItems > 99 ? '99+' : totalItems}
+        </span>
+      )}
     </button>
   )
 }

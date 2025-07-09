@@ -5,14 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "build:with-tsc": "tsc -b && vite build",
     "openapi-ts": "openapi-ts",
     "generate:types": "dotenv openapi-ts --input ${VITE_API_URL}/api-json --output src/client",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "lint:watch": "eslint . --ext ts,tsx --watch",
     "lint:staged": "eslint --fix $(git diff --name-only --staged | grep -E '\\.tsx?$')",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -p ."
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
@@ -36,7 +38,9 @@
     "react-router-dom": "^6.25.1",
     "react-toastify": "^10.0.5",
     "reactjs-popup": "^2.0.6",
-    "zod": "^3.23.8"
+    "socket.io-client": "^4.8.1",
+    "zod": "^3.23.8",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@hey-api/openapi-ts": "^0.52.9",

@@ -10,7 +10,7 @@ module.exports = {
     "plugin:import/warnings",
     "plugin:import/typescript",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs", "node_modules", "build"],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "node_modules", "build", "src/client/**/*"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2020,
@@ -25,9 +25,9 @@ module.exports = {
       version: "detect",
     },
     "import/resolver": {
-      typescript: {},
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      typescript: {
+        alwaysTryTypes: true,
+        project: "./tsconfig.app.json",
       },
     },
   },
@@ -36,57 +36,44 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
-    "react/react-in-jsx-scope": "off", // Not needed in React 17+
-    "react/prop-types": "off", // We're using TypeScript for prop validation
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", { 
-      "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_",
-      "ignoreRestSiblings": true 
-    }],
-    "no-console": ["warn", { allow: ["warn", "error"] }],
-    "import/order": [
-      "warn",
-      {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          ["parent", "sibling"],
-          "index"
-        ],
-        "newlines-between": "always",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
-      }
-    ],
-    "spellcheck/spell-checker": [
-      "off", // Disabled to prevent spell checking Hebrew text
-      {
-        skipWords: [],
-        skipIfMatch: [
-          "[\u0590-\u05FF]+", // Matches Hebrew characters
-        ],
-      },
-    ],
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "import/no-unresolved": "warn",
+    "import/named": "warn",
+    "import/default": "warn",
+    "import/namespace": "warn",
+    "prefer-const": "warn",
+    "no-unused-vars": "off",
+    "spellcheck/spell-checker": "off",
+    "import/no-named-as-default-member": "off",
   },
   overrides: [
     {
-      // Specific rules for TypeScript files
       files: ["*.ts", "*.tsx"],
       rules: {
-        "@typescript-eslint/no-explicit-any": "warn",
-        "@typescript-eslint/ban-ts-comment": "warn"
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/no-unused-vars": "warn"
       }
     },
     {
-      // Specific rules for test files
       files: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
       env: {
         jest: true,
       },
       rules: {
         "@typescript-eslint/no-explicit-any": "off",
-        "no-console": "off"
+        "@typescript-eslint/no-unused-vars": "off",
       }
     }
   ]

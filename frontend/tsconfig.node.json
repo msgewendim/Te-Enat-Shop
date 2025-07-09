@@ -33,5 +33,6 @@
 		"removeComments": true, // Remove comments in output
 		"incremental": true // Enable incremental compilation
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "src/client/*.gen.ts"],
+	"exclude": ["node_modules", "dist", "src/client/*.gen.ts"]
 }

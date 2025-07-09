@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Feature } from "../../client";
+import { Feature } from "../../client/types.gen";
 import { menu } from "../../utils/imageFiles";
 
 const WhoAreWe = () => {
