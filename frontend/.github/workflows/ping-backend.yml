@@ -1,0 +1,21 @@
+name: Keep Backend Alive
+
+on:
+  schedule:
+    # Runs every 10 minutes
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend
+        run: |
+          curl -s -I "${{ secrets.BACKEND_URL }}"
+          if [ $? -ne 0 ]; then
+            echo "Backend is down!"
+            exit 1
+          else
+            echo "Backend is up!"
+          fi
